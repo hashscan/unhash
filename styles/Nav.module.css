@@ -32,19 +32,6 @@
   border-radius: 16px;
 }
 
-.account {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-
-  padding: 6px 12px;
-
-  background-color: var(--background-card);
-  border-radius: 12px;
-  border: 1px solid var(--border-card);
-}
-
 .account:hover {
   cursor: pointer;
   background: rgba(92, 92, 92, 0.25);
@@ -64,9 +51,30 @@
   background-color: transparent;
 }
 
-.accountName {
+.accountName,
+.chains {
   font-size: 16px;
   line-height: 150%;
   font-weight: 500;
   letter-spacing: 0.02em;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.chains,
+.account {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  background-color: var(--background-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-card);
+  color: var(--text-primary);
+  cursor: pointer;
 }

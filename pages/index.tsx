@@ -1,17 +1,14 @@
 import React from 'react'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
-import dynamic from 'next/dynamic'
-import { useAccount } from 'wagmi'
 import { Nav } from 'components/Nav'
+import { InputENS } from 'components/InputENS'
 
-const ConnectWidget = dynamic(() => import('../components/ConnectWidget').then((m) => m.ConnectWidget), { ssr: false })
-
-const Index = () => {
+const Search = () => {
   return (
     <>
       <Nav />
+      <InputENS />
     </>
   )
 }
 
-export default Index
+export default Search
