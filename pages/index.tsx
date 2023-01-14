@@ -1,7 +1,8 @@
 import React from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Index = () => {
-  return <h1>Hello</h1>
+  return <ConnectButton chainStatus="none" />
 }
 
 export default Index
