@@ -11,8 +11,6 @@
 }
 
 .buttonBig:disabled,
-.button:disabled,
-.button:disabled:hover,
 .buttonBig[data-error='true'] {
   background-color: red;
   cursor: not-allowed !important;

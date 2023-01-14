@@ -25,3 +25,9 @@
   gap: 12px;
   margin-bottom: 16px;
 }
+
+.info {
+  width: 366px;
+  justify-content: space-between;
+  display: flex;
+}

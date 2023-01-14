@@ -25,7 +25,6 @@ export const InputENS = () => {
           className={ui.button}
           onClick={() => {
             setLoading(true)
-            console.log(v)
 
             provider.resolveName(v).then((domain) => {
               setLoading(false)
@@ -37,7 +36,10 @@ export const InputENS = () => {
           {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'check'}
         </button>
       </div>
-      {isClaimable !== null && <div>{isClaimable === true ? 'Eligible!' : 'Domain already taken :('}</div>}
+      <div className={styles.info}>
+        {isClaimable !== null && <div>{isClaimable === true ? 'Eligible!' : 'Domain already taken :('}</div>}
+        <span>$5/y</span>
+      </div>
     </div>
   )
 }
