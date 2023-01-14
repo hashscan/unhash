@@ -1,0 +1,26 @@
+{
+  "name": "ens",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^0.8.1",
+    "ethers": "^5.7.2",
+    "next": "^13.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "wagmi": "^0.10.10"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "typescript": "^4.9.4"
+  }
+}
