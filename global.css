@@ -1,0 +1,78 @@
+:root {
+  /* colors */
+  --background: #141416;
+  --background-2: #18191c; /* todo: replace by background-card */
+  --background-3: #191a20;
+  --background-card: #191a1d;
+  --background-highlight: #273f5e;
+  --text-primary: #fafafa;
+  --text-secondary: #b8bac2;
+  --text-highlight: #7db5ff;
+  --primary: #2e87fb;
+  --primary-hover: #4694fa;
+  --border-1: #14171c;
+  --border-2: #262626;
+  --border-3: #4f4f4f;
+  --border-card: rgba(255, 255, 255, 0.04);
+  --green: #3dc676;
+  --yellow: #f7d154;
+  --error: #f74748;
+  --shadow-card: rgba(46, 47, 54, 0.24);
+  --twitter: #1da1f2;
+  --discord: #5865f2;
+  /* fonts */
+  --font: Inter, Inter-fallback, Helvetica, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  /* sizes */
+  --radius-default: 4px;
+  /* toastify */
+  --toastify-color-dark: var(--background-card);
+  --toastify-font-family: var(--font);
+  --toastify-icon-color-error: var(--error);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+button,
+input,
+body {
+  font-family: var(--font);
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 115%;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 1200px) {
+  h1 {
+    font-size: 30px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  h1 {
+    font-size: 28px;
+  }
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}

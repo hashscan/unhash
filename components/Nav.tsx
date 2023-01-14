@@ -1,0 +1,82 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { RefObject, useRef, useState } from 'react'
+import styles from 'styles/Nav.module.css'
+import ui from 'styles/ui.module.css'
+import { useDisconnect } from 'wagmi'
+import { useOnClickOutside } from 'usehooks-ts'
+import Image from 'next/image'
+import { formatAddress } from 'lib/utils'
+import { LogoutIcon, ProfileIcon } from './icons'
+
+export const Nav = () => {
+  const [isOpen, setOpen] = useState(false)
+  const { disconnect } = useDisconnect()
+
+  const ref = useRef<HTMLElement>() as RefObject<HTMLElement>
+  useOnClickOutside(ref, () => setOpen(false))
+
+  const logoutClick = () => {
+    setOpen(false)
+    disconnect()
+  }
+
+  return (
+    <nav className={styles.nav} ref={ref}>
+      <div className={styles.title}>ENS</div>
+      <div className={styles.space}></div>
+      <ConnectButton.Custom>
+        {({ account, openConnectModal, authenticationStatus, mounted }) => {
+          // Note: If your app doesn't use authentication, you
+          // can remove all 'authenticationStatus' checks
+          const ready = mounted && authenticationStatus !== 'loading'
+          const connected = ready && account && (!authenticationStatus || authenticationStatus === 'authenticated')
+
+          return (
+            <div
+              {...(!ready && {
+                'aria-hidden': true,
+                style: {
+                  opacity: 0,
+                  pointerEvents: 'none',
+                  userSelect: 'none'
+                }
+              })}
+            >
+              {(() => {
+                if (!connected) {
+                  return (
+                    <button onClick={openConnectModal} className={`${ui.button} ${styles.connect}`} type="button">
+                      Connect wallet
+                    </button>
+                  )
+                }
+                return (
+                  <div className={`${styles.account}`} onClick={() => setOpen(!isOpen)}>
+                    <div className={`${styles.accountIcon} ${!account.ensAvatar && styles.accountIconPlaceholder}`}>
+                      {account.ensAvatar ? (
+                        <img width={28} height={28} alt="avatar" src={account.ensAvatar} />
+                      ) : (
+                        <ProfileIcon color="var(--text-secondary)" />
+                      )}
+                    </div>
+                    <div className={styles.accountName}>
+                      {account.ensName ? account.ensName : formatAddress(account.address)}
+                    </div>
+                  </div>
+                )
+              })()}
+            </div>
+          )
+        }}
+      </ConnectButton.Custom>
+      <div className={ui.modal} style={{ visibility: isOpen ? 'visible' : 'hidden', opacity: isOpen ? 1 : 0 }}>
+        <div className={ui.menu} onClick={logoutClick}>
+          <div className={ui.menuIcon} style={{ height: '24px', width: '24px', marginLeft: '-4px' }}>
+            <LogoutIcon />
+          </div>
+          <span className={ui.menuText}>Log out</span>
+        </div>
+      </div>
+    </nav>
+  )
+}

@@ -1,0 +1,123 @@
+.buttonBig {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 100%;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.buttonBig:disabled,
+.buttonBig[data-error='true'] {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.button {
+  height: 40px;
+  width: auto;
+  padding: 0px 16px;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+
+  border-radius: 4px;
+  border: none;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 2px;
+  background-color: var(--primary);
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover);
+}
+
+.buttonSmall {
+  height: 32px;
+  padding: 0px 20px;
+  font-size: 14px;
+}
+
+.buttonSecondary {
+  color: var(--primary);
+  background: transparent;
+  box-shadow: none;
+}
+
+.buttonSecondary:focus {
+  outline: 0;
+  background: var(--background-2);
+}
+
+.buttonSecondary:hover {
+  background: var(--background-2);
+}
+
+.modal {
+  min-width: 180px;
+  position: absolute;
+  top: 64px;
+  right: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--background-card);
+  border: 1px solid var(--border-card);
+
+  transition: 100ms;
+  z-index: 1;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 18px 12px 12px;
+}
+
+.menu:hover {
+  cursor: pointer;
+  background: rgba(92, 92, 92, 0.25);
+  border-radius: 4px;
+}
+
+.menuIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuText {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.card {
+  background-color: var(--background-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--primary);
+}

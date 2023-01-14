@@ -1,0 +1,72 @@
+.nav {
+  align-self: stretch;
+  height: 56px;
+  padding: 0px 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1.5px solid var(--border-2);
+  position: relative;
+}
+
+.title {
+  font-size: 24px;
+  padding: 4px;
+  font-weight: bold;
+  color: #7db5ff;
+}
+
+@media screen and (max-width: 520px) {
+  .title {
+    font-size: 16px;
+  }
+}
+
+.space {
+  flex-grow: 1;
+}
+
+.connect {
+  border-radius: 16px;
+}
+
+.account {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  padding: 6px 12px;
+
+  background-color: var(--background-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-card);
+}
+
+.account:hover {
+  cursor: pointer;
+  background: rgba(92, 92, 92, 0.25);
+}
+
+.accountIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: var(--background);
+  border: 1px solid var(--border-2);
+}
+
+.accountIconPlaceholder {
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+
+.accountName {
+  font-size: 16px;
+  line-height: 150%;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
