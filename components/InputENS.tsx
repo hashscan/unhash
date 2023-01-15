@@ -27,7 +27,7 @@ export const InputENS = () => {
           className={ui.button}
           onClick={() => {
             setLoading(true)
-            if (isClaimable) router.push(`/register?domain=${v}`)
+            if (isClaimable) return router.push(`/register?domain=${v}`)
 
             provider.resolveName(v).then((domain) => {
               setLoading(false)
@@ -36,7 +36,7 @@ export const InputENS = () => {
             })
           }}
         >
-          {isLoading ? <ProgressBar color="var(--text-primary)" /> : v === '' ? 'check' : 'continue'}
+          {isLoading ? <ProgressBar color="var(--text-primary)" /> : v === '' || !isClaimable ? 'check' : 'continue'}
         </button>
       </div>
       <div className={styles.info}>
