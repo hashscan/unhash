@@ -1,13 +1,14 @@
 import { ENS } from '@ensdomains/ensjs'
+import { ProgressBar } from 'components/icons'
 import { Nav } from 'components/Nav'
-import { ethers, PopulatedTransaction } from 'ethers'
+import { BigNumber, ethers, PopulatedTransaction } from 'ethers'
 import { useENSInstance } from 'hooks/useENSInstance'
 import { useSendCommit } from 'hooks/useSendCommit'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from 'styles/register.module.css'
-import { useAccount, useSigner } from 'wagmi'
+import { useAccount, useProvider, useSigner } from 'wagmi'
 
 const Register = () => {
   const router = useRouter()
@@ -19,7 +20,24 @@ const Register = () => {
   const [address, setAddress] = useState<string>(accountAddress as string)
   const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
   const { data: signer } = useSigner()
-  const { sendTransaction, isLoading, data, error } = useSendCommit(commitTx)
+  const { config, sendTransaction, error, isLoading } = useSendCommit(commitTx)
+  const provider = useProvider()
+
+  useEffect(() => {
+    const fn = async () => {
+      const { customData, ...commitPopTx } = await ens
+        .withProvider(provider as ethers.providers.JsonRpcProvider)
+        .commitName.populateTransaction(domain, {
+          duration: duration * 31536000,
+          owner: address,
+          addressOrIndex: address,
+          signer: signer as ethers.providers.JsonRpcSigner
+        })
+
+      setCommitTx(commitPopTx)
+    }
+    if (address && duration && signer) fn()
+  }, [address, duration, signer])
 
   return (
     <>
@@ -49,31 +67,12 @@ const Register = () => {
         />
         <button
           onClick={async () => {
-            const { customData, ...commitPopTx } = await ens.commitName.populateTransaction(domain, {
-              duration,
-              owner: address,
-              addressOrIndex: address,
-              signer: signer as ethers.providers.JsonRpcSigner
-            })
-            setCommitTx(commitPopTx)
-
-            // const { secret, wrapperExpiry } = customData!
-
-            // const controller = await ens.contracts!.getEthRegistrarController()!
-            // const [price] = await controller.rentPrice(domain, duration)
-
-            // const tx = await ens.registerName(domain, {
-            //   owner: address,
-            //   duration: duration * 31536000,
-            //   secret,
-            //   value: price
-            // })
-
-            // await tx.wait()
+            sendTransaction?.()
           }}
         >
-          Register
+          {isLoading ? <ProgressBar /> : 'Commit'}
         </button>
+        gas limit: {config.request && BigNumber.from(config.request.gasLimit).toNumber()}
       </main>
     </>
   )

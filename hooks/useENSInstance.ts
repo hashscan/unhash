@@ -5,8 +5,5 @@ import { useEffect } from 'react'
 export const useENSInstance = () => {
   const ens = new ENS({})
 
-  useEffect(() => {
-    ens.setProvider(publicProvider)
-  }, [])
   return ens
 }
