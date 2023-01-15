@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import styles from 'styles/InputENS.module.css'
 import ui from 'styles/ui.module.css'
@@ -9,6 +10,7 @@ export const InputENS = () => {
   const [isClaimable, setClaimable] = useState<null | boolean>(null)
   const [isLoading, setLoading] = useState(false)
   const provider = useProvider()
+  const router = useRouter()
 
   return (
     <div className={styles.container}>
@@ -21,10 +23,11 @@ export const InputENS = () => {
         />
         <button
           disabled={v === ''}
-          style={{ width: 78 }}
+          style={{ width: 100 }}
           className={ui.button}
           onClick={() => {
             setLoading(true)
+            if (isClaimable) router.push(`/register?domain=${v}`)
 
             provider.resolveName(v).then((domain) => {
               setLoading(false)
@@ -33,7 +36,7 @@ export const InputENS = () => {
             })
           }}
         >
-          {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'check'}
+          {isLoading ? <ProgressBar color="var(--text-primary)" /> : v === '' ? 'check' : 'continue'}
         </button>
       </div>
       <div className={styles.info}>
