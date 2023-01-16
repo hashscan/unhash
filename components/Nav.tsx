@@ -70,7 +70,12 @@ export const Nav = () => {
                     <button className={`${styles.account}`} onClick={() => setOpen(!isOpen)}>
                       <div className={`${styles.accountIcon} ${!account.ensAvatar && styles.accountIconPlaceholder}`}>
                         {account.ensAvatar ? (
-                          <img width={28} height={28} alt="avatar" src={account.ensAvatar} />
+                          <img
+                            width={28}
+                            height={28}
+                            alt="avatar"
+                            src={account.ensAvatar.replace('gateway.ipfs.io', 'ipfs.eth.aragon.network')}
+                          />
                         ) : (
                           <ProfileIcon color="var(--text-secondary)" />
                         )}
