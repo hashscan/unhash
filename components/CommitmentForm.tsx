@@ -70,11 +70,14 @@ export const CommitmentForm = ({ domain }: { domain: string }) => {
       <button
         className={ui.button}
         onClick={async () => {
+          console.log(commitTx)
+
           sendTransaction?.()
         }}
       >
         {isLoading ? <ProgressBar /> : 'Commit'}
       </button>
+      {error?.message}
       {config.request && (
         <>
           commit tx cost: $
