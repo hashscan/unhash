@@ -33,7 +33,7 @@ const Register = () => {
         <h2>{domain}</h2>
         {step === 'registration' ? (
           <p>registration step</p>
-        ) : !isCommitSuccess ? (
+        ) : isCommitSuccess ? (
           <WaitMinute />
         ) : (
           <CommitmentForm
