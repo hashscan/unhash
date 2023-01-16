@@ -68,13 +68,13 @@ export const Nav = () => {
                       {chain.name}
                     </button>
                     <button className={`${styles.account}`} onClick={() => setOpen(!isOpen)}>
-                      {/* <div className={`${styles.accountIcon} ${!account.ensAvatar && styles.accountIconPlaceholder}`}>
+                      <div className={`${styles.accountIcon} ${!account.ensAvatar && styles.accountIconPlaceholder}`}>
                         {account.ensAvatar ? (
                           <img width={28} height={28} alt="avatar" src={account.ensAvatar} />
                         ) : (
                           <ProfileIcon color="var(--text-secondary)" />
                         )}
-                      </div> */}
+                      </div>
                       <div className={styles.accountName}>
                         {account.ensName ? account.ensName : formatAddress(account.address)}
                       </div>
