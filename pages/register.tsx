@@ -8,7 +8,8 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import styles from 'styles/register.module.css'
-import { useAccount, useProvider, useSigner } from 'wagmi'
+import ui from 'styles/ui.module.css'
+import { useAccount, useFeeData, useProvider, useSigner } from 'wagmi'
 
 const Register = () => {
   const router = useRouter()
@@ -22,8 +23,10 @@ const Register = () => {
   const { data: signer } = useSigner()
   const { config, sendTransaction, error, isLoading } = useSendCommit(commitTx)
   const provider = useProvider()
+  const { data: feeData } = useFeeData()
 
   useEffect(() => {
+    // get tx data for commitment
     const fn = async () => {
       const { customData, ...commitPopTx } = await ens
         .withProvider(provider as ethers.providers.JsonRpcProvider)
@@ -44,35 +47,42 @@ const Register = () => {
       <Nav />
       <main className={styles.main}>
         <h1>Domain registration</h1>
+        <p>{'Commit -> Wait a minute -> Register'}</p>
         <h2>{domain}</h2>
-        <label htmlFor="address">Owner: </label>
-        <input
-          name="owner"
-          value={address}
-          pattern="^0x[a-fA-F0-9]{40}$"
-          onChange={(v) => setAddress(v.currentTarget.value as `0x${string}`)}
-          defaultValue={accountAddress}
-        />
-        <label htmlFor="duration">Duration (years): </label>
-        <input
-          name="duration (years)"
-          placeholder="1"
-          type="number"
-          min={1}
-          defaultValue={1}
-          onChange={(v) => {
-            const n = v.currentTarget.valueAsNumber
-            if (!isNaN(n)) setDuration(n)
-          }}
-        />
+        <div className={styles.field}>
+          <label htmlFor="address">Owner: </label>
+          <input
+            name="owner"
+            value={address}
+            pattern="^0x[a-fA-F0-9]{40}$"
+            onChange={(v) => setAddress(v.currentTarget.value as `0x${string}`)}
+            defaultValue={accountAddress}
+            className={ui.input}
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="duration">Duration (years): </label>
+          <input
+            name="duration (years)"
+            placeholder="1"
+            type="number"
+            min={1}
+            defaultValue={1}
+            className={ui.input}
+            onChange={(v) => {
+              const n = v.currentTarget.valueAsNumber
+              if (!isNaN(n)) setDuration(n)
+            }}
+          />
+        </div>
         <button
+          className={ui.button}
           onClick={async () => {
             sendTransaction?.()
           }}
         >
           {isLoading ? <ProgressBar /> : 'Commit'}
         </button>
-        gas limit: {config.request && BigNumber.from(config.request.gasLimit).toNumber()}
       </main>
     </>
   )

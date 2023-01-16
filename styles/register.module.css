@@ -1,5 +1,17 @@
 .main {
-  max-width: 1200px;
+  width: 600px;
   margin: 0 auto;
   padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field > label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.field > input {
+  width: 100%;
 }

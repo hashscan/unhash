@@ -15,12 +15,7 @@ export const InputENS = () => {
   return (
     <div className={styles.container}>
       <div className={styles.search}>
-        <input
-          className={styles.input}
-          value={v}
-          onChange={(e) => set(e.currentTarget.value)}
-          placeholder="v1rtl.eth"
-        />
+        <input className={ui.input} value={v} onChange={(e) => set(e.currentTarget.value)} placeholder="v1rtl.eth" />
         <button
           disabled={v === ''}
           style={{ width: 100 }}
@@ -39,10 +34,12 @@ export const InputENS = () => {
           {isLoading ? <ProgressBar color="var(--text-primary)" /> : v === '' || !isClaimable ? 'check' : 'continue'}
         </button>
       </div>
-      <div className={styles.info}>
-        {isClaimable !== null && <div>{isClaimable === true ? 'Eligible!' : 'Domain already taken :('}</div>}
-        <span>$5/y</span>
-      </div>
+      {isClaimable !== null && (
+        <div className={styles.info}>
+          <div>{isClaimable === true ? 'Eligible!' : 'Domain already taken :('}</div>
+          <span>$5/y</span>
+        </div>
+      )}
     </div>
   )
 }
