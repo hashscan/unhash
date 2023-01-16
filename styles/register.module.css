@@ -6,12 +6,3 @@
   flex-direction: column;
   gap: 24px;
 }
-
-.field > label {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.field > input {
-  width: 100%;
-}
