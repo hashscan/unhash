@@ -3,6 +3,7 @@ import { ProgressBar } from 'components/icons'
 import { Nav } from 'components/Nav'
 import { BigNumber, ethers, PopulatedTransaction } from 'ethers'
 import { useENSInstance } from 'hooks/useENSInstance'
+import { useEthPrice } from 'hooks/useEthPrice'
 import { useSendCommit } from 'hooks/useSendCommit'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -24,6 +25,7 @@ const Register = () => {
   const { config, sendTransaction, error, isLoading } = useSendCommit(commitTx)
   const provider = useProvider()
   const { data: feeData } = useFeeData()
+  const ethPrice = useEthPrice()
 
   useEffect(() => {
     // get tx data for commitment
@@ -83,6 +85,20 @@ const Register = () => {
         >
           {isLoading ? <ProgressBar /> : 'Commit'}
         </button>
+        {config.request && (
+          <>
+            commit tx cost: $
+            {(
+              parseFloat(
+                ethers.utils.formatEther(
+                  BigNumber.from(config.request.gasLimit).mul(
+                    feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
+                  )
+                )
+              ) * ethPrice
+            ).toPrecision(5)}
+          </>
+        )}
       </main>
     </>
   )
