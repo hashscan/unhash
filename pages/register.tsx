@@ -1,15 +1,28 @@
 import { CommitmentForm } from 'components/CommitmentForm'
 import { Nav } from 'components/Nav'
+import { WaitMinute } from 'components/WaitMinute'
+import { PopulatedTransaction } from 'ethers'
+import { useSendCommit } from 'hooks/useSendCommit'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from 'styles/register.module.css'
 
 const Register = () => {
   const router = useRouter()
-  const { domain: query } = router.query
+  const { domain: query, step } = router.query
 
   const domain = (Array.isArray(query) ? query[0] : query)!
+
+  const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
+
+  const {
+    config: commitConfig,
+    sendTransaction: commit,
+    error: commitError,
+    isLoading: isCommitLoading,
+    isSuccess: isCommitSuccess
+  } = useSendCommit(commitTx)
 
   return (
     <>
@@ -18,7 +31,20 @@ const Register = () => {
         <h1>Domain registration</h1>
         <p>{'Commit -> Wait a minute -> Register'}</p>
         <h2>{domain}</h2>
-        <CommitmentForm {...{ domain }} />
+        {step === 'registration' ? (
+          <p>registration step</p>
+        ) : !isCommitSuccess ? (
+          <WaitMinute />
+        ) : (
+          <CommitmentForm
+            {...{ domain, commitTx, setCommitTx }}
+            error={commitError}
+            isLoading={isCommitLoading}
+            isSuccess={isCommitSuccess}
+            sendTransaction={commit}
+            config={commitConfig}
+          />
+        )}
       </main>
     </>
   )

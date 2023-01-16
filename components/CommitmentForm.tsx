@@ -1,14 +1,32 @@
 import { ethers, BigNumber, PopulatedTransaction } from 'ethers'
 import { useENSInstance } from 'hooks/useENSInstance'
 import { useEthPrice } from 'hooks/useEthPrice'
-import { useSendCommit } from 'hooks/useSendCommit'
-import { useEffect, useState } from 'react'
-import { useAccount, useFeeData, useProvider, useSigner } from 'wagmi'
+import { PrepareSendTransactionResult } from '@wagmi/core'
+import { useEffect, useMemo, useState } from 'react'
+import { useAccount, useFeeData, useProvider, useSigner, useSendTransaction } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
 
-export const CommitmentForm = ({ domain }: { domain: string }) => {
+export const CommitmentForm = ({
+  domain,
+  commitTx,
+  setCommitTx,
+  config,
+  sendTransaction,
+  isLoading,
+  isSuccess,
+  error
+}: {
+  domain: string
+  commitTx?: PopulatedTransaction
+  setCommitTx: (tx?: PopulatedTransaction) => void
+  config: PrepareSendTransactionResult
+  sendTransaction: ReturnType<typeof useSendTransaction>['sendTransaction']
+  isLoading: boolean
+  isSuccess: boolean
+  error: Error | null
+}) => {
   const ens = useENSInstance()
   const { data: signer } = useSigner()
   const provider = useProvider()
@@ -18,9 +36,22 @@ export const CommitmentForm = ({ domain }: { domain: string }) => {
   const { address: accountAddress } = useAccount()
 
   const [address, setAddress] = useState<string>(accountAddress as string)
-  const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
 
-  const { config, sendTransaction, error, isLoading } = useSendCommit(commitTx)
+  const txPrice = useMemo(
+    () =>
+      config.request
+        ? (
+            parseFloat(
+              ethers.utils.formatEther(
+                BigNumber.from(config.request.gasLimit).mul(
+                  feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
+                )
+              )
+            ) * ethPrice
+          ).toPrecision(5)
+        : '',
+    [feeData, config]
+  )
 
   useEffect(() => {
     // get tx data for commitment
@@ -77,21 +108,9 @@ export const CommitmentForm = ({ domain }: { domain: string }) => {
       >
         {isLoading ? <ProgressBar /> : 'Commit'}
       </button>
+      {isSuccess && 'success!'}
       {error?.message}
-      {config.request && (
-        <>
-          commit tx cost: $
-          {(
-            parseFloat(
-              ethers.utils.formatEther(
-                BigNumber.from(config.request.gasLimit).mul(
-                  feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
-                )
-              )
-            ) * ethPrice
-          ).toPrecision(5)}
-        </>
-      )}
+      {txPrice && <>commit tx cost: ${txPrice}</>}
     </>
   )
 }

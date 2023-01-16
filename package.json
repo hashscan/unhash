@@ -13,6 +13,7 @@
   "dependencies": {
     "@ensdomains/ensjs": "3.0.0-alpha.39",
     "@rainbow-me/rainbowkit": "^0.8.1",
+    "@wagmi/core": "^0.8.14",
     "ethers": "^5.7.2",
     "next": "^13.1.2",
     "react": "^18.2.0",
