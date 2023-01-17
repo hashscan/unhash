@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { ProgressBar } from './icons'
 
 export const WaitMinute = () => {
   const [isReady, setReady] = useState(false)
@@ -13,7 +14,7 @@ export const WaitMinute = () => {
   }, [])
 
   return (
-    <p>
+    <>
       {isReady ? (
         <button
           onClick={() => {
@@ -25,8 +26,10 @@ export const WaitMinute = () => {
           Confirm registration
         </button>
       ) : (
-        'Wait a minute'
+        <div>
+          Wait a minute <ProgressBar color="var(--text-primary)" />
+        </div>
       )}
-    </p>
+    </>
   )
 }
