@@ -1,41 +1,37 @@
-import { ethers, BigNumber, PopulatedTransaction } from 'ethers'
-import { useENSInstance } from 'hooks/useENSInstance'
-import { useEthPrice } from 'hooks/useEthPrice'
-import { PrepareSendTransactionResult } from '@wagmi/core'
+import { BigNumber, ethers, PopulatedTransaction } from 'ethers'
+import { ENS } from '@ensdomains/ensjs'
 import { useEffect, useMemo, useState } from 'react'
-import { useAccount, useFeeData, useProvider, useSigner, useSendTransaction } from 'wagmi'
+import { useAccount, useFeeData, useSigner } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
+import { useSendCommit } from 'hooks/useSendCommit'
+import type { providers } from 'ethers'
 
 export const CommitmentForm = ({
   domain,
-  commitTx,
-  setCommitTx,
-  config,
-  sendTransaction,
-  isLoading,
-  isSuccess,
-  error
+
+  feeData,
+  ethPrice,
+  provider,
+  signer,
+  ens,
+  accountAddress
 }: {
   domain: string
-  commitTx?: PopulatedTransaction
-  setCommitTx: (tx?: PopulatedTransaction) => void
-  config: PrepareSendTransactionResult
-  sendTransaction: ReturnType<typeof useSendTransaction>['sendTransaction']
-  isLoading: boolean
-  isSuccess: boolean
-  error: Error | null
+  feeData: ReturnType<typeof useFeeData>['data']
+  ethPrice: number
+  provider: providers.BaseProvider
+  signer?: ReturnType<typeof useSigner>['data']
+  ens: ENS
+  accountAddress?: `0x${string}`
 }) => {
-  const ens = useENSInstance()
-  const { data: signer } = useSigner()
-  const provider = useProvider()
-  const { data: feeData } = useFeeData()
-  const ethPrice = useEthPrice()
+  const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
   const [duration, setDuration] = useState(1)
-  const { address: accountAddress } = useAccount()
 
   const [address, setAddress] = useState<string>(accountAddress as string)
+
+  const { config, sendTransaction, isError, isLoading, isSuccess } = useSendCommit(commitTx)
 
   const txPrice = useMemo(
     () =>
@@ -65,18 +61,34 @@ export const CommitmentForm = ({
           signer: signer as ethers.providers.JsonRpcSigner
         })
 
+      const { secret, wrapperExpiry } = customData!
+
+      localStorage.setItem('commit-secret', JSON.stringify(secret))
+      localStorage.setItem('commit-wrapper-expiry', (wrapperExpiry as BigInt).toString())
+      localStorage.setItem('duration', JSON.stringify(duration))
+
       setCommitTx(commitPopTx)
     }
     if (address && duration) fn()
   }, [address, duration])
 
   return (
-    <>
+    <form
+      className={styles.form}
+      onSubmit={(e) => {
+        e.preventDefault()
+        if (e.currentTarget.reportValidity()) {
+          localStorage.setItem('owner-address', address)
+          sendTransaction?.()
+        }
+      }}
+    >
       <div className={styles.field}>
         <label htmlFor="address">Owner: </label>
         <input
           name="owner"
           value={address}
+          required
           pattern="^0x[a-fA-F0-9]{40}$"
           onChange={(v) => setAddress(v.currentTarget.value as `0x${string}`)}
           defaultValue={accountAddress}
@@ -86,6 +98,7 @@ export const CommitmentForm = ({
       <div className={styles.field}>
         <label htmlFor="duration">Duration (years): </label>
         <input
+          required
           name="duration (years)"
           placeholder="1"
           type="number"
@@ -98,19 +111,12 @@ export const CommitmentForm = ({
           }}
         />
       </div>
-      <button
-        className={ui.button}
-        onClick={async () => {
-          console.log(commitTx)
-
-          sendTransaction?.()
-        }}
-      >
+      <button type="submit" className={ui.button}>
         {isLoading ? <ProgressBar /> : 'Commit'}
       </button>
       {isSuccess && 'success!'}
-      {error?.message}
+      {isError && 'tx error :('}
       {txPrice && <>commit tx cost: ${txPrice}</>}
-    </>
+    </form>
   )
 }

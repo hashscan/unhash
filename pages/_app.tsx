@@ -28,7 +28,6 @@ const wagmiClient = createClient({
   connectors,
   provider
 })
-
 const theme: Theme = {
   ...darkTheme(),
   fonts: { body: 'var(--font)' }

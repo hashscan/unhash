@@ -1,28 +1,41 @@
 import { CommitmentForm } from 'components/CommitmentForm'
 import { Nav } from 'components/Nav'
+import { RegisterStep } from 'components/RegisterStep'
 import { WaitMinute } from 'components/WaitMinute'
-import { PopulatedTransaction } from 'ethers'
-import { useSendCommit } from 'hooks/useSendCommit'
+import { useENSInstance } from 'hooks/useENSInstance'
+import { useEthPrice } from 'hooks/useEthPrice'
+import { RegistrationStep } from 'lib/types'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React from 'react'
 import styles from 'styles/register.module.css'
+import { useReadLocalStorage } from 'usehooks-ts'
+import { useSigner, useProvider, useFeeData, useAccount } from 'wagmi'
+
+const Step = ({ step, domain }: { step: RegistrationStep | null; domain: string }) => {
+  const ens = useENSInstance()
+  const { data: signer } = useSigner()
+  const provider = useProvider()
+  const { data: feeData } = useFeeData()
+  const ethPrice = useEthPrice()
+  const { address } = useAccount()
+
+  switch (step) {
+    case 'commit':
+    default:
+      return <CommitmentForm {...{ ens, signer, provider, feeData, ethPrice, domain }} accountAddress={address} />
+    case 'wait':
+      return <WaitMinute />
+    case 'register':
+      return <RegisterStep {...{ ens, ethPrice, feeData, provider, domain }} />
+  }
+}
 
 const Register = () => {
   const router = useRouter()
-  const { domain: query, step } = router.query
-
+  const { domain: query } = router.query
+  const step = useReadLocalStorage<RegistrationStep>('step')
   const domain = (Array.isArray(query) ? query[0] : query)!
-
-  const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
-
-  const {
-    config: commitConfig,
-    sendTransaction: commit,
-    error: commitError,
-    isLoading: isCommitLoading,
-    isSuccess: isCommitSuccess
-  } = useSendCommit(commitTx)
 
   return (
     <>
@@ -31,20 +44,7 @@ const Register = () => {
         <h1>Domain registration</h1>
         <p>{'Commit -> Wait a minute -> Register'}</p>
         <h2>{domain}</h2>
-        {step === 'registration' ? (
-          <p>registration step</p>
-        ) : isCommitSuccess ? (
-          <WaitMinute />
-        ) : (
-          <CommitmentForm
-            {...{ domain, commitTx, setCommitTx }}
-            error={commitError}
-            isLoading={isCommitLoading}
-            isSuccess={isCommitSuccess}
-            sendTransaction={commit}
-            config={commitConfig}
-          />
-        )}
+        <Step {...{ step, domain }} />
       </main>
     </>
   )
