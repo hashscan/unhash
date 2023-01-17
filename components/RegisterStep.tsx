@@ -66,7 +66,7 @@ export const RegisterStep = ({
       {isSuccess && 'success!'}
       {isError && 'error :('}
       {txPrice && <>commit tx cost: ${txPrice}</>}
-      <button>Confirm</button>
+      <button onClick={() => sendTransaction?.()}>Confirm</button>
     </>
   )
 }

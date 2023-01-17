@@ -1,26 +1,23 @@
 import { BigNumber, PopulatedTransaction } from 'ethers'
 import { RegistrationStep } from 'lib/types'
 import { useRouter } from 'next/router'
+import { useLocalStorage } from 'usehooks-ts'
 import { usePrepareSendTransaction, useSendTransaction, useWaitForTransaction } from 'wagmi'
 
 export const useSendCommit = (tx: PopulatedTransaction | undefined) => {
   const { config } = usePrepareSendTransaction({
-    request: { ...tx, gasLimit: BigNumber.from(46_000) } as PopulatedTransaction & { to: string }
+    request: { ...tx } as PopulatedTransaction & { to: string }
   })
-  const router = useRouter()
+  const [_, setCommitTx] = useLocalStorage('commit-tx', '')
+  const [__, setStep] = useLocalStorage('step', '')
 
   const { sendTransaction, data } = useSendTransaction(config)
 
   const { isLoading, isSuccess, isError } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: (data) => {
-      localStorage.setItem('commit-tx', data.transactionHash)
-      localStorage.setItem('step', 'wait' as RegistrationStep)
-      setTimeout(() => {
-        router.replace({
-          query: { ...router.query, step: 'wait' }
-        })
-      }, 1000)
+      setCommitTx(data.transactionHash)
+      setStep('wait' as RegistrationStep)
     }
   })
 

@@ -22,11 +22,11 @@ const Step = ({ step, domain }: { step: RegistrationStep | null; domain: string 
 
   switch (step) {
     case 'commit':
-    default:
       return <CommitmentForm {...{ ens, signer, provider, feeData, ethPrice, domain }} accountAddress={address} />
     case 'wait':
       return <WaitMinute />
     case 'register':
+    default:
       return <RegisterStep {...{ ens, ethPrice, feeData, provider, domain }} />
   }
 }

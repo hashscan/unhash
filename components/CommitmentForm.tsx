@@ -7,6 +7,7 @@ import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
 import { useSendCommit } from 'hooks/useSendCommit'
 import type { providers } from 'ethers'
+import { useLocalStorage } from 'usehooks-ts'
 
 export const CommitmentForm = ({
   domain,
@@ -27,11 +28,14 @@ export const CommitmentForm = ({
   accountAddress?: `0x${string}`
 }) => {
   const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
-  const [duration, setDuration] = useState(1)
 
-  const [address, setAddress] = useState<string>(accountAddress as string)
+  const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
 
   const { config, sendTransaction, isError, isLoading, isSuccess } = useSendCommit(commitTx)
+
+  const [_, setSecret] = useLocalStorage('commit-secret', '')
+  const [__, setCommitWrapperExpiry] = useLocalStorage('commit-wrapper-expiry', '')
+  const [duration, setDuration] = useLocalStorage('duration', 31536000)
 
   const txPrice = useMemo(
     () =>
@@ -62,10 +66,8 @@ export const CommitmentForm = ({
         })
 
       const { secret, wrapperExpiry } = customData!
-
-      localStorage.setItem('commit-secret', JSON.stringify(secret))
-      localStorage.setItem('commit-wrapper-expiry', (wrapperExpiry as BigInt).toString())
-      localStorage.setItem('duration', JSON.stringify(duration))
+      setSecret(secret)
+      setCommitWrapperExpiry((wrapperExpiry as BigInt).toString())
 
       setCommitTx(commitPopTx)
     }
@@ -78,7 +80,6 @@ export const CommitmentForm = ({
       onSubmit={(e) => {
         e.preventDefault()
         if (e.currentTarget.reportValidity()) {
-          localStorage.setItem('owner-address', address)
           sendTransaction?.()
         }
       }}
