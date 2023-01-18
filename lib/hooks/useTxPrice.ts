@@ -18,7 +18,7 @@ export const useTxPrice = ({
   const ethPrice = useEthPrice()
   const txPrice = useMemo(
     () =>
-      config.request
+      config.request && feeData
         ? (
             parseFloat(
               ethers.utils.formatEther(
