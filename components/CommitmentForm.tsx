@@ -1,24 +1,20 @@
-import { ENS } from '@ensdomains/ensjs'
 import { useEffect, useState } from 'react'
-import { useFeeData, useSigner } from 'wagmi'
+import { useContractRead, useFeeData, useSigner } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import type { providers, PopulatedTransaction } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
-import { commitName } from 'lib/ens/commitName'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
-import { YEAR_IN_SECONDS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
+import { randomSecret } from 'lib/utils'
 
 export const CommitmentForm = ({
   domain,
-
   feeData,
-  ethPrice,
   provider,
   signer,
-  ens,
   accountAddress
 }: {
   domain: string
@@ -26,40 +22,30 @@ export const CommitmentForm = ({
   ethPrice: number
   provider: providers.JsonRpcProvider
   signer?: ReturnType<typeof useSigner>['data']
-  ens: ENS
   accountAddress?: `0x${string}`
 }) => {
-  const [commitTx, setCommitTx] = useState<PopulatedTransaction>()
-
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
 
-  const { config, sendTransaction, isLoading, isSuccess, isSendError, isRemoteError, remoteError, sendError } =
-    useSendCommit(commitTx)
+  const generatedSecret = randomSecret()
+  const [secret, setSecret] = useLocalStorage('commit-secret', generatedSecret)
+  const [_, setDuration] = useLocalStorage('duration', YEAR_IN_SECONDS)
 
-  const [_, setSecret] = useLocalStorage('commit-secret', '')
-  const [__, setCommitWrapperExpiry] = useLocalStorage('commit-wrapper-expiry', '')
-  const [duration, setDuration] = useLocalStorage('duration', YEAR_IN_SECONDS)
+  const { data: commitmentHash } = useContractRead<string[], 'makeCommitment', string>({
+    abi: ETH_REGISTRAR_ABI,
+    address: ETH_REGISTRAR_ADDRESS,
+    functionName: 'makeCommitment',
+    args: [domain, address, secret]
+  })
+
+  const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError } = useSendCommit({
+    commitmentHash
+  })
 
   const txPrice = useTxPrice({ config, feeData })
 
   useEffect(() => {
-    // get tx data for commitment
-    const fn = async () => {
-      const { secret, wrapperExpiry, commitPopTx } = await commitName({
-        provider,
-        address,
-        ens,
-        signer: signer as providers.JsonRpcSigner,
-        domain,
-        duration
-      })
-      setSecret(secret)
-      setCommitWrapperExpiry((wrapperExpiry as BigInt).toString())
-
-      setCommitTx(commitPopTx)
-    }
-    if (address && duration && signer) fn()
-  }, [address, duration, signer])
+    setSecret(generatedSecret)
+  }, [])
 
   return (
     <form
@@ -67,7 +53,7 @@ export const CommitmentForm = ({
       onSubmit={(e) => {
         e.preventDefault()
         if (e.currentTarget.reportValidity()) {
-          sendTransaction?.()
+          write?.()
         }
       }}
     >
@@ -105,7 +91,7 @@ export const CommitmentForm = ({
       {txPrice && <>commit tx cost: ${txPrice}</>}
       <div>
         {isSuccess && 'success!'}
-        {isSendError && <div className={styles.error}>{sendError?.message}</div>}
+        {isWriteError && <div className={styles.error}>{writeError?.message}</div>}
         {isRemoteError && <div className={styles.error}>{remoteError?.message}</div>}
       </div>
     </form>

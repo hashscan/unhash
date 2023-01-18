@@ -6,3 +6,11 @@ export function formatAddress(address: string): string {
     ? address
     : `${address.substring(0, leadingChars)}\u2026${address.substring(address.length - trailingChars)}`
 }
+
+export const randomSecret = () => {
+  const bytes = new Uint8Array(32)
+  crypto.getRandomValues(bytes)
+  return `0x${Array.from(bytes)
+    .map((p) => p.toString(16).padStart(2, '0'))
+    .join('')}`
+}
