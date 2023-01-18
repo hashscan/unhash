@@ -1,5 +1,5 @@
 import { ENS } from '@ensdomains/ensjs'
-import { PopulatedTransaction, providers } from 'ethers'
+import { BigNumber, PopulatedTransaction, providers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { useFeeData } from 'wagmi'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
@@ -39,7 +39,8 @@ export const RegisterStep = ({
         duration,
         provider,
         secret,
-        owner
+        owner,
+        wrapperExpiry: BigNumber.from(wrapperExpiry)
       })
 
       setRegisterTx(tx)

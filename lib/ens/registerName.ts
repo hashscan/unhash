@@ -1,5 +1,5 @@
 import { ENS } from '@ensdomains/ensjs'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 export const registerName = async ({
   ens,
@@ -7,7 +7,8 @@ export const registerName = async ({
   duration,
   provider,
   secret,
-  owner
+  owner,
+  wrapperExpiry
 }: {
   ens: ENS
   domain: string
@@ -15,6 +16,7 @@ export const registerName = async ({
   provider: ethers.providers.JsonRpcProvider
   secret: string
   owner: string
+  wrapperExpiry: BigNumber
 }) => {
   const controller = await ens.contracts!.getEthRegistrarController()!
   const [price] = await controller.rentPrice(domain, duration)
@@ -23,7 +25,9 @@ export const registerName = async ({
     secret,
     owner,
     duration,
-    value: price
+    value: price,
+    addressOrIndex: owner,
+    wrapperExpiry
   })
 
   return tx
