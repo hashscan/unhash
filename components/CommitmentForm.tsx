@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useContractRead, useFeeData, useSigner } from 'wagmi'
+import { useChainId, useContractRead, useFeeData, useSigner } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
@@ -7,7 +7,7 @@ import { useSendCommit } from 'lib/hooks/useSendCommit'
 import type { providers, PopulatedTransaction } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 import { randomSecret } from 'lib/utils'
 
 const generatedSecret = randomSecret()
@@ -27,19 +27,20 @@ export const CommitmentForm = ({
   accountAddress?: `0x${string}`
 }) => {
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
-
+  const chainId = useChainId()
   const [secret, setSecret] = useLocalStorage('commit-secret', generatedSecret)
   const [_, setDuration] = useLocalStorage('duration', YEAR_IN_SECONDS)
 
   const { data: commitmentHash } = useContractRead<string[], 'makeCommitment', string>({
     abi: ETH_REGISTRAR_ABI,
-    address: ETH_REGISTRAR_ADDRESS,
+    address: chainId === 1 ? ETH_REGISTRAR_ADDRESS : GOERLI_REGISTRAR_ADDRESS,
     functionName: 'makeCommitment',
     args: [domain, address, secret]
   })
 
   const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError } = useSendCommit({
-    commitmentHash
+    commitmentHash,
+    chainId
   })
 
   const txPrice = useTxPrice({ config, feeData })

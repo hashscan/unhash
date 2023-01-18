@@ -1,13 +1,11 @@
-import { BigNumber, PopulatedTransaction } from 'ethers'
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS } from 'lib/constants'
 import { RegistrationStep } from 'lib/types'
-import { useRouter } from 'next/router'
 import { useLocalStorage } from 'usehooks-ts'
-import { useContractWrite, usePrepareContractWrite, useSendTransaction, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-export const useSendCommit = ({ commitmentHash }: { commitmentHash?: string }) => {
+export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: string; chainId: number }) => {
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS,
+    address: chainId === 1 ? ETH_REGISTRAR_ADDRESS : GOERLI_REGISTRAR_ADDRESS,
     abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
     args: [commitmentHash]

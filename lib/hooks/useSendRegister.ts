@@ -1,15 +1,15 @@
-import { BigNumber, ethers, PopulatedTransaction } from 'ethers'
-import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS } from 'lib/constants'
+import { ethers } from 'ethers'
+import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, GOERLI_REGISTRAR_ADDRESS } from 'lib/constants'
 import { RegistrationStep } from 'lib/types'
 import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
-import { usePrepareContractWrite, usePrepareSendTransaction, useSendTransaction, useWaitForTransaction } from 'wagmi'
+import { useChainId, usePrepareContractWrite, useSendTransaction, useWaitForTransaction } from 'wagmi'
 
 export const useSendRegister = ({ name, owner }: { name: string; owner: string }) => {
   const duration = useReadLocalStorage<number>('duration')
   const secret = useReadLocalStorage<string>('commit-secret')
-
+  const chainId = useChainId()
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS,
+    address: chainId === 1 ? ETH_REGISTRAR_ADDRESS : GOERLI_REGISTRAR_ADDRESS,
     abi: ETH_REGISTRAR_ABI,
     functionName: 'register',
     args: [name, owner, duration || YEAR_IN_SECONDS, secret],
