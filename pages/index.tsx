@@ -10,6 +10,9 @@ import api from 'lib/api'
 
 /** Returns error message or null if domain valid */
 function validateDomainName(domain: string): string | null {
+  if (domain.length == 0) {
+    return 'Enter domain name'
+  }
   if (!domain.endsWith('.eth')) {
     return 'Domain must end with .eth'
   }

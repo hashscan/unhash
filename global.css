@@ -47,6 +47,11 @@ body {
   font-family: var(--font);
 }
 
+input:focus {
+  border: 1px solid var(--primary);
+  outline: 1px solid var(--primary);
+}
+
 h1 {
   font-size: 30px;
   font-weight: 700;
