@@ -2,8 +2,8 @@ import { CommitmentForm } from 'components/CommitmentForm'
 import { Nav } from 'components/Nav'
 import { RegisterStep } from 'components/RegisterStep'
 import { WaitMinute } from 'components/WaitMinute'
-import { useENSInstance } from 'hooks/useENSInstance'
-import { useEthPrice } from 'hooks/useEthPrice'
+import { useENSInstance } from 'lib/hooks/useENSInstance'
+import { useEthPrice } from 'lib/hooks/useEthPrice'
 import { RegistrationStep } from 'lib/types'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -22,11 +22,11 @@ const Step = ({ step, domain }: { step: RegistrationStep | null; domain: string 
 
   switch (step) {
     case 'commit':
+    default:
       return <CommitmentForm {...{ ens, signer, provider, feeData, ethPrice, domain }} accountAddress={address} />
     case 'wait':
       return <WaitMinute />
     case 'register':
-    default:
       return <RegisterStep {...{ ens, ethPrice, feeData, provider, domain }} />
   }
 }

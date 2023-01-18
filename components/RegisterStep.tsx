@@ -2,8 +2,9 @@ import { ENS } from '@ensdomains/ensjs'
 import { ethers, BigNumber, PopulatedTransaction, providers } from 'ethers'
 import { useEffect, useMemo, useState } from 'react'
 import { useFeeData } from 'wagmi'
-import { useSendRegister } from 'hooks/useSendRegister'
+import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { useReadLocalStorage } from 'usehooks-ts'
+import { ProgressBar } from './icons'
 
 export const RegisterStep = ({
   ens,
@@ -66,7 +67,9 @@ export const RegisterStep = ({
       {isSuccess && 'success!'}
       {isError && 'error :('}
       {txPrice && <>commit tx cost: ${txPrice}</>}
-      <button onClick={() => sendTransaction?.()}>Confirm</button>
+      <button disabled={isLoading} onClick={() => sendTransaction?.()}>
+        {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Confirm'}
+      </button>
     </>
   )
 }

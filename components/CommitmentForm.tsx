@@ -5,7 +5,7 @@ import { useAccount, useFeeData, useSigner } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
-import { useSendCommit } from 'hooks/useSendCommit'
+import { useSendCommit } from 'lib/hooks/useSendCommit'
 import type { providers } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
 
