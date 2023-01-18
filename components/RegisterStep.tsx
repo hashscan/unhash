@@ -1,5 +1,5 @@
 import { BigNumber, ethers, PopulatedTransaction, providers } from 'ethers'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useFeeData } from 'wagmi'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { useReadLocalStorage } from 'usehooks-ts'
@@ -21,12 +21,12 @@ export const RegisterStep = ({
   domain: string
   address: string
 }) => {
-  const secret = useReadLocalStorage<string>('commit-secret')!
-  const wrapperExpiry = useReadLocalStorage<string>('commit-wrapper-expiry')
-  const cachedDuration = useReadLocalStorage<number>('duration')!
-  const cachedOwner = useReadLocalStorage<string>('owner-address')!
-  const { config, sendTransaction, isLoading, isSuccess, isSendError, isRemoteError, remoteError, sendError } =
-    useSendRegister({})
+  const cachedOwner = useReadLocalStorage<string>('owner-address')
+
+  const { config, sendTransaction, isLoading, isSuccess, isSendError, isRemoteError, sendError } = useSendRegister({
+    name: domain,
+    owner: cachedOwner || address
+  })
 
   const txPrice = useTxPrice({ config, feeData })
 

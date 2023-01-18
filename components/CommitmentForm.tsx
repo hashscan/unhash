@@ -10,6 +10,8 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 import { randomSecret } from 'lib/utils'
 
+const generatedSecret = randomSecret()
+
 export const CommitmentForm = ({
   domain,
   feeData,
@@ -26,7 +28,6 @@ export const CommitmentForm = ({
 }) => {
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
 
-  const generatedSecret = randomSecret()
   const [secret, setSecret] = useLocalStorage('commit-secret', generatedSecret)
   const [_, setDuration] = useLocalStorage('duration', YEAR_IN_SECONDS)
 

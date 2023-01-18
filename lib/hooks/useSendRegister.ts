@@ -1,14 +1,22 @@
-import { BigNumber, PopulatedTransaction } from 'ethers'
+import { BigNumber, ethers, PopulatedTransaction } from 'ethers'
+import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS } from 'lib/constants'
 import { RegistrationStep } from 'lib/types'
-import { useLocalStorage } from 'usehooks-ts'
-import { usePrepareSendTransaction, useSendTransaction, useWaitForTransaction } from 'wagmi'
+import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
+import { usePrepareContractWrite, usePrepareSendTransaction, useSendTransaction, useWaitForTransaction } from 'wagmi'
 
-export const useSendRegister = (tx: PopulatedTransaction | undefined) => {
-  const { config } = usePrepareSendTransaction({
-    request: { ...tx, gasLimit: BigNumber.from(300_000) } as PopulatedTransaction & { to: string }
+export const useSendRegister = ({ name, owner }: { name: string; owner: string }) => {
+  const duration = useReadLocalStorage<number>('duration')
+  const secret = useReadLocalStorage<string>('commit-secret')
+
+  const { config } = usePrepareContractWrite({
+    address: ETH_REGISTRAR_ADDRESS,
+    abi: ETH_REGISTRAR_ABI,
+    functionName: 'register',
+    args: [name, owner, duration || YEAR_IN_SECONDS, secret],
+    overrides: { value: ethers.utils.parseEther('0.1') }
   })
   const [_, setRegTx] = useLocalStorage('reg-tx', '')
-
+  const [__, setStep] = useLocalStorage<RegistrationStep>('step', 'register')
   const { sendTransaction, data, error: sendError, isError: isSendError } = useSendTransaction(config)
 
   const {
@@ -20,7 +28,7 @@ export const useSendRegister = (tx: PopulatedTransaction | undefined) => {
     hash: data?.hash,
     onSuccess: (data) => {
       setRegTx(data.transactionHash)
-      localStorage.removeItem('step')
+      setStep('success')
     }
   })
 

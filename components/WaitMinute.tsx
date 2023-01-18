@@ -24,7 +24,7 @@ export const WaitMinute = () => {
             setStep('register')
           }}
         >
-          Confirm registration
+          Next
         </button>
       ) : (
         <div>
