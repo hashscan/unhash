@@ -8,6 +8,8 @@ import styles from 'styles/CommitmentForm.module.css'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import type { providers } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
+import { commitName } from 'lib/ens/commitName'
+import { useTxPrice } from 'lib/hooks/useTxPrice'
 
 export const CommitmentForm = ({
   domain,
@@ -37,35 +39,19 @@ export const CommitmentForm = ({
   const [__, setCommitWrapperExpiry] = useLocalStorage('commit-wrapper-expiry', '')
   const [duration, setDuration] = useLocalStorage('duration', 31536000)
 
-  const txPrice = useMemo(
-    () =>
-      config.request
-        ? (
-            parseFloat(
-              ethers.utils.formatEther(
-                BigNumber.from(config.request.gasLimit).mul(
-                  feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
-                )
-              )
-            ) * ethPrice
-          ).toPrecision(5)
-        : '',
-    [feeData, config]
-  )
+  const txPrice = useTxPrice({ config, feeData })
 
   useEffect(() => {
     // get tx data for commitment
     const fn = async () => {
-      const { customData, ...commitPopTx } = await ens
-        .withProvider(provider as ethers.providers.JsonRpcProvider)
-        .commitName.populateTransaction(domain, {
-          duration: duration * 31536000,
-          owner: address,
-          addressOrIndex: address,
-          signer: signer as ethers.providers.JsonRpcSigner
-        })
-
-      const { secret, wrapperExpiry } = customData!
+      const { secret, wrapperExpiry, commitPopTx } = await commitName({
+        provider: provider as ethers.providers.JsonRpcProvider,
+        address,
+        ens,
+        signer: signer as ethers.providers.JsonRpcSigner,
+        domain,
+        duration
+      })
       setSecret(secret)
       setCommitWrapperExpiry((wrapperExpiry as BigInt).toString())
 

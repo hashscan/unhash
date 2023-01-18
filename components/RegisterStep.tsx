@@ -5,6 +5,7 @@ import { useFeeData } from 'wagmi'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { useReadLocalStorage } from 'usehooks-ts'
 import { ProgressBar } from './icons'
+import { useTxPrice } from 'lib/hooks/useTxPrice'
 
 export const RegisterStep = ({
   ens,
@@ -26,21 +27,7 @@ export const RegisterStep = ({
   const owner = useReadLocalStorage<string>('owner-address')!
   const { config, sendTransaction, isError, isLoading, isSuccess } = useSendRegister(registerTx)
 
-  const txPrice = useMemo(
-    () =>
-      config.request
-        ? (
-            parseFloat(
-              ethers.utils.formatEther(
-                BigNumber.from(config.request.gasLimit).mul(
-                  feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
-                )
-              )
-            ) * ethPrice
-          ).toPrecision(5)
-        : '',
-    [feeData, config]
-  )
+  const txPrice = useTxPrice({ config, feeData })
 
   useEffect(() => {
     // get tx data for commitment
