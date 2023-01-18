@@ -26,6 +26,12 @@ export const Step = ({ domain }: { domain: string }) => {
         return <WaitMinute />
       case 'register':
         return <RegisterStep {...{ ethPrice, feeData, signer, domain, address }} />
+      case 'success':
+        return (
+          <div>
+            success! {domain} is resolved to {address}
+          </div>
+        )
     }
   } else return null
 }
