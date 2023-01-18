@@ -13,13 +13,15 @@ import styles from 'styles/register.module.css'
 import { useReadLocalStorage } from 'usehooks-ts'
 import { useSigner, useProvider, useFeeData, useAccount } from 'wagmi'
 
-const Step = ({ step, domain }: { step: RegistrationStep | null; domain: string }) => {
+const Step = ({ domain }: { domain: string }) => {
   const ens = useENSInstance()
   const { data: signer } = useSigner()
   const provider = useProvider<ethers.providers.JsonRpcProvider>()
   const { data: feeData } = useFeeData()
   const ethPrice = useEthPrice()
   const { address } = useAccount()
+
+  const step = useReadLocalStorage<RegistrationStep>('step')
 
   switch (step) {
     case 'commit':
@@ -35,7 +37,6 @@ const Step = ({ step, domain }: { step: RegistrationStep | null; domain: string 
 const Register = () => {
   const router = useRouter()
   const { domain: query } = router.query
-  const step = useReadLocalStorage<RegistrationStep>('step')
   const domain = (Array.isArray(query) ? query[0] : query)!
 
   return (
@@ -45,7 +46,7 @@ const Register = () => {
         <h1>Domain registration</h1>
         <p>{'Commit -> Wait a minute -> Register'}</p>
         <h2>{domain}</h2>
-        <Step {...{ step, domain }} />
+        <Step {...{ domain }} />
       </main>
     </>
   )
