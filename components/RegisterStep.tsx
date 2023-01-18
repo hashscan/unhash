@@ -1,11 +1,12 @@
 import { ENS } from '@ensdomains/ensjs'
-import { ethers, BigNumber, PopulatedTransaction, providers } from 'ethers'
-import { useEffect, useMemo, useState } from 'react'
+import { PopulatedTransaction, providers } from 'ethers'
+import { useEffect, useState } from 'react'
 import { useFeeData } from 'wagmi'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { useReadLocalStorage } from 'usehooks-ts'
 import { ProgressBar } from './icons'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
+import { registerName } from 'lib/ens/registerName'
 
 export const RegisterStep = ({
   ens,
@@ -17,7 +18,7 @@ export const RegisterStep = ({
   ens: ENS
   feeData: ReturnType<typeof useFeeData>['data']
   ethPrice: number
-  provider: providers.BaseProvider
+  provider: providers.JsonRpcProvider
   domain: string
 }) => {
   const [registerTx, setRegisterTx] = useState<PopulatedTransaction>()
@@ -32,19 +33,16 @@ export const RegisterStep = ({
   useEffect(() => {
     // get tx data for commitment
     const fn = async () => {
-      const controller = await ens.contracts!.getEthRegistrarController()!
-      const [price] = await controller.rentPrice(domain, duration!)
+      const tx = await registerName({
+        ens,
+        domain,
+        duration,
+        provider,
+        secret,
+        owner
+      })
 
-      const { customData, ...commitPopTx } = await ens
-        .withProvider(provider as ethers.providers.JsonRpcProvider)
-        .registerName.populateTransaction(domain, {
-          secret,
-          owner,
-          duration,
-          value: price
-        })
-
-      setRegisterTx(commitPopTx)
+      setRegisterTx(tx)
     }
     if (duration && secret && owner) fn()
   }, [duration, secret, owner])

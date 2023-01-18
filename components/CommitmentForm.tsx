@@ -1,12 +1,11 @@
-import { BigNumber, ethers, PopulatedTransaction } from 'ethers'
 import { ENS } from '@ensdomains/ensjs'
-import { useEffect, useMemo, useState } from 'react'
-import { useAccount, useFeeData, useSigner } from 'wagmi'
+import { useEffect, useState } from 'react'
+import { useFeeData, useSigner } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
-import type { providers } from 'ethers'
+import type { providers, PopulatedTransaction } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
 import { commitName } from 'lib/ens/commitName'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
@@ -24,7 +23,7 @@ export const CommitmentForm = ({
   domain: string
   feeData: ReturnType<typeof useFeeData>['data']
   ethPrice: number
-  provider: providers.BaseProvider
+  provider: providers.JsonRpcProvider
   signer?: ReturnType<typeof useSigner>['data']
   ens: ENS
   accountAddress?: `0x${string}`
@@ -45,10 +44,10 @@ export const CommitmentForm = ({
     // get tx data for commitment
     const fn = async () => {
       const { secret, wrapperExpiry, commitPopTx } = await commitName({
-        provider: provider as ethers.providers.JsonRpcProvider,
+        provider,
         address,
         ens,
-        signer: signer as ethers.providers.JsonRpcSigner,
+        signer: signer as providers.JsonRpcSigner,
         domain,
         duration
       })
