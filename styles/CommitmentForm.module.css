@@ -12,3 +12,10 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.error {
+  background-color: var(--error);
+  color: white;
+  padding: 12px;
+  border-radius: var(--radii-sm);
+}

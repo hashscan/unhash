@@ -7,6 +7,7 @@ import { useOnClickOutside } from 'usehooks-ts'
 import Image from 'next/image'
 import { formatAddress } from 'lib/utils'
 import { LogoutIcon, ProfileIcon } from './icons'
+import Link from 'next/link'
 
 export const Nav = () => {
   const [isOpen, setOpen] = useState(false)
@@ -22,8 +23,10 @@ export const Nav = () => {
 
   return (
     <nav className={styles.nav} ref={ref}>
-      <div className={styles.title}>ENS</div>
-      <div className={styles.space}></div>
+      <Link href="/" className={styles.title}>
+        ENS
+      </Link>
+
       <ConnectButton.Custom>
         {({ account, openConnectModal, authenticationStatus, mounted, openChainModal, chain }) => {
           // Note: If your app doesn't use authentication, you

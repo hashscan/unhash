@@ -1,5 +1,5 @@
 import { ENS } from '@ensdomains/ensjs'
-import { BigNumber, PopulatedTransaction, providers } from 'ethers'
+import { BigNumber, ethers, PopulatedTransaction, providers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { useFeeData } from 'wagmi'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
@@ -7,55 +7,62 @@ import { useReadLocalStorage } from 'usehooks-ts'
 import { ProgressBar } from './icons'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { registerName } from 'lib/ens/registerName'
+import { YEAR_IN_SECONDS } from 'lib/constants'
+import styles from 'styles/CommitmentForm.module.css'
+import ui from 'styles/ui.module.css'
 
 export const RegisterStep = ({
   ens,
   feeData,
-  ethPrice,
-  provider,
+  address,
+  signer,
   domain
 }: {
   ens: ENS
   feeData: ReturnType<typeof useFeeData>['data']
   ethPrice: number
-  provider: providers.JsonRpcProvider
+  signer: ethers.Signer
   domain: string
+  address: string
 }) => {
   const [registerTx, setRegisterTx] = useState<PopulatedTransaction>()
   const secret = useReadLocalStorage<string>('commit-secret')!
   const wrapperExpiry = useReadLocalStorage<string>('commit-wrapper-expiry')
-  const duration = useReadLocalStorage<number>('duration')!
-  const owner = useReadLocalStorage<string>('owner-address')!
-  const { config, sendTransaction, isError, isLoading, isSuccess } = useSendRegister(registerTx)
+  const cachedDuration = useReadLocalStorage<number>('duration')!
+  const cachedOwner = useReadLocalStorage<string>('owner-address')!
+  const { config, sendTransaction, isLoading, isSuccess, isSendError, isRemoteError, remoteError, sendError } =
+    useSendRegister(registerTx)
 
   const txPrice = useTxPrice({ config, feeData })
 
-  useEffect(() => {
-    // get tx data for commitment
-    const fn = async () => {
-      const tx = await registerName({
-        ens,
-        domain,
-        duration,
-        provider,
-        secret,
-        owner,
-        wrapperExpiry: BigNumber.from(wrapperExpiry)
-      })
-
-      setRegisterTx(tx)
-    }
-    if (duration && secret && owner) fn()
-  }, [duration, secret, owner])
-
   return (
     <>
-      {isSuccess && 'success!'}
-      {isError && 'error :('}
-      {txPrice && <>commit tx cost: ${txPrice}</>}
-      <button disabled={isLoading} onClick={() => sendTransaction?.()}>
+      <button
+        className={ui.button}
+        disabled={isLoading}
+        onClick={async () => {
+          const tx = await registerName({
+            ens,
+            domain,
+            duration: cachedDuration || YEAR_IN_SECONDS,
+            signer: signer as providers.JsonRpcSigner,
+            secret,
+            owner: cachedOwner || address,
+            wrapperExpiry: BigNumber.from(wrapperExpiry)
+          })
+
+          setRegisterTx(tx)
+          sendTransaction?.()
+        }}
+      >
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Confirm'}
       </button>
+      {txPrice && <>commit tx cost: ${txPrice}</>}
+      <div>
+        {isSuccess && 'success!'}
+        {isSendError && <div className={styles.error}>{sendError?.message}</div>}
+        {isRemoteError && <div className={styles.error}>Transaction error</div>}
+      </div>
     </>
   )
 }

@@ -1,38 +1,15 @@
-import { CommitmentForm } from 'components/CommitmentForm'
 import { Nav } from 'components/Nav'
-import { RegisterStep } from 'components/RegisterStep'
-import { WaitMinute } from 'components/WaitMinute'
-import { ethers } from 'ethers'
-import { useENSInstance } from 'lib/hooks/useENSInstance'
-import { useEthPrice } from 'lib/hooks/useEthPrice'
-import { RegistrationStep } from 'lib/types'
+
 import { GetServerSideProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React from 'react'
 import styles from 'styles/register.module.css'
-import { useReadLocalStorage } from 'usehooks-ts'
-import { useSigner, useProvider, useFeeData, useAccount } from 'wagmi'
 
-const Step = ({ domain }: { domain: string }) => {
-  const ens = useENSInstance()
-  const { data: signer } = useSigner()
-  const provider = useProvider<ethers.providers.JsonRpcProvider>()
-  const { data: feeData } = useFeeData()
-  const ethPrice = useEthPrice()
-  const { address } = useAccount()
-
-  const step = useReadLocalStorage<RegistrationStep>('step')
-
-  switch (step) {
-    case 'commit':
-    default:
-      return <CommitmentForm {...{ ens, signer, provider, feeData, ethPrice, domain }} accountAddress={address} />
-    case 'wait':
-      return <WaitMinute />
-    case 'register':
-      return <RegisterStep {...{ ens, ethPrice, feeData, provider, domain }} />
-  }
-}
+const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
+  ssr: false,
+  loading: () => <div>loading...</div>
+})
 
 const Register = () => {
   const router = useRouter()
@@ -44,7 +21,7 @@ const Register = () => {
       <Nav />
       <main className={styles.main}>
         <h1>Domain registration</h1>
-        <p>{'Commit -> Wait a minute -> Register'}</p>
+        <div>{'Commit -> Wait a minute -> Register'}</div>
         <h2>{domain}</h2>
         <Step {...{ domain }} />
       </main>

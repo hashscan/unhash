@@ -10,7 +10,7 @@
 
   background: var(--background-3);
   border: 1px solid var(--border-card);
-  border-radius: 8px;
+  border-radius: var(--radii-md);
 }
 
 .iconLayout {

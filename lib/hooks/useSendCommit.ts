@@ -11,9 +11,14 @@ export const useSendCommit = (tx: PopulatedTransaction | undefined) => {
   const [_, setCommitTx] = useLocalStorage('commit-tx', '')
   const [__, setStep] = useLocalStorage('step', '')
 
-  const { sendTransaction, data } = useSendTransaction(config)
+  const { sendTransaction, data, error: sendError, isError: isSendError } = useSendTransaction(config)
 
-  const { isLoading, isSuccess, isError } = useWaitForTransaction({
+  const {
+    isLoading,
+    isSuccess,
+    isError: isRemoteError,
+    error: remoteError
+  } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: (data) => {
       setCommitTx(data.transactionHash)
@@ -21,5 +26,5 @@ export const useSendCommit = (tx: PopulatedTransaction | undefined) => {
     }
   })
 
-  return { data, isError, isLoading, sendTransaction, config, isSuccess }
+  return { data, isLoading, sendTransaction, config, isSuccess, sendError, remoteError, isSendError, isRemoteError }
 }

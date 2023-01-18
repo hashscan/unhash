@@ -16,7 +16,7 @@ export const commitName = async ({
   ens: ENS
   signer: ethers.providers.JsonRpcSigner
 }) => {
-  const { customData, ...commitPopTx } = await ens.withProvider(provider).commitName.populateTransaction(domain, {
+  const { customData, ...commitPopTx } = await ens.commitName.populateTransaction(domain, {
     duration: duration * 31536000,
     owner: address,
     addressOrIndex: address,

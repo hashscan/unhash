@@ -4,7 +4,7 @@
   padding-left: 8px;
   padding-right: 8px;
   font-size: 100%;
-  border-radius: 4px;
+  border-radius: var(--radii-sm);
   box-sizing: border-box;
   cursor: pointer;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
   font-weight: 500;
   font-size: 16px;
 
-  border-radius: 4px;
+  border-radius: var(--radii-sm);
   border: none;
   box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 2px;
   background-color: var(--primary);
@@ -68,7 +68,7 @@
   gap: 8px;
 
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--radii-md);
   background-color: var(--background-card);
   border: 1px solid var(--border-card);
 
@@ -88,7 +88,7 @@
 .menu:hover {
   cursor: pointer;
   background: rgba(92, 92, 92, 0.25);
-  border-radius: 4px;
+  border-radius: var(--radii-sm);
 }
 
 .menuIcon {
@@ -108,7 +108,7 @@
 .card {
   background-color: var(--background-card);
   border: 1px solid var(--border-card);
-  border-radius: 8px;
+  border-radius: var(--radii-md);
 }
 
 .link {
@@ -131,7 +131,7 @@
   background-color: var(--background-card);
   border: none;
   color: var(--text-primary);
-  border-radius: 4px;
+  border-radius: var(--radii-sm);
   border: 1px solid var(--border-card);
   box-sizing: border-box;
 }

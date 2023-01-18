@@ -5,13 +5,18 @@ import { usePrepareSendTransaction, useSendTransaction, useWaitForTransaction } 
 
 export const useSendRegister = (tx: PopulatedTransaction | undefined) => {
   const { config } = usePrepareSendTransaction({
-    request: { ...tx } as PopulatedTransaction & { to: string }
+    request: { ...tx, gasLimit: BigNumber.from(300_000) } as PopulatedTransaction & { to: string }
   })
   const [_, setRegTx] = useLocalStorage('reg-tx', '')
 
-  const { sendTransaction, data } = useSendTransaction(config)
+  const { sendTransaction, data, error: sendError, isError: isSendError } = useSendTransaction(config)
 
-  const { isLoading, isSuccess, isError } = useWaitForTransaction({
+  const {
+    isLoading,
+    isSuccess,
+    isError: isRemoteError,
+    error: remoteError
+  } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: (data) => {
       setRegTx(data.transactionHash)
@@ -19,5 +24,5 @@ export const useSendRegister = (tx: PopulatedTransaction | undefined) => {
     }
   })
 
-  return { data, isError, isLoading, sendTransaction, config, isSuccess }
+  return { data, isLoading, sendTransaction, config, isSuccess, sendError, remoteError, isSendError, isRemoteError }
 }

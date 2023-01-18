@@ -1,10 +1,13 @@
+import { RegistrationStep } from 'lib/types'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 import { ProgressBar } from './icons'
 
 export const WaitMinute = () => {
   const [isReady, setReady] = useState(false)
   const router = useRouter()
+  const [_, setStep] = useLocalStorage<RegistrationStep>('step', 'wait')
 
   useEffect(() => {
     const to = setTimeout(() => {
@@ -18,9 +21,7 @@ export const WaitMinute = () => {
       {isReady ? (
         <button
           onClick={() => {
-            router.replace({
-              query: { ...router.query, step: 'registration' }
-            })
+            setStep('register')
           }}
         >
           Confirm registration

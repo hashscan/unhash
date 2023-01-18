@@ -24,7 +24,8 @@
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
   /* sizes */
-  --radius-default: 4px;
+  --radii-sm: 4px;
+  --radii-md: 8px;
   /* toastify */
   --toastify-color-dark: var(--background-card);
   --toastify-font-family: var(--font);

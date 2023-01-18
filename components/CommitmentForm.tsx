@@ -9,6 +9,7 @@ import type { providers, PopulatedTransaction } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
 import { commitName } from 'lib/ens/commitName'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
+import { YEAR_IN_SECONDS } from 'lib/constants'
 
 export const CommitmentForm = ({
   domain,
@@ -32,11 +33,12 @@ export const CommitmentForm = ({
 
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
 
-  const { config, sendTransaction, isError, isLoading, isSuccess } = useSendCommit(commitTx)
+  const { config, sendTransaction, isLoading, isSuccess, isSendError, isRemoteError, remoteError, sendError } =
+    useSendCommit(commitTx)
 
   const [_, setSecret] = useLocalStorage('commit-secret', '')
   const [__, setCommitWrapperExpiry] = useLocalStorage('commit-wrapper-expiry', '')
-  const [duration, setDuration] = useLocalStorage('duration', 31536000)
+  const [duration, setDuration] = useLocalStorage('duration', YEAR_IN_SECONDS)
 
   const txPrice = useTxPrice({ config, feeData })
 
@@ -56,8 +58,8 @@ export const CommitmentForm = ({
 
       setCommitTx(commitPopTx)
     }
-    if (address && duration) fn()
-  }, [address, duration])
+    if (address && duration && signer) fn()
+  }, [address, duration, signer])
 
   return (
     <form
@@ -93,16 +95,19 @@ export const CommitmentForm = ({
           className={ui.input}
           onChange={(v) => {
             const n = v.currentTarget.valueAsNumber
-            if (!isNaN(n)) setDuration(n)
+            if (!isNaN(n)) setDuration(n * YEAR_IN_SECONDS)
           }}
         />
       </div>
       <button type="submit" className={ui.button}>
-        {isLoading ? <ProgressBar /> : 'Commit'}
+        {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Commit'}
       </button>
-      {isSuccess && 'success!'}
-      {isError && 'tx error :('}
       {txPrice && <>commit tx cost: ${txPrice}</>}
+      <div>
+        {isSuccess && 'success!'}
+        {isSendError && <div className={styles.error}>{sendError?.message}</div>}
+        {isRemoteError && <div className={styles.error}>{remoteError?.message}</div>}
+      </div>
     </form>
   )
 }

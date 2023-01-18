@@ -5,7 +5,7 @@ export const registerName = async ({
   ens,
   domain,
   duration,
-  provider,
+  signer,
   secret,
   owner,
   wrapperExpiry
@@ -13,21 +13,22 @@ export const registerName = async ({
   ens: ENS
   domain: string
   duration: number
-  provider: ethers.providers.JsonRpcProvider
   secret: string
   owner: string
   wrapperExpiry: BigNumber
+  signer: ethers.providers.JsonRpcSigner
 }) => {
   const controller = await ens.contracts!.getEthRegistrarController()!
   const [price] = await controller.rentPrice(domain, duration)
 
-  const tx = await ens.withProvider(provider).registerName.populateTransaction(domain, {
+  const tx = await ens.registerName.populateTransaction(domain, {
     secret,
     owner,
     duration,
     value: price,
     addressOrIndex: owner,
-    wrapperExpiry
+    wrapperExpiry,
+    signer
   })
 
   return tx

@@ -1,7 +1,19 @@
 import { ENS } from '@ensdomains/ensjs'
+import { providers } from 'ethers'
+import { useEffect, useState } from 'react'
 
-export const useENSInstance = () => {
-  const ens = new ENS({})
+const ens = new ENS({})
 
-  return ens
+export const useENSInstance = (provider: providers.JsonRpcProvider) => {
+  const [isReady, setReady] = useState(false)
+
+  useEffect(() => {
+    if (provider) {
+      ens.setProvider(provider).then(() => {
+        setReady(true)
+      })
+    }
+  }, [provider])
+
+  return { ens, isReady }
 }
