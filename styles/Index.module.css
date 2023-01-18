@@ -1,0 +1,24 @@
+.container {
+  height: calc(100vh - 56px);
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-top: 200px;
+}
+
+.search {
+  width: 472px;
+  display: inherit;
+  gap: 12px;
+}
+
+.info {
+  width: 472px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  padding-top: 10px;
+  padding-left: 20px;
+}
