@@ -1,36 +1,18 @@
-import { darkTheme, getDefaultWallets, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
-import { configureChains, createClient, WagmiConfig } from 'wagmi'
-import { mainnet, goerli } from 'wagmi/chains'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { darkTheme, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
+import { createClient, WagmiConfig } from 'wagmi'
+
 import '@rainbow-me/rainbowkit/styles.css'
 import '../global.css'
 import React from 'react'
 import { AppProps } from 'next/app'
-
-const { chains, provider } = configureChains(
-  [mainnet, goerli],
-  [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!, priority: 0 }),
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: chain.id === 1 ? 'https://rpc.ankr.com/eth' : `https://rpc.ankr.com/eth_goerli`
-      }),
-      priority: 1
-    })
-  ]
-)
-
-const { connectors } = getDefaultWallets({
-  appName: 'ENS',
-  chains
-})
+import { chains, provider, connectors } from 'lib/connectors'
 
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider
 })
+
 const theme: Theme = {
   ...darkTheme(),
   fonts: { body: 'var(--font)' }
