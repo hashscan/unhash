@@ -1,26 +1,20 @@
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import {
   argentWallet,
-  injectedWallet,
   metaMaskWallet,
   rainbowWallet,
   walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets'
-import { mainnet, goerli } from 'wagmi/chains'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { configureChains } from 'wagmi'
+import { NETWORKS } from './constants'
+import { toChain } from './types'
 
 const { chains, provider } = configureChains(
-  [mainnet, goerli],
+  NETWORKS.map(n => toChain(n)),
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!, priority: 0 }),
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: chain.id === 1 ? 'https://rpc.ankr.com/eth' : `https://rpc.ankr.com/eth_goerli`
-      }),
-      priority: 1
-    })
+    // no backup provider on purpose
   ]
 )
 
