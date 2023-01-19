@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { RefObject, useRef, useState } from 'react'
 import styles from 'styles/Nav.module.css'
 import ui from 'styles/ui.module.css'
 import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
-import Image from 'next/image'
 import { formatAddress } from 'lib/utils'
 import { LogoutIcon, ProfileIcon } from './icons'
 import Link from 'next/link'

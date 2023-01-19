@@ -1,5 +1,5 @@
 import { RegistrationStep } from 'lib/types'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
 import { useProvider } from 'wagmi'
 import { ProgressBar } from './icons'
@@ -7,7 +7,6 @@ import ui from 'styles/ui.module.css'
 import { useCountdown } from 'lib/hooks/useCountdown'
 
 export const WaitMinute = () => {
-  const [isReady, setReady] = useState(false)
   const provider = useProvider()
   const commitTxBlock = useReadLocalStorage<number>('commit-tx-block')
   const [_, setStep] = useLocalStorage<RegistrationStep>('step', 'wait')

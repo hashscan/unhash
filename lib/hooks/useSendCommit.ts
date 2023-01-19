@@ -1,7 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS } from 'lib/constants'
 import { RegistrationStep } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
-import { useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: string; chainId: number }) => {
   const { config } = usePrepareContractWrite({
