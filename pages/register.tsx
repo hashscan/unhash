@@ -31,7 +31,12 @@ const Register = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   if (!query.domain) {
-    return { notFound: true }
+    return {
+      redirect: {
+        permanent: true,
+        destination: '/'
+      }
+    }
   } else return { props: {} }
 }
 

@@ -20,7 +20,7 @@ export const ConnectWidget = ({ className, onClick }: Props) => {
         ></div>
       </div>
       <div className={styles.content}>
-        <span className={styles.text}>You're not signed in</span>
+        <span className={styles.text}>You&apos;re not signed in</span>
         <span className={styles.description}>Start by connecting your wallet</span>
       </div>
       <button

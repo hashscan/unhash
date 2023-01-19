@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useChainId, useContractRead, useFeeData, useSigner } from 'wagmi'
+import { useEffect } from 'react'
+import { useChainId, useContractRead, useFeeData } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
-import type { providers, PopulatedTransaction } from 'ethers'
 import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
@@ -42,6 +41,7 @@ export const CommitmentForm = ({
 
   useEffect(() => {
     setSecret(generatedSecret)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

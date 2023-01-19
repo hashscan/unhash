@@ -1,7 +1,4 @@
-import { ethers } from 'ethers'
-import { useEthPrice } from 'lib/hooks/useEthPrice'
 import { RegistrationStep } from 'lib/types'
-import { useEffect } from 'react'
 import { useReadLocalStorage } from 'usehooks-ts'
 import { useSigner, useFeeData, useAccount } from 'wagmi'
 import { CommitmentForm } from './CommitmentForm'
