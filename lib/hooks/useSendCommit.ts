@@ -2,6 +2,7 @@ import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS } fr
 import { RegistrationStep } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { useRegisterStep } from './storage'
 
 export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: string; chainId: number }) => {
   const { config } = usePrepareContractWrite({
@@ -11,7 +12,7 @@ export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: st
     args: [commitmentHash]
   })
   const [_, setCommitTxBlock] = useLocalStorage('commit-tx-block', 0)
-  const [__, setStep] = useLocalStorage('step', '')
+  const { setStep } = useRegisterStep()
 
   const { write, data, error: writeError, isError: isWriteError } = useContractWrite(config)
 

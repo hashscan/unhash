@@ -7,6 +7,8 @@ import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
+
+import { useCommitSecret, useRegisterDuration } from 'lib/hooks/storage'
 import { randomSecret } from 'lib/utils'
 
 const generatedSecret = randomSecret()
@@ -22,8 +24,8 @@ export const CommitmentForm = ({
 }) => {
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
   const chainId = useChainId()
-  const [secret, setSecret] = useLocalStorage('commit-secret', generatedSecret)
-  const [_, setDuration] = useLocalStorage('duration', YEAR_IN_SECONDS)
+  const { secret, setSecret } = useCommitSecret(generatedSecret)
+  const { setDuration } = useRegisterDuration()
 
   const { data: commitmentHash } = useContractRead<string[], 'makeCommitment', string>({
     abi: ETH_REGISTRAR_ABI,

@@ -6,13 +6,12 @@ import {
   GOERLI_REGISTRAR_ADDRESS,
   ETH_RESOLVER_ADDRESS
 } from 'lib/constants'
-import { RegistrationStep } from 'lib/types'
-import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
 import { useChainId, usePrepareContractWrite, useSendTransaction, useWaitForTransaction } from 'wagmi'
+import { useCommitSecret, useRegisterDuration, useRegisterStep } from './storage'
 
 export const useSendRegister = ({ name, owner }: { name: string; owner: string }) => {
-  const duration = useReadLocalStorage<number>('duration')
-  const secret = useReadLocalStorage<string>('commit-secret')
+  const { duration } = useRegisterDuration()
+  const { secret } = useCommitSecret()
   const chainId = useChainId()
   const { config } = usePrepareContractWrite({
     address: chainId === 1 ? ETH_REGISTRAR_ADDRESS : GOERLI_REGISTRAR_ADDRESS,
@@ -21,8 +20,7 @@ export const useSendRegister = ({ name, owner }: { name: string; owner: string }
     args: [name, owner, duration || YEAR_IN_SECONDS, secret, ETH_RESOLVER_ADDRESS, owner],
     overrides: { value: ethers.utils.parseEther('0.1') }
   })
-  const [_, setRegTx] = useLocalStorage('reg-tx', '')
-  const [__, setStep] = useLocalStorage<RegistrationStep>('step', 'register')
+  const { setStep } = useRegisterStep()
   const { sendTransaction, data, error: sendError, isError: isSendError } = useSendTransaction(config)
 
   const {
@@ -32,8 +30,7 @@ export const useSendRegister = ({ name, owner }: { name: string; owner: string }
     error: remoteError
   } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: (data) => {
-      setRegTx(data.transactionHash)
+    onSuccess: () => {
       setStep('success')
     }
   })
