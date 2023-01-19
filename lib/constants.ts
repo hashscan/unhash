@@ -19,4 +19,5 @@ export const ETH_REGISTRAR_ABI = [
   'function registerWithConfig(string memory name, address owner, uint duration, bytes32 secret, address resolver, address addr) public payable'
 ]
 
+export const MIN_COMMIT_TIME_S = 60
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24

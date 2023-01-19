@@ -1,5 +1,5 @@
 import { YEAR_IN_SECONDS } from 'lib/constants'
-import { RegistrationStep } from 'lib/types'
+import { Registration, RegistrationStep } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
 
 // TODO: describe return types
@@ -19,4 +19,9 @@ export const useRegisterStep = () => {
   const [step, setStep] = useLocalStorage<RegistrationStep>('step', 'commit')
 
   return { step, setStep }
+}
+
+
+export function useRegistration(domain: string): [Registration | null, (setRegistration: Registration | null) => void] {
+  return useLocalStorage<Registration | null>(`ens.registration.${domain}`, null)
 }

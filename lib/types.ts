@@ -1,4 +1,5 @@
 import { mainnet, goerli, Chain } from 'wagmi/chains'
+import { MIN_COMMIT_TIME_S } from './constants'
 
 
 export type Network = 'mainnet' | 'goerli'
@@ -25,5 +26,31 @@ export function toNetwork(chainId: number): Network {
   }
 }
 
-// TODO: update possible states
+// TODO: compute dynamically in Step component from Registration
 export type RegistrationStep = 'commit' | 'wait' | 'register' | 'success'
+
+
+export type Registration = {
+  domain: string
+  name: string
+  owner: string
+  duration: number // seconds
+  secret: string
+  status: RegistrationStatus
+  commitTxHash?: string
+  commitTimestamp?: number
+  registerTxHash?: string
+}
+
+export enum RegistrationStatus {
+  CommitSent = 'commit_sent',
+  Commited = 'commited',
+  RegisterSent = 'register_sent',
+  Registered = 'registered',
+}
+
+export function isWaiting(reg: Registration): boolean {
+  return reg.status === RegistrationStatus.Commited
+    && !!reg.commitTimestamp
+    && new Date().getTime() - reg.commitTimestamp < MIN_COMMIT_TIME_S
+}
