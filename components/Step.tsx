@@ -6,6 +6,7 @@ import { useReadLocalStorage } from 'usehooks-ts'
 import { useSigner, useProvider, useFeeData, useAccount, useEnsAddress } from 'wagmi'
 import { CommitmentForm } from './CommitmentForm'
 import { RegisterStep } from './RegisterStep'
+import { Success } from './Success'
 import { WaitMinute } from './WaitMinute'
 
 export const Step = ({ domain }: { domain: string }) => {
@@ -28,11 +29,7 @@ export const Step = ({ domain }: { domain: string }) => {
       case 'register':
         return <RegisterStep {...{ ethPrice, feeData, signer, domain, address }} />
       case 'success':
-        return (
-          <div>
-            success! {domain} is resolved to {address}
-          </div>
-        )
+        return <Success {...{ domain, address }} />
     }
   } else return null
 }
