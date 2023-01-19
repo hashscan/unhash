@@ -1,9 +1,8 @@
 import { Nav } from 'components/Nav'
-
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import React from 'react'
+import { parseDomainName, validateDomain } from 'lib/utils'
 import styles from 'styles/register.module.css'
 
 const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
@@ -11,33 +10,48 @@ const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
   loading: () => <div>loading...</div>
 })
 
-const Register = () => {
-  const router = useRouter()
-  const { domain: query } = router.query
-  const domain = (Array.isArray(query) ? query[0] : query)!
+interface RegisterProps {
+  domain: string
+  name: string
+}
 
+const Register: NextPage<RegisterProps> = (props: RegisterProps) => {
   return (
     <>
       <Nav />
       <main className={styles.main}>
         <h1>Domain registration</h1>
         <div>{'Commit -> Wait a minute -> Register'}</div>
-        <h2>{domain}</h2>
-        <Step {...{ domain }} />
+        <h2>{props.domain}</h2>
+        <Step {...{
+          domain: props.domain,
+          name: props.name
+        }} />
       </main>
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  if (!query.domain) {
+  const domain = query.domain as string
+
+  // validate domain query on server side
+  const e = validateDomain(domain)
+  if (e) {
     return {
       redirect: {
         permanent: true,
         destination: '/'
       }
     }
-  } else return { props: {} }
+  }
+
+  return {
+    props: {
+      domain: domain,
+      name: parseDomainName(domain),
+    }
+  }
 }
 
 export default Register

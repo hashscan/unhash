@@ -7,23 +7,8 @@ import styles from 'styles/Index.module.css'
 import ui from 'styles/ui.module.css'
 import api from 'lib/api'
 import { useChainId } from 'wagmi'
+import { validateDomain } from 'lib/utils'
 
-/** Returns error message or null if domain valid */
-function validateDomainName(domain: string): string | null {
-  if (domain.length == 0) {
-    return 'Enter domain name'
-  }
-  if (!domain.endsWith('.eth')) {
-    return 'Domain must end with .eth'
-  }
-  if (domain.split('.').length !== 2) {
-    return 'Domain should not have subdomains'
-  }
-  if (domain.split('.')[0].length < 3) {
-    return 'Domain name must be at least 3 characters long'
-  }
-  return null
-}
 
 const Index = () => {
   const router = useRouter()
@@ -36,7 +21,7 @@ const Index = () => {
   // const [error, setError] = useState<string | null>(null)
 
   const onDomainInputChanged = (input: string) => {
-    setDomainInput(input)
+    setDomainInput(input.trim())
     if (validationError) setValidationError(null)
     setAvailable(null)
   }
@@ -48,7 +33,7 @@ const Index = () => {
   // todo: fix race condition
   // todo: add debounce
   useEffect(() => {
-    if (validateDomainName(domainInput)) return
+    if (validateDomain(domainInput)) return
 
     const checkAvailability = async () => {
       try {
@@ -68,8 +53,9 @@ const Index = () => {
   }, [domainInput])
 
   const onRegisterClick = async () => {
+    if (domainInput.length === 0) return
     // show validation error on click
-    const e = validateDomainName(domainInput)
+    const e = validateDomain(domainInput)
     if (e) {
       setValidationError(e)
       return

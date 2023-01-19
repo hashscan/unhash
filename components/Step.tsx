@@ -6,15 +6,19 @@ import { RegisterStep } from './RegisterStep'
 import { Success } from './Success'
 import { WaitMinute } from './WaitMinute'
 
-export const Step = ({ domain }: { domain: string }) => {
+export const Step = ({
+  domain,
+  name,
+}: {
+  domain: string,
+  name: string
+}) => {
   const { data: signer } = useSigner()
 
   const { data: feeData } = useFeeData()
   const { address } = useAccount()
 
   const step = useReadLocalStorage<RegistrationStep>('step')
-
-  const name = domain.split('.')[0]
 
   if (address && signer) {
     switch (step) {
