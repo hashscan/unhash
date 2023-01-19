@@ -25,6 +25,5 @@ export function toNetwork(chainId: number): Network {
   }
 }
 
-
-// TODO: move to UI
+// TODO: update possible states
 export type RegistrationStep = 'commit' | 'wait' | 'register' | 'success'

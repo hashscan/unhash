@@ -25,7 +25,7 @@ export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: st
     hash: data?.hash,
     onSuccess: async (data) => {
       setCommitTxBlock(data.blockNumber)
-      setStep('wait' as RegistrationStep)
+      setStep('wait' as RegistrationStep) // TODO: fix
     }
   })
 
