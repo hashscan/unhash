@@ -13,17 +13,12 @@ import { randomSecret } from 'lib/utils'
 const generatedSecret = randomSecret()
 
 export const CommitmentForm = ({
-  domain,
+  name,
   feeData,
-  provider,
-  signer,
   accountAddress
 }: {
-  domain: string
+  name: string
   feeData: ReturnType<typeof useFeeData>['data']
-  ethPrice: number
-  provider: providers.JsonRpcProvider
-  signer?: ReturnType<typeof useSigner>['data']
   accountAddress?: `0x${string}`
 }) => {
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
@@ -35,7 +30,7 @@ export const CommitmentForm = ({
     abi: ETH_REGISTRAR_ABI,
     address: chainId === 1 ? ETH_REGISTRAR_ADDRESS : GOERLI_REGISTRAR_ADDRESS,
     functionName: 'makeCommitment',
-    args: [domain, address, secret]
+    args: [name, address, secret]
   })
 
   const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError } = useSendCommit({
