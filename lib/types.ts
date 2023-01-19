@@ -43,9 +43,9 @@ export type Registration = {
 }
 
 export enum RegistrationStatus {
-  CommitSent = 'commit_sent',
+  CommitPending = 'commit_pending',
   Commited = 'commited',
-  RegisterSent = 'register_sent',
+  RegisterPending = 'register_pending',
   Registered = 'registered',
 }
 
