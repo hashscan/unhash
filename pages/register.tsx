@@ -20,9 +20,10 @@ const Register: NextPage<RegisterProps> = (props: RegisterProps) => {
     <>
       <Nav />
       <main className={styles.main}>
-        <h1>Domain registration</h1>
-        <div>{'Commit -> Wait a minute -> Register'}</div>
-        <h2>{props.domain}</h2>
+        <h1 style={{ marginTop: '40px' }}>
+          Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{props.domain}</span>
+        </h1>
+        <div style={{ height: '1px', background: 'var(--border-2)', marginTop: '20px', marginBottom: '40px' }}></div>
         <Step {...{
           domain: props.domain,
           name: props.name
