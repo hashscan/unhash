@@ -11,11 +11,12 @@ import { AppProps } from 'next/app'
 const { chains, provider } = configureChains(
   [mainnet, goerli],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!, priority: 0 }),
     jsonRpcProvider({
       rpc: (chain) => ({
         http: chain.id === 1 ? 'https://rpc.ankr.com/eth' : `https://rpc.ankr.com/eth_goerli`
-      })
+      }),
+      priority: 1
     })
   ]
 )
