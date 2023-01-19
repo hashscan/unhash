@@ -16,9 +16,10 @@ export const WaitMinute = () => {
   useEffect(() => {
     const mins = () => {
       const now = new Date()
+
       setMinutes(now.getMinutes() - date.getMinutes())
       setSeconds(now.getSeconds() - date.getSeconds())
-      if (minutes >= 1) {
+      if (minutes >= 1 && seconds >= 1) {
         setReady(true)
       }
     }
