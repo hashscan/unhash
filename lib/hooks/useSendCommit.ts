@@ -1,12 +1,12 @@
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, GOERLI_REGISTRAR_ADDRESS } from 'lib/constants'
-import { RegistrationStep } from 'lib/types'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
+import { RegistrationStep, toNetwork } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegisterStep } from './storage'
 
 export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: string; chainId: number }) => {
   const { config } = usePrepareContractWrite({
-    address: chainId === 1 ? ETH_REGISTRAR_ADDRESS : GOERLI_REGISTRAR_ADDRESS,
+    address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
     args: [commitmentHash]
