@@ -8,8 +8,9 @@ type DomainStatus = {
 }
 
 export type DomainPrice = {
-  priceWei: string
-  priceEth: string
+  wei: string
+  eth: string
+  usd: number
 }
 
 async function checkDomain(domain: string, network: Network = 'mainnet'): Promise<boolean> {
