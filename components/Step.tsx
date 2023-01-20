@@ -41,7 +41,7 @@ export const Step = ({ domain, name }: { domain: string; name: string }) => {
   }
 
   if (status === 'registered') {
-    return <Success {...{ domain, address }} />
+    return <Success {...{ name, address }} />
   }
 
   return <div>loading</div>
