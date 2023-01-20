@@ -29,7 +29,7 @@ export type Registration = {
   name: string
   owner: string
   duration: number // seconds
-  secret?: string
+  secret: string
   status: RegistrationStatus
   commitTxHash?: string
   commitBlock?: number

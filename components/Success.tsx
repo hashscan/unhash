@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
 
-export const Success = ({ domain, address }: { domain: string; address: string }) => {
+export const Success = ({ name, address }: { name: string; address: string }) => {
   useEffect(() => {
-    localStorage.removeItem('step')
+    localStorage.removeItem('status')
+    localStorage.removeItem(`ens.registration.${name}`)
   }, [])
 
   return (
     <div>
-      success! {domain} is resolved to {address}
+      success! {name}.eth is resolved to {address}
     </div>
   )
 }

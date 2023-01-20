@@ -1,8 +1,8 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { toNetwork } from 'lib/types'
-import { useEffect } from 'react'
+import { randomSecret } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useBlockNumber, useRegisterStatus, useRegistration } from './storage'
+import { useRegisterStatus, useRegistration } from './storage'
 
 export const useSendCommit = ({
   commitmentHash,
@@ -27,7 +27,6 @@ export const useSendCommit = ({
     enabled: Boolean(commitmentHash)
   })
   const { registration, setRegistration } = useRegistration(name)
-  const { setBlockNumber } = useBlockNumber()
 
   const base = { name, owner, duration, secret }
 
@@ -57,7 +56,6 @@ export const useSendCommit = ({
   } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: (data) => {
-      setBlockNumber(data.blockNumber)
       setStatus('committed')
       const reg = registration!
       setRegistration({

@@ -27,7 +27,7 @@ export const Step = ({ domain, name }: { domain: string; name: string }) => {
       })
   }, [provider, reg])
 
-  if (!(address && signer)) return null
+  if (!(address && signer)) return <div>loading</div>
 
   if (status === 'start' || status === 'commitPending')
     return <CommitmentForm {...{ name, feeData }} accountAddress={address} />
@@ -37,10 +37,12 @@ export const Step = ({ domain, name }: { domain: string; name: string }) => {
 
   if (status === 'committed' || status === 'registerPending') {
     // TODO: pass register tx hash
-    return <RegisterStep {...{ feeData, address, name }} />
+    return <RegisterStep {...{ feeData, name }} />
   }
 
   if (status === 'registered') {
     return <Success {...{ domain, address }} />
   }
+
+  return <div>loading</div>
 }

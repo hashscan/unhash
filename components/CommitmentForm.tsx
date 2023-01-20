@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useChainId, useContractRead, useFeeData } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
@@ -8,13 +8,11 @@ import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 
-import { useCommitSecret, useRegisterDuration, useRegistration } from 'lib/hooks/storage'
-import { randomSecret } from 'lib/utils'
 import { toNetwork } from 'lib/types'
+import { useRegistration } from 'lib/hooks/storage'
+import { randomSecret } from 'lib/utils'
 
-// TODO: generate new secret each call
-const generatedSecret = randomSecret()
-
+const secret = randomSecret()
 export const CommitmentForm = ({
   name,
   feeData,
@@ -25,10 +23,9 @@ export const CommitmentForm = ({
   accountAddress?: `0x${string}`
 }) => {
   const chainId = useChainId()
-  const { secret, setSecret } = useCommitSecret(generatedSecret)
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
-  const { duration, setDuration } = useRegisterDuration()
 
+  const [duration, setDuration] = useState(YEAR_IN_SECONDS)
   // TODO: move to service / create a hook
   const { data: commitmentHash } = useContractRead<string[], 'makeCommitment', string>({
     abi: ETH_REGISTRAR_ABI,
@@ -47,11 +44,6 @@ export const CommitmentForm = ({
   })
 
   const txPrice = useTxPrice({ config, feeData })
-
-  useEffect(() => {
-    setSecret(generatedSecret)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <form

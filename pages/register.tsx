@@ -15,7 +15,7 @@ interface RegisterProps {
   name: string
 }
 
-const Register: NextPage<RegisterProps> = (props: RegisterProps) => {
+const Register: NextPage<RegisterProps> = (props) => {
   return (
     <>
       <Nav />
@@ -24,10 +24,7 @@ const Register: NextPage<RegisterProps> = (props: RegisterProps) => {
           Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{props.domain}</span>
         </h1>
         <div style={{ height: '1px', background: 'var(--border-2)', marginTop: '20px', marginBottom: '40px' }}></div>
-        <Step {...{
-          domain: props.domain,
-          name: props.name
-        }} />
+        <Step {...props} />
       </main>
     </>
   )
@@ -50,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       domain: domain,
-      name: parseDomainName(domain),
+      name: parseDomainName(domain)
     }
   }
 }
