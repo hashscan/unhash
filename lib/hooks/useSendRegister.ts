@@ -22,7 +22,7 @@ export const useSendRegister = ({ name }: { name: string }) => {
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner),
     overrides: {
-      gasLimit: BigNumber.from(100_000),
+      gasLimit: BigNumber.from(250_000),
       value: ethers.utils.parseEther('0.1') // TODO: set correct price from api
     }
   })
