@@ -8,7 +8,7 @@ import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 
-import { useCommitSecret, useRegisterDuration } from 'lib/hooks/storage'
+import { useCommitSecret, useRegisterDuration, useRegistration } from 'lib/hooks/storage'
 import { randomSecret } from 'lib/utils'
 import { toNetwork } from 'lib/types'
 
@@ -24,10 +24,10 @@ export const CommitmentForm = ({
   feeData: ReturnType<typeof useFeeData>['data']
   accountAddress?: `0x${string}`
 }) => {
-  const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
   const chainId = useChainId()
   const { secret, setSecret } = useCommitSecret(generatedSecret)
-  const { setDuration } = useRegisterDuration()
+  const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
+  const { duration, setDuration } = useRegisterDuration()
 
   // TODO: move to service / create a hook
   const { data: commitmentHash } = useContractRead<string[], 'makeCommitment', string>({
@@ -39,7 +39,11 @@ export const CommitmentForm = ({
 
   const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError } = useSendCommit({
     commitmentHash,
-    chainId
+    chainId,
+    owner: address,
+    name,
+    duration,
+    secret
   })
 
   const txPrice = useTxPrice({ config, feeData })
@@ -54,8 +58,8 @@ export const CommitmentForm = ({
       className={styles.form}
       onSubmit={(e) => {
         e.preventDefault()
-        if (e.currentTarget.reportValidity()) {
-          write?.()
+        if (typeof write !== 'undefined' && e.currentTarget.reportValidity()) {
+          write()
         }
       }}
     >

@@ -29,11 +29,34 @@ export function validateDomain(domain: string): string | null {
   return null
 }
 
-/** 
+/**
  * Returns first component of domain as domain name.
  * A domain must be valid according to {@link validateDomain}.
  */
 export function parseDomainName(domain: string): string {
   if (validateDomain(domain)) throw Error('Invalid domain')
   return domain.split('.')[0]
+}
+
+export const diffDates = (date1: Date, date2: Date) => {
+  const utcdate1 = Date.UTC(
+    date1.getFullYear(),
+    date1.getMonth(),
+    date1.getDate(),
+    date1.getHours(),
+    date1.getMinutes(),
+    date1.getSeconds(),
+    date1.getMilliseconds()
+  )
+  const utcOther = Date.UTC(
+    date2.getFullYear(),
+    date2.getMonth(),
+    date2.getDate(),
+    date2.getHours(),
+    date2.getMinutes(),
+    date2.getSeconds(),
+    date2.getMilliseconds()
+  )
+
+  return (utcdate1 - utcOther) / 60000
 }

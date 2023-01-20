@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const getReturnValues = (countDown: number) => {
+const getReturnValues = (countDown: number): [days: number, hours: number, minutes: number, seconds: number] => {
   // calculate time left
   const days = Math.floor(countDown / (1000 * 60 * 60 * 24))
   const hours = Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))

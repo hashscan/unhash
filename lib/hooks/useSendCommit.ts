@@ -1,20 +1,53 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
-import { RegistrationStep, toNetwork } from 'lib/types'
-import { useLocalStorage } from 'usehooks-ts'
+import { toNetwork } from 'lib/types'
+import { useEffect } from 'react'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegisterStep } from './storage'
+import { useBlockNumber, useRegisterStatus, useRegistration } from './storage'
 
-export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: string; chainId: number }) => {
+export const useSendCommit = ({
+  commitmentHash,
+  chainId,
+  owner,
+  name,
+  duration,
+  secret
+}: {
+  commitmentHash?: string
+  chainId: number
+  name: string
+  owner: string
+  duration: number
+  secret: string
+}) => {
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
-    args: [commitmentHash]
+    args: [commitmentHash],
+    enabled: Boolean(commitmentHash)
   })
-  const [_, setCommitTxBlock] = useLocalStorage('commit-tx-block', 0)
-  const { setStep } = useRegisterStep()
+  const { registration, setRegistration } = useRegistration(name)
+  const { setBlockNumber } = useBlockNumber()
 
-  const { write, data, error: writeError, isError: isWriteError } = useContractWrite(config)
+  const base = { name, owner, duration, secret }
+
+  const {
+    write,
+    data,
+    error: writeError,
+    isError: isWriteError
+  } = useContractWrite({
+    ...config,
+    onSuccess: (data) => {
+      setRegistration({
+        ...base,
+        status: 'commitPending',
+        commitTxHash: data.hash
+      })
+    }
+  })
+
+  const { setStatus } = useRegisterStatus()
 
   const {
     isLoading,
@@ -23,11 +56,27 @@ export const useSendCommit = ({ commitmentHash, chainId }: { commitmentHash?: st
     error: remoteError
   } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: async (data) => {
-      setCommitTxBlock(data.blockNumber)
-      setStep('wait' as RegistrationStep) // TODO: fix
+    onSuccess: (data) => {
+      setBlockNumber(data.blockNumber)
+      setStatus('committed')
+      const reg = registration!
+      setRegistration({
+        ...reg,
+        status: 'committed',
+        commitBlock: data.blockNumber
+      })
     }
   })
 
-  return { data, isLoading, write, config, isSuccess, writeError, remoteError, isWriteError, isRemoteError }
+  return {
+    data,
+    isLoading,
+    write,
+    config,
+    isSuccess,
+    writeError,
+    remoteError,
+    isWriteError,
+    isRemoteError
+  }
 }

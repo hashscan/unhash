@@ -1,9 +1,6 @@
 import { YEAR_IN_SECONDS } from 'lib/constants'
-import { Registration, RegistrationStep } from 'lib/types'
-import { useLocalStorage } from 'usehooks-ts'
-
-// TODO: describe return types
-// TODO: replace return objects {} by arrays []?
+import { Registration, RegistrationStatus } from 'lib/types'
+import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
 
 export const useRegisterDuration = () => {
   const [duration, setDuration] = useLocalStorage<number>('duration', YEAR_IN_SECONDS)
@@ -15,13 +12,24 @@ export const useCommitSecret = (defaultValue = '') => {
   return { secret, setSecret }
 }
 
-export const useRegisterStep = () => {
-  const [step, setStep] = useLocalStorage<RegistrationStep>('step', 'commit')
+export const useRegisterStatus = () => {
+  const [status, setStatus] = useLocalStorage<RegistrationStatus>('status', 'start')
 
-  return { step, setStep }
+  return { status, setStatus }
 }
 
+export const useBlockNumber = () => {
+  const [blockNumber, setBlockNumber] = useLocalStorage<number>('commit-tx-block', 0)
+  return { blockNumber, setBlockNumber }
+}
 
-export function useRegistration(domain: string): [Registration | null, (setRegistration: Registration | null) => void] {
-  return useLocalStorage<Registration | null>(`ens.registration.${domain}`, null)
+export function useRegistration(domain: string) {
+  const [registration, setRegistration] = useLocalStorage<Registration | null>(`ens.registration.${domain}`, null)
+
+  return { registration, setRegistration }
+}
+
+export const useRegistrationRead = (domain: string) => {
+  const registration = useReadLocalStorage<Registration | null>(`ens.registration.${domain}`)
+  return registration
 }

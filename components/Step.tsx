@@ -1,36 +1,46 @@
-import { RegistrationStep } from 'lib/types'
-import { useReadLocalStorage } from 'usehooks-ts'
-import { useSigner, useFeeData, useAccount } from 'wagmi'
+import { useRegisterStatus, useRegistrationRead } from 'lib/hooks/storage'
+import { diffDates } from 'lib/utils'
+import { useEffect, useState } from 'react'
+import { useSigner, useFeeData, useAccount, useProvider } from 'wagmi'
 import { CommitmentForm } from './CommitmentForm'
 import { RegisterStep } from './RegisterStep'
 import { Success } from './Success'
 import { WaitMinute } from './WaitMinute'
 
-export const Step = ({
-  domain,
-  name,
-}: {
-  domain: string,
-  name: string
-}) => {
+export const Step = ({ domain, name }: { domain: string; name: string }) => {
   const { data: signer } = useSigner()
 
   const { data: feeData } = useFeeData()
   const { address } = useAccount()
 
-  const step = useReadLocalStorage<RegistrationStep>('step')
+  const { status } = useRegisterStatus()
+  const provider = useProvider()
+  const reg = useRegistrationRead(name)
+  const [isMounted, setMounted] = useState(false)
+  const [timestamp, setTimestamp] = useState(0)
+  useEffect(() => {
+    if (provider && reg?.commitBlock)
+      provider.getBlock(reg?.commitBlock!).then((block) => {
+        setTimestamp(block.timestamp)
 
-  if (address && signer) {
-    switch (step) {
-      case 'commit':
-      default:
-        return <CommitmentForm {...{ feeData, domain, name }} accountAddress={address} />
-      case 'wait':
-        return <WaitMinute />
-      case 'register':
-        return <RegisterStep {...{ feeData, address, name }} />
-      case 'success':
-        return <Success {...{ domain, address }} />
-    }
-  } else return null
+        setMounted(true)
+      })
+  }, [provider, reg])
+
+  if (!(address && signer)) return null
+
+  if (status === 'start' || status === 'commitPending')
+    return <CommitmentForm {...{ name, feeData }} accountAddress={address} />
+
+  if (status === 'committed' && isMounted && diffDates(new Date(), new Date(timestamp * 1000)) < 1)
+    return <WaitMinute {...{ timestamp }} />
+
+  if (status === 'committed' || status === 'registerPending') {
+    // TODO: pass register tx hash
+    return <RegisterStep {...{ feeData, address, name }} />
+  }
+
+  if (status === 'registered') {
+    return <Success {...{ domain, address }} />
+  }
 }

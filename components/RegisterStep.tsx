@@ -35,7 +35,7 @@ export const RegisterStep = ({
       >
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Confirm'}
       </button>
-      {txPrice && <>commit tx cost: ${txPrice}</>}
+      {txPrice && <>register tx cost: ${txPrice}</>}
       <div>
         {isSuccess && 'success!'}
         {isSendError && <div className={styles.error}>{sendError?.message}</div>}
