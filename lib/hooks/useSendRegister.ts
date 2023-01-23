@@ -11,14 +11,14 @@ export const useSendRegister = ({ name }: { name: string }) => {
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
-    functionName: 'register', // 'registerWithConfig' does not work
+    functionName: 'registerWithConfig', // 'registerWithConfig' does not work
     args: [
       name,
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
-      registration?.secret
-      /*  ETH_RESOLVER_ADDRESS,
-      registration?.owner */
+      registration?.secret,
+      ETH_RESOLVER_ADDRESS,
+      registration?.owner
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner),
     overrides: {

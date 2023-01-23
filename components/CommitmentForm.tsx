@@ -51,37 +51,49 @@ export const CommitmentForm = ({
       onSubmit={(e) => {
         e.preventDefault()
         if (typeof write !== 'undefined' && e.currentTarget.reportValidity()) {
+          const fd = new FormData(e.currentTarget)
+          setAddress(fd.get('owner') as string)
+          setDuration(parseInt(fd.get('duration') as string) * YEAR_IN_SECONDS)
           write()
         }
       }}
     >
       <div className={styles.field}>
-        <label htmlFor="address">Owner: </label>
-        <input
-          name="owner"
-          value={address}
-          required
-          pattern="^0x[a-fA-F0-9]{40}$"
-          onChange={(v) => setAddress(v.currentTarget.value as `0x${string}`)}
-          defaultValue={accountAddress}
-          className={ui.input}
-        />
+        <label htmlFor="owner">Owner: </label>
+        <input name="owner" required pattern="^0x[a-fA-F0-9]{40}$" defaultValue={accountAddress} className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="duration">Duration (years): </label>
-        <input
-          required
-          name="duration (years)"
-          placeholder="1"
-          type="number"
-          min={1}
-          defaultValue={1}
-          className={ui.input}
-          onChange={(v) => {
-            const n = v.currentTarget.valueAsNumber
-            if (!isNaN(n)) setDuration(n * YEAR_IN_SECONDS)
-          }}
-        />
+        <input required name="duration" placeholder="1" type="number" min={1} defaultValue={1} className={ui.input} />
+      </div>
+      <div>Optional fields:</div>
+      <div className={styles.field}>
+        <label htmlFor="name">Name</label>
+        <input name="name" placeholder="ens_user420" minLength={1} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="email">Email</label>
+        <input name="email" placeholder="hello@example.com" minLength={5} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="url">Website URL</label>
+        <input name="url" placeholder="https://example.com" minLength={3} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="bio">Bio</label>
+        <input name="bio" placeholder="23 yo designer from Moscow" minLength={1} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="tw">Twitter handle</label>
+        <input name="tw" placeholder="jake" minLength={1} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="gh">GitHub username</label>
+        <input name="gh" placeholder="ry" minLength={1} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="avatar">Avatar URL</label>
+        <input name="avatar" placeholder="ipfs://ba..." minLength={4} className={ui.input} />
       </div>
       <button type="submit" className={ui.button}>
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Commit'}
