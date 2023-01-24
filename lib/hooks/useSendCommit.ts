@@ -1,6 +1,6 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
-import { randomSecret } from 'lib/utils'
+import { useState } from 'react'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegisterStatus, useRegistration } from './storage'
 
@@ -29,6 +29,7 @@ export const useSendCommit = ({
   const { registration, setRegistration } = useRegistration(name)
 
   const base = { name, owner, duration, secret }
+  const [fields, setFields] = useState<Fields>()
 
   const {
     write,
@@ -38,8 +39,12 @@ export const useSendCommit = ({
   } = useContractWrite({
     ...config,
     onSuccess: (data) => {
+      const reg = registration!
+
       setRegistration({
         ...base,
+        ...reg,
+        fields,
         status: 'commitPending',
         commitTxHash: data.hash
       })
@@ -56,20 +61,16 @@ export const useSendCommit = ({
   } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: (data) => {
-      setStatus('committed')
       const reg = registration!
+      setStatus('committed')
       setRegistration({
         ...reg,
+        fields,
         status: 'committed',
         commitBlock: data.blockNumber
       })
     }
   })
-
-  const setFields = (fields: Fields) => {
-    const reg = registration!
-    setRegistration({ ...reg, fields })
-  }
 
   return {
     data,

@@ -9,7 +9,6 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 
 import { Fields, toNetwork } from 'lib/types'
-import { useRegistration } from 'lib/hooks/storage'
 import { randomSecret } from 'lib/utils'
 
 const secret = randomSecret()
@@ -64,6 +63,7 @@ export const CommitmentForm = ({
               fields[k] = v as string
             }
           }
+
           setFields(fields)
 
           write()
