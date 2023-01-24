@@ -6,7 +6,7 @@ import styles from 'styles/CommitmentForm.module.css'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 
 import { Fields, toNetwork } from 'lib/types'
 import { randomSecret } from 'lib/utils'
@@ -26,11 +26,11 @@ export const CommitmentForm = ({
 
   const [duration, setDuration] = useState(YEAR_IN_SECONDS)
   // TODO: move to service / create a hook
-  const { data: commitmentHash } = useContractRead<string[], 'makeCommitment', string>({
+  const { data: commitmentHash } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
     abi: ETH_REGISTRAR_ABI,
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
-    functionName: 'makeCommitment',
-    args: [name, address, secret]
+    functionName: 'makeCommitmentWithConfig',
+    args: [name, address, secret, ETH_RESOLVER_ADDRESS, address]
   })
 
   const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError, setFields } =
