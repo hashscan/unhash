@@ -17,12 +17,12 @@ export const useSendRegister = ({ name }: { name: string }) => {
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
-      ETH_RESOLVER_ADDRESS,
+      ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)),
       registration?.owner
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner),
     overrides: {
-      gasLimit: BigNumber.from(250_000),
+      gasLimit: BigNumber.from(500_000),
       value: ethers.utils.parseEther('0.1') // TODO: set correct price from api
     }
   })

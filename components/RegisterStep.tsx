@@ -13,8 +13,6 @@ export const RegisterStep = ({ feeData, name }: { feeData: ReturnType<typeof use
 
   const registration = useRegistrationRead(name)
 
-  console.log(registration)
-
   const txPrice = useTxPrice({ config, feeData })
 
   return (
