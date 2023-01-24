@@ -1,5 +1,5 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
-import { toNetwork } from 'lib/types'
+import { Fields, toNetwork } from 'lib/types'
 import { randomSecret } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegisterStatus, useRegistration } from './storage'
@@ -66,6 +66,11 @@ export const useSendCommit = ({
     }
   })
 
+  const setFields = (fields: Fields) => {
+    const reg = registration!
+    setRegistration({ ...reg, fields })
+  }
+
   return {
     data,
     isLoading,
@@ -75,6 +80,7 @@ export const useSendCommit = ({
     writeError,
     remoteError,
     isWriteError,
-    isRemoteError
+    isRemoteError,
+    setFields
   }
 }

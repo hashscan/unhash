@@ -8,7 +8,7 @@ import { useLocalStorage } from 'usehooks-ts'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 
-import { toNetwork } from 'lib/types'
+import { Fields, toNetwork } from 'lib/types'
 import { useRegistration } from 'lib/hooks/storage'
 import { randomSecret } from 'lib/utils'
 
@@ -34,14 +34,15 @@ export const CommitmentForm = ({
     args: [name, address, secret]
   })
 
-  const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError } = useSendCommit({
-    commitmentHash,
-    chainId,
-    owner: address,
-    name,
-    duration,
-    secret
-  })
+  const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError, setFields } =
+    useSendCommit({
+      commitmentHash,
+      chainId,
+      owner: address,
+      name,
+      duration,
+      secret
+    })
 
   const txPrice = useTxPrice({ config, feeData })
 
@@ -52,8 +53,19 @@ export const CommitmentForm = ({
         e.preventDefault()
         if (typeof write !== 'undefined' && e.currentTarget.reportValidity()) {
           const fd = new FormData(e.currentTarget)
-          setAddress(fd.get('owner') as string)
-          setDuration(parseInt(fd.get('duration') as string) * YEAR_IN_SECONDS)
+          const fields: Fields = {}
+
+          for (const [k, v] of fd.entries()) {
+            if (k === 'owner') {
+              setAddress(v as string)
+            } else if (k === 'duration') {
+              setDuration(parseInt(v as string) * YEAR_IN_SECONDS)
+            } else {
+              fields[k] = v as string
+            }
+          }
+          setFields(fields)
+
           write()
         }
       }}
@@ -80,16 +92,16 @@ export const CommitmentForm = ({
         <input name="url" placeholder="https://example.com" minLength={3} className={ui.input} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="bio">Bio</label>
-        <input name="bio" placeholder="23 yo designer from Moscow" minLength={1} className={ui.input} />
+        <label htmlFor="description">Bio</label>
+        <input name="description" placeholder="23 yo designer from Moscow" minLength={1} className={ui.input} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="tw">Twitter handle</label>
-        <input name="tw" placeholder="jake" minLength={1} className={ui.input} />
+        <label htmlFor="com.twitter">Twitter handle</label>
+        <input name="com.twitter" placeholder="jake" minLength={1} className={ui.input} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="gh">GitHub username</label>
-        <input name="gh" placeholder="ry" minLength={1} className={ui.input} />
+        <label htmlFor="com.github">GitHub username</label>
+        <input name="com.github" placeholder="ry" minLength={1} className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="avatar">Avatar URL</label>

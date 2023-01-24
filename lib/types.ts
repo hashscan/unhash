@@ -25,6 +25,17 @@ export function toNetwork(chainId: number): Network {
   }
 }
 
+export type Fields = Partial<{
+  name: string
+  email: `${string}@${string}.${string}`
+  url: string
+  description: string
+  'com.github': string
+  'com.twitter': string
+  avatar: string
+  [k: string]: string
+}>
+
 export type Registration = {
   name: string
   owner: string
@@ -34,6 +45,7 @@ export type Registration = {
   commitTxHash?: string
   commitBlock?: number
   registerTxHash?: string
+  fields?: Fields
 }
 
 export type RegistrationStatus = 'start' | 'commitPending' | 'committed' | 'registerPending' | 'registered'
