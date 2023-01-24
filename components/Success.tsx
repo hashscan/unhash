@@ -31,9 +31,11 @@ export const Success = ({
       >
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Confirm'}
       </button>
-      {isWriteError && <div className={styles.error}>{writeError?.message}</div>}
-      {isRemoteError && <div className={styles.error}>Transaction error</div>}
-      {txPrice && <>fields tx cost: ${txPrice}</>}
+      <div>
+        {isWriteError && <div className={styles.error}>{writeError?.message}</div>}
+        {isRemoteError && <div className={styles.error}>Transaction error</div>}
+        {txPrice && <>fields tx cost: ${txPrice}</>}
+      </div>
     </div>
   )
 }
