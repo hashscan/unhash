@@ -30,18 +30,20 @@ export const CommitmentForm = ({
     abi: ETH_REGISTRAR_ABI,
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     functionName: 'makeCommitmentWithConfig',
-    args: [name, address, secret, ETH_RESOLVER_ADDRESS, address]
+    args: [name, address, secret, ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)), address]
   })
 
-  const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError, setFields } =
-    useSendCommit({
-      commitmentHash,
-      chainId,
-      owner: address,
-      name,
-      duration,
-      secret
-    })
+  const [fields, setFields] = useState<Fields>({})
+
+  const { config, write, isLoading, isSuccess, isWriteError, isRemoteError, remoteError, writeError } = useSendCommit({
+    commitmentHash,
+    chainId,
+    owner: address,
+    name,
+    duration,
+    secret,
+    fields
+  })
 
   const txPrice = useTxPrice({ config, feeData })
 
@@ -52,7 +54,7 @@ export const CommitmentForm = ({
         e.preventDefault()
         if (typeof write !== 'undefined' && e.currentTarget.reportValidity()) {
           const fd = new FormData(e.currentTarget)
-          const fields: Fields = {}
+          const f: Fields = {}
 
           for (const [k, v] of fd.entries()) {
             if (k === 'owner') {
@@ -60,11 +62,11 @@ export const CommitmentForm = ({
             } else if (k === 'duration') {
               setDuration(parseInt(v as string) * YEAR_IN_SECONDS)
             } else {
-              fields[k] = v as string
+              f[k] = v as string
             }
           }
 
-          setFields(fields)
+          setFields(f)
 
           write()
         }
