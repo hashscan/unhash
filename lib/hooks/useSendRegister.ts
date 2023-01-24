@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { toNetwork } from 'lib/types'
-import { useChainId, usePrepareContractWrite, useSendTransaction, useWaitForTransaction } from 'wagmi'
+import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegisterStatus, useRegistration } from './storage'
 
 export const useSendRegister = ({ name }: { name: string }) => {
@@ -29,11 +29,11 @@ export const useSendRegister = ({ name }: { name: string }) => {
   const { setStatus } = useRegisterStatus()
 
   const {
-    sendTransaction,
+    write,
     data,
     error: sendError,
     isError: isSendError
-  } = useSendTransaction({
+  } = useContractWrite({
     ...config,
     onSuccess: (data) => {
       if (!registration) return
@@ -56,5 +56,5 @@ export const useSendRegister = ({ name }: { name: string }) => {
     }
   })
 
-  return { data, isLoading, sendTransaction, config, isSuccess, sendError, remoteError, isSendError, isRemoteError }
+  return { data, isLoading, write, config, isSuccess, sendError, remoteError, isSendError, isRemoteError }
 }

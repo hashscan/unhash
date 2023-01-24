@@ -7,7 +7,7 @@ import ui from 'styles/ui.module.css'
 import { useRegistrationRead } from 'lib/hooks/storage'
 
 export const RegisterStep = ({ feeData, name }: { feeData: ReturnType<typeof useFeeData>['data']; name: string }) => {
-  const { config, sendTransaction, isLoading, isSuccess, isSendError, isRemoteError, sendError } = useSendRegister({
+  const { config, write, isLoading, isSuccess, isSendError, isRemoteError, sendError } = useSendRegister({
     name
   })
 
@@ -32,7 +32,7 @@ export const RegisterStep = ({ feeData, name }: { feeData: ReturnType<typeof use
         className={ui.button}
         disabled={isLoading}
         onClick={async () => {
-          sendTransaction?.()
+          write?.()
         }}
       >
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Confirm'}

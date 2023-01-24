@@ -48,11 +48,4 @@ export type Registration = {
   fields?: Fields
 }
 
-export type RegistrationStatus =
-  | 'start'
-  | 'commitPending'
-  | 'committed'
-  | 'registerPending'
-  | 'registered'
-  | 'fieldsPending'
-  | 'fieldsSet'
+export type RegistrationStatus = 'start' | 'commitPending' | 'committed' | 'registerPending' | 'registered'

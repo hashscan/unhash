@@ -23,4 +23,10 @@ export const ETH_REGISTRAR_ABI = [
   'function registerWithConfig(string,address,uint,bytes32,address,address) payable'
 ]
 
+export const ETH_RESOLVER_ABI = [
+  'function setText(bytes32,string,string)',
+  'function text(bytes32,key)',
+  'function multicall(bytes[])'
+]
+
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24
