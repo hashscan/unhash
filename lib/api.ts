@@ -13,7 +13,11 @@ export type DomainPrice = {
   usd: number
 }
 
+// Registrant, controller and resolver are always null for non-mainnet
 export type DomainInfo = {
+  registrant: string | null
+  controller: string | null
+  resolver: string | null
   records: Fields
 }
 
@@ -27,10 +31,9 @@ async function getPrice(domain: string, network: Network = 'mainnet', duration: 
     .json<DomainPrice>()
 }
 
-async function domainInfo(domain: string, network: Network = 'mainnet'): Promise<Fields> {
-  const res = await ky.get(`${API_URL}/domain/info?domain=${domain}&network=${network}`)
+async function domainInfo(domain: string, network: Network = 'mainnet'): Promise<DomainInfo> {
+  return await ky.get(`${API_URL}/domain/info?domain=${domain}&network=${network}`)
     .json<DomainInfo>()
-  return res.records
 }
 
 const api = {
