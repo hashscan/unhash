@@ -1,6 +1,5 @@
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import ui from 'styles/ui.module.css'
-import styles from 'styles/CommitmentForm.module.css'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import type { useFeeData } from 'wagmi'
 import { ProgressBar } from './icons'
@@ -8,13 +7,15 @@ import { ProgressBar } from './icons'
 export const Success = ({
   name,
   address,
-  feeData
+  feeData,
+  domain
 }: {
   name: string
   address: string
   feeData?: ReturnType<typeof useFeeData>['data']
+  domain: string
 }) => {
-  const { config, isLoading, isRemoteError, isWriteError, writeError, write } = useSendSetFields({ name })
+  const { config, isLoading, isRemoteError, isWriteError, writeError, write } = useSendSetFields({ name, domain })
 
   const txPrice = useTxPrice({ config, feeData })
 
@@ -32,8 +33,8 @@ export const Success = ({
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Confirm'}
       </button>
       <div>
-        {isWriteError && <div className={styles.error}>{writeError?.message}</div>}
-        {isRemoteError && <div className={styles.error}>Transaction error</div>}
+        {isWriteError && <div className={ui.error}>{writeError?.message}</div>}
+        {isRemoteError && <div className={ui.error}>Transaction error</div>}
         {txPrice && <>fields tx cost: ${txPrice}</>}
       </div>
     </div>

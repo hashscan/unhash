@@ -2,7 +2,6 @@ import { useFeeData } from 'wagmi'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { ProgressBar } from './icons'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
-import styles from 'styles/CommitmentForm.module.css'
 import ui from 'styles/ui.module.css'
 import { useRegistrationRead } from 'lib/hooks/storage'
 
@@ -40,8 +39,8 @@ export const RegisterStep = ({ feeData, name }: { feeData: ReturnType<typeof use
       {txPrice && <>register tx cost: ${txPrice}</>}
       <div>
         {isSuccess && 'success!'}
-        {isSendError && <div className={styles.error}>{sendError?.message}</div>}
-        {isRemoteError && <div className={styles.error}>Transaction error</div>}
+        {isSendError && <div className={ui.error}>{sendError?.message}</div>}
+        {isRemoteError && <div className={ui.error}>Transaction error</div>}
       </div>
     </>
   )

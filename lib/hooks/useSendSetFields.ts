@@ -5,13 +5,13 @@ import { toNetwork } from 'lib/types'
 import { useChainId, useContract, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegistration } from './storage'
 
-export const useSendSetFields = ({ name }: { name: string }) => {
+export const useSendSetFields = ({ name, domain }: { name: string; domain: string }) => {
   const chainId = useChainId()
   const { registration } = useRegistration(name)
 
   const resolverAddress = ETH_RESOLVER_ADDRESS.get(toNetwork(chainId))
 
-  const node = namehash(name)
+  const node = namehash(domain)
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })
   const filteredFields = Object.entries(registration?.fields!).filter(([_, v]) => typeof v === 'string' && v !== '')
 

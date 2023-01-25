@@ -23,7 +23,7 @@ export const LogoutIcon = () => (
 )
 
 export const ProgressBar = ({
-  color = 'black',
+  color = 'var(--text-primary)',
   height = '40px',
   width = '40px'
 }: Partial<{ color: string; height: string | number; width: string | number }>) => {

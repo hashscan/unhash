@@ -9,7 +9,6 @@ import api from 'lib/api'
 import { useChainId } from 'wagmi'
 import { validateDomain } from 'lib/utils'
 
-
 const Index = () => {
   const router = useRouter()
 
@@ -73,8 +72,7 @@ const Index = () => {
 
   return (
     <>
-      <Nav />
-      <div className={styles.container}>
+      <main className={styles.container}>
         <div className={styles.search}>
           <input
             style={{ width: 340 }}
@@ -96,7 +94,7 @@ const Index = () => {
           </div>
         )}
         {/* TODO: add request error */}
-      </div>
+      </main>
     </>
   )
 }

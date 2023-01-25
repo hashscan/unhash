@@ -18,7 +18,6 @@ interface RegisterProps {
 const Register: NextPage<RegisterProps> = (props) => {
   return (
     <>
-      <Nav />
       <main className={styles.main}>
         <h1 style={{ marginTop: '40px' }}>
           Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{props.domain}</span>

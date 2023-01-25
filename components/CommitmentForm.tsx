@@ -115,8 +115,8 @@ export const CommitmentForm = ({
       {txPrice && <>commit tx cost: ${txPrice}</>}
       <div>
         {isSuccess && 'success!'}
-        {isWriteError && <div className={styles.error}>{writeError?.message}</div>}
-        {isRemoteError && <div className={styles.error}>{remoteError?.message}</div>}
+        {isWriteError && <div className={ui.error}>{writeError?.message}</div>}
+        {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
       </div>
     </form>
   )

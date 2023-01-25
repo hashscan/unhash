@@ -135,3 +135,10 @@
   border: 1px solid var(--border-card);
   box-sizing: border-box;
 }
+
+.error {
+  background-color: var(--error);
+  color: white;
+  padding: 12px;
+  border-radius: var(--radii-sm);
+}
