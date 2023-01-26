@@ -3,6 +3,7 @@ import ui from 'styles/ui.module.css'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import type { useFeeData } from 'wagmi'
 import { ProgressBar } from './icons'
+import { useRegistration } from 'lib/hooks/storage'
 
 export const Success = ({
   name,
@@ -15,7 +16,11 @@ export const Success = ({
   feeData?: ReturnType<typeof useFeeData>['data']
   domain: string
 }) => {
-  const { config, isLoading, isRemoteError, isWriteError, writeError, write } = useSendSetFields({ name, domain })
+  const { registration } = useRegistration(name)
+  const { config, isLoading, isRemoteError, isWriteError, writeError, write } = useSendSetFields({
+    fields: registration?.fields || {},
+    domain
+  })
 
   const txPrice = useTxPrice({ config, feeData })
 

@@ -1,19 +1,26 @@
-import { BigNumber } from 'ethers'
+import { BigNumber, providers } from 'ethers'
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { toNetwork } from 'lib/types'
+import { Fields, toNetwork } from 'lib/types'
 import { useChainId, useContract, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegistration } from './storage'
 
-export const useSendSetFields = ({ name, domain }: { name: string; domain: string }) => {
+export const useSendSetFields = ({
+  domain,
+  fields,
+  onSuccess
+}: Partial<{
+  domain: string | null
+  fields: Fields
+  onSuccess: ((data: providers.TransactionReceipt) => void) | undefined
+}>) => {
   const chainId = useChainId()
-  const { registration } = useRegistration(name)
 
   const resolverAddress = ETH_RESOLVER_ADDRESS.get(toNetwork(chainId))
 
-  const node = namehash(domain)
+  const node = domain ? namehash(domain) : undefined
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })
-  const filteredFields = Object.entries(registration?.fields!).filter(([_, v]) => typeof v === 'string' && v !== '')
+  const filteredFields =
+    fields && node ? Object.entries(fields).filter(([_, v]) => typeof v === 'string' && v !== '') : []
 
   const encoded = filteredFields.map(([k, v]) => contract?.interface.encodeFunctionData('setText', [node, k, v]))
 
@@ -21,7 +28,7 @@ export const useSendSetFields = ({ name, domain }: { name: string; domain: strin
     address: resolverAddress,
     abi: ETH_RESOLVER_ABI,
     functionName: 'multicall',
-    enabled: encoded.length !== 0,
+    enabled: encoded.length !== 0 && Boolean(domain),
     args: [encoded],
     overrides: {
       gasLimit: BigNumber.from(250_000)
@@ -43,7 +50,8 @@ export const useSendSetFields = ({ name, domain }: { name: string; domain: strin
     isError: isRemoteError,
     error: remoteError
   } = useWaitForTransaction({
-    hash: data?.hash
+    hash: data?.hash,
+    onSuccess
   })
 
   return { data, isLoading, write, config, isSuccess, writeError, remoteError, isWriteError, isRemoteError }

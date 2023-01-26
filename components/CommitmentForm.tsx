@@ -83,7 +83,7 @@ export const CommitmentForm = ({
       <div>Optional fields:</div>
       <div className={styles.field}>
         <label htmlFor="name">Name</label>
-        <input name="name" placeholder="ens_user420" minLength={1} className={ui.input} />
+        <input name="name" placeholder="ens_user420" className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="email">Email</label>
@@ -95,15 +95,15 @@ export const CommitmentForm = ({
       </div>
       <div className={styles.field}>
         <label htmlFor="description">Bio</label>
-        <input name="description" placeholder="23 yo designer from Moscow" minLength={1} className={ui.input} />
+        <input name="description" placeholder="23 yo designer from Moscow" className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="com.twitter">Twitter handle</label>
-        <input name="com.twitter" placeholder="jake" minLength={1} className={ui.input} />
+        <input name="com.twitter" placeholder="jake" className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="com.github">GitHub username</label>
-        <input name="com.github" placeholder="ry" minLength={1} className={ui.input} />
+        <input name="com.github" placeholder="ry" className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="avatar">Avatar URL</label>
