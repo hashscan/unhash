@@ -13,12 +13,19 @@ export type DomainPrice = {
   usd: number
 }
 
-// Registrant, controller and resolver are always null for non-mainnet
 export type DomainInfo = {
   registrant: string | null
   controller: string | null
   resolver: string | null
   records: Fields
+}
+
+export type UserInfo = {
+  domains: {
+    owned: string[],
+    controlled: string[],
+    resolved: string[],
+  }
 }
 
 async function checkDomain(domain: string, network: Network = 'mainnet'): Promise<boolean> {
@@ -36,10 +43,16 @@ async function domainInfo(domain: string, network: Network = 'mainnet'): Promise
     .json<DomainInfo>()
 }
 
+async function userInfo(address: string, network: Network = 'mainnet'): Promise<UserInfo> {
+  return await ky.get(`${API_URL}/user?address=${address}&network=${network}`)
+    .json<UserInfo>()
+}
+
 const api = {
   checkDomain,
   getPrice,
   domainInfo,
+  userInfo,
 }
 
 export default api
