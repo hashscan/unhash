@@ -93,13 +93,12 @@ const Profile = () => {
                 <input name="name" placeholder="ens_user420" defaultValue={info.records.name} className={ui.input} />
               </div>
               <div className={form.field}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="description">Bio</label>
                 <input
-                  name="email"
-                  placeholder="hello@example.com"
-                  minLength={5}
+                  name="description"
+                  placeholder="23 yo designer from Moscow"
                   className={ui.input}
-                  defaultValue={info.records.email}
+                  defaultValue={info.records.description}
                 />
               </div>
               <div className={form.field}>
@@ -113,12 +112,13 @@ const Profile = () => {
                 />
               </div>
               <div className={form.field}>
-                <label htmlFor="description">Bio</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  name="description"
-                  placeholder="23 yo designer from Moscow"
+                  name="email"
+                  placeholder="hello@example.com"
+                  minLength={5}
                   className={ui.input}
-                  defaultValue={info.records.description}
+                  defaultValue={info.records.email}
                 />
               </div>
               <div className={form.field}>
@@ -127,10 +127,10 @@ const Profile = () => {
                   name="com.twitter"
                   placeholder="jake"
                   className={ui.input}
-                  defaultValue={info.records.description}
+                  defaultValue={info.records['com.twitter']}
                 />
               </div>
-              <div className={form.field}>
+              {/* <div className={form.field}>
                 <label htmlFor="com.github">GitHub username</label>
                 <input
                   name="com.github"
@@ -148,7 +148,7 @@ const Profile = () => {
                   className={ui.input}
                   defaultValue={info.records.avatar}
                 />
-              </div>
+              </div> */}
 
               <button disabled={isFieldsLoading} type="submit" className={ui.button}>
                 {isFieldsLoading ? <ProgressBar /> : 'Submit'}

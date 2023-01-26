@@ -73,43 +73,43 @@ export const CommitmentForm = ({
       }}
     >
       <div className={styles.field}>
-        <label htmlFor="owner">Owner: </label>
+        <label htmlFor="owner">Owner</label>
         <input name="owner" required pattern="^0x[a-fA-F0-9]{40}$" defaultValue={accountAddress} className={ui.input} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="duration">Duration (years): </label>
+        <label htmlFor="duration">Duration (years)</label>
         <input required name="duration" placeholder="1" type="number" min={1} defaultValue={1} className={ui.input} />
       </div>
-      <div>Optional fields:</div>
+      <div style={{ fontSize: '20px', fontWeight: '600', marginTop: '30px', marginBottom: '10px' }}>Profile</div>
       <div className={styles.field}>
         <label htmlFor="name">Name</label>
         <input name="name" placeholder="ens_user420" className={ui.input} />
-      </div>
-      <div className={styles.field}>
-        <label htmlFor="email">Email</label>
-        <input name="email" placeholder="hello@example.com" minLength={5} className={ui.input} />
-      </div>
-      <div className={styles.field}>
-        <label htmlFor="url">Website URL</label>
-        <input name="url" placeholder="https://example.com" minLength={3} className={ui.input} />
       </div>
       <div className={styles.field}>
         <label htmlFor="description">Bio</label>
         <input name="description" placeholder="23 yo designer from Moscow" className={ui.input} />
       </div>
       <div className={styles.field}>
+        <label htmlFor="url">Website URL</label>
+        <input name="url" placeholder="https://example.com" minLength={3} className={ui.input} />
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="email">Email</label>
+        <input name="email" placeholder="hello@example.com" minLength={5} className={ui.input} />
+      </div>
+      <div className={styles.field}>
         <label htmlFor="com.twitter">Twitter handle</label>
         <input name="com.twitter" placeholder="jake" className={ui.input} />
       </div>
-      <div className={styles.field}>
+      {/* <div className={styles.field}>
         <label htmlFor="com.github">GitHub username</label>
         <input name="com.github" placeholder="ry" className={ui.input} />
-      </div>
-      <div className={styles.field}>
+      </div> */}
+      {/* <div className={styles.field}>
         <label htmlFor="avatar">Avatar URL</label>
         <input name="avatar" placeholder="ipfs://ba..." minLength={4} className={ui.input} />
-      </div>
-      <button type="submit" className={ui.button}>
+      </div> */}
+      <button type="submit" className={ui.button} style={{ marginTop: '30px' }}>
         {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Commit'}
       </button>
       {txPrice && <>commit tx cost: ${txPrice}</>}
