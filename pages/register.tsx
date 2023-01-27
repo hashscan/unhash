@@ -18,11 +18,14 @@ interface RegisterProps {
 }
 
 const Register: NextPage<RegisterProps> = (props) => {
-  const [domainInfo, setDomainInfo] = useState<DomainInfo | null>()
+  const [domainInfo, setDomainInfo] = useState<DomainInfo | null>(null)
   const chainId = useChainId()
 
   useEffect(() => {
-    api.domainInfo(props.domain).then((res) => setDomainInfo(res))
+    api
+      .domainInfo(props.domain)
+      .then((res) => setDomainInfo(res))
+      .catch(() => console.log(`Not found`))
   }, [props.domain])
 
   return (
