@@ -9,7 +9,6 @@ import { Domain, Fields, toNetwork } from 'lib/types'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
-import { parseDomainName } from 'lib/utils'
 
 const EnsToggle = ({ domain }: { domain: Domain }) => {
   const { isLoading, write } = useSetPrimaryEns({ domain })

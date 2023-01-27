@@ -1,9 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { parseDomainName, validateDomain } from 'lib/utils'
 import styles from 'styles/register.module.css'
 import type { Domain } from 'lib/types'
+import api, { DomainInfo } from 'lib/api'
+import { goerli, useChainId } from 'wagmi'
 
 const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
   ssr: false,
@@ -16,14 +18,49 @@ interface RegisterProps {
 }
 
 const Register: NextPage<RegisterProps> = (props) => {
+  const [domainInfo, setDomainInfo] = useState<DomainInfo | null>()
+  const chainId = useChainId()
+
+  useEffect(() => {
+    api.domainInfo(props.domain).then((res) => setDomainInfo(res))
+  }, [props.domain])
+
   return (
     <>
       <main className={styles.main}>
-        <h1 style={{ marginTop: '40px' }}>
-          Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{props.domain}</span>
-        </h1>
-        <div style={{ height: '1px', background: 'var(--border-2)', marginTop: '20px', marginBottom: '40px' }}></div>
-        <Step {...props} />
+        {domainInfo ? (
+          <>
+            <h1 style={{ marginTop: '40px' }}>{props.domain}</h1>
+            <h2>Records</h2>
+            {Object.entries(domainInfo.records).map(([k, v]) => {
+              return v ? (
+                <div key={`${k}-${v}`}>
+                  <span>{k}</span> - <span>{v}</span>
+                </div>
+              ) : null
+            })}
+            <h2>Misc</h2>
+            {chainId !== goerli.id ? (
+              <>
+                <div>Controller: {domainInfo.controller}</div>
+                <div>Registrant: {domainInfo.registrant}</div>
+                <div>Resolver: {domainInfo.resolver}</div>
+              </>
+            ) : (
+              <div>no info</div>
+            )}
+          </>
+        ) : (
+          <>
+            <h1 style={{ marginTop: '40px' }}>
+              Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{props.domain}</span>
+            </h1>
+            <div
+              style={{ height: '1px', background: 'var(--border-2)', marginTop: '20px', marginBottom: '40px' }}
+            ></div>
+            <Step {...props} />
+          </>
+        )}
       </main>
     </>
   )
