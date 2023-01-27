@@ -21,6 +21,7 @@ export type DomainInfo = {
 }
 
 export type UserInfo = {
+  primaryEns: string | null
   domains: {
     owned: string[],
     controlled: string[],
