@@ -4,6 +4,7 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import type { useFeeData } from 'wagmi'
 import { ProgressBar } from './icons'
 import { useRegistration } from 'lib/hooks/storage'
+import type { Domain } from 'lib/types'
 
 export const Success = ({
   name,
@@ -14,7 +15,7 @@ export const Success = ({
   name: string
   address: string
   feeData?: ReturnType<typeof useFeeData>['data']
-  domain: string
+  domain: Domain
 }) => {
   const { registration } = useRegistration(name)
   const { config, isLoading, isRemoteError, isWriteError, writeError, write } = useSendSetFields({
