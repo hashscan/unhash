@@ -1,9 +1,10 @@
-import ky from "ky"
-import { API_URL } from "./constants"
-import { Network, Fields } from "./types"
+import ky from 'ky'
+import { Address } from 'wagmi'
+import { API_URL } from './constants'
+import type { Network, Fields, Domain } from './types'
 
 type DomainStatus = {
-  domain: string
+  domain: Domain
   isAvailable: boolean
 }
 
@@ -14,18 +15,18 @@ export type DomainPrice = {
 }
 
 export type DomainInfo = {
-  registrant: string | null
-  controller: string | null
-  resolver: string | null
+  registrant: Address | null
+  controller: Address | null
+  resolver: Address | null
   records: Fields
 }
 
 export type UserInfo = {
-  primaryEns: string | null
+  primaryEns: Domain | null
   domains: {
-    owned: string[],
-    controlled: string[],
-    resolved: string[],
+    owned: string[]
+    controlled: string[]
+    resolved: Domain[]
   }
 }
 
@@ -35,25 +36,24 @@ async function checkDomain(domain: string, network: Network = 'mainnet'): Promis
 }
 
 async function getPrice(domain: string, network: Network = 'mainnet', duration: number): Promise<DomainPrice> {
-  return await ky.get(`${API_URL}/domain/price?domain=${domain}&network=${network}&duration=${duration}`)
+  return await ky
+    .get(`${API_URL}/domain/price?domain=${domain}&network=${network}&duration=${duration}`)
     .json<DomainPrice>()
 }
 
 async function domainInfo(domain: string, network: Network = 'mainnet'): Promise<DomainInfo> {
-  return await ky.get(`${API_URL}/domain/info?domain=${domain}&network=${network}`)
-    .json<DomainInfo>()
+  return await ky.get(`${API_URL}/domain/info?domain=${domain}&network=${network}`).json<DomainInfo>()
 }
 
-async function userInfo(address: string, network: Network = 'mainnet'): Promise<UserInfo> {
-  return await ky.get(`${API_URL}/user?address=${address}&network=${network}`)
-    .json<UserInfo>()
+async function userInfo(address: Address, network: Network = 'mainnet'): Promise<UserInfo> {
+  return await ky.get(`${API_URL}/user?address=${address}&network=${network}`).json<UserInfo>()
 }
 
 const api = {
   checkDomain,
   getPrice,
   domainInfo,
-  userInfo,
+  userInfo
 }
 
 export default api

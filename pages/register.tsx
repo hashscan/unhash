@@ -1,9 +1,9 @@
-import { Nav } from 'components/Nav'
 import { GetServerSideProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
 import { parseDomainName, validateDomain } from 'lib/utils'
 import styles from 'styles/register.module.css'
+import type { Domain } from 'lib/types'
 
 const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
   ssr: false,
@@ -11,7 +11,7 @@ const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
 })
 
 interface RegisterProps {
-  domain: string
+  domain: Domain
   name: string
 }
 

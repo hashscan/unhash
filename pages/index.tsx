@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { Nav } from 'components/Nav'
 import { ProgressBar } from 'components/icons'
 import styles from 'styles/Index.module.css'
 import ui from 'styles/ui.module.css'

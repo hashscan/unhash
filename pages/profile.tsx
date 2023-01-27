@@ -1,23 +1,40 @@
 import { ProgressBar } from 'components/icons'
-import api, { DomainInfo } from 'lib/api'
+import api, { DomainInfo, UserInfo } from 'lib/api'
 import { useEffect, useState } from 'react'
-import { goerli, useAccount, useChainId, useEnsName, useFeeData } from 'wagmi'
+import { goerli, useAccount, useChainId, useFeeData } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import form from 'styles/CommitmentForm.module.css'
 import styles from 'styles/profile.module.css'
-import { Fields, toNetwork } from 'lib/types'
+import { Domain, Fields, toNetwork } from 'lib/types'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
+import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
+import { parseDomainName } from 'lib/utils'
+
+const EnsToggle = ({ domain }: { domain: Domain }) => {
+  const { isLoading, write } = useSetPrimaryEns({ domain })
+
+  return (
+    <button
+      disabled={isLoading}
+      className={ui.buttonSecondary}
+      onClick={() => {
+        write?.()
+      }}
+    >
+      {isLoading ? <ProgressBar height={16} width={16} /> : domain}
+    </button>
+  )
+}
 
 const Profile = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
-  const { data: domain, error, isError, isLoading } = useEnsName({ address, chainId })
   const [info, setInfo] = useState<DomainInfo | null>(null)
   const [mode, setMode] = useState<'view' | 'edit'>('view')
-
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [fields, setFields] = useState<Fields>({})
-
+  const [domain, setDomain] = useState<Domain | null>(null)
   const {
     isLoading: isFieldsLoading,
     write,
@@ -31,14 +48,19 @@ const Profile = () => {
   const txPrice = useTxPrice({ config, feeData })
 
   useEffect(() => {
-    if (domain) {
-      api.domainInfo(domain, toNetwork(chainId)).then((res) => setInfo(res))
+    if (address) {
+      api.userInfo(address, toNetwork(chainId)).then((res) => {
+        setUserInfo(res)
+        setDomain(res.primaryEns!)
+        if (res.primaryEns)
+          api.domainInfo(res.primaryEns!, toNetwork(chainId)).then((res) => {
+            setInfo(res)
+          })
+      })
     }
-  }, [chainId, domain, mode])
+  }, [chainId, mode, address])
 
   if (isDisconnected) return 'Connect Wallet'
-  if (isError) return <div className={ui.error}>{error?.message}</div>
-  if (isLoading) return <ProgressBar />
 
   return (
     <main className={styles.main}>
@@ -49,6 +71,11 @@ const Profile = () => {
       {info ? (
         mode === 'view' ? (
           <div>
+            <div className={styles.domains}>
+              {userInfo?.domains.resolved.map((domain) => (
+                <EnsToggle {...{ domain }} key={domain} />
+              ))}
+            </div>
             <h2>Records</h2>
             {Object.entries(info.records).map(([k, v]) => {
               return v ? (

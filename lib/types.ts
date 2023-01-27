@@ -49,3 +49,5 @@ export type Registration = {
 }
 
 export type RegistrationStatus = 'start' | 'commitPending' | 'committed' | 'registerPending' | 'registered'
+
+export type Domain = `${string}.eth`

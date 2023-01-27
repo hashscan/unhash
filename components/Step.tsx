@@ -1,4 +1,5 @@
 import { useRegisterStatus, useRegistrationRead } from 'lib/hooks/storage'
+import type { Domain } from 'lib/types'
 import { diffDates } from 'lib/utils'
 import { useEffect, useState } from 'react'
 import { useSigner, useFeeData, useAccount, useProvider } from 'wagmi'
@@ -7,7 +8,7 @@ import { RegisterStep } from './RegisterStep'
 import { Success } from './Success'
 import { WaitMinute } from './WaitMinute'
 
-export const Step = ({ domain, name }: { domain: string; name: string }) => {
+export const Step = ({ domain, name }: { domain: Domain; name: string }) => {
   const { data: signer } = useSigner()
 
   const { data: feeData } = useFeeData()

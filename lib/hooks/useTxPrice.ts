@@ -1,6 +1,6 @@
-import { BigNumber, BigNumberish, ethers } from 'ethers'
-
+import { BigNumber, BigNumberish, utils, providers } from 'ethers'
 import { useMemo } from 'react'
+import { Address } from 'wagmi'
 import { useEthPrice } from './useEthPrice'
 
 export const useTxPrice = ({
@@ -8,12 +8,12 @@ export const useTxPrice = ({
   feeData
 }: {
   config: {
-    request?: ethers.providers.TransactionRequest & {
-      to: `0x${string}`
+    request?: providers.TransactionRequest & {
+      to: Address
       gasLimit: NonNullable<BigNumberish>
     }
   }
-  feeData?: ethers.providers.FeeData
+  feeData?: providers.FeeData
 }) => {
   const ethPrice = useEthPrice()
   const txPrice = useMemo(
@@ -21,7 +21,7 @@ export const useTxPrice = ({
       config.request && feeData
         ? (
             parseFloat(
-              ethers.utils.formatEther(
+              utils.formatEther(
                 BigNumber.from(config.request.gasLimit).mul(
                   feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
                 )
@@ -29,7 +29,7 @@ export const useTxPrice = ({
             ) * ethPrice
           ).toPrecision(5)
         : '',
-    [feeData, config]
+    [config.request, feeData, ethPrice]
   )
   return txPrice
 }

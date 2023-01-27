@@ -1,7 +1,7 @@
 import { BigNumber, providers } from 'ethers'
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Fields, toNetwork } from 'lib/types'
+import { Domain, Fields, toNetwork } from 'lib/types'
 import { useChainId, useContract, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 export const useSendSetFields = ({
@@ -9,7 +9,7 @@ export const useSendSetFields = ({
   fields,
   onSuccess
 }: Partial<{
-  domain: string | null
+  domain: Domain | null
   fields: Fields
   onSuccess: ((data: providers.TransactionReceipt) => void) | undefined
 }>) => {

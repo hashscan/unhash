@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useChainId, useContractRead, useFeeData } from 'wagmi'
+import { Address, useChainId, useContractRead, useFeeData } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'
@@ -10,6 +10,7 @@ import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS, YEAR_IN
 
 import { Fields, toNetwork } from 'lib/types'
 import { randomSecret } from 'lib/utils'
+import { providers } from 'ethers'
 
 const secret = randomSecret()
 export const CommitmentForm = ({
@@ -18,8 +19,8 @@ export const CommitmentForm = ({
   accountAddress
 }: {
   name: string
-  feeData: ReturnType<typeof useFeeData>['data']
-  accountAddress?: `0x${string}`
+  feeData?: providers.FeeData
+  accountAddress?: Address
 }) => {
   const chainId = useChainId()
   const [address, setAddress] = useLocalStorage('owner-address', accountAddress as string)
