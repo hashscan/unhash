@@ -1,4 +1,15 @@
 :root {
+  /* typography */
+  --font-system: system-ui;
+
+  /* font sizes: we use font scale with base 18px and 1.333 scale factor */
+  --fs-regular: 18px;
+  --fs-small: 14.4px;
+  --fs-medium: 23.9px;
+  --fs-large: 32px;
+  --fs-x-large: 42.6px;
+  --fs-xx-large: 56.8px;
+
   /* colors */
   --background: #141416;
   --background-3: #191a20;
@@ -19,16 +30,14 @@
   --shadow-card: rgba(46, 47, 54, 0.24);
   --twitter: #1da1f2;
   --discord: #5865f2;
-  /* fonts */
-  --font: Inter, Inter-fallback, Helvetica, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
   /* sizes */
   --radii-sm: 4px;
   --radii-md: 8px;
+
   /* toastify */
   --toastify-color-dark: var(--background-card);
-  --toastify-font-family: var(--font);
+  --toastify-font-family: var(--font-ui);
   --toastify-icon-color-error: var(--error);
 }
 
@@ -44,7 +53,8 @@ body {
 button,
 input,
 body {
-  font-family: var(--font);
+  font-family: var(--font-ui);
+  font-weight: 300;
 }
 
 input:focus {
