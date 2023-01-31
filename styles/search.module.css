@@ -18,7 +18,7 @@
 
 .hero {
   max-width: calc(var(--container-width) / 2);
-  margin: 72px 0 128px 0;
+  margin: 80px 0 64px 0;
 }
 
 .searchInput {

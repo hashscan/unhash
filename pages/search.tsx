@@ -14,7 +14,9 @@ const Search: NextPage<SearchProps> = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.hero}>
-        <h1 className={styles.heroTitle}>Get Your Unique .eth Domain</h1>
+        <h1 className={styles.heroTitle}>
+          <WrapBalancer>Get Your Unique .eth Domain</WrapBalancer>
+        </h1>
 
         <h2 className={styles.heroSubtitle}>
           <WrapBalancer>
