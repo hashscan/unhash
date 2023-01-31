@@ -74,11 +74,9 @@ export const Nav = () => {
                   return (
                     <div className={styles.buttons}>
                       <button onClick={openChainModal} className={styles.chains} type="button">
-                        {chain.iconUrl && (
-                          <img alt={chain.name ?? 'Chain icon'} src={chain.iconUrl} height={24} width={24} />
-                        )}
                         {chain.name}
                       </button>
+                      {' | '}
                       <button className={`${styles.account}`} onClick={() => setOpen(!isOpen)}>
                         <div className={`${styles.accountIcon} ${!account.ensAvatar && styles.accountIconPlaceholder}`}>
                           {account.ensAvatar ? (

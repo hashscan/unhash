@@ -65,6 +65,9 @@
   --radii-md: 8px;
   --radii-lg: 12px;
 
+  /* transition */
+  --ease-250: 0.25s ease;
+
   /* toastify */
   --toastify-color-dark: var(--background-card);
   --toastify-font-family: var(--font-ui);

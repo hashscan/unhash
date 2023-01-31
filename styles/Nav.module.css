@@ -36,16 +36,11 @@
 
 .connect {
   border-radius: var(--radii-sm);
-  background-color: var(--color-slate-1);
+  background-color: var(--text-primary);
 }
 
 .connect:hover {
-  background-color: var(--color-slate-2);
-}
-
-.account:hover {
-  cursor: pointer;
-  background: rgba(92, 92, 92, 0.25);
+  background-color: var(--text-secondary);
 }
 
 .accountIcon {
@@ -73,7 +68,8 @@
 .buttons {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 24px;
+  align-items: center;
 }
 
 .chains,
@@ -83,11 +79,25 @@
   align-items: center;
   gap: 10px;
   padding: 6px 12px;
-  background-color: var(--background-card);
   border-radius: var(--radii-sm);
-  border: 1px solid var(--border-card);
-  color: var(--text-primary);
   cursor: pointer;
+}
+
+.account {
+  background-color: transparent;
+  border: 1.5px solid var(--text-primary);
+  color: var(--text-primary);
+}
+
+.chains {
+  background-color: var(--color-slate-5);
+  color: white;
+  font-weight: 500;
+  border: 1.5px solid transparent;
+}
+
+.chains:hover {
+  background-color: var(--color-slate-4);
 }
 
 .links {
