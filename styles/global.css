@@ -4,17 +4,17 @@
 
   /* font sizes: we use font scale with base 18px and 1.333 scale factor */
   --fs-regular: 18px;
-  --fs-small: 14.4px;
-  --fs-medium: 23.9px;
-  --fs-large: 32px;
-  --fs-x-large: 42.6px;
-  --fs-xx-large: 56.8px;
+  --fs-sm: 14.4px;
+  --fs-md: 23.9px;
+  --fs-lg: 32px;
+  --fs-x-lg: 42.6px;
+  --fs-xx-lg: 56.8px;
 
   --type-regular: 300 var(--fs-regular) / 1.444 var(--font-ui);
-  --type-medium: 300 var(--fs-medium) / 1.5 var(--font-ui);
-  --type-large: 300 var(--fs-large) / 1.5 var(--font-ui);
-  --type-x-large: 500 var(--fs-x-large) / 1.1 var(--font-ui);
-  --type-xx-large: 500 var(--fs-xx-large) / 1.1 var(--font-ui);
+  --type-md: 300 var(--fs-md) / 1.5 var(--font-ui);
+  --type-lg: 300 var(--fs-lg) / 1.5 var(--font-ui);
+  --type-x-lg: 500 var(--fs-x-lg) / 1.1 var(--font-ui);
+  --type-xx-lg: 500 var(--fs-xx-lg) / 1.1 var(--font-ui);
 
   /* 
     letter spacings
@@ -22,10 +22,10 @@
     so these need to be set separately
   */
   --ls-regular: -0.01em;
-  --ls-medium: -0.02em;
-  --ls-large: -0.03em;
-  --ls-x-large: -0.05em;
-  --ls-xx-large: -0.04em;
+  --ls-md: -0.02em;
+  --ls-lg: -0.03em;
+  --ls-x-lg: -0.05em;
+  --ls-xx-lg: -0.04em;
 
   /* slate colors */
   --color-slate-0: #000000;
@@ -63,10 +63,7 @@
   /* border radiuses */
   --radii-sm: 4px;
   --radii-md: 8px;
-
-  --radii-small: 4px;
-  --radii-medium: 8px;
-  --radii-large: 12px;
+  --radii-lg: 12px;
 
   /* toastify */
   --toastify-color-dark: var(--background-card);

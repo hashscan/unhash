@@ -1,13 +1,19 @@
 .nav {
   height: 72px;
   padding: 0px 32px;
+  border-bottom: 1px solid var(--color-slate-6);
+  box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
+}
+
+.sub {
+  margin: 0 auto;
+  max-width: var(--container-width);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--color-slate-6);
   position: relative;
-  box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
+  height: 100%;
 }
 
 .title {
@@ -29,7 +35,12 @@
 }
 
 .connect {
-  border-radius: 16px;
+  border-radius: var(--radii-sm);
+  background-color: var(--color-slate-1);
+}
+
+.connect:hover {
+  background-color: var(--color-slate-2);
 }
 
 .account:hover {
@@ -73,8 +84,14 @@
   gap: 10px;
   padding: 6px 12px;
   background-color: var(--background-card);
-  border-radius: 12px;
+  border-radius: var(--radii-sm);
   border: 1px solid var(--border-card);
   color: var(--text-primary);
   cursor: pointer;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
 }
