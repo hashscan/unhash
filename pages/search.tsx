@@ -1,0 +1,33 @@
+import React, { useEffect, useState } from 'react'
+import { NextPage } from 'next'
+
+import type { Domain } from 'lib/types'
+import api, { DomainInfo } from 'lib/api'
+import { goerli, useChainId } from 'wagmi'
+
+import styles from 'styles/search.module.css'
+
+interface SearchProps {}
+
+const Search: NextPage<SearchProps> = (props) => {
+  return (
+    <div className={styles.container}>
+      <div className={styles.hero}>
+        <h1 className={styles.heroTitle}>Get Your Unique .eth Domain</h1>
+
+        <h2 className={styles.heroSubtitle}>
+          A modern and better way of searching, buying and managing ENS domains
+        </h2>
+      </div>
+
+      <div className={styles.search}>
+        <input
+          className={styles.searchInput}
+          placeholder="Start typing..."
+        ></input>
+      </div>
+    </div>
+  )
+}
+
+export default Search

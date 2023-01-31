@@ -1,0 +1,29 @@
+.container {
+  --padding: 16px; /* TODO: this probably needs to be set somewhere globally */
+  max-width: calc(2 * var(--padding) + var(--container-width));
+  padding: 0 var(--padding) 0 var(--padding);
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font: var(--type-x-large);
+  letter-spacing: var(--ls-x-large);
+  margin-bottom: 16px;
+}
+
+.heroSubtitle {
+  font: var(--type-medium);
+  letter-spacing: var(--type-medium);
+}
+
+.hero {
+  max-width: calc(var(--container-width) / 2);
+  margin: 72px 0 128px 0;
+}
+
+.searchInput {
+  width: 100%;
+  font: var(--type-x-large);
+  padding: 16px 40px;
+  border-radius: 8px;
+}
