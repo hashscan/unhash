@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 
+import WrapBalancer from 'react-wrap-balancer'
 import type { Domain } from 'lib/types'
 import api, { DomainInfo } from 'lib/api'
 import { goerli, useChainId } from 'wagmi'
@@ -16,7 +17,10 @@ const Search: NextPage<SearchProps> = (props) => {
         <h1 className={styles.heroTitle}>Get Your Unique .eth Domain</h1>
 
         <h2 className={styles.heroSubtitle}>
-          A modern and better way of searching, buying and managing ENS domains
+          <WrapBalancer>
+            A modern and better way of searching, buying and managing{' '}
+            <b>ENS domains</b>
+          </WrapBalancer>
         </h2>
       </div>
 
