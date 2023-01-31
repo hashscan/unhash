@@ -47,9 +47,13 @@
   --twitter: #1da1f2;
   --discord: #5865f2;
 
-  /* sizes */
+  /* border radiuses */
   --radii-sm: 4px;
   --radii-md: 8px;
+
+  --radii-small: 4px;
+  --radii-medium: 8px;
+  --radii-large: 16px;
 
   /* toastify */
   --toastify-color-dark: var(--background-card);
@@ -86,6 +90,17 @@ h4,
 h5 {
   margin: 0;
   padding: 0;
+}
+
+/* box-sizing reset */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 /* reset default system input styles */
