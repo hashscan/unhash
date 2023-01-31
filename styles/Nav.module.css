@@ -36,11 +36,11 @@
 
 .connect {
   border-radius: var(--radii-sm);
-  background-color: var(--text-primary);
+  background-color: var(--text-primary) !important;
 }
 
 .connect:hover {
-  background-color: var(--text-secondary);
+  background-color: var(--text-secondary) !important;
 }
 
 .accountIcon {
