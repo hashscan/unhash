@@ -10,6 +10,22 @@
   --fs-x-large: 42.6px;
   --fs-xx-large: 56.8px;
 
+  --type-regular: 300 var(--fs-regular) / 1.444 var(--font-ui);
+  --type-medium: 300 var(--fs-medium) / 1.5 var(--font-ui);
+  --type-large: 300 var(--fs-large) / 1.5 var(--font-ui);
+  --type-x-large: 500 var(--fs-x-large) / 1.1 var(--font-ui);
+  --type-xx-large: 600 var(--fs-xx-large) / 1.1 var(--font-ui);
+
+  /* 
+    letter spacings
+    (CSS doesn't allow setting letter-spacing via a `font` property,
+    so these need to be set separately
+  */
+  --ls-regular: -0.01em;
+  --ls-medium: -0.02em;
+  --ls-large: -0.03em;
+  --ls-x-large: -0.04em;
+
   /* colors */
   --background: #141416;
   --background-3: #191a20;
@@ -39,6 +55,8 @@
   --toastify-color-dark: var(--background-card);
   --toastify-font-family: var(--font-ui);
   --toastify-icon-color-error: var(--error);
+
+  --container-width: 1280px;
 }
 
 html,
@@ -48,46 +66,35 @@ body {
 
   background: var(--background);
   color: var(--text-primary);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 button,
-input,
 body {
-  font-family: var(--font-ui);
-  font-weight: 300;
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+}
+
+/* reset padding of headings */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+/* reset default system input styles */
+input {
+  appearance: none;
+  border: none;
+  outline: none;
 }
 
 input:focus {
-  border: 1px solid var(--primary);
-  outline: 1px solid var(--primary);
-}
-
-h1 {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 115%;
-  margin: 0;
-  padding: 0;
-}
-
-@media screen and (max-width: 1200px) {
-  h1 {
-    font-size: 30px;
-  }
-  h3 {
-    font-size: 18px;
-  }
-}
-
-@media screen and (max-width: 520px) {
-  h1 {
-    font-size: 28px;
-  }
-}
-
-h3 {
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0;
-  padding: 0;
+  border-bottom: 2px solid var(--primary);
 }
