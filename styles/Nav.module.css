@@ -1,12 +1,13 @@
 .nav {
-  height: 56px;
-  padding: 0px 20px;
+  height: 72px;
+  padding: 0px 32px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1.5px solid var(--border-2);
+  border-bottom: 1px solid var(--color-slate-6);
   position: relative;
+  box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
 }
 
 .title {

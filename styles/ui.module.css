@@ -6,9 +6,10 @@
   font-weight: 500;
   font-size: 16px;
 
-  border-radius: var(--radii-sm);
+  border-radius: var(--radii-small);
   border: none;
-  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 2px;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset,
+    rgba(15, 15, 15, 0.1) 0px 1px 2px;
   background-color: var(--primary);
 }
 
@@ -24,7 +25,7 @@
 }
 
 .buttonSecondary {
-  border-radius: var(--radii-sm);
+  border-radius: var(--radii-small);
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 8px;
@@ -59,7 +60,7 @@
   gap: 8px;
 
   padding: 8px;
-  border-radius: var(--radii-md);
+  border-radius: var(--radii-medium);
   background-color: var(--background-card);
   border: 1px solid var(--border-card);
 
@@ -79,7 +80,7 @@
 .menu:hover {
   cursor: pointer;
   background: rgba(92, 92, 92, 0.25);
-  border-radius: var(--radii-sm);
+  border-radius: var(--radii-small);
 }
 
 .menuIcon {
@@ -99,7 +100,7 @@
 .card {
   background-color: var(--background-card);
   border: 1px solid var(--border-card);
-  border-radius: var(--radii-md);
+  border-radius: var(--radii-medium);
 }
 
 .link {
@@ -122,7 +123,7 @@
   background-color: var(--background-card);
   border: none;
   color: var(--text-primary);
-  border-radius: var(--radii-sm);
+  border-radius: var(--radii-small);
   border: 1px solid var(--border-card);
   box-sizing: border-box;
 }
@@ -131,5 +132,5 @@
   background-color: var(--error);
   color: white;
   padding: 12px;
-  border-radius: var(--radii-sm);
+  border-radius: var(--radii-small);
 }
