@@ -81,6 +81,7 @@
   padding: 6px 12px;
   border-radius: var(--radii-sm);
   cursor: pointer;
+  transition: var(--ease-250);
 }
 
 .account {
