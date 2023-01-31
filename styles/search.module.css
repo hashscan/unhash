@@ -6,15 +6,15 @@
 }
 
 .heroTitle {
-  font: var(--type-x-large);
-  letter-spacing: var(--ls-x-large);
+  font: var(--type-x-lg);
+  letter-spacing: var(--ls-x-lg);
   margin-bottom: 16px;
   color: var(--color-slate-0);
 }
 
 .heroSubtitle {
-  font: var(--type-medium);
-  letter-spacing: var(--type-medium);
+  font: var(--type-md);
+  letter-spacing: var(--type-md);
 }
 
 .hero {
@@ -32,7 +32,7 @@
   bottom: 16px;
   right: 16px;
   background: var(--color-slate-1);
-  border-radius: var(--radii-medium);
+  border-radius: var(--radii-md);
   color: var(--color-slate-8);
   font: var(--type-regular);
   padding: 16px 24px;
@@ -45,8 +45,8 @@
   width: 100%;
   color: var(--color-slate-0);
   background-color: var(--color-slate-8);
-  font: var(--type-xx-large);
-  letter-spacing: var(--ls-xx-large);
+  font: var(--type-xx-lg);
+  letter-spacing: var(--ls-xx-lg);
   padding: 32px 20px;
   border-radius: 8px;
 }
