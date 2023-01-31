@@ -40,7 +40,6 @@ export const useSendCommit = ({
     ...config,
     onSuccess: (data) => {
       const reg = registration!
-
       setRegistration({
         ...base,
         ...reg,

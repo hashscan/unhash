@@ -14,6 +14,6 @@ export function useRegistration(name: string) {
 }
 
 export const useRegistrationRead = (name: string) => {
-  const registration = useReadLocalStorage<Registration | null>(`ens.registration.${name}`)
+  const registration = useReadLocalStorage<Registration>(`ens.registration.${name}`)
   return registration
 }
