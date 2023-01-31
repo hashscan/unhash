@@ -28,9 +28,13 @@ const Search: NextPage<SearchProps> = (props) => {
 
       <div className={styles.search}>
         <input
+          autoFocus
           className={styles.searchInput}
-          placeholder="Start typing..."
+          spellCheck="false"
+          placeholder="Look up .eth domain..."
         ></input>
+
+        <div className={styles.searchButton}>Buy for $5 / year</div>
       </div>
     </div>
   )
