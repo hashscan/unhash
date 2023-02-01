@@ -1,5 +1,5 @@
 .nav {
-  height: 72px;
+  height: var(--nav-height);
   padding: 0px 32px;
   border-bottom: 1px solid var(--color-slate-6);
   box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);

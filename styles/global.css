@@ -13,7 +13,7 @@
   --type-regular: 300 var(--fs-regular) / 1.444 var(--font-ui);
   --type-sm: 400 var(--fs-sm) / 1.444 var(--font-ui);
   --type-md: 300 var(--fs-md) / 1.5 var(--font-ui);
-  --type-lg: 300 var(--fs-lg) / 1.5 var(--font-ui);
+  --type-lg: 500 var(--fs-lg) / 1.5 var(--font-ui);
   --type-x-lg: 500 var(--fs-x-lg) / 1.1 var(--font-ui);
   --type-xx-lg: 500 var(--fs-xx-lg) / 1.1 var(--font-ui);
 
@@ -74,6 +74,8 @@
   --toastify-font-family: var(--font-ui);
   --toastify-icon-color-error: var(--error);
 
+  /* sizes */
+  --nav-height: 72px;
   --container-width: 1280px;
 }
 

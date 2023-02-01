@@ -1,0 +1,33 @@
+.main {
+  align-self: stretch;
+
+  width: var(--container-width);
+  height: calc(100vh - var(--nav-height));
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.left {
+  flex-grow: 1;
+
+  padding: 60px 30px 60px 0px;
+}
+
+.right {
+  min-width: 520px;
+
+  padding: 60px 30px;
+
+  background-color: var(--background-card);
+  border-left: 1.5px solid var(--color-slate-6);
+}
+
+.title {
+  color: var(--color-slate-2);
+  font: var(--type-lg);
+  letter-spacing: var(--ls-lg);
+}
