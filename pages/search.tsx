@@ -34,7 +34,10 @@ const Search: NextPage<SearchProps> = (props) => {
           placeholder="Look up .eth domain..."
         ></input>
 
-        <div className={styles.searchButton}>Buy for $5 / year</div>
+        <div className={styles.searchButton}>
+          <div>Get for $5 / year</div>
+          <div className={styles.searchButtonStatus}>Available</div>
+        </div>
       </div>
     </div>
   )

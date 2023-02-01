@@ -19,7 +19,7 @@
 
 .hero {
   max-width: calc(var(--container-width) / 2);
-  margin: 80px 0 64px 0;
+  margin: 96px 0 96px 0;
 }
 
 .search {
@@ -28,27 +28,30 @@
 
 .searchButton {
   position: absolute;
-  top: 16px;
-  bottom: 16px;
+  top: 18px;
+  bottom: 18px;
   right: 16px;
   background: var(--color-slate-1);
-  border-radius: var(--radii-md);
+  border-radius: var(--radii-lg);
   color: var(--color-slate-8);
   font: var(--type-regular);
   padding: 16px 24px;
   display: flex;
+  flex-flow: column nowrap;
   align-items: center;
-  font-weight: 500;
+  justify-content: center;
+  font-weight: 600;
 }
 
 .searchInput {
   width: 100%;
   color: var(--color-slate-0);
-  background-color: var(--color-slate-8);
+  background-color: var(--color-slate-7);
+  border: 1px solid var(--color-slate-6);
   font: var(--type-xx-lg);
   letter-spacing: var(--ls-xx-lg);
-  padding: 32px 20px;
-  border-radius: 8px;
+  padding: 32px 16px;
+  border-radius: var(--radii-lg);
 }
 
 .searchInput::placeholder {
@@ -56,5 +59,10 @@
 }
 
 .searchInput:focus {
-  box-shadow: none;
+  box-shadow: inset 0px 0px 16px -1px rgba(0, 0, 0, 0.03);
+}
+
+.searchButtonStatus {
+  color: var(--color-slate-4);
+  font-weight: 400;
 }
