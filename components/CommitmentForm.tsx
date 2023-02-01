@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Address, useChainId, useContractRead, useFeeData } from 'wagmi'
+import { Address, useChainId, useContractRead } from 'wagmi'
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/CommitmentForm.module.css'

@@ -8,7 +8,6 @@ import localFont from '@next/font/local'
 import { AppProps } from 'next/app'
 import { chains, provider, connectors } from 'lib/connectors'
 import { Nav } from 'components/Nav'
-import { WatchTx } from 'components/WatchTx'
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -65,7 +64,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           <Nav />
           <Component {...pageProps} />
         </RainbowKitProvider>
-        <WatchTx />
       </WagmiConfig>
     </>
   )

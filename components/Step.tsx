@@ -1,4 +1,4 @@
-import { useRegisterStatus, useRegistrationRead } from 'lib/hooks/storage'
+import { useRegistrationRead } from 'lib/hooks/storage'
 import type { Domain } from 'lib/types'
 import { diffDates } from 'lib/utils'
 import { useEffect, useState } from 'react'
@@ -14,9 +14,9 @@ export const Step = ({ domain, name }: { domain: Domain; name: string }) => {
   const { data: feeData } = useFeeData()
   const { address } = useAccount()
 
-  const { status } = useRegisterStatus()
   const provider = useProvider()
   const reg = useRegistrationRead(name)
+  const status = reg?.status
   const [isMounted, setMounted] = useState(false)
   const [timestamp, setTimestamp] = useState(0)
   useEffect(() => {
@@ -34,7 +34,7 @@ export const Step = ({ domain, name }: { domain: Domain; name: string }) => {
     return <CommitmentForm {...{ name, feeData }} accountAddress={address} />
 
   if (status === 'committed' && isMounted && diffDates(new Date(), new Date(timestamp * 1000)) < 1)
-    return <WaitMinute {...{ timestamp }} />
+    return <WaitMinute {...{ timestamp, name }} />
 
   if (status === 'committed' || status === 'registerPending') {
     // TODO: pass register tx hash

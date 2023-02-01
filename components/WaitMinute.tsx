@@ -1,10 +1,10 @@
 import { ProgressBar } from './icons'
 import ui from 'styles/ui.module.css'
 import { useCountdown } from 'lib/hooks/useCountdown'
-import { useRegisterStatus } from 'lib/hooks/storage'
+import { useRegistration } from 'lib/hooks/storage'
 
-export const WaitMinute = ({ timestamp }: { timestamp: number }) => {
-  const { setStatus } = useRegisterStatus()
+export const WaitMinute = ({ timestamp, name }: { timestamp: number; name: string }) => {
+  const { registration, setRegistration } = useRegistration(name)
 
   const [days, hours, minutes, seconds] = useCountdown(new Date(timestamp * 1000 + 60000))
 
@@ -13,7 +13,7 @@ export const WaitMinute = ({ timestamp }: { timestamp: number }) => {
       <button
         className={ui.button}
         onClick={() => {
-          setStatus('committed')
+          if (registration) setRegistration({ ...registration, status: 'committed' })
         }}
       >
         Next

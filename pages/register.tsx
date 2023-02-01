@@ -6,7 +6,7 @@ import styles from 'styles/register.module.css'
 import type { Domain } from 'lib/types'
 import api, { DomainInfo } from 'lib/api'
 import { goerli, useChainId } from 'wagmi'
-import { useRegisterStatus } from 'lib/hooks/storage'
+import { useRegistrationRead } from 'lib/hooks/storage'
 
 const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
   ssr: false,
@@ -18,25 +18,26 @@ interface RegisterProps {
   name: string
 }
 
-const Register: NextPage<RegisterProps> = (props) => {
+const Register: NextPage<RegisterProps> = ({ name, domain }) => {
   const [domainInfo, setDomainInfo] = useState<DomainInfo | null>(null)
   const chainId = useChainId()
-  const { status } = useRegisterStatus()
+  const registration = useRegistrationRead(name)
+  const status = registration?.status
 
   useEffect(() => {
     if (status === 'registerPending' || status === 'commitPending')
       api
-        .domainInfo(props.domain)
+        .domainInfo(domain)
         .then((res) => setDomainInfo(res))
         .catch(() => console.log(`Not found`))
-  }, [props.domain, status])
+  }, [domain, status])
 
   return (
     <>
       <main className={styles.main}>
         {domainInfo ? (
           <>
-            <h1 style={{ marginTop: '40px' }}>{props.domain}</h1>
+            <h1 style={{ marginTop: '40px' }}>{domain}</h1>
             <h2>Records</h2>
             {Object.entries(domainInfo.records).map(([k, v]) => {
               return v ? (
@@ -59,12 +60,12 @@ const Register: NextPage<RegisterProps> = (props) => {
         ) : (
           <>
             <h1 style={{ marginTop: '40px' }}>
-              Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{props.domain}</span>
+              Register <span style={{ color: 'var(--primary)', textDecoration: 'underline' }}>{domain}</span>
             </h1>
             <div
               style={{ height: '1px', background: 'var(--border-2)', marginTop: '20px', marginBottom: '40px' }}
             ></div>
-            <Step {...props} />
+            <Step {...{ domain, name }} />
           </>
         )}
       </main>

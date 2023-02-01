@@ -2,7 +2,7 @@ import { BigNumber, ethers } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegisterStatus, useRegistration } from './storage'
+import { useRegistration } from './storage'
 
 export const useSendRegister = ({ name }: { name: string }) => {
   const chainId = useChainId()
@@ -26,7 +26,6 @@ export const useSendRegister = ({ name }: { name: string }) => {
       value: ethers.utils.parseEther('0.1') // TODO: set correct price from api
     }
   })
-  const { setStatus } = useRegisterStatus()
 
   const {
     write,
@@ -52,7 +51,6 @@ export const useSendRegister = ({ name }: { name: string }) => {
     onSuccess: () => {
       if (!registration) return
       setRegistration({ ...registration, status: 'registered' })
-      setStatus('registered')
     }
   })
 

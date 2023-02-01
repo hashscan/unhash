@@ -60,3 +60,11 @@ export const diffDates = (date1: Date, date2: Date) => {
 
   return (utcdate1 - utcOther) / 60000
 }
+export function parseJSON<T>(value: string | null): T | undefined {
+  try {
+    return value === 'undefined' ? undefined : JSON.parse(value ?? '')
+  } catch {
+    console.log('parsing error on', { value })
+    return undefined
+  }
+}
