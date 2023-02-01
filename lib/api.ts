@@ -4,8 +4,8 @@ import { API_URL } from './constants'
 import type { Network, Fields, Domain } from './types'
 
 type DomainStatus = {
-  domain: Domain
   isAvailable: boolean
+  listing?: DomainListing
 }
 
 export type DomainPrice = {
@@ -21,6 +21,17 @@ export type DomainInfo = {
   records: Fields
 }
 
+export type DomainListing = {
+  url: string
+  source: {
+    name: string
+    url: string
+  }
+  priceUsd: number
+  price: number
+  currency: Currency
+}
+
 export type UserInfo = {
   primaryEns: Domain | null
   domains: {
@@ -30,8 +41,16 @@ export type UserInfo = {
   }
 }
 
-async function checkDomain(domain: string, network: Network = 'mainnet'): Promise<boolean> {
-  const res = await ky.get(`${API_URL}/domain/check?domain=${domain}&network=${network}`).json<DomainStatus>()
+export type Currency = {
+  contract: string
+  name: string
+  symbol: string
+  decimals: number
+}
+
+
+async function checkDomain(domain: string, network: Network = 'mainnet', withListing: boolean = false): Promise<boolean> {
+  const res = await ky.get(`${API_URL}/domain/check?domain=${domain}&network=${network}&withListing=${withListing}`).json<DomainStatus>()
   return res.isAvailable
 }
 

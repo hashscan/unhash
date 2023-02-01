@@ -1,13 +1,19 @@
 .nav {
   height: 72px;
   padding: 0px 32px;
+  border-bottom: 1px solid var(--color-slate-6);
+  box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
+}
+
+.sub {
+  margin: 0 auto;
+  max-width: var(--container-width);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--color-slate-6);
   position: relative;
-  box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
+  height: 100%;
 }
 
 .title {
@@ -29,12 +35,12 @@
 }
 
 .connect {
-  border-radius: 16px;
+  border-radius: var(--radii-sm);
+  background-color: var(--text-primary) !important;
 }
 
-.account:hover {
-  cursor: pointer;
-  background: rgba(92, 92, 92, 0.25);
+.connect:hover {
+  background-color: var(--text-secondary) !important;
 }
 
 .accountIcon {
@@ -62,7 +68,8 @@
 .buttons {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: 24px;
+  align-items: center;
 }
 
 .chains,
@@ -72,9 +79,30 @@
   align-items: center;
   gap: 10px;
   padding: 6px 12px;
-  background-color: var(--background-card);
-  border-radius: 12px;
-  border: 1px solid var(--border-card);
-  color: var(--text-primary);
+  border-radius: var(--radii-sm);
   cursor: pointer;
+  transition: var(--ease-250);
+}
+
+.account {
+  background-color: transparent;
+  border: 1.5px solid var(--text-primary);
+  color: var(--text-primary);
+}
+
+.chains {
+  background-color: var(--color-slate-5);
+  color: white;
+  font-weight: 500;
+  border: 1.5px solid transparent;
+}
+
+.chains:hover {
+  background-color: var(--color-slate-4);
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
 }
