@@ -43,8 +43,8 @@
 }
 
 .loader {
-  --size: 12px;
-  animation: 0.6s linear infinite spin;
+  --size: 10px;
+  animation: 0.5s linear infinite spin;
   display: none;
   margin-right: 32px;
 }
@@ -60,5 +60,5 @@
   height: var(--size);
   border-radius: var(--size);
   background: var(--color-slate-1);
-  transform: translateY(-16px);
+  transform: translateY(-18px);
 }
