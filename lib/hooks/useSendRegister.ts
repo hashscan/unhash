@@ -2,7 +2,7 @@ import { BigNumber, ethers } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegistration } from './storage'
+import { usePendingRegistrations, useRegistration } from './storage'
 
 export const useSendRegister = ({ name }: { name: string }) => {
   const chainId = useChainId()
@@ -27,6 +27,8 @@ export const useSendRegister = ({ name }: { name: string }) => {
     }
   })
 
+  const { pendingRegistrations, setPendingRegistrations } = usePendingRegistrations()
+
   const {
     write,
     data,
@@ -36,7 +38,7 @@ export const useSendRegister = ({ name }: { name: string }) => {
     ...config,
     onSuccess: (data) => {
       if (!registration) return
-
+      setPendingRegistrations([...pendingRegistrations, registration])
       setRegistration({ ...registration, registerTxHash: data.hash, status: 'registerPending' })
     }
   })

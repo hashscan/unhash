@@ -11,3 +11,9 @@ export const useRegistrationRead = (name: string) => {
   const registration = useReadLocalStorage<Registration>(`ens.registration.${name}`)
   return registration
 }
+
+export const usePendingRegistrations = () => {
+  const [pendingRegistrations, setPendingRegistrations] = useLocalStorage<Registration[]>('ens.pending', [])
+
+  return { pendingRegistrations, setPendingRegistrations }
+}

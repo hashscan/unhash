@@ -1,7 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegistration } from './storage'
+import { usePendingRegistrations, useRegistration } from './storage'
 
 export const useSendCommit = ({
   commitmentHash,
@@ -28,7 +28,7 @@ export const useSendCommit = ({
     enabled: Boolean(commitmentHash)
   })
   const { registration, setRegistration } = useRegistration(name)
-
+  const { pendingRegistrations, setPendingRegistrations } = usePendingRegistrations()
   const base = { name, owner, duration, secret }
 
   const {
@@ -40,6 +40,7 @@ export const useSendCommit = ({
     ...config,
     onSuccess: (data) => {
       const reg = registration!
+      setPendingRegistrations([...pendingRegistrations, reg])
       setRegistration({
         ...base,
         ...reg,

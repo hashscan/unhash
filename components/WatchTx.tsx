@@ -1,8 +1,8 @@
-import { getAllRegistrations } from 'lib/registration/getAllRegistrations'
+import { usePendingRegistrations } from 'lib/hooks/storage'
 import { updateRegistration } from 'lib/registration/updateRegistration'
 import { Registration } from 'lib/types'
 import { waitForPending } from 'lib/waitForPending'
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useProvider } from 'wagmi'
 
 const filterForUnique = (data: Registration[]) => {
@@ -11,25 +11,23 @@ const filterForUnique = (data: Registration[]) => {
 
 export const WatchTx = () => {
   const provider = useProvider()
-  const txesCache = useMemo(() => new Map<string, Promise<void>>(), [])
+  const txesCache = new Map()
   const [completed, setCompleted] = useState<Registration[]>([])
   const [failed, setFailed] = useState<Registration[]>([])
-  const [pending, setPending] = useState<Registration[]>([])
+  const { pendingRegistrations, setPendingRegistrations } = usePendingRegistrations()
 
   useEffect(() => {
-    const regs = getAllRegistrations()
-    setPending(regs)
     waitForPending({
-      regs,
+      regs: pendingRegistrations,
       provider,
       txesCache,
       onSuccess: (reg) => {
         setCompleted(filterForUnique([...completed, reg]))
-        setPending(regs.filter((x) => x.name !== reg.name))
+        setPendingRegistrations(pendingRegistrations.filter((x) => x.name !== reg.name))
         updateRegistration(reg)
       },
       onError: (reg) => {
-        setPending(regs.filter((x) => x.name !== reg.name))
+        setPendingRegistrations(pendingRegistrations.filter((x) => x.name !== reg.name))
         setFailed(filterForUnique([...failed, reg]))
       }
     })
@@ -64,10 +62,10 @@ export const WatchTx = () => {
           })}
         </div>
       ) : null}
-      {pending.length ? (
+      {pendingRegistrations.length ? (
         <div>
           <div>Pending:</div>
-          {[...pending].map((reg) => {
+          {[...pendingRegistrations].map((reg) => {
             const pending = reg.status.indexOf('Pending')
             return (
               <>
