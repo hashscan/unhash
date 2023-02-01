@@ -14,8 +14,8 @@ const waitForPending = async ({
   txes: string[]
   provider: providers.BaseProvider
   txesCache: Map<string, Promise<void>>
-  setCompleted: Dispatch<SetStateAction<string[]>>
-  setFailed: Dispatch<SetStateAction<string[]>>
+  setCompleted: Dispatch<SetStateAction<Set<string>>>
+  setFailed: Dispatch<SetStateAction<Set<string>>>
 }) => {
   await Promise.all(
     txes.map(async (hash) => {
@@ -33,9 +33,9 @@ const waitForPending = async ({
         }
         if (status === 0) {
           // failed
-          setFailed((h) => [...h, hash])
+          setFailed((h) => new Set([...h, hash]))
         } else {
-          setCompleted((h) => [...h, hash])
+          setCompleted((h) => new Set([...h, hash]))
         }
       })
 
@@ -63,8 +63,8 @@ const getTransactions = async (hashes: string[]) => {
 export const WatchTx = () => {
   const provider = useProvider()
   const txesCache = useMemo(() => new Map<string, Promise<void>>(), [])
-  const [completed, setCompleted] = useState<string[]>([])
-  const [failed, setFailed] = useState<string[]>([])
+  const [completed, setCompleted] = useState<Set<string>>(new Set())
+  const [failed, setFailed] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     const hashes: string[] = []
