@@ -6,6 +6,7 @@ import styles from 'styles/register.module.css'
 import type { Domain } from 'lib/types'
 import api, { DomainInfo } from 'lib/api'
 import { goerli, useChainId } from 'wagmi'
+import { useRegisterStatus } from 'lib/hooks/storage'
 
 const Step = dynamic(() => import('components/Step').then((m) => m.Step), {
   ssr: false,
@@ -20,13 +21,15 @@ interface RegisterProps {
 const Register: NextPage<RegisterProps> = (props) => {
   const [domainInfo, setDomainInfo] = useState<DomainInfo | null>(null)
   const chainId = useChainId()
+  const { status } = useRegisterStatus()
 
   useEffect(() => {
-    api
-      .domainInfo(props.domain)
-      .then((res) => setDomainInfo(res))
-      .catch(() => console.log(`Not found`))
-  }, [props.domain])
+    if (status === 'registerPending' || status === 'commitPending')
+      api
+        .domainInfo(props.domain)
+        .then((res) => setDomainInfo(res))
+        .catch(() => console.log(`Not found`))
+  }, [props.domain, status])
 
   return (
     <>
