@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 
 import WrapBalancer from 'react-wrap-balancer'
-import type { Domain } from 'lib/types'
-import api, { DomainInfo } from 'lib/api'
-import { goerli, useChainId } from 'wagmi'
+import {
+  SearchButton,
+  SearchStatus,
+} from 'components/DomainSearchBar/SearchButton'
 
 import styles from 'styles/search.module.css'
 
@@ -34,9 +35,8 @@ const Search: NextPage<SearchProps> = (props) => {
           placeholder="Look up .eth domain..."
         ></input>
 
-        <div className={styles.searchButton}>
-          <div>Get for $5 / year</div>
-          <div className={styles.searchButtonStatus}>Available</div>
+        <div className={styles.action}>
+          <SearchButton status={SearchStatus.Available} />
         </div>
       </div>
     </div>

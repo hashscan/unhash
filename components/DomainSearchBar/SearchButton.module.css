@@ -1,0 +1,64 @@
+.container {
+  margin-right: 24px;
+  transition: opacity 0.3s ease;
+}
+
+.containerHidden {
+  opacity: 0;
+}
+
+.button {
+  background: var(--color-slate-1);
+  border-radius: var(--radii-lg);
+  box-shadow: none;
+  border: none;
+  color: var(--color-slate-8);
+  font: var(--type-regular);
+  padding: 18px 32px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.buttonStatus {
+  color: var(--color-slate-5);
+  font-weight: 400;
+}
+
+/*
+ * Loading spinner 
+ */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  --size: 12px;
+  animation: 0.6s linear infinite spin;
+  display: none;
+  margin-right: 32px;
+}
+
+.loaderVisible {
+  display: block;
+}
+
+.loader::after {
+  content: '';
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--size);
+  background: var(--color-slate-1);
+  transform: translateY(-16px);
+}
