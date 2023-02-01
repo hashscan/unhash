@@ -7,7 +7,7 @@ import React from 'react'
 import localFont from '@next/font/local'
 import { AppProps } from 'next/app'
 import { chains, provider, connectors } from 'lib/connectors'
-import { Nav } from 'components/Nav'
+import { Nav } from 'components/Nav/Nav'
 
 const wagmiClient = createClient({
   autoConnect: true,

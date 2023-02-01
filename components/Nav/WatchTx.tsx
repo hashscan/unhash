@@ -4,6 +4,8 @@ import { Registration } from 'lib/types'
 import { waitForPending } from 'lib/waitForPending'
 import { useState, useEffect } from 'react'
 import { useProvider } from 'wagmi'
+import ui from 'styles/ui.module.css'
+import styles from './WatchTx.module.css'
 
 const filterForUnique = (data: Registration[]) => {
   return data.reduce<Registration[]>((acc, x) => acc.concat(acc.find((y) => y.name === x.name) ? [] : [x]), [])
@@ -37,40 +39,40 @@ export const WatchTx = () => {
   return (
     <>
       {failed.length ? (
-        <div>
-          <div>Failed:</div>
+        <div className={styles.container}>
+          <div style={{ color: 'var(--error)' }}>Failed ({failed.length}):</div>
           {[...failed].map((reg) => {
             const pending = reg.status.indexOf('Pending')
             return (
-              <>
+              <div className={`${ui.menu} ${styles.tx}`} key={`${reg.name}-${reg.status}`}>
                 {reg.name}.eth - {reg.status.slice(0, pending === -1 ? reg.status.length : pending)}
-              </>
+              </div>
             )
           })}
         </div>
       ) : null}
       {completed.length ? (
         <div>
-          <div>Completed:</div>
+          <div>Completed ({completed.length}):</div>
           {[...completed].map((reg) => {
             const pending = reg.status.indexOf('Pending')
             return (
-              <>
+              <div className={`${ui.menu} ${styles.tx}`} key={`${reg.name}-${reg.status}`}>
                 {reg.name}.eth - {reg.status.slice(0, pending === -1 ? reg.status.length : pending)}
-              </>
+              </div>
             )
           })}
         </div>
       ) : null}
       {pendingRegistrations.length ? (
         <div>
-          <div>Pending:</div>
+          <div>Pending ({pendingRegistrations.length}):</div>
           {[...pendingRegistrations].map((reg) => {
             const pending = reg.status.indexOf('Pending')
             return (
-              <>
+              <div className={`${ui.menu} ${styles.tx}`} key={`${reg.name}-${reg.status}`}>
                 {reg.name}.eth - {reg.status.slice(0, pending === -1 ? reg.status.length : pending)}
-              </>
+              </div>
             )
           })}
         </div>
