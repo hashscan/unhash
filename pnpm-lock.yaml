@@ -5,6 +5,7 @@ specifiers:
   '@rainbow-me/rainbowkit': ^0.8.1
   '@types/node': ^18.11.18
   '@types/react': ^18.0.27
+  clsx: ^1.2.1
   eslint: 8.33.0
   eslint-config-next: 13.1.6
   ethers: ^5.7.2
@@ -21,6 +22,7 @@ specifiers:
 dependencies:
   '@next/font': 13.1.6
   '@rainbow-me/rainbowkit': 0.8.1_gzfz4i5v4izsxklqvygub5k6cm
+  clsx: 1.2.1
   ethers: 5.7.2
   ky: 0.33.2
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
