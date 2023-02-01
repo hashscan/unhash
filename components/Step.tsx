@@ -30,8 +30,7 @@ export const Step = ({ domain, name }: { domain: Domain; name: string }) => {
 
   if (!(address && signer)) return <div>loading</div>
 
-  if (status === 'start' || status === 'commitPending')
-    return <CommitmentForm {...{ name, feeData }} accountAddress={address} />
+  if (!status || status === 'commitPending') return <CommitmentForm {...{ name, feeData }} accountAddress={address} />
 
   if (status === 'committed' && isMounted && diffDates(new Date(), new Date(timestamp * 1000)) < 1)
     return <WaitMinute {...{ timestamp, name }} />
