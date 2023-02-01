@@ -1,5 +1,5 @@
-import { Registration } from './types'
-import { parseJSON } from './utils'
+import { Registration } from '../types'
+import { parseJSON } from '../utils'
 
 export const getAllRegistrations = () => {
   const registrations: Registration[] = []

@@ -1,4 +1,5 @@
-import { getAllRegistrations } from 'lib/getAllRegistrations'
+import { getAllRegistrations } from 'lib/registration/getAllRegistrations'
+import { updateRegistration } from 'lib/registration/updateRegistration'
 import { Registration } from 'lib/types'
 import { waitForPending } from 'lib/waitForPending'
 import { useMemo, useState, useEffect } from 'react'
@@ -25,14 +26,7 @@ export const WatchTx = () => {
       onSuccess: (reg) => {
         setCompleted(filterForUnique([...completed, reg]))
         setPending(regs.filter((x) => x.name !== reg.name))
-        localStorage.setItem(
-          `ens.registration.${reg.name}`,
-          JSON.stringify({
-            ...reg,
-            status: reg.status === 'registerPending' ? 'registered' : 'committed'
-          } as Registration)
-        )
-        dispatchEvent(new Event('local-storage'))
+        updateRegistration(reg)
       },
       onError: (reg) => {
         setPending(regs.filter((x) => x.name !== reg.name))
