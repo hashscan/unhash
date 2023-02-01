@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 
 import WrapBalancer from 'react-wrap-balancer'
-import {
-  SearchButton,
-  SearchStatus,
-} from 'components/DomainSearchBar/SearchButton'
+import DomainSearchBar from 'components/DomainSearchBar'
 
 import styles from 'styles/search.module.css'
 
@@ -31,18 +28,9 @@ const Search: NextPage<SearchProps> = (props) => {
         </div>
       </div>
 
-      <div className={styles.container}>
-        <div className={styles.search}>
-          <input
-            autoFocus
-            className={styles.searchInput}
-            spellCheck="false"
-            placeholder="Look up .eth domain..."
-          ></input>
-
-          <div className={styles.action}>
-            <SearchButton status={SearchStatus.Available} />
-          </div>
+      <div className={styles.searchSection}>
+        <div className={styles.container}>
+          <DomainSearchBar />
         </div>
       </div>
     </>

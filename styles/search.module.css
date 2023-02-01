@@ -27,40 +27,7 @@
   letter-spacing: var(--type-md);
 }
 
-.search {
+.searchSection {
   position: relative;
-  margin-top: -132px;
-}
-
-.action {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  min-width: 240px;
-  justify-content: flex-end;
-}
-
-.searchInput {
-  width: 100%;
-  color: var(--color-slate-0);
-  background-color: var(--color-slate-8);
-  border: 1px solid var(--color-slate-5);
-  font: var(--type-xx-lg);
-  letter-spacing: var(--ls-xx-lg);
-  padding: 32px 16px;
-  border-radius: var(--radii-lg);
-}
-
-.searchInput::placeholder {
-  color: var(--color-slate-5);
-}
-
-.searchInput:focus {
-  box-shadow: none;
-  border-color: var(--color-slate-3);
-  box-shadow: inset 0px 0px 4px -2px var(--color-slate-5);
+  margin-top: -128px;
 }
