@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 
 import WrapBalancer from 'react-wrap-balancer'
-import DomainSearchBar from 'components/DomainSearchBar'
+import { DomainSearchBar } from 'components/DomainSearchBar'
 
 import styles from 'styles/search.module.css'
 
