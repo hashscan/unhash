@@ -4,6 +4,7 @@ import { validateDomain } from 'lib/utils'
 import { GetServerSideProps, NextPage } from 'next'
 import { useState } from 'react'
 import styles from 'styles/checkout.module.css'
+import ui from 'styles/ui.module.css'
 
 interface CheckoutProps {
   domain: Domain
@@ -27,20 +28,42 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
   return (
     <main className={styles.main}>
       {/* TODO: remove temp bg hack */}
-      <div className={styles.background}/>
+      <div className={styles.background} />
       <div className={styles.left}>
-        <span className={styles.title}>ENS domain registration</span>
+        <div className={styles.header}>
+          {/* hidden for now */}
+          {/* <div className={styles.back}><BackIcon /></div> */}
+          <span className={styles.title}>ENS domain registration</span>
+        </div>
         {/* TODO: make component for steps and keep updated */}
-        <div>
+        <div className={styles.steps}>
           <span style={{ fontWeight: '400' }}>Commit&nbsp;&nbsp;&nbsp;</span>{'>'}
           <span style={{ color: 'var(--text-secondary)' }}>&nbsp;&nbsp;&nbsp;Wait&nbsp;&nbsp;&nbsp;{'>'}</span>
           <span style={{ color: 'var(--text-secondary)' }}>&nbsp;&nbsp;&nbsp;Register</span>
         </div>
-        {/* TODO: add step components based on step */}
-        <div style={{ margin: '200px 0px 200px 0px' }}>{step}</div>
-        {/* TODO: move buttons to step components */}
-        {step !== 'commit' && <button onClick={() => onPrevClick()} >Prev</button>}
-        {step !== 'register' && <button onClick={() => onNextClick()}>Next</button>}
+
+        <div className={styles.subtitle}>Domain info</div>
+        <div className={styles.contentPlaceholder}></div>
+
+        <div className={styles.subtitle}>Profile</div>
+        <div className={styles.contentPlaceholder}>
+          <div style={{ fontWeight: '400', padding: '15px' }}>
+            {step.replace(/^\w/, (c) => c.toUpperCase())} step
+          </div>
+        </div>
+        <div className={styles.buttons}>
+          <button
+            className={ui.button}
+            onClick={() => onPrevClick()}
+            style={{ visibility: step === 'commit' ? 'hidden' : 'visible' }}
+          >
+            {step === 'wait' ? 'Back' : 'Cancel'}
+          </button>
+          {step !== 'register' &&
+            <button className={ui.button} onClick={() => onNextClick()}>
+            {step === 'commit' ? 'Start' : 'Register'}
+            </button>}
+        </div>
       </div>
       <div className={styles.right}>
         <CheckoutOrder domain={props.domain} />
