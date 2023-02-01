@@ -1,0 +1,16 @@
+.item {
+  width: 100%;
+  padding: 7px 0px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: 500;
+}
+
+.hint {
+  color: var(--text-secondary);
+  font-weight: 400;
+}

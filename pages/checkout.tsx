@@ -1,4 +1,5 @@
-import { Domain } from 'domain'
+import { CheckoutOrder } from 'components/CheckoutOrder'
+import { Domain } from 'lib/types'
 import { validateDomain } from 'lib/utils'
 import { GetServerSideProps, NextPage } from 'next'
 import { useState } from 'react'
@@ -34,13 +35,13 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
           <span style={{ color: 'var(--text-secondary)' }}>&nbsp;&nbsp;&nbsp;Register</span>
         </div>
         {/* TODO: add step components based on step */}
-        <div style={{margin: '200px 0px 200px 0px'}}>{step}</div>
+        <div style={{ margin: '200px 0px 200px 0px' }}>{step}</div>
         {/* TODO: move buttons to step components */}
         {step !== 'commit' && <button onClick={() => onPrevClick()} >Prev</button>}
         {step !== 'register' && <button onClick={() => onNextClick()}>Next</button>}
       </div>
       <div className={styles.right}>
-        <>{props.domain}</>
+        <CheckoutOrder domain={props.domain} />
       </div>
     </main>
   )
