@@ -121,7 +121,7 @@
   padding: 6px 12px;
   color: var(--text-primary);
   border-radius: var(--radii-sm);
-  border: 1.25px solid var(--color-slate-5);
+  outline: 1.25px solid var(--color-slate-5);
   box-sizing: border-box;
   caret-color: var(--text-primary);
 }
@@ -132,8 +132,8 @@
 }
 
 .input:focus {
-  outline: 0.5px solid var(--color-slate-2);
-  border: 1px solid var(--color-slate-2);
+  outline: 1.5px solid var(--color-slate-2);
+  border: none;
   /* TODO: fix small unknown inner border */
 }
 

@@ -2,6 +2,7 @@ import { Domain } from 'lib/types'
 import React from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
+import { EthereumIcon } from 'components/icons'
 
 
 interface CheckoutCommitStepProps {
@@ -23,7 +24,11 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
 
       <div className={styles.header}>Domain Ownership</div>
       <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
-      <input name="owner" placeholder="0x01234...F0A0 (Optional)" autoComplete="off" className={`${styles.owner} ${ui.input}`} />
+
+      <div className={styles.inputContainer}>
+        <div className={styles.inputIcon}><EthereumIcon /></div>
+        <input name="owner" placeholder="0x01234...F0A0 (Optional)" autoComplete="off" className={`${styles.owner} ${ui.input}`} />
+      </div>
 
       <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>Configure public ENS profile for this domain if you're setting it for your wallet. You can skip it or complete after registration</div>
