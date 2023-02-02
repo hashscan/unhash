@@ -22,16 +22,16 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       </div>
 
       <div className={styles.header}>Domain Ownership</div>
-      <div className={styles.subheader}>Enter address if you want to buy a domain for another wallet</div>
-      <input name="name" placeholder="0x01234...F0A0 (Optional)" autocomplete="off" className={`${styles.owner} ${ui.input}`} />
+      <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
+      <input name="owner" placeholder="0x01234...F0A0 (Optional)" autoComplete="off" className={`${styles.owner} ${ui.input}`} />
 
       <div className={styles.header}>Profile</div>
-      <div className={styles.subheader}>Configure ENS profile for this domain. You can complete it after registration</div>
-      <div className={styles.contentPlaceholder}>
-        <div style={{ fontWeight: '400', padding: '15px' }}>
-          Commit step
-        </div>
-      </div>
+      <div className={styles.subheader}>Configure public ENS profile for this domain. You can skip it or complete after registration</div>
+      <input name="name" placeholder="Add a display name" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
+      <input name="description" placeholder="Add a bio to your profile" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
+      <input name="url" placeholder="Add your website" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
+      <input name="email" placeholder="Personal email" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
+      <input name="twitter" placeholder="@username" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
     </div>
   )
 }

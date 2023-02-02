@@ -10,7 +10,7 @@
   color: var(--color-slate-2);
   font: var(--type-md);
   letter-spacing: var(--ls-md);
-  margin-top: 30px;
+  margin-top: 35px;
 }
 
 .subheader {
@@ -19,14 +19,7 @@
   letter-spacing: var(--ls-sm);
   font-weight: 400;
   margin-top: 0px;
-}
-
-/* TODO: remove once actual content added */
-.contentPlaceholder {
-  height: 140px;
-  border: 1.5px solid var(--color-slate-6);
-  border-radius: var(--radii-sm);
-  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .duration {
@@ -35,7 +28,6 @@
   justify-content: flex-start;
   align-items: center;
   gap: 7px;
-  margin-top: 15px;
 }
 
 .durationButton {
@@ -69,10 +61,14 @@
 }
 
 .owner {
-  margin-top: 15px;
   width: 460px;
   /* TODO: use global style */
   font-family: monospace;
   font-size: 16px;
   font-weight: 500;
+}
+
+.profileInput {
+  margin-bottom: 10px;
+  width: 460px;
 }
