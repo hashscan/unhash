@@ -1,5 +1,5 @@
 .container {
-  margin-right: 24px;
+  margin-right: 16px;
   transition: opacity 0.3s ease;
 }
 
@@ -14,7 +14,7 @@
   border: none;
   color: var(--color-slate-8);
   font: var(--type-regular);
-  padding: 18px 32px;
+  padding: 12px 32px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -23,8 +23,20 @@
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .container {
+    margin-right: 0;
+  }
+
+  .button {
+    display: block;
+    width: 100%;
+  }
+}
+
 .buttonStatus {
   color: var(--color-slate-5);
+  font: var(--type-sm);
   font-weight: 400;
 }
 
