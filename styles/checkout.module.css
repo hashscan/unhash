@@ -1,26 +1,28 @@
 .main {
-  align-self: stretch;
+  --sidebar-width: 520px;
 
   width: var(--container-width);
   height: calc(100vh - var(--nav-height));
   margin: 0 auto;
+  padding: 40px 30px;
 
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-}
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-
-.left {
-  flex-grow: 1;
   background-color: var(--background);
-  padding: 60px 30px 60px 0px;
 }
 
 .right {
-  min-width: 520px;
+  width: calc(var(--sidebar-width) + (100vw - var(--container-width)) / 2);
+  position: fixed;
+  top: var(--nav-height);
+  bottom: 0;
+  right: 0;
+
   padding: 60px 30px;
+  padding-right: calc((100vw - var(--container-width)) / 2);
   background-color: var(--background-card);
   border-left: 1.5px solid var(--color-slate-6);
 }
