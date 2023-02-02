@@ -115,17 +115,26 @@
 }
 
 .input {
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
   padding: 6px 12px;
-  background-color: var(--background-card);
-  border: none;
   color: var(--text-primary);
   border-radius: var(--radii-sm);
-  border: 1px solid var(--border-card);
+  border: 1.25px solid var(--color-slate-5);
   box-sizing: border-box;
+  caret-color: var(--text-primary);
+}
+
+.input::placeholder {
+  color: var(--text-hint);
+  opacity: 1;
+}
+
+.input:focus {
+  outline: 0.5px solid var(--color-slate-2);
+  border: 1px solid var(--color-slate-2);
+  /* TODO: fix small unknown inner border */
 }
 
 .error {

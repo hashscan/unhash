@@ -10,7 +10,7 @@
   color: var(--color-slate-2);
   font: var(--type-md);
   letter-spacing: var(--ls-md);
-  margin-top: 25px;
+  margin-top: 30px;
 }
 
 .subheader {
@@ -66,4 +66,13 @@
 .durationButtonSelected:hover {
   color: var(--color-slate-f);
   border: 1.5px solid var(--color-slate-1);
+}
+
+.owner {
+  margin-top: 15px;
+  width: 460px;
+  /* TODO: use global style */
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 500;
 }

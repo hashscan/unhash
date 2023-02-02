@@ -47,6 +47,7 @@
   --background-highlight: #273f5e;
   --text-primary: var(--color-slate-1);
   --text-secondary: var(--color-slate-3);
+  --text-hint: var(--color-slate-4);
   --text-highlight: #7db5ff;
   --primary: #2e87fb;
   --primary-hover: #4694fa;
