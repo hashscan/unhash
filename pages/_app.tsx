@@ -63,7 +63,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
           <Nav />
           {/* TODO: implement sticky navbar without extra div */}
-          <div style={{marginTop: 'var(--nav-height)'}}>
+          <div style={{
+            width: 'var(--container-width)',
+            margin: 'var(--nav-height) auto 0 auto',
+          }}>
             <Component {...pageProps} />
           </div>
         </RainbowKitProvider>

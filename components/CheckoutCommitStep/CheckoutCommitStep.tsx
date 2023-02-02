@@ -25,8 +25,8 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
       <input name="owner" placeholder="0x01234...F0A0 (Optional)" autoComplete="off" className={`${styles.owner} ${ui.input}`} />
 
-      <div className={styles.header}>Profile</div>
-      <div className={styles.subheader}>Configure public ENS profile for this domain. You can skip it or complete after registration</div>
+      <div className={styles.header}>ENS Profile</div>
+      <div className={styles.subheader}>Configure public ENS profile for this domain if you're setting it for your wallet. You can skip it or complete after registration</div>
       <input name="name" placeholder="Add a display name" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
       <input name="description" placeholder="Add a bio to your profile" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
       <input name="url" placeholder="Add your website" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
