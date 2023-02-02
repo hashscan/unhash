@@ -1,3 +1,4 @@
+import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
 import { Domain } from 'lib/types'
 import { validateDomain } from 'lib/utils'
@@ -42,15 +43,8 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
           <span style={{ color: 'var(--text-secondary)' }}>&nbsp;&nbsp;&nbsp;Register</span>
         </div>
 
-        <div className={styles.subtitle}>Domain info</div>
-        <div className={styles.contentPlaceholder}></div>
+        <CheckoutCommitStep domain={props.domain} />
 
-        <div className={styles.subtitle}>Profile</div>
-        <div className={styles.contentPlaceholder}>
-          <div style={{ fontWeight: '400', padding: '15px' }}>
-            {step.replace(/^\w/, (c) => c.toUpperCase())} step
-          </div>
-        </div>
         <div className={styles.buttons}>
           <button
             className={ui.button}
@@ -61,7 +55,7 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
           </button>
           {step !== 'register' &&
             <button className={ui.button} onClick={() => onNextClick()}>
-            {step === 'commit' ? 'Start' : 'Register'}
+              {step === 'commit' ? 'Start' : 'Register'}
             </button>}
         </div>
       </div>

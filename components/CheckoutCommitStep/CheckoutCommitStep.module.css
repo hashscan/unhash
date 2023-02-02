@@ -1,0 +1,69 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.header {
+  color: var(--color-slate-2);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  margin-top: 25px;
+}
+
+.subheader {
+  color: var(--color-slate-2);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+  margin-top: 0px;
+}
+
+/* TODO: remove once actual content added */
+.contentPlaceholder {
+  height: 140px;
+  border: 1.5px solid var(--color-slate-6);
+  border-radius: var(--radii-sm);
+  margin-top: 15px;
+}
+
+.duration {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 7px;
+  margin-top: 15px;
+}
+
+.durationButton {
+  width: 104px;
+  padding: 6px 0px;
+
+  color: var(--color-slate-1);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+  text-align: center;
+
+  border-radius: 6px;
+  border: 1.5px solid var(--color-slate-1);
+}
+
+.durationButton:hover {
+  cursor: pointer;
+  color: var(--color-slate-3);
+  border: 1.5px solid var(--color-slate-3);
+}
+
+.durationButtonSelected {
+  background-color: var(--color-slate-1);
+  color: var(--color-slate-f);
+}
+
+.durationButtonSelected:hover {
+  color: var(--color-slate-f);
+  border: 1.5px solid var(--color-slate-1);
+}

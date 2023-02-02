@@ -52,14 +52,6 @@
   letter-spacing: var(--ls-lg);
 }
 
-.subtitle {
-  color: var(--color-slate-2);
-  font: var(--type-md);
-  letter-spacing: var(--ls-md);
-  font-weight: 400;
-  padding: 20px 0 10px 0;
-}
-
 .back {
   cursor: pointer;
   transition: var(--ease-250);
@@ -75,13 +67,6 @@
 .steps {
   margin: 0px 0px;
   font: var(--type-sm);
-}
-
-/* TODO: remove once actual content added */
-.contentPlaceholder {
-  height: 140px;
-  border: 1.5px solid var(--color-slate-6);
-  border-radius: var(--radii-sm);
 }
 
 .buttons {
