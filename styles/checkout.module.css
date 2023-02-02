@@ -11,23 +11,11 @@
   align-items: stretch;
 }
 
-/* TODO: remove temp bg hack */
-.background {
-  z-index: 0;
-  position: absolute;
-  top: var(--nav-height);
-  right: 0;
-  bottom: 0;
-  left: 50%;
-  background-color: var(--background-card);
-}
 
 .left {
   flex-grow: 1;
   background-color: var(--background);
   padding: 60px 30px 60px 0px;
-  /* TODO: remove temp bg hack */
-  z-index: 1;
 }
 
 .right {
@@ -35,8 +23,6 @@
   padding: 60px 30px;
   background-color: var(--background-card);
   border-left: 1.5px solid var(--color-slate-6);
-  /* TODO: remove temp bg hack */
-  z-index: 1;
 }
 
 .header {

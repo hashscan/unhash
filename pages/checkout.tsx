@@ -28,8 +28,6 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
 
   return (
     <main className={styles.main}>
-      {/* TODO: remove temp bg hack */}
-      <div className={styles.background} />
       <div className={styles.left}>
         <div className={styles.header}>
           {/* hidden for now */}
