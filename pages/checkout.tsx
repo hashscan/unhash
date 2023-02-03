@@ -1,5 +1,6 @@
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
+import { CheckoutWait } from 'components/CheckoutWait'
 import { Domain } from 'lib/types'
 import { validateDomain } from 'lib/utils'
 import { GetServerSideProps, NextPage } from 'next'
@@ -47,7 +48,16 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
           </span>
         </div>
 
-        <CheckoutCommitStep domain={props.domain} />
+        {step === 'commit' &&
+          <CheckoutCommitStep domain={props.domain} />
+        }
+        {step === 'wait' &&
+          // TODO: pass actual commit tx timestamp or manage state from this component
+          <CheckoutWait value={20} />
+        }
+        {step === 'register' &&
+          <div >Register page</div>
+        }
 
         <div className={styles.buttons}>
           <button
@@ -59,7 +69,7 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
           </button>
           {step !== 'register' && (
             <button className={ui.button} onClick={() => onNextClick()}>
-              {step === 'commit' ? 'Start' : 'Register'}
+              {step === 'commit' ? 'Start registration' : 'Complete registration'}
             </button>
           )}
         </div>

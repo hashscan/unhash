@@ -7,13 +7,18 @@
 
   --sidebar-width: 520px;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row;
   position: relative;
 }
 
 .main {
-  max-width: 520px;
+  width: 520px;
   padding: 40px 0;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
 }
 
 .right {
