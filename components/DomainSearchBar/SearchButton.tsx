@@ -8,7 +8,7 @@ export enum SearchStatus {
   Inactive,
   Loading,
   Available,
-  NotAvailable,
+  NotAvailable
 }
 
 export interface DomainAvailability {
@@ -31,7 +31,7 @@ export const SearchButton = ({ status }: SearchButtonProps) => {
     <div
       className={clsx(styles.container, {
         // hide the entire component when not focused
-        [styles.containerHidden]: status === SearchStatus.Inactive,
+        [styles.containerHidden]: status === SearchStatus.Inactive
       })}
     >
       <Loader visible={status === SearchStatus.Loading} />
@@ -39,9 +39,7 @@ export const SearchButton = ({ status }: SearchButtonProps) => {
       {[SearchStatus.Available, SearchStatus.NotAvailable].includes(status) && (
         <button className={styles.button}>
           Buy for $5 / year
-          <div className={styles.buttonStatus}>
-            {status === SearchStatus.Available ? 'available' : 'not available'}
-          </div>
+          <div className={styles.buttonStatus}>{status === SearchStatus.Available ? 'available' : 'not available'}</div>
         </button>
       )}
     </div>

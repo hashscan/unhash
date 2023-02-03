@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { NextPage } from 'next'
-
+import React from 'react'
 import WrapBalancer from 'react-wrap-balancer'
 import { DomainSearchBar } from 'components/DomainSearchBar'
-
 import styles from 'styles/search.module.css'
 
-interface SearchProps {}
-
-const Search: NextPage<SearchProps> = (props) => {
+const Search = () => {
   return (
     <>
       <div className={styles.heroSection}>
@@ -20,8 +15,7 @@ const Search: NextPage<SearchProps> = (props) => {
 
             <h2 className={styles.heroSubtitle}>
               <WrapBalancer>
-                A modern and better way of searching, buying and managing{' '}
-                <b>ENS domains</b>
+                A modern and better way of searching, buying and managing <b>ENS domains</b>
               </WrapBalancer>
             </h2>
           </div>
