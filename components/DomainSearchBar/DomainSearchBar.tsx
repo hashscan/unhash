@@ -2,25 +2,34 @@ import React, { useEffect, useState } from 'react'
 
 import { SearchButton, SearchStatus } from './SearchButton'
 import styles from './DomainSearchBar.module.css'
+import api from 'lib/api'
+import { useChainId } from 'wagmi'
+import { validateDomain } from 'lib/utils'
+import { useDebounce } from 'usehooks-ts'
 
-interface SearchProps {}
-
-export const DomainSearchBar = (props: SearchProps) => {
+export const DomainSearchBar = () => {
   /**
    * TODO: this is just a naive mock implementation
    */
   const [searchQuery, setSearchQuery] = useState('')
   const [status, setStatus] = useState(SearchStatus.Loading)
+  const chainId = useChainId()
+
+  const domainInput = useDebounce(searchQuery, 300)
 
   useEffect(() => {
-    if (searchQuery.length === 0) {
+    if (domainInput.length === 0) {
       setStatus(SearchStatus.Inactive)
-    } else if (searchQuery.length < 7) {
-      setStatus(SearchStatus.Loading)
     } else {
-      setStatus(SearchStatus.Available)
+      if (validateDomain(domainInput)) return
+      const check = async () => {
+        setStatus(SearchStatus.Loading)
+        const available = await api.checkDomain(domainInput, chainId === 1 ? 'mainnet' : 'goerli')
+        setStatus(available ? SearchStatus.Available : SearchStatus.NotAvailable)
+      }
+      check()
     }
-  }, [searchQuery])
+  }, [domainInput, chainId])
 
   return (
     <div className={styles.searchBar}>
