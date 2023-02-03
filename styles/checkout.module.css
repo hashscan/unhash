@@ -73,3 +73,13 @@
   align-items: center;
   margin-top: 40px;
 }
+
+.buttonPrev {}
+
+.buttonSpace {
+  flex-grow: 1;
+}
+
+.buttonNext {
+  align-self: flex-end;
+}

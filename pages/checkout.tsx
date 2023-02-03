@@ -12,19 +12,18 @@ interface CheckoutProps {
   domain: Domain
 }
 
-type CheckoutStep = 'commit' | 'wait' | 'register'
+type CheckoutStep = 'commit' | 'register' | 'success'
 
 const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
   const [step, setStep] = useState<CheckoutStep>('commit')
 
   const onPrevClick = () => {
-    if (step === 'wait') setStep('commit')
-    if (step === 'register') setStep('wait')
+    if (step === 'register') setStep('commit')
   }
 
   const onNextClick = () => {
-    if (step === 'commit') setStep('wait')
-    if (step === 'wait') setStep('register')
+    if (step === 'commit') setStep('register')
+    if (step === 'register') setStep('success')
   }
 
   return (
@@ -51,35 +50,34 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
         {step === 'commit' &&
           <CheckoutCommitStep domain={props.domain} />
         }
-        {step === 'wait' &&
-          // TODO: pass actual commit tx timestamp or manage state from this component
-          <CheckoutWait value={20} />
-        }
         {step === 'register' &&
-          <div >Register page</div>
+          <div style={{ margin: '32px 0', font: 'var(--type-lg)' }}>Register page</div>
+        }
+        {step === 'success' &&
+          <div style={{ margin: '100px auto', font: 'var(--type-lg)' }}>Success!</div>
         }
 
         <div className={styles.buttons}>
-          <button
-            className={ui.button}
-            onClick={() => onPrevClick()}
-            style={{ visibility: step === 'commit' ? 'hidden' : 'visible' }}
-          >
-            {step === 'wait' ? 'Back' : 'Cancel'}
-          </button>
-          {step !== 'register' && (
-            <button className={ui.button} onClick={() => onNextClick()}>
+          {step === 'register' &&
+            <button className={`${ui.button} ${styles.buttonPrev}`} onClick={() => onPrevClick()}>
+              Back
+            </button>
+          }
+          {/* TODO: proper way to move button without extra div? */}
+          <div className={styles.buttonSpace}></div>
+          {step !== 'success' && (
+            <button className={`${ui.button} ${styles.buttonNext}`} onClick={() => onNextClick()}>
               {step === 'commit' ? 'Start registration' : 'Complete registration'}
             </button>
           )}
         </div>
-      </main>
+      </main >
 
       {/* right as a side bar */}
-      <div className={styles.right}>
+      < div className={styles.right} >
         <CheckoutOrder domain={props.domain} />
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 
