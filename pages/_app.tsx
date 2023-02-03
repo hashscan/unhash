@@ -62,13 +62,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
           <Nav />
-          {/* TODO: implement sticky navbar without extra div */}
-          <div style={{
-            width: 'var(--container-width)',
-            margin: 'var(--nav-height) auto 0 auto',
-          }}>
-            <Component {...pageProps} />
-          </div>
+          <Component {...pageProps} />
         </RainbowKitProvider>
       </WagmiConfig>
     </>
