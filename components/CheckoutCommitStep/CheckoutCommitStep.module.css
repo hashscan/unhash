@@ -18,7 +18,7 @@
   margin-bottom: 16px;
 }
 
-.duration {
+.years {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -26,7 +26,7 @@
   gap: 8px;
 }
 
-.durationButton {
+.yearButton {
   width: 104px;
   padding: 6px 0px;
 
@@ -40,18 +40,18 @@
   border: 1.5px solid var(--color-slate-1);
 }
 
-.durationButton:hover {
+.yearButton:hover {
   cursor: pointer;
   color: var(--color-slate-3);
   border: 1.5px solid var(--color-slate-3);
 }
 
-.durationButtonSelected {
+.yearButtonSelected {
   background-color: var(--color-slate-1);
   color: var(--color-slate-f);
 }
 
-.durationButtonSelected:hover {
+.yearButtonSelected:hover {
   color: var(--color-slate-f);
   border: 1.5px solid var(--color-slate-1);
 }

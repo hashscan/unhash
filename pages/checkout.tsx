@@ -5,7 +5,7 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { Domain } from 'lib/types'
-import { validateDomain } from 'lib/utils'
+import { clamp, validateDomain } from 'lib/utils'
 import { GetServerSideProps } from 'next'
 import { useState } from 'react'
 import styles from 'styles/checkout.module.css'
@@ -19,6 +19,7 @@ type CheckoutStep = 'commit' | 'register' | 'success'
 
 const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const [step, setStep] = useState<CheckoutStep>('commit')
+  const [durationYears, setDurationYears] = useState<number>(2)
 
   const onPrevClick = () => {
     if (step === 'register') setStep('commit')
@@ -28,6 +29,10 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const onNextClick = () => {
     if (step === 'commit') setStep('register')
     if (step === 'register') setStep('success')
+  }
+
+  const onDurationChanged = (year: number) => {
+    setDurationYears(clamp(year, 1, 4))
   }
 
   return (
@@ -48,7 +53,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
         </div>
 
         {step === 'commit' && (
-          <CheckoutCommitStep domain={props.domain} />
+          <CheckoutCommitStep domain={props.domain} durationYears={durationYears} onDurationChanged={onDurationChanged} />
         )}
         {step === 'register' &&
           <CheckoutRegisterStep domain={props.domain} />
@@ -80,7 +85,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
 
       {/* right as a side bar */}
       <div className={styles.right}>
-        <CheckoutOrder domain={props.domain} />
+        <CheckoutOrder domain={props.domain} durationYears={durationYears} />
       </div>
     </div>
   )

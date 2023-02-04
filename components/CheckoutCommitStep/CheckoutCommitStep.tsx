@@ -4,23 +4,34 @@ import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon } from 'components/icons'
 import clsx from 'clsx'
+import { formatYears } from 'lib/format'
 
 
 interface CheckoutCommitStepProps {
   domain: Domain
+  durationYears: number
+  onDurationChanged?: (year: number) => void
 }
 
 export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
-
+  const years = [1, 2, 3, 4]
   return (
     <div className={styles.container}>
       <div className={styles.header}>Registration period</div>
       <div className={styles.subheader}>Buy more years now to save on fees</div>
-      <div className={styles.duration}>
-        <div className={clsx(styles.durationButton, styles.durationButtonSelected)}>1 year</div>
-        <div className={styles.durationButton}>2 years</div>
-        <div className={styles.durationButton}>3 years</div>
-        <div className={styles.durationButton}>4 years</div>
+      <div className={styles.years}>
+        {years.map((year) =>
+          <div
+            key={year}
+            className={clsx(
+              styles.yearButton,
+              { [styles.yearButtonSelected]: year === props.durationYears }
+            )}
+            onClick={() => props.onDurationChanged?.(year)}
+          >
+            {formatYears(year)}
+          </div>
+        )}
       </div>
 
       <div className={styles.header}>Domain Ownership</div>
