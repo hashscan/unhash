@@ -11,10 +11,8 @@ export const CheckoutOrder = (props: CheckoutOrderProps) => {
 
   return (
     <div className={styles.container}>
-      <span className={styles.title}>Your order</span>
-      <div className={styles.items}>
-        <OrderItem title={`${props.domain}`} hint={'3 years'} price={'$50'} />
-      </div>
+      <div className={styles.title}>Your order</div>
+      <OrderItem title={`${props.domain}`} hint={'3 years'} price={'$50'} />
       <div className={styles.line}>
         <span>Estimated network fees</span>
         <span>$14.20</span>

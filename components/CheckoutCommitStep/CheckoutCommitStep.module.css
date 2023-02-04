@@ -1,7 +1,5 @@
 .container {
   width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .header {
@@ -88,5 +86,6 @@
 }
 
 .profileInput {
+  width: 100%;
   margin-bottom: 10px;
 }
