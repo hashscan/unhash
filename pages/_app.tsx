@@ -3,11 +3,10 @@ import { createClient, WagmiConfig } from 'wagmi'
 
 import '@rainbow-me/rainbowkit/styles.css'
 import 'styles/global.css'
-import React from 'react'
 import localFont from '@next/font/local'
 import { AppProps } from 'next/app'
 import { chains, provider, connectors } from 'lib/connectors'
-import { Nav } from 'components/Nav'
+import { wrapInLayout } from 'components/layouts'
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -61,8 +60,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
-          <Nav />
-          <Component {...pageProps} />
+          {wrapInLayout(Component, <Component {...pageProps} />)}
         </RainbowKitProvider>
       </WagmiConfig>
     </>
