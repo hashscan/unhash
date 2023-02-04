@@ -1,6 +1,7 @@
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
 import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
+import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { Domain } from 'lib/types'
 import { validateDomain } from 'lib/utils'
@@ -56,7 +57,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
           <CheckoutRegisterStep domain={props.domain} />
         }
         {step === 'success' &&
-          <div style={{ margin: '100px auto', font: 'var(--type-lg)' }}>Success!</div>
+          <CheckoutSuccessStep domain={props.domain} />
         }
 
         <div className={styles.buttons}>

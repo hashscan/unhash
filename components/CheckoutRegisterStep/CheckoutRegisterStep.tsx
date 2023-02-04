@@ -12,7 +12,6 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
     <div className={styles.container}>
       <div className={styles.header}>Confirm registration</div>
       <div className={styles.subheader}>Confirm below to register your domain and configure the profile</div>
-      <div className={styles.space}></div>
     </div>
   )
 }

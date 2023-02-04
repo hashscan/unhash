@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  color: var(--color-slate-2);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  margin-top: 35px;
+}
+
+.subheader {
+  color: var(--color-slate-2);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+  margin-top: 0px;
+  margin-bottom: 60px;
+}
