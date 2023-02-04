@@ -4,6 +4,10 @@
   flex-flow: row nowrap;
 }
 
+.pricing a {
+  color: inherit;
+}
+
 .texts {
   flex-basis: 33%;
 }
@@ -25,7 +29,8 @@
 
 .table {
   width: 100%;
-  border-spacing: 8px 0;
+  border-spacing: 16px 0;
+  margin-bottom: 32px;
 }
 
 .table tr > td {
@@ -46,6 +51,13 @@
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
   color: var(--color-slate-4);
+}
+
+.subnote {
+  text-align: right;
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  color: var(--color-slate-3);
 }
 
 @media (max-width: 768px) {

@@ -34,9 +34,47 @@
 .searchSection {
   position: relative;
   margin-top: -128px;
-  margin-bottom: 128px;
+  margin-bottom: 64px;
+}
+
+.suggestionsSection {
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--color-slate-5);
+  margin-bottom: 96px;
 }
 
 .pricingSection {
-  margin-bottom: 72px;
+  margin-bottom: 96px;
+}
+
+/**
+ * Suggestions
+ */
+
+.suggestions {
+  display: flex;
+  margin-top: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+  max-width: 75%;
+}
+
+.suggestionsSection > p {
+  font: var(--type-regular);
+  margin-top: 72px;
+  color: var(--color-slate-4);
+}
+
+.suggestion {
+  padding: 8px 16px;
+  border: 1px solid var(--color-slate-3);
+  border-radius: var(--radii-sm);
+  font: var(--type-regular);
+}
+
+.suggestion > span {
+  color: var(--color-slate-4);
+  font: var(--type-sm);
+  margin-left: 8px;
 }

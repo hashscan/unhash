@@ -7,6 +7,21 @@ import { LandingPricing } from 'components/LandingPricing/LandingPricing'
 import { Footer } from 'components/Footer/Footer'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
+const Suggestion = ({
+  name,
+  priceInUSD
+}: {
+  name: string
+  priceInUSD: number
+}) => {
+  return (
+    <div className={styles.suggestion}>
+      {name}
+      <span>${priceInUSD}</span>
+    </div>
+  )
+}
+
 const Search: PageWithLayout = () => {
   return (
     <div className={styles.searchPage}>
@@ -30,6 +45,21 @@ const Search: PageWithLayout = () => {
       <div className={styles.container}>
         <section className={styles.searchSection}>
           <DomainSearchBar />
+        </section>
+
+        <section className={styles.suggestionsSection}>
+          <p>Suggested for you</p>
+          <div className={styles.suggestions}>
+            {[
+              'molefrg.eth',
+              'loosly.eth',
+              'self-boo.eth',
+              'lamewe.eth',
+              'self-boo.eth'
+            ].map((name) => (
+              <Suggestion key={name} name={name} priceInUSD={10} />
+            ))}
+          </div>
         </section>
 
         <section className={styles.pricingSection}>
