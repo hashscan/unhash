@@ -33,11 +33,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
     <div className={styles.checkout}>
       <main className={styles.main}>
         {/* left content */}
-        <div className={styles.header}>
-          {/* hidden for now */}
-          {/* <div className={styles.back}><BackIcon /></div> */}
-          <span className={styles.title}>ENS domain registration</span>
-        </div>
+        <span className={styles.title}>ENS domain registration</span>
         {/* TODO: make component for steps and keep updated */}
         <div className={styles.steps}>
           <span style={{ fontWeight: '400' }}>Commit&nbsp;&nbsp;&nbsp;</span>

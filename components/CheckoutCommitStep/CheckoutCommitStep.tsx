@@ -36,7 +36,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <input name="description" placeholder="Add a bio to your profile" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
       <input name="url" placeholder="Add your website" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
       <input name="email" placeholder="Personal email" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
-      <input name="twitter" placeholder="@username" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
+      <input name="twitter" placeholder="@username" autoComplete="off" className={`${styles.profileInput} ${styles.profileInputLast} ${ui.input}`} />
     </div>
   )
 }

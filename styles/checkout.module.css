@@ -20,13 +20,6 @@
   border-left: 1.5px solid var(--color-slate-6);
 }
 
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 24px;
-}
-
 .title {
   color: var(--color-slate-2);
   font: var(--type-lg);
@@ -60,8 +53,7 @@
   margin-top: 40px;
 }
 
-.buttonPrev {
-}
+.buttonPrev {}
 
 .buttonSpace {
   flex-grow: 1;
