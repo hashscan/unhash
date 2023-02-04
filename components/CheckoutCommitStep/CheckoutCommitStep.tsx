@@ -1,26 +1,68 @@
-import { Domain } from 'lib/types'
-import React from 'react'
+import { Domain, toNetwork } from 'lib/types'
+import React, { useMemo } from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon } from 'components/icons'
 import clsx from 'clsx'
 import { formatYears } from 'lib/format'
+import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
+import { useAccount, useChainId } from 'wagmi'
+import { YEAR_IN_SECONDS } from 'lib/constants'
+import { useSendCommit } from 'lib/hooks/useSendCommit'
 
+
+const YEAR_BUTTONS = [1, 2, 3, 4]
 
 interface CheckoutCommitStepProps {
   domain: Domain
+  name: string
   durationYears: number
   onDurationChanged?: (year: number) => void
 }
 
 export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
-  const years = [1, 2, 3, 4]
+  // TODO: handle no network and no account
+  const chainId = useChainId()
+  const { address } = useAccount() // can be undefined
+
+  // TODO: fix ReferenceError: crypto is not defined
+  // const secret = useMemo(() => "1349404", [])
+  const secret = '0xf9502d93b2a556e997ee7d177d3f3c620a00b02426100d91941a5915f6d5ad45'
+
+  const { commitmentHash } = useMakeCommitment(
+    props.name,
+    address,
+    secret,
+    toNetwork(chainId)
+  )
+
+  const { write, isLoading, isSuccess, isWriteError } = useSendCommit({
+    commitmentHash,
+    chainId: chainId,
+    owner: address!,
+    name: props.name,
+    duration: props.durationYears * YEAR_IN_SECONDS,
+    secret: secret,
+    fields: {},
+  })
+
+  console.log(`name: ${props.name}, address: ${address}, secret: ${secret}, network: ${toNetwork(chainId)}`)
+  console.log(`commitmentHash: ${commitmentHash}`)
+
+  // const onStartClick = () => {
+  //   if (typeof write === 'undefined') return
+
+  //   // TODO: generate random secret
+  //   write()
+  // }
+
+  // TODO: show connect wallet button if not connected
   return (
     <div className={styles.container}>
       <div className={styles.header}>Registration period</div>
       <div className={styles.subheader}>Buy more years now to save on fees</div>
       <div className={styles.years}>
-        {years.map((year) =>
+        {YEAR_BUTTONS.map((year) =>
           <div
             key={year}
             className={clsx(
@@ -49,6 +91,10 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <input name="url" placeholder="Add your website" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
       <input name="email" placeholder="Personal email" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
       <input name="twitter" placeholder="@username" autoComplete="off" className={clsx(styles.profileInput, ui.input, styles.profileInputLast)} />
+
+      {/* <button className={ui.button} onClick={() => onStartClick()}>
+        Start registration
+      </button> */}
     </div>
   )
 }

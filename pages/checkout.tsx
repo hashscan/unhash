@@ -5,7 +5,7 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { Domain } from 'lib/types'
-import { clamp, validateDomain } from 'lib/utils'
+import { clamp, parseDomainName, validateDomain } from 'lib/utils'
 import { GetServerSideProps } from 'next'
 import { useState } from 'react'
 import styles from 'styles/checkout.module.css'
@@ -13,6 +13,7 @@ import ui from 'styles/ui.module.css'
 
 interface CheckoutProps {
   domain: Domain
+  name: string
 }
 
 type CheckoutStep = 'commit' | 'register' | 'success'
@@ -53,7 +54,12 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
         </div>
 
         {step === 'commit' && (
-          <CheckoutCommitStep domain={props.domain} durationYears={durationYears} onDurationChanged={onDurationChanged} />
+          <CheckoutCommitStep
+            domain={props.domain}
+            name={props.name}
+            durationYears={durationYears}
+            onDurationChanged={onDurationChanged}
+          />
         )}
         {step === 'register' &&
           <CheckoutRegisterStep domain={props.domain} />
@@ -105,7 +111,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: {
-      domain: domain
+      domain: domain,
+      name: parseDomainName(domain),
     }
   }
 }

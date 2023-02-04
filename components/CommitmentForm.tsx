@@ -9,10 +9,10 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS, YEAR_IN_SECONDS } from 'lib/constants'
 
 import { Fields, toNetwork } from 'lib/types'
-import { randomSecret } from 'lib/utils'
+import { generateCommitSecret } from 'lib/utils'
 import { providers } from 'ethers'
 
-const secret = randomSecret()
+const secret = generateCommitSecret()
 export const CommitmentForm = ({
   name,
   feeData,
