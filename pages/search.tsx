@@ -4,10 +4,12 @@ import { DomainSearchBar } from 'components/DomainSearchBar'
 import styles from 'styles/search.module.css'
 
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
+import { Footer } from 'components/Footer/Footer'
+import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
-const Search = () => {
+const Search: PageWithLayout = () => {
   return (
-    <>
+    <div className={styles.searchPage}>
       <div className={styles.heroSection}>
         <div className={styles.container}>
           <div className={styles.hero}>
@@ -34,8 +36,12 @@ const Search = () => {
           <LandingPricing />
         </section>
       </div>
-    </>
+
+      <Footer />
+    </div>
   )
 }
+
+Search.layout = FullWidthLayout
 
 export default Search
