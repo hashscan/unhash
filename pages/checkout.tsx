@@ -71,7 +71,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
         <div className={styles.buttons}>
           {step !== 'commit' &&
             <button className={clsx(ui.button, styles.buttonPrev)} onClick={() => onPrevClick()}>
-              Back
+              {'<'}
             </button>
           }
           {/* TODO: proper way to move button without extra div? */}
@@ -81,9 +81,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
               className={clsx(ui.button, styles.buttonNext)}
               onClick={() => onNextClick()}
             >
-              {step === 'commit'
-                ? 'Start registration'
-                : 'Complete registration'}
+              {'>'}
             </button>
           )}
         </div>

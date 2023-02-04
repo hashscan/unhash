@@ -50,7 +50,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 40px;
+
+  border-top: 1.5px solid var(--color-slate-6);
+  margin-top: 60px;
+  padding-top: 20px;
 }
 
 .buttonPrev {}

@@ -49,12 +49,12 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
   console.log(`name: ${props.name}, address: ${address}, secret: ${secret}, network: ${toNetwork(chainId)}`)
   console.log(`commitmentHash: ${commitmentHash}`)
 
-  // const onStartClick = () => {
-  //   if (typeof write === 'undefined') return
+  const onStartClick = () => {
+    if (typeof write === 'undefined') return
 
-  //   // TODO: generate random secret
-  //   write()
-  // }
+    // TODO: generate random secret
+    write()
+  }
 
   // TODO: show connect wallet button if not connected
   return (
@@ -92,9 +92,9 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <input name="email" placeholder="Personal email" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
       <input name="twitter" placeholder="@username" autoComplete="off" className={clsx(styles.profileInput, ui.input, styles.profileInputLast)} />
 
-      {/* <button className={ui.button} onClick={() => onStartClick()}>
+      <button className={clsx(ui.button, styles.commitButton)} onClick={() => onStartClick()}>
         Start registration
-      </button> */}
+      </button>
     </div>
   )
 }
