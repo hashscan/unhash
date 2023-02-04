@@ -7,11 +7,12 @@ interface CheckoutRegisterStepProps {
 }
 
 export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
-  // TODO: waiting form if time not passed
+  // TODO: add waiting form if time not passed
   return (
     <div className={styles.container}>
-      <h2>Confirm registration</h2>
-      <p>Commit success. Time to register {props.domain}</p>
+      <div className={styles.header}>Confirm registration</div>
+      <div className={styles.subheader}>Confirm below to register your domain and configure the profile</div>
+      <div className={styles.space}></div>
     </div>
   )
 }
