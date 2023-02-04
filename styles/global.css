@@ -87,6 +87,7 @@ body {
 
   background: var(--color-slate-f);
   color: var(--color-slate-0);
+  height: 100%;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

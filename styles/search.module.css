@@ -5,6 +5,10 @@
   margin: 0 auto;
 }
 
+.searchPage {
+  min-height: calc(100vh - var(--nav-height));
+}
+
 .hero {
   max-width: calc(var(--container-width) / 2);
   padding: 96px 0 192px 0;
@@ -31,4 +35,8 @@
   position: relative;
   margin-top: -128px;
   margin-bottom: 128px;
+}
+
+.pricingSection {
+  margin-bottom: 72px;
 }
