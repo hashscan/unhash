@@ -1,6 +1,7 @@
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
 import { CheckoutWait } from 'components/CheckoutWait'
+import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { Domain } from 'lib/types'
 import { validateDomain } from 'lib/utils'
 import { GetServerSideProps, NextPage } from 'next'
@@ -14,7 +15,7 @@ interface CheckoutProps {
 
 type CheckoutStep = 'commit' | 'register' | 'success'
 
-const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
+const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const [step, setStep] = useState<CheckoutStep>('commit')
 
   const onPrevClick = () => {
@@ -47,37 +48,47 @@ const Checkout: NextPage<CheckoutProps> = (props: CheckoutProps) => {
           </span>
         </div>
 
-        {step === 'commit' &&
-          <CheckoutCommitStep domain={props.domain} />
-        }
-        {step === 'register' &&
-          <div style={{ margin: '32px 0', font: 'var(--type-lg)' }}>Register page</div>
-        }
-        {step === 'success' &&
-          <div style={{ margin: '100px auto', font: 'var(--type-lg)' }}>Success!</div>
-        }
+        {step === 'commit' && <CheckoutCommitStep domain={props.domain} />}
+        {step === 'register' && (
+          <div style={{ margin: '32px 0', font: 'var(--type-lg)' }}>
+            Register page
+          </div>
+        )}
+        {step === 'success' && (
+          <div style={{ margin: '100px auto', font: 'var(--type-lg)' }}>
+            Success!
+          </div>
+        )}
 
         <div className={styles.buttons}>
-          {step === 'register' &&
-            <button className={`${ui.button} ${styles.buttonPrev}`} onClick={() => onPrevClick()}>
+          {step === 'register' && (
+            <button
+              className={`${ui.button} ${styles.buttonPrev}`}
+              onClick={() => onPrevClick()}
+            >
               Back
             </button>
-          }
+          )}
           {/* TODO: proper way to move button without extra div? */}
           <div className={styles.buttonSpace}></div>
           {step !== 'success' && (
-            <button className={`${ui.button} ${styles.buttonNext}`} onClick={() => onNextClick()}>
-              {step === 'commit' ? 'Start registration' : 'Complete registration'}
+            <button
+              className={`${ui.button} ${styles.buttonNext}`}
+              onClick={() => onNextClick()}
+            >
+              {step === 'commit'
+                ? 'Start registration'
+                : 'Complete registration'}
             </button>
           )}
         </div>
-      </main >
+      </main>
 
       {/* right as a side bar */}
-      < div className={styles.right} >
+      <div className={styles.right}>
         <CheckoutOrder domain={props.domain} />
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
 
@@ -99,5 +110,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     }
   }
 }
+
+Checkout.layout = <ContainerLayout verticalPadding={false} />
 
 export default Checkout
