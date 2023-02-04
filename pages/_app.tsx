@@ -54,6 +54,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         {`
           :root {
             --font-ui: ${Lausanne.style.fontFamily};
+            --font-mono: monospace;
           }
         `}
       </style>
