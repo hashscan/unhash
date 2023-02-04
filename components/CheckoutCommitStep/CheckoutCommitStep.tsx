@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon } from 'components/icons'
+import clsx from 'clsx'
 
 
 interface CheckoutCommitStepProps {
@@ -16,7 +17,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <div className={styles.header}>Registration period</div>
       <div className={styles.subheader}>Buy more years now to save on fees</div>
       <div className={styles.duration}>
-        <div className={`${styles.durationButton} ${styles.durationButtonSelected}`}>1 year</div>
+        <div className={clsx(styles.durationButton, styles.durationButtonSelected)}>1 year</div>
         <div className={styles.durationButton}>2 years</div>
         <div className={styles.durationButton}>3 years</div>
         <div className={styles.durationButton}>4 years</div>
@@ -32,11 +33,11 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
 
       <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>Configure public ENS profile for this domain if you are setting it for your wallet. You can skip it or complete after registration</div>
-      <input name="name" placeholder="Add a display name" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
-      <input name="description" placeholder="Add a bio to your profile" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
-      <input name="url" placeholder="Add your website" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
-      <input name="email" placeholder="Personal email" autoComplete="off" className={`${styles.profileInput} ${ui.input}`} />
-      <input name="twitter" placeholder="@username" autoComplete="off" className={`${styles.profileInput} ${styles.profileInputLast} ${ui.input}`} />
+      <input name="name" placeholder="Add a display name" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
+      <input name="description" placeholder="Add a bio to your profile" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
+      <input name="url" placeholder="Add your website" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
+      <input name="email" placeholder="Personal email" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
+      <input name="twitter" placeholder="@username" autoComplete="off" className={clsx(styles.profileInput, ui.input, styles.profileInputLast)} />
     </div>
   )
 }

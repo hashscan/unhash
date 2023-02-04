@@ -8,6 +8,7 @@ import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
 import { LogoutIcon, ProfileIcon } from './icons'
 import Link from 'next/link'
+import clsx from 'clsx'
 
 export const Nav = () => {
   const [isOpen, setOpen] = useState(false)
@@ -58,7 +59,7 @@ export const Nav = () => {
                 {(() => {
                   if (!connected) {
                     return (
-                      <button onClick={openConnectModal} className={`${ui.button} ${styles.connect}`} type="button">
+                      <button onClick={openConnectModal} className={clsx(ui.button, styles.connect)} type="button">
                         Connect wallet
                       </button>
                     )
@@ -77,8 +78,11 @@ export const Nav = () => {
                         {chain.name}
                       </button>
                       {' | '}
-                      <button className={`${styles.account}`} onClick={() => setOpen(!isOpen)}>
-                        <div className={`${styles.accountIcon} ${!account.ensAvatar && styles.accountIconPlaceholder}`}>
+                      <button className={styles.account} onClick={() => setOpen(!isOpen)}>
+                        <div className={clsx(
+                          styles.accountIcon,
+                          { [styles.accountIconPlaceholder]: !account.ensAvatar }
+                        )}>
                           {account.ensAvatar ? (
                             <img
                               width={28}

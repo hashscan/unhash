@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
 import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
@@ -58,7 +59,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
 
         <div className={styles.buttons}>
           {step !== 'commit' &&
-            <button className={`${ui.button} ${styles.buttonPrev}`} onClick={() => onPrevClick()}>
+            <button className={clsx(ui.button, styles.buttonPrev)} onClick={() => onPrevClick()}>
               Back
             </button>
           }
@@ -66,7 +67,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
           <div className={styles.buttonSpace}></div>
           {step !== 'success' && (
             <button
-              className={`${ui.button} ${styles.buttonNext}`}
+              className={clsx(ui.button, styles.buttonNext)}
               onClick={() => onNextClick()}
             >
               {step === 'commit'
