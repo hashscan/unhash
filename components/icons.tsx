@@ -46,3 +46,30 @@ export const ProgressBar = ({
     </svg>
   )
 }
+
+export const BackIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="4" fill="var(--color-slate-6)" />
+    <path d="M13.2929 23.2929C12.9024 23.6834 12.9024 24.3166 13.2929 24.7071L19.6569 31.0711C20.0474 31.4616 20.6805 31.4616 21.0711 31.0711C21.4616 30.6805 21.4616 30.0474 21.0711 29.6569L15.4142 24L21.0711 18.3431C21.4616 17.9526 21.4616 17.3195 21.0711 16.9289C20.6805 16.5384 20.0474 16.5384 19.6569 16.9289L13.2929 23.2929ZM33 25C33.5523 25 34 24.5523 34 24C34 23.4477 33.5523 23 33 23V25ZM14 25H33V23H14V25Z"
+      fill="var(--color-slate-f)"
+    />
+  </svg>
+)
+
+export const EthereumIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 784.37 1277.39">
+    <g id="Layer_x0020_1">
+      <metadata id="CorelCorpID_0Corel-Layer" />
+      <g id="_1421394342400">
+        <g>
+          <polygon fill="currentColor" fill-rule="nonzero" points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54 " />
+          <polygon fill="currentColor" fill-rule="nonzero" points="392.07,0 -0,650.54 392.07,882.29 392.07,472.33 " />
+          <polygon fill="currentColor" fill-rule="nonzero" points="392.07,956.52 387.24,962.41 387.24,1263.28 392.07,1277.38 784.37,724.89 " />
+          <polygon fill="currentColor" fill-rule="nonzero" points="392.07,1277.38 392.07,956.52 -0,724.89 " />
+          <polygon fill="currentColor" fill-rule="nonzero" points="392.07,882.29 784.13,650.54 392.07,472.33 " />
+          <polygon fill="currentColor" fill-rule="nonzero" points="0,650.54 392.07,882.29 392.07,472.33 " />
+        </g>
+      </g>
+    </g>
+  </svg>
+)

@@ -9,12 +9,12 @@
   border-radius: var(--radii-sm);
   border: none;
   box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 2px;
-  background-color: var(--primary);
+  background-color: var(--text-primary);
 }
 
 .button:hover {
   cursor: pointer;
-  background-color: var(--primary-hover);
+  background-color: var(--text-secondary);
 }
 
 .buttonSmall {
@@ -115,17 +115,26 @@
 }
 
 .input {
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
   padding: 6px 12px;
-  background-color: var(--background-card);
-  border: none;
   color: var(--text-primary);
   border-radius: var(--radii-sm);
-  border: 1px solid var(--border-card);
+  outline: 1.25px solid var(--color-slate-5);
   box-sizing: border-box;
+  caret-color: var(--text-primary);
+}
+
+.input::placeholder {
+  color: var(--text-hint);
+  opacity: 1;
+}
+
+.input:focus {
+  outline: 1.5px solid var(--color-slate-2);
+  border: none;
+  /* TODO: fix small unknown inner border */
 }
 
 .error {

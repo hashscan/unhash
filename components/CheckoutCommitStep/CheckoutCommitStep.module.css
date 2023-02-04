@@ -1,0 +1,95 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  color: var(--color-slate-2);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  margin-top: 40px;
+}
+
+.subheader {
+  color: var(--color-slate-2);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+  margin-top: 0px;
+  margin-bottom: 16px;
+}
+
+.duration {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.durationButton {
+  width: 104px;
+  padding: 6px 0px;
+
+  color: var(--color-slate-1);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+  text-align: center;
+
+  border-radius: 6px;
+  border: 1.5px solid var(--color-slate-1);
+}
+
+.durationButton:hover {
+  cursor: pointer;
+  color: var(--color-slate-3);
+  border: 1.5px solid var(--color-slate-3);
+}
+
+.durationButtonSelected {
+  background-color: var(--color-slate-1);
+  color: var(--color-slate-f);
+}
+
+.durationButtonSelected:hover {
+  color: var(--color-slate-f);
+  border: 1.5px solid var(--color-slate-1);
+}
+
+.owner {
+  /* TODO: use global style */
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* TODO: move to a Input component */
+.inputContainer {
+  height: 38px;
+}
+
+.inputContainer>input {
+  height: 100%;
+  width: 100%;
+  padding-left: 50px;
+}
+
+.inputIcon {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  
+  color: var(--color-slate-f);
+  background-color: var(--color-slate-5);
+  border-radius: var(--radii-sm) 0 0 var(--radii-sm);
+}
+
+.profileInput {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.profileInputLast {
+  margin-bottom: 0px;
+}
