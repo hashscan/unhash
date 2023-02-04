@@ -3,6 +3,8 @@ import WrapBalancer from 'react-wrap-balancer'
 import { DomainSearchBar } from 'components/DomainSearchBar'
 import styles from 'styles/search.module.css'
 
+import { LandingPricing } from 'components/LandingPricing/LandingPricing'
+
 const Search = () => {
   return (
     <>
@@ -15,17 +17,22 @@ const Search = () => {
 
             <h2 className={styles.heroSubtitle}>
               <WrapBalancer>
-                A modern and better way of searching, buying and managing <b>ENS domains</b>
+                A modern and better way of searching, buying and managing{' '}
+                <b>ENS domains</b>
               </WrapBalancer>
             </h2>
           </div>
         </div>
       </div>
 
-      <div className={styles.searchSection}>
-        <div className={styles.container}>
+      <div className={styles.container}>
+        <section className={styles.searchSection}>
           <DomainSearchBar />
-        </div>
+        </section>
+
+        <section className={styles.pricingSection}>
+          <LandingPricing />
+        </section>
       </div>
     </>
   )
