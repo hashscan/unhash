@@ -17,52 +17,53 @@ export const LandingPricing = () => {
       {/* rhs */}
       <div className={styles.info}>
         <table className={styles.table}>
-          <tr>
-            <td>
-              <span className={styles.price}>
-                $5
-                <small> / year</small>
-              </span>
-            </td>
-            <td>5+ character names</td>
-          </tr>
-
-          <tr>
-            <td>
-              <span className={styles.price}>
-                $160<small> / year</small>
-              </span>
-            </td>
-            <td>
-              4 character names, e.g.{' '}
-              <a
-                href="https://nick.eth.co/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                nick.eth
-              </a>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <span className={styles.price}>
-                $640<sup>*</sup>
-                <small> / year</small>
-              </span>
-            </td>
-            <td>
-              3 character names, e.g.{' '}
-              <a
-                href="https://isc.eth.co/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                isc.eth
-              </a>
-            </td>
-          </tr>
+          <tbody>
+            {' '}
+            <tr>
+              <td>
+                <span className={styles.price}>
+                  $5
+                  <small> / year</small>
+                </span>
+              </td>
+              <td>5+ character names</td>
+            </tr>
+            <tr>
+              <td>
+                <span className={styles.price}>
+                  $160<small> / year</small>
+                </span>
+              </td>
+              <td>
+                4 character names, e.g.{' '}
+                <a
+                  href="https://nick.eth.co/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  nick.eth
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span className={styles.price}>
+                  $640<sup>*</sup>
+                  <small> / year</small>
+                </span>
+              </td>
+              <td>
+                3 character names, e.g.{' '}
+                <a
+                  href="https://isc.eth.co/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  isc.eth
+                </a>
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <div className={styles.subnote}>

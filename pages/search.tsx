@@ -55,7 +55,7 @@ const Search: PageWithLayout = () => {
               'loosly.eth',
               'self-boo.eth',
               'lamewe.eth',
-              'self-boo.eth'
+              'sgame.eth'
             ].map((name) => (
               <Suggestion key={name} name={name} priceInUSD={10} />
             ))}
