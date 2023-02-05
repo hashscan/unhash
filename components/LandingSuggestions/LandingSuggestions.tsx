@@ -1,9 +1,4 @@
-import {
-  ComponentProps,
-  useInsertionEffect,
-  useLayoutEffect,
-  useState
-} from 'react'
+import { ComponentProps, useLayoutEffect, useState } from 'react'
 import styles from './LandingSuggestions.module.css'
 
 import { type Suggestion } from './types'
