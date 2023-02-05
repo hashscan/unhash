@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ComponentProps } from 'react'
 import { Domain } from 'lib/types'
 
 import clsx from 'clsx'
@@ -17,7 +17,7 @@ export interface DomainAvailability {
   /* TODO: price, listing, etc. */
 }
 
-export interface SearchButtonProps {
+export interface SearchButtonProps extends ComponentProps<'div'> {
   status: SearchStatus
   availability?: DomainAvailability /* TODO */
 }
@@ -26,9 +26,10 @@ const Loader = ({ visible }: { visible: boolean }) => (
   <div className={clsx(styles.loader, visible && styles.loaderVisible)} />
 )
 
-export const SearchButton = ({ status }: SearchButtonProps) => {
+export const SearchButton = ({ status, ...props }: SearchButtonProps) => {
   return (
     <div
+      {...props}
       className={clsx(styles.container, {
         // hide the entire component when not focused
         [styles.containerHidden]: status === SearchStatus.Inactive
@@ -39,7 +40,9 @@ export const SearchButton = ({ status }: SearchButtonProps) => {
       {[SearchStatus.Available, SearchStatus.NotAvailable].includes(status) && (
         <button className={styles.button}>
           Buy for $5 / year
-          <div className={styles.buttonStatus}>{status === SearchStatus.Available ? 'available' : 'not available'}</div>
+          <div className={styles.buttonStatus}>
+            {status === SearchStatus.Available ? 'available' : 'not available'}
+          </div>
         </button>
       )}
     </div>
