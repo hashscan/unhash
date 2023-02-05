@@ -1,101 +1,60 @@
-import React from 'react'
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import { ProgressBar } from 'components/icons'
-import styles from 'styles/Index.module.css'
-import ui from 'styles/ui.module.css'
-import api from 'lib/api'
-import { useChainId } from 'wagmi'
-import { validateDomain } from 'lib/utils'
+import React, { useCallback, useRef } from 'react'
+import WrapBalancer from 'react-wrap-balancer'
 
-const Index = () => {
-  const router = useRouter()
+import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar'
+import { LandingPricing } from 'components/LandingPricing/LandingPricing'
+import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggestions'
+import { Footer } from 'components/Footer/Footer'
+import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
-  const [domainInput, setDomainInput] = useState<string>('')
-  const [validationError, setValidationError] = useState<string | null>(null)
+import styles from 'styles/search.module.css'
+import { Suggestion } from 'components/LandingSuggestions/types'
 
-  const [isAvailable, setAvailable] = useState<boolean | null>(null)
-  const [isLoading, setLoading] = useState(false)
-  // const [error, setError] = useState<string | null>(null)
+const Search: PageWithLayout = () => {
+  const searchBarRef = useRef<SearchBarHandle>(null)
 
-  const onDomainInputChanged = (input: string) => {
-    setDomainInput(input.trim())
-    if (validationError) setValidationError(null)
-    setAvailable(null)
-  }
-
-  const chainId = useChainId()
-
-  // fetch domain availability on input change
-  // todo: add network
-  // todo: fix race condition
-  // todo: add debounce
-  useEffect(() => {
-    if (validateDomain(domainInput)) return
-
-    const checkAvailability = async () => {
-      try {
-        setLoading(true)
-        const available = await api.checkDomain(domainInput, chainId === 1 ? 'mainnet' : 'goerli')
-        setAvailable(available)
-        setLoading(false)
-      } catch (e) {
-        // todo: handle request and api errors
-        console.log(`Error checking domain ${domainInput}: ${e}`)
-        setAvailable(null)
-        setLoading(false)
-      }
-    }
-
-    checkAvailability()
-  }, [domainInput])
-
-  const onRegisterClick = async () => {
-    if (domainInput.length === 0) return
-    // show validation error on click
-    const e = validateDomain(domainInput)
-    if (e) {
-      setValidationError(e)
-      return
-    }
-
-    // ignore on loading
-    if (isLoading) return
-
-    // route if available
-    if (isAvailable) {
-      router.push(`/register?domain=${domainInput}`)
-      return
-    }
-  }
+  const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {
+    searchBarRef.current?.setSearch(suggestion.domain)
+  }, [])
 
   return (
-    <>
-      <main className={styles.container}>
-        <div className={styles.search}>
-          <input
-            style={{ width: 340 }}
-            className={ui.input}
-            type="text"
-            autoComplete="off"
-            defaultValue={''}
-            placeholder="v1rtl.eth"
-            onChange={(e) => onDomainInputChanged(e.currentTarget.value)}
-          />
-          <button style={{ width: 120 }} disabled={isLoading} className={ui.button} onClick={() => onRegisterClick()}>
-            {isLoading ? <ProgressBar color="var(--text-primary)" /> : 'Register'}
-          </button>
-        </div>
-        {validationError && <div className={styles.info}>{validationError}</div>}
-        {isAvailable !== null && (
-          <div className={styles.info} style={{ color: isAvailable ? 'var(--green)' : 'var(--error)' }}>
-            {isAvailable === true ? 'Domain is available!' : 'This domain is taken.'}
+    <div className={styles.searchPage}>
+      <div className={styles.heroSection}>
+        <div className={styles.container}>
+          <div className={styles.hero}>
+            <h1 className={styles.heroTitle}>
+              <WrapBalancer>Get Your Unique .eth Domain</WrapBalancer>
+            </h1>
+
+            <h2 className={styles.heroSubtitle}>
+              <WrapBalancer>
+                A modern and better way of searching, buying and managing{' '}
+                <b>ENS domains</b>
+              </WrapBalancer>
+            </h2>
           </div>
-        )}
-        {/* TODO: add request error */}
-      </main>
-    </>
+        </div>
+      </div>
+
+      <div className={styles.container}>
+        <section className={styles.searchSection}>
+          <DomainSearchBar ref={searchBarRef} />
+        </section>
+
+        <section className={styles.suggestionsSection}>
+          <LandingSuggestions onSuggestionSelected={handleSuggestionSelected} />
+        </section>
+
+        <section className={styles.pricingSection}>
+          <LandingPricing />
+        </section>
+      </div>
+
+      <Footer />
+    </div>
   )
 }
 
-export default Index
+Search.layout = FullWidthLayout
+
+export default Search
