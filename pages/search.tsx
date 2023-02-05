@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 import WrapBalancer from 'react-wrap-balancer'
 
-import { DomainSearchBar } from 'components/DomainSearchBar'
+import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar'
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
 import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggestions'
 import { Footer } from 'components/Footer/Footer'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
 import styles from 'styles/search.module.css'
+import { Suggestion } from 'components/LandingSuggestions/types'
 
 const Search: PageWithLayout = () => {
+  const searchBarRef = useRef<SearchBarHandle>(null)
+
+  const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {
+    searchBarRef.current?.setSearch(suggestion.domain)
+  }, [])
+
   return (
     <div className={styles.searchPage}>
       <div className={styles.heroSection}>
@@ -31,13 +38,11 @@ const Search: PageWithLayout = () => {
 
       <div className={styles.container}>
         <section className={styles.searchSection}>
-          <DomainSearchBar />
+          <DomainSearchBar ref={searchBarRef} />
         </section>
 
         <section className={styles.suggestionsSection}>
-          <LandingSuggestions
-            onSuggestionSelected={(sugg) => console.log(sugg)}
-          />
+          <LandingSuggestions onSuggestionSelected={handleSuggestionSelected} />
         </section>
 
         <section className={styles.pricingSection}>
