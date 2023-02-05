@@ -7,7 +7,7 @@ import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggest
 import { Footer } from 'components/Footer/Footer'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
-import styles from 'styles/search.module.css'
+import styles from './index.module.css'
 import { Suggestion } from 'components/LandingSuggestions/types'
 
 const Search: PageWithLayout = () => {
