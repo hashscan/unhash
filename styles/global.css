@@ -85,7 +85,7 @@ body {
   padding: 0;
   margin: 0;
 
-  background: var(--color-slate-f);
+  background: var(--background);
   color: var(--color-slate-0);
   height: 100%;
 
