@@ -11,6 +11,7 @@ import api from 'lib/api'
 import { useChainId } from 'wagmi'
 import { validateDomain } from 'lib/utils'
 import { useDebounce } from 'usehooks-ts'
+import { useRouter } from 'next/router'
 
 // allow parent components to imperatively update search string using ref
 export type SearchBarHandle = {
@@ -19,14 +20,13 @@ export type SearchBarHandle = {
 
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(
   (_props, ref) => {
-    /**
-     * TODO: this is just a naive mock implementation
-     */
     const [searchQuery, setSearchQuery] = useState('')
     const [status, setStatus] = useState(SearchStatus.Loading)
     const chainId = useChainId()
 
     const domainInput = useDebounce(searchQuery, 300)
+
+    const router = useRouter()
 
     useImperativeHandle(ref, () => ({
       setSearch(value: string) {
@@ -65,7 +65,12 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(
         ></input>
 
         <div className={styles.action}>
-          <SearchButton status={status} />
+          <SearchButton
+            status={status}
+            onClick={() => {
+              router.push(`/checkout?domain=${searchQuery}`)
+            }}
+          />
         </div>
       </div>
     )
