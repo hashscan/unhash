@@ -1,26 +1,13 @@
 import React from 'react'
 import WrapBalancer from 'react-wrap-balancer'
-import { DomainSearchBar } from 'components/DomainSearchBar'
-import styles from 'styles/search.module.css'
 
+import { DomainSearchBar } from 'components/DomainSearchBar'
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
+import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggestions'
 import { Footer } from 'components/Footer/Footer'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
-const Suggestion = ({
-  name,
-  priceInUSD
-}: {
-  name: string
-  priceInUSD: number
-}) => {
-  return (
-    <div className={styles.suggestion}>
-      {name}
-      <span>${priceInUSD}</span>
-    </div>
-  )
-}
+import styles from 'styles/search.module.css'
 
 const Search: PageWithLayout = () => {
   return (
@@ -48,18 +35,9 @@ const Search: PageWithLayout = () => {
         </section>
 
         <section className={styles.suggestionsSection}>
-          <p>Suggested for you</p>
-          <div className={styles.suggestions}>
-            {[
-              'molefrg.eth',
-              'loosly.eth',
-              'self-boo.eth',
-              'lamewe.eth',
-              'sgame.eth'
-            ].map((name) => (
-              <Suggestion key={name} name={name} priceInUSD={10} />
-            ))}
-          </div>
+          <LandingSuggestions
+            onSuggestionSelected={(sugg) => console.log(sugg)}
+          />
         </section>
 
         <section className={styles.pricingSection}>
