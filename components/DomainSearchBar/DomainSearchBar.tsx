@@ -14,12 +14,12 @@ import { useDebounce } from 'usehooks-ts'
 import { useRouter } from 'next/router'
 
 // allow parent components to imperatively update search string using ref
-export type SearchBarHandle = {
+export interface SearchBarHandle {
   setSearch: (val: string) => void
 }
 
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(
-  (_props, ref) => {
+  function SearchBarWithRef(_props, ref) {
     const [searchQuery, setSearchQuery] = useState('')
     const [status, setStatus] = useState(SearchStatus.Loading)
     const chainId = useChainId()
