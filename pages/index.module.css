@@ -5,14 +5,22 @@
   margin: 0 auto;
 }
 
+.searchPage {
+  min-height: calc(100vh - var(--nav-height));
+}
+
 .hero {
   max-width: calc(var(--container-width) / 2);
   padding: 96px 0 192px 0;
 }
 
 .heroSection {
-  background: linear-gradient(rgba(0, 0, 0, 0), 80%, var(--color-slate-f)),
-    top left / 32px 32px repeat url('./assets/grid-pattern.png');
+  background: linear-gradient(
+      to bottom,
+      #ffffff00 70%,
+      var(--color-slate-f) 100%
+    ),
+    top left / 32px 32px repeat url('../styles/assets/grid-pattern.png');
 }
 
 .heroTitle {
@@ -30,4 +38,21 @@
 .searchSection {
   position: relative;
   margin-top: -128px;
+  margin-bottom: 64px;
+}
+
+.suggestionsSection {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-slate-5);
+  margin-bottom: 96px;
+}
+
+.pricingSection {
+  margin-bottom: 96px;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    max-width: unset;
+  }
 }
