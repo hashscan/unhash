@@ -35,8 +35,7 @@ export const useSendCommit = ({
     write,
     data,
     isLoading: isWriteLoading,
-    error: writeError,
-    isError: isWriteError
+    error: writeError
   } = useContractWrite({
     ...config,
     onSuccess: (data) => {
@@ -58,8 +57,7 @@ export const useSendCommit = ({
   const {
     isLoading: isWaitLoading,
     isSuccess,
-    isError: isRemoteError,
-    error: remoteError
+    error: waitError
   } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: async (data) => {
@@ -84,9 +82,6 @@ export const useSendCommit = ({
     write,
     config,
     isSuccess,
-    writeError,
-    remoteError,
-    isWriteError,
-    isRemoteError
+    error: writeError ? writeError : waitError,
   }
 }

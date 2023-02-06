@@ -36,7 +36,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
     toNetwork(chainId)
   )
 
-  const { write, isLoading, isSuccess, isWriteError } = useSendCommit({
+  const { write, isLoading, error } = useSendCommit({
     commitmentHash,
     chainId: chainId,
     owner: address!,
@@ -103,6 +103,13 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       {isLoading && (
         <div className={styles.loader}>
           <ProgressBar color='var(--color-slate-f)' width={'32px'} height={'32px'} />
+        </div>
+      )}
+
+      {/* TODO: remove temp error solution */}
+      {error && (
+        <div className={styles.error}>
+          {error.message}
         </div>
       )}
     </div>

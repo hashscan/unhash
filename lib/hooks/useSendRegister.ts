@@ -11,7 +11,7 @@ export const useSendRegister = (name: string) => {
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
-    functionName: 'registerWithConfig', // 'registerWithConfig' does not work
+    functionName: 'registerWithConfig',
     args: [
       name,
       registration?.owner,
@@ -32,7 +32,6 @@ export const useSendRegister = (name: string) => {
     data,
     isLoading: isWriteLoading,
     error: sendError,
-    isError: isSendError
   } = useContractWrite({
     ...config,
     onSuccess: (data) => {
@@ -45,8 +44,7 @@ export const useSendRegister = (name: string) => {
   const {
     isLoading: isWaitLoading,
     isSuccess,
-    isError: isRemoteError,
-    error: remoteError
+    error: waitError
   } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: () => {
@@ -61,9 +59,6 @@ export const useSendRegister = (name: string) => {
     write,
     config,
     isSuccess,
-    sendError,
-    remoteError,
-    isSendError,
-    isRemoteError
+    error: sendError || waitError,
   }
 }

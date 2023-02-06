@@ -22,7 +22,7 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
   const count = useCountdown(commitTimestamp + 60 * 1000)
   const wait = count > 0
 
-  const { write, isLoading } = useSendRegister(props.name)
+  const { write, isLoading, error } = useSendRegister(props.name)
 
 
   const onRegisterClick = () => {
@@ -53,6 +53,13 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
           {isLoading && (
             <div className={styles.loader}>
               <ProgressBar color='var(--color-slate-f)' width={'32px'} height={'32px'} />
+            </div>
+          )}
+
+          {/* TODO: remove temp error solution */}
+          {error && (
+            <div className={styles.error}>
+              {error.message}
             </div>
           )}
         </>)

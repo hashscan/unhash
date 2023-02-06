@@ -36,6 +36,19 @@
   margin-right: 84px;
 }
 
-.loaderHidden {
-  visibility: hidden;
+/* TODO: remove temp error solution */
+.error {
+  width: fit-content;
+  height: fit-content;
+  display: block;
+  margin-left: auto;
+  margin-right: 0px;
+
+  color: var(--error);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+
+  border-radius: 4px;
+  padding: 4px 12px;
 }
