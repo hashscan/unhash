@@ -12,6 +12,7 @@ import { useChainId } from 'wagmi'
 import { validateDomain } from 'lib/utils'
 import { useDebounce } from 'usehooks-ts'
 import { useRouter } from 'next/router'
+import { toNetwork } from 'lib/types'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -37,20 +38,21 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(
     useEffect(() => {
       if (domainInput.length === 0) {
         setStatus(SearchStatus.Inactive)
-      } else {
-        if (validateDomain(domainInput)) return
-        const check = async () => {
-          setStatus(SearchStatus.Loading)
-          const available = await api.checkDomain(
-            domainInput,
-            chainId === 1 ? 'mainnet' : 'goerli'
-          )
-          setStatus(
-            available ? SearchStatus.Available : SearchStatus.NotAvailable
-          )
-        }
-        check()
+        return
       }
+      // TODO: setStatus Invalid?
+      if (validateDomain(domainInput)) return
+
+      const check = async () => {
+        setStatus(SearchStatus.Loading)
+        // TODO: catch api errors
+        const available = await api.checkDomain(
+          domainInput,
+          toNetwork(chainId)
+        )
+        setStatus(available ? SearchStatus.Available : SearchStatus.NotAvailable)
+      }
+      check()
     }, [domainInput, chainId])
 
     return (
