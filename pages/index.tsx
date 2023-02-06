@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react'
 import WrapBalancer from 'react-wrap-balancer'
 
-import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar'
+import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar/DomainSearchBar'
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
 import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggestions'
 import { Footer } from 'components/Footer/Footer'
@@ -36,17 +36,17 @@ const Search: PageWithLayout = () => {
       </div>
 
       <div className={styles.container}>
-        <section className={styles.searchSection}>
+        <div className={styles.searchSection}>
           <DomainSearchBar ref={searchBarRef} />
-        </section>
+        </div>
 
-        <section className={styles.suggestionsSection}>
+        <div className={styles.suggestionsSection}>
           <LandingSuggestions onSuggestionSelected={handleSuggestionSelected} />
-        </section>
+        </div>
 
-        <section className={styles.pricingSection}>
+        <div className={styles.pricingSection}>
           <LandingPricing />
-        </section>
+        </div>
       </div>
 
       <Footer />
