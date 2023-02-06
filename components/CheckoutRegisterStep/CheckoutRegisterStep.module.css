@@ -17,3 +17,10 @@
   margin-top: 0px;
   margin-bottom: 64px;
 }
+
+.registerButton {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 40px;
+}

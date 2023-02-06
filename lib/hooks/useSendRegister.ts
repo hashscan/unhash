@@ -4,7 +4,7 @@ import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegistration } from './storage'
 
-export const useSendRegister = ({ name }: { name: string }) => {
+export const useSendRegister = (name: string) => {
   const chainId = useChainId()
   const { registration, setRegistration } = useRegistration(name)
 
