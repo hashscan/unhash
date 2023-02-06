@@ -28,8 +28,7 @@ const Search: PageWithLayout = () => {
 
             <h2 className={styles.heroSubtitle}>
               <WrapBalancer>
-                A modern and better way of searching, buying and managing{' '}
-                <b>ENS domains</b>
+                A modern and better way of searching, buying and managing <b>ENS domains</b>
               </WrapBalancer>
             </h2>
           </div>
