@@ -1,4 +1,4 @@
-import { ComponentProps, useLayoutEffect, useState } from 'react'
+import { ComponentProps, useEffect, useState } from 'react'
 import styles from './LandingSuggestions.module.css'
 
 import { type Suggestion } from './types'
@@ -17,10 +17,7 @@ interface SuggestionTagProps extends ComponentProps<'div'> {
   suggestion: Suggestion
 }
 
-const SuggestionTag = ({
-  suggestion: { domain, priceInUSD },
-  ...props
-}: SuggestionTagProps) => {
+const SuggestionTag = ({ suggestion: { domain, priceInUSD }, ...props }: SuggestionTagProps) => {
   return (
     <div className={styles.suggestion} {...props}>
       {domain}
@@ -33,12 +30,10 @@ export interface LandingSuggestionsProps {
   onSuggestionSelected: (s: Suggestion) => void
 }
 
-export const LandingSuggestions = ({
-  onSuggestionSelected
-}: LandingSuggestionsProps) => {
+export const LandingSuggestions = ({ onSuggestionSelected }: LandingSuggestionsProps) => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setSuggestions(
       Array(6)
         .fill(0)
