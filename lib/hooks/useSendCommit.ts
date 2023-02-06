@@ -1,6 +1,6 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi'
 import { useRegistration } from './storage'
 
 export const useSendCommit = ({
@@ -51,6 +51,9 @@ export const useSendCommit = ({
     }
   })
 
+  // ethers provider needed to get exact transaction timestamp
+  const provider = useProvider()
+  // wait for transaction success to update Registration status
   const {
     isLoading,
     isSuccess,
@@ -58,13 +61,18 @@ export const useSendCommit = ({
     error: remoteError
   } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      // get timestamp from block
+      const commitBlock = await provider.getBlock(data.blockNumber)
+      const commitTimestamp = commitBlock.timestamp * 1000
+      // TODO: replace by specific function to update reg status
       const reg = registration!
       setRegistration({
         ...reg,
-        fields,
+        fields, // why do we need to set fields again?
         status: 'committed',
-        commitBlock: data.blockNumber
+        commitBlock: data.blockNumber,
+        commitTimestamp: commitTimestamp,
       })
     }
   })

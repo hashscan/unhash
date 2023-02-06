@@ -44,6 +44,7 @@ export type Registration = {
   status: RegistrationStatus
   commitTxHash?: string
   commitBlock?: number
+  commitTimestamp?: number
   registerTxHash?: string
   fields?: Fields
 }

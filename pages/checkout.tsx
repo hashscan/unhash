@@ -74,7 +74,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
           />
         )}
         {step === 'register' &&
-          <CheckoutRegisterStep domain={props.domain} />
+          <CheckoutRegisterStep domain={props.domain} name={props.name} />
         }
         {step === 'success' &&
           <CheckoutSuccessStep domain={props.domain} />
