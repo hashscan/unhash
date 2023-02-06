@@ -6,6 +6,7 @@ import { useCountdown } from 'lib/hooks/useCountdown'
 import React from 'react'
 import styles from './CheckoutRegisterStep.module.css'
 import ui from 'styles/ui.module.css'
+import { ProgressBar } from 'components/icons'
 
 
 interface CheckoutRegisterStepProps {
@@ -21,7 +22,7 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
   const count = useCountdown(commitTimestamp + 60 * 1000)
   const wait = count > 0
 
-  const { write } = useSendRegister(props.name)
+  const { write, isLoading } = useSendRegister(props.name)
 
 
   const onRegisterClick = () => {
@@ -41,9 +42,19 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
           <div className={styles.header}>Confirm registration</div>
           <div className={styles.subheader}>Confirm below to register your domain and configure the profile</div>
 
-          <button className={clsx(ui.button, styles.registerButton)} onClick={() => onRegisterClick()}>
-            Complete registration
+          {/* TODO: replace by button with loader component */}
+          <button
+            className={clsx(ui.button, styles.registerButton)}
+            onClick={() => !isLoading && onRegisterClick()}
+            disabled={isLoading}
+          >
+            {!isLoading && 'Complete registration'}
           </button>
+          {isLoading && (
+            <div className={styles.loader}>
+              <ProgressBar color='var(--color-slate-f)' width={'32px'} height={'32px'} />
+            </div>
+          )}
         </>)
       }
     </div>

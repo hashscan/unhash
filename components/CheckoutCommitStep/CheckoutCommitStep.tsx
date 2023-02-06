@@ -1,8 +1,8 @@
 import { Domain, toNetwork } from 'lib/types'
-import React, { useMemo } from 'react'
+import React from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
-import { EthereumIcon } from 'components/icons'
+import { EthereumIcon, ProgressBar } from 'components/icons'
 import clsx from 'clsx'
 import { formatYears } from 'lib/format'
 import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
@@ -92,9 +92,19 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <input name="email" placeholder="Personal email" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
       <input name="twitter" placeholder="@username" autoComplete="off" className={clsx(styles.profileInput, ui.input, styles.profileInputLast)} />
 
-      <button className={clsx(ui.button, styles.commitButton)} onClick={() => onStartClick()}>
-        Start registration
+      {/* TODO: replace by button with loader component */}
+      <button
+        className={clsx(ui.button, styles.commitButton)}
+        onClick={() => !isLoading && onStartClick()}
+        disabled={isLoading}
+      >
+        {!isLoading && 'Start registration'}
       </button>
+      {isLoading && (
+        <div className={styles.loader}>
+          <ProgressBar color='var(--color-slate-f)' width={'32px'} height={'32px'} />
+        </div>
+      )}
     </div>
   )
 }

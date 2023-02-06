@@ -6,9 +6,7 @@ import ui from 'styles/ui.module.css'
 import { useRegistrationRead } from 'lib/hooks/storage'
 
 export const RegisterStep = ({ feeData, name }: { feeData: ReturnType<typeof useFeeData>['data']; name: string }) => {
-  const { config, write, isLoading, isSuccess, isSendError, isRemoteError, sendError } = useSendRegister({
-    name
-  })
+  const { config, write, isLoading, isSuccess, isSendError, isRemoteError, sendError } = useSendRegister(name)
 
   const registration = useRegistrationRead(name)
 

@@ -30,6 +30,7 @@ export const useSendRegister = (name: string) => {
   const {
     write,
     data,
+    isLoading: isWriteLoading,
     error: sendError,
     isError: isSendError
   } = useContractWrite({
@@ -42,7 +43,7 @@ export const useSendRegister = (name: string) => {
   })
 
   const {
-    isLoading,
+    isLoading: isWaitLoading,
     isSuccess,
     isError: isRemoteError,
     error: remoteError
@@ -54,5 +55,15 @@ export const useSendRegister = (name: string) => {
     }
   })
 
-  return { data, isLoading, write, config, isSuccess, sendError, remoteError, isSendError, isRemoteError }
+  return {
+    data,
+    isLoading: isWriteLoading || isWaitLoading,
+    write,
+    config,
+    isSuccess,
+    sendError,
+    remoteError,
+    isSendError,
+    isRemoteError
+  }
 }

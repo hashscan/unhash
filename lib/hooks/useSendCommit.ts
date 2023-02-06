@@ -34,6 +34,7 @@ export const useSendCommit = ({
   const {
     write,
     data,
+    isLoading: isWriteLoading,
     error: writeError,
     isError: isWriteError
   } = useContractWrite({
@@ -55,7 +56,7 @@ export const useSendCommit = ({
   const provider = useProvider()
   // wait for transaction success to update Registration status
   const {
-    isLoading,
+    isLoading: isWaitLoading,
     isSuccess,
     isError: isRemoteError,
     error: remoteError
@@ -79,7 +80,7 @@ export const useSendCommit = ({
 
   return {
     data,
-    isLoading,
+    isLoading: isWriteLoading || isWaitLoading,
     write,
     config,
     isSuccess,
