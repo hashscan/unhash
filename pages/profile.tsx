@@ -3,7 +3,6 @@ import api, { DomainInfo, UserInfo } from 'lib/api'
 import { useEffect, useState } from 'react'
 import { goerli, useAccount, useChainId, useFeeData } from 'wagmi'
 import ui from 'styles/ui.module.css'
-import form from 'styles/CommitmentForm.module.css'
 import styles from 'styles/profile.module.css'
 import { Domain, Fields, toNetwork } from 'lib/types'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
@@ -96,7 +95,7 @@ const Profile = () => {
           <>
             <h2>Records</h2>
             <form
-              className={form.form}
+              className={styles.form}
               onSubmit={(e) => {
                 e.preventDefault()
 
@@ -114,11 +113,11 @@ const Profile = () => {
                 }
               }}
             >
-              <div className={form.field}>
+              <div className={styles.field}>
                 <label htmlFor="name">Name</label>
                 <input name="name" placeholder="ens_user420" defaultValue={info.records.name} className={ui.input} />
               </div>
-              <div className={form.field}>
+              <div className={styles.field}>
                 <label htmlFor="description">Bio</label>
                 <input
                   name="description"
@@ -127,7 +126,7 @@ const Profile = () => {
                   defaultValue={info.records.description}
                 />
               </div>
-              <div className={form.field}>
+              <div className={styles.field}>
                 <label htmlFor="url">Website URL</label>
                 <input
                   name="url"
@@ -137,7 +136,7 @@ const Profile = () => {
                   className={ui.input}
                 />
               </div>
-              <div className={form.field}>
+              <div className={styles.field}>
                 <label htmlFor="email">Email</label>
                 <input
                   name="email"
@@ -147,7 +146,7 @@ const Profile = () => {
                   defaultValue={info.records.email}
                 />
               </div>
-              <div className={form.field}>
+              <div className={styles.field}>
                 <label htmlFor="com.twitter">Twitter handle</label>
                 <input
                   name="com.twitter"

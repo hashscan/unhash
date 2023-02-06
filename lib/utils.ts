@@ -38,29 +38,6 @@ export function parseDomainName(domain: string): string {
   return domain.split('.')[0]
 }
 
-export const diffDates = (date1: Date, date2: Date) => {
-  const utcdate1 = Date.UTC(
-    date1.getFullYear(),
-    date1.getMonth(),
-    date1.getDate(),
-    date1.getHours(),
-    date1.getMinutes(),
-    date1.getSeconds(),
-    date1.getMilliseconds()
-  )
-  const utcOther = Date.UTC(
-    date2.getFullYear(),
-    date2.getMonth(),
-    date2.getDate(),
-    date2.getHours(),
-    date2.getMinutes(),
-    date2.getSeconds(),
-    date2.getMilliseconds()
-  )
-
-  return (utcdate1 - utcOther) / 60000
-}
-
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
 }
