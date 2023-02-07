@@ -38,3 +38,5 @@ export const ETH_RESOLVER_ABI = [
 export const ETH_REVERSE_REGISTRAR_ABI = ['function setName(string) returns (bytes32)']
 
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24
+
+export const COMMIT_WAIT_MS = 15 * 1000

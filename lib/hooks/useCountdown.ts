@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export function useCountdown(target: number) {
   const initCount = Math.ceil((target - Date.now()) / 1000)
