@@ -23,10 +23,12 @@ export function useRegistrationX(name: string) {
         throw new Error('Registration already exists')
       }
 
-      return [..._registrations, {
-        ...r,
-        status: 'commitPending',
-      }]
+      return [
+        ..._registrations,
+        {
+          ...r,
+          status: 'commitPending',
+        }]
     })
   }, [name, setRegistrations])
 
@@ -36,14 +38,47 @@ export function useRegistrationX(name: string) {
       const _registration = _registrations.find((r) => r.name === name)
       if (!_registration) throw new Error('Registration not found')
 
-      return [..._registrations.filter((r) => r.name !== name), {
-        ..._registration,
-        status: 'committed',
-        commitBlock,
-        commitTimestamp,
-      }]
+      return [
+        ..._registrations.filter((r) => r.name !== name),
+        {
+          ..._registration,
+          status: 'committed',
+          commitBlock,
+          commitTimestamp,
+        }]
     })
   }, [name, setRegistrations])
 
-  return { registration, create, setCommited }
+  // Update the registration status to 'registerPending'
+  const setRegistering = useCallback((registerTxHash: string) => {
+    setRegistrations((_registrations) => {
+      const _registration = _registrations.find((r) => r.name === name)
+      if (!_registration) throw new Error('Registration not found')
+
+      return [
+        ..._registrations.filter((r) => r.name !== name),
+        {
+          ..._registration,
+          status: 'registerPending',
+          registerTxHash,
+        }]
+    })
+  }, [name, setRegistrations])
+
+  // Update the registration status to 'registered'
+  const setRegistered = useCallback(() => {
+    setRegistrations((_registrations) => {
+      const _registration = _registrations.find((r) => r.name === name)
+      if (!_registration) throw new Error('Registration not found')
+
+      return [
+        ..._registrations.filter((r) => r.name !== name),
+        {
+          ..._registration,
+          status: 'registered',
+        }]
+    })
+  }, [name, setRegistrations])
+
+  return { registration, create, setCommited, setRegistering, setRegistered }
 }
