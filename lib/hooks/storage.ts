@@ -2,22 +2,13 @@ import { Registration } from 'lib/types'
 import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
 
 export function useRegistration(name: string) {
-  const [registration, setRegistration] = useLocalStorage<Registration | null>(`ens.registration.${name}`, null)
+  const [registrations, setRegistrations] = useLocalStorage<Registration[]>(`ens.registrations`, [])
 
-  // TODO: implement
-  // creates registration with commitPending status
-  const createRegistration = (commitTxHash: string) => {
-    // setRegistration((reg) => {
-    //   if (!reg) return null
-    //   return {
-    //     ...reg,
-    //     status: 'commitPending',
-    //     commitTxHash
-    //   }
-    // })
-  }
-  
-  return { registration, setRegistration, createRegistration }
+  const registration = registrations.find((r) => r.name === name)
+  const setRegistration = (reg: Registration) =>
+    setRegistrations([...registrations.filter((r) => r.name !== name), reg])
+
+  return { registration, setRegistration }
 }
 
 export const useRegistrationRead = (name: string) => {

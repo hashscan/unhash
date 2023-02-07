@@ -4,7 +4,8 @@
   padding: 24px 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
+  align-items: center;
 }
 
 .domains {
@@ -14,12 +15,12 @@
   gap: 16px;
 }
 
-.field>label {
+.field > label {
   display: block;
   margin-bottom: 8px;
 }
 
-.field>input {
+.field > input {
   width: 100%;
 }
 
@@ -27,4 +28,19 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.avatar {
+  border-radius: var(--round);
+  height: 250px;
+  width: 250px;
+}
+
+.domain {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.desc {
+  margin-top: 6px;
 }

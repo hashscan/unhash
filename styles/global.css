@@ -66,6 +66,7 @@
   --radii-sm: 4px;
   --radii-md: 8px;
   --radii-lg: 12px;
+  --round: 999px;
 
   /* transition */
   --ease-250: 0.25s ease;
