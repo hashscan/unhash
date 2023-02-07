@@ -23,13 +23,46 @@
   }
 }
 
+.inputWithSuffix {
+  position: relative;
+}
+
+/* input and its overlay should have the same size and typographic styles */
+.suffix,
+.input {
+  font: var(--type-lg);
+  letter-spacing: var(--ls-lg);
+  padding: 12px 16px;
+}
+
+.suffix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+
+  pointer-events: none;
+  border: 1px solid transparent;
+  color: transparent;
+
+  opacity: 0;
+}
+
+.suffixVisible {
+  opacity: 1;
+}
+
+/* the actual suffix */
+.suffix > span {
+  color: var(--color-slate-5);
+}
+
 .input {
   color: var(--color-slate-0);
   background-color: var(--color-slate-8);
   border: 1px solid var(--color-slate-5);
-  font: var(--type-lg);
-  letter-spacing: var(--ls-lg);
-  padding: 12px 16px;
+
   border-radius: var(--radii-lg);
   width: 100%;
 }
