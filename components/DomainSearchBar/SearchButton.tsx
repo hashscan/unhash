@@ -1,50 +1,33 @@
 import React, { ComponentProps } from 'react'
-import { Domain } from 'lib/types'
 
 import clsx from 'clsx'
 import styles from './SearchButton.module.css'
-
-export enum SearchStatus {
-  Inactive,
-  Loading,
-  Available,
-  NotAvailable
-}
-
-export interface DomainAvailability {
-  available: boolean
-  domain: Domain
-  /* TODO: price, listing, etc. */
-}
+import { SearchStatus } from './types'
 
 export interface SearchButtonProps extends ComponentProps<'div'> {
   status: SearchStatus
-  availability?: DomainAvailability /* TODO */
+  focused: boolean
 }
 
-const Loader = ({ visible }: { visible: boolean }) => (
-  <div className={clsx(styles.loader, visible && styles.loaderVisible)} />
+const Loader = ({ status, focused }: { status: SearchStatus; focused: boolean }) => (
+  <div
+    className={clsx(styles.loader, {
+      [styles.loaderVisible]: focused,
+      [styles.loaderActive]: [SearchStatus.Loading].includes(status)
+    })}
+  >
+    <div className={styles.loaderSpinner}></div>
+  </div>
 )
 
-export const SearchButton = ({ status, ...props }: SearchButtonProps) => {
+export const SearchButton = ({ status, focused, ...props }: SearchButtonProps) => {
   return (
-    <div
-      {...props}
-      className={clsx(styles.container, {
-        // hide the entire component when not focused
-        [styles.containerHidden]: status === SearchStatus.Inactive
-      })}
-    >
-      <Loader visible={status === SearchStatus.Loading} />
+    <div {...props} className={clsx(styles.container)}>
+      <Loader status={status} focused={focused} />
 
-      {[SearchStatus.Available, SearchStatus.NotAvailable].includes(status) && (
-        <button className={styles.button}>
-          Buy for $5 / year
-          <div className={styles.buttonStatus}>
-            {status === SearchStatus.Available ? 'available' : 'not available'}
-          </div>
-        </button>
-      )}
+      <button className={clsx(styles.button)} disabled={status !== SearchStatus.Available}>
+        Register
+      </button>
     </div>
   )
 }
