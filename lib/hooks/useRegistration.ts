@@ -3,7 +3,7 @@ import { useLocalStorage } from "usehooks-ts"
 import { useCallback } from "react"
 
 // helper type to avoid long type declaration
-type CreateRegistration = {
+type CreateRegistrationParams = {
   name: string
   owner: string
   duration: number
@@ -16,7 +16,7 @@ export function useRegistration(name: string) {
   const registration = registrations.find((reg) => reg.name === name)
 
   // Create new registration with the 'commitPending' status
-  const create = useCallback((r: CreateRegistration) => {
+  const create = useCallback((r: CreateRegistrationParams) => {
     setRegistrations((_registrations) => {
       if (_registrations.find((r) => r.name === name)) {
         throw new Error('Registration already exists')
