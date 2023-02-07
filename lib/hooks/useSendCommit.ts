@@ -1,7 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
 import { useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi'
-import { useRegistration } from './storage'
+import { useRegistrationX } from './useRegistrationX'
 
 export const useSendCommit = ({
   commitmentHash,
@@ -10,7 +10,7 @@ export const useSendCommit = ({
   name,
   duration,
   secret,
-  fields
+  fields // TODO: support storing fields in Registartion
 }: {
   commitmentHash?: string
   chainId: number
@@ -20,6 +20,8 @@ export const useSendCommit = ({
   secret: string
   fields: Fields
 }) => {
+  const { create, setCommited } = useRegistrationX(name)
+
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
@@ -27,28 +29,16 @@ export const useSendCommit = ({
     args: [commitmentHash],
     enabled: Boolean(commitmentHash)
   })
-  const { registration, setRegistration } = useRegistration(name)
-
-  const base = { name, owner, duration, secret }
-
-  const {
-    write,
-    data,
-    isLoading: isWriteLoading,
-    error: writeError
-  } = useContractWrite({
+  const { write, data, isLoading: isWriteLoading, error: writeError } = useContractWrite({
     ...config,
-    onSuccess: (data) => {
-      const reg = registration!
-
-      setRegistration({
-        ...base,
-        ...reg,
-        fields,
-        status: 'commitPending',
-        commitTxHash: data.hash
-      })
-    }
+    // create new Registartion when transaction is sent
+    onSuccess: (data) => create({
+      name,
+      owner,
+      duration,
+      secret,
+      commitTxHash: data.hash
+    })
   })
 
   // ethers provider needed to get exact transaction timestamp
@@ -64,15 +54,7 @@ export const useSendCommit = ({
       // get timestamp from block
       const commitBlock = await provider.getBlock(data.blockNumber)
       const commitTimestamp = commitBlock.timestamp * 1000
-      // TODO: replace by specific function to update reg status
-      const reg = registration!
-      setRegistration({
-        ...reg,
-        fields, // why do we need to set fields again?
-        status: 'committed',
-        commitBlock: data.blockNumber,
-        commitTimestamp: commitTimestamp,
-      })
+      setCommited(data.blockNumber, commitTimestamp)
     }
   })
 
