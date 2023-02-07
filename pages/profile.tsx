@@ -9,6 +9,7 @@ import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { useIsMounted } from 'usehooks-ts'
+import { formatAddress } from 'lib/utils'
 
 const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
   const { data: avatar, isLoading, error } = useEnsAvatar({ chainId, address })
@@ -58,7 +59,7 @@ const Profile = () => {
   return (
     <main className={styles.main}>
       {isMounted() ? <Avatar {...{ chainId, address }} /> : null}
-      <h1 className={styles.domain}>{domain}</h1>
+      <h1 className={styles.domain}>{formatAddress(address)}</h1>
       <p className={styles.desc}>{domainInfo?.records.description}</p>
     </main>
   )
