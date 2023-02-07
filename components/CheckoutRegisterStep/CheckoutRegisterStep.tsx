@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { CheckoutWait } from 'components/CheckoutWait'
-import { useRegistrationRead } from 'lib/hooks/storage'
+import { useRegistration } from 'lib/hooks/useRegistration'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { useCountdown } from 'lib/hooks/useCountdown'
 import React from 'react'
@@ -17,7 +17,7 @@ interface CheckoutRegisterStepProps {
 export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
   // TODO: can it be undefined for some reason? 
   // do we need to handle by returning empty div?
-  const reg = useRegistrationRead(props.name)
+  const { registration: reg } = useRegistration(props.name)
   const commitTimestamp = reg?.commitTimestamp!
   const count = useCountdown(commitTimestamp + 60 * 1000)
   const wait = count > 0
