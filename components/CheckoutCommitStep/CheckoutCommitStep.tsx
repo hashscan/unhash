@@ -101,9 +101,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
         {!isLoading && 'Start registration'}
       </button>
       {isLoading && (
-        <div className={styles.loader}>
-          <ProgressBar color='var(--color-slate-f)' width={'32px'} height={'32px'} />
-        </div>
+        <ProgressBar className={styles.loader} color='var(--color-slate-f)' width={'32px'} height={'32px'} />
       )}
 
       {/* TODO: remove temp error solution */}
