@@ -1,7 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegisterStatus, useRegistration } from './storage'
+import { useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi'
+import { useRegistration } from './storage'
 
 export const useSendCommit = ({
   commitmentHash,
@@ -34,8 +34,8 @@ export const useSendCommit = ({
   const {
     write,
     data,
-    error: writeError,
-    isError: isWriteError
+    isLoading: isWriteLoading,
+    error: writeError
   } = useContractWrite({
     ...config,
     onSuccess: (data) => {
@@ -51,36 +51,37 @@ export const useSendCommit = ({
     }
   })
 
-  const { setStatus } = useRegisterStatus()
-
+  // ethers provider needed to get exact transaction timestamp
+  const provider = useProvider()
+  // wait for transaction success to update Registration status
   const {
-    isLoading,
+    isLoading: isWaitLoading,
     isSuccess,
-    isError: isRemoteError,
-    error: remoteError
+    error: waitError
   } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      // get timestamp from block
+      const commitBlock = await provider.getBlock(data.blockNumber)
+      const commitTimestamp = commitBlock.timestamp * 1000
+      // TODO: replace by specific function to update reg status
       const reg = registration!
-      setStatus('committed')
       setRegistration({
         ...reg,
-        fields,
+        fields, // why do we need to set fields again?
         status: 'committed',
-        commitBlock: data.blockNumber
+        commitBlock: data.blockNumber,
+        commitTimestamp: commitTimestamp,
       })
     }
   })
 
   return {
     data,
-    isLoading,
+    isLoading: isWriteLoading || isWaitLoading,
     write,
     config,
     isSuccess,
-    writeError,
-    remoteError,
-    isWriteError,
-    isRemoteError
+    error: writeError ? writeError : waitError,
   }
 }

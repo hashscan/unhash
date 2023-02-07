@@ -13,3 +13,18 @@
   flex-wrap: wrap;
   gap: 16px;
 }
+
+.field>label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.field>input {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

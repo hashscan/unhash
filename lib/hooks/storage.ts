@@ -1,16 +1,23 @@
-import { Registration, RegistrationStatus } from 'lib/types'
+import { Registration } from 'lib/types'
 import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
-
-export const useRegisterStatus = () => {
-  const [status, setStatus] = useLocalStorage<RegistrationStatus>('status', 'start')
-
-  return { status, setStatus }
-}
 
 export function useRegistration(name: string) {
   const [registration, setRegistration] = useLocalStorage<Registration | null>(`ens.registration.${name}`, null)
 
-  return { registration, setRegistration }
+  // TODO: implement
+  // creates registration with commitPending status
+  const createRegistration = (commitTxHash: string) => {
+    // setRegistration((reg) => {
+    //   if (!reg) return null
+    //   return {
+    //     ...reg,
+    //     status: 'commitPending',
+    //     commitTxHash
+    //   }
+    // })
+  }
+  
+  return { registration, setRegistration, createRegistration }
 }
 
 export const useRegistrationRead = (name: string) => {

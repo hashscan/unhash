@@ -44,10 +44,11 @@ export type Registration = {
   status: RegistrationStatus
   commitTxHash?: string
   commitBlock?: number
+  commitTimestamp?: number
   registerTxHash?: string
   fields?: Fields
 }
 
-export type RegistrationStatus = 'start' | 'commitPending' | 'committed' | 'registerPending' | 'registered'
+export type RegistrationStatus = 'commitPending' | 'committed' | 'registerPending' | 'registered'
 
 export type Domain = `${string}.eth`

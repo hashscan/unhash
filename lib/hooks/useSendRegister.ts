@@ -2,16 +2,16 @@ import { BigNumber, ethers } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegisterStatus, useRegistration } from './storage'
+import { useRegistration } from './storage'
 
-export const useSendRegister = ({ name }: { name: string }) => {
+export const useSendRegister = (name: string) => {
   const chainId = useChainId()
   const { registration, setRegistration } = useRegistration(name)
 
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
-    functionName: 'registerWithConfig', // 'registerWithConfig' does not work
+    functionName: 'registerWithConfig',
     args: [
       name,
       registration?.owner,
@@ -26,13 +26,12 @@ export const useSendRegister = ({ name }: { name: string }) => {
       value: ethers.utils.parseEther('0.1') // TODO: set correct price from api
     }
   })
-  const { setStatus } = useRegisterStatus()
 
   const {
     write,
     data,
+    isLoading: isWriteLoading,
     error: sendError,
-    isError: isSendError
   } = useContractWrite({
     ...config,
     onSuccess: (data) => {
@@ -43,18 +42,23 @@ export const useSendRegister = ({ name }: { name: string }) => {
   })
 
   const {
-    isLoading,
+    isLoading: isWaitLoading,
     isSuccess,
-    isError: isRemoteError,
-    error: remoteError
+    error: waitError
   } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: () => {
       if (!registration) return
       setRegistration({ ...registration, status: 'registered' })
-      setStatus('registered')
     }
   })
 
-  return { data, isLoading, write, config, isSuccess, sendError, remoteError, isSendError, isRemoteError }
+  return {
+    data,
+    isLoading: isWriteLoading || isWaitLoading,
+    write,
+    config,
+    isSuccess,
+    error: sendError || waitError,
+  }
 }
