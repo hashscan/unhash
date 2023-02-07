@@ -1,7 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
 import { useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi'
-import { useRegistrationX } from './useRegistrationX'
+import { useRegistration } from './useRegistration'
 
 export const useSendCommit = ({
   commitmentHash,
@@ -20,7 +20,7 @@ export const useSendCommit = ({
   secret: string
   fields: Fields
 }) => {
-  const { create, setCommited } = useRegistrationX(name)
+  const { create, setCommited } = useRegistration(name)
 
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
@@ -54,6 +54,7 @@ export const useSendCommit = ({
       // get timestamp from block
       const commitBlock = await provider.getBlock(data.blockNumber)
       const commitTimestamp = commitBlock.timestamp * 1000
+      // update registration status
       setCommited(data.blockNumber, commitTimestamp)
     }
   })

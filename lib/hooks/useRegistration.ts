@@ -11,8 +11,7 @@ type CreateRegistration = {
   commitTxHash: string
 }
 
-// TODO: rename to useRegistration
-export function useRegistrationX(name: string) {
+export function useRegistration(name: string) {
   const [registrations, setRegistrations] = useLocalStorage<Registration[]>(`ens.registrations`, [])
   const registration = registrations.find((reg) => reg.name === name)
 

@@ -3,7 +3,7 @@ import { CheckoutOrder } from 'components/CheckoutOrder'
 import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
-import { useRegistrationRead } from 'lib/hooks/storage'
+import { useRegistration } from 'lib/hooks/useRegistration'
 import { Domain, RegistrationStatus } from 'lib/types'
 import { clamp, parseDomainName, validateDomain } from 'lib/utils'
 import { GetServerSideProps } from 'next'
@@ -21,7 +21,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const [durationYears, setDurationYears] = useState<number>(2)
 
   // subscribe to registration status updates
-  const reg = useRegistrationRead(props.name)
+  const { registration: reg } = useRegistration(props.name)
   const status: RegistrationStatus | undefined = reg?.status
   const step: CheckoutStep = useMemo(() => {
     if (status === 'registered') return 'success'
