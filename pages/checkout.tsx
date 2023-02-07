@@ -2,7 +2,7 @@ import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
 import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep'
-import { CheckoutWait } from 'components/CheckoutWait'
+import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
@@ -20,7 +20,8 @@ interface CheckoutProps {
 
 type CheckoutStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'
 
-function calculateStep(reg: Registration | undefined): CheckoutStep {
+// this is actually a reducer
+function calculateStep(_: CheckoutStep, reg: Registration | undefined): CheckoutStep {
   const status = reg?.status
 
   if (!status || status === 'commitPending') return 'commit'
@@ -31,7 +32,7 @@ function calculateStep(reg: Registration | undefined): CheckoutStep {
   if (status === 'registerPending') return 'register'
   if (status === 'registered') return 'success'
 
-  return 'commit' // typescript without return at the end
+  return 'initializing' // eslint asks to add this
 }
 
 const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
@@ -42,10 +43,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const status: RegistrationStatus | undefined = reg?.status
 
   // reducer to update step on registration changes and timeout
-  const stepReducer = (_: CheckoutStep, reg: Registration | undefined) => {
-    return calculateStep(reg)
-  }
-  const [step, dispatchStep] = useReducer(stepReducer, 'commit')
+  const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
 
   // set timeout to trigger step update
@@ -59,8 +57,12 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
     setDurationYears(clamp(year, 1, 4))
   }
 
-  console.log(`[checkout] ${props.domain}: 
-  status = ${status}, step = ${step}, waitTimeout = ${Math.ceil(waitTimeout / 1000)}s`)
+  // TODO: remove after PR review
+  console.log(
+    `[checkout] ${props.domain}: status = ${status}, step = ${step}, waitTimeout = ${Math.ceil(
+      waitTimeout / 1000
+    )}s`
+  )
 
   return (
     <div className={styles.checkout}>
@@ -77,7 +79,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
           />
         )}
         {step === 'wait' && reg?.commitTimestamp && (
-          <CheckoutWait commitTimestamp={reg?.commitTimestamp!} />
+          <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
         )}
         {step === 'register' && <CheckoutRegisterStep domain={props.domain} name={props.name} />}
         {step === 'success' && <CheckoutSuccessStep domain={props.domain} />}
