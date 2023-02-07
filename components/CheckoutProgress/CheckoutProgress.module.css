@@ -1,0 +1,14 @@
+.step {
+  /* TODO: style according to global styles */
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-slate-0);
+  padding: 2px 8px;
+  margin: 0 1px;
+}
+
+.currentStep {
+  color: var(--color-slate-f);
+  background-color: var(--color-slate-0);
+  border-radius: 1px;
+}

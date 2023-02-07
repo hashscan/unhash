@@ -1,5 +1,6 @@
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder'
+import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
 import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep'
 import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
@@ -18,7 +19,8 @@ interface CheckoutProps {
   name: string
 }
 
-type CheckoutStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'
+// exported to be used by CheckoutProgress
+export type CheckoutStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'
 
 // this is actually a reducer
 function calculateStep(_: CheckoutStep, reg: Registration | undefined): CheckoutStep {
@@ -69,6 +71,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
       {/* left content */}
       <main className={styles.main}>
         <span className={styles.title}>ENS domain registration</span>
+        <CheckoutProgress className={styles.progress} step={step} />
         {step === 'initializing' && <div></div>}
         {step === 'commit' && (
           <CheckoutCommitStep
