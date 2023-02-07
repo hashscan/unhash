@@ -12,22 +12,21 @@ export interface SearchButtonProps extends ComponentProps<'div'> {
 const Loader = ({ status, focused }: { status: SearchStatus; focused: boolean }) => (
   <div
     className={clsx(styles.loader, {
-      [styles.loaderVisible]: focused && [SearchStatus.Idle, SearchStatus.Loading].includes(status),
+      [styles.loaderVisible]: focused,
       [styles.loaderActive]: [SearchStatus.Loading].includes(status)
     })}
-  />
+  >
+    <div className={styles.loaderSpinner}></div>
+  </div>
 )
 
 export const SearchButton = ({ status, focused, ...props }: SearchButtonProps) => {
   return (
-    <div {...props}>
+    <div {...props} className={clsx(styles.container)}>
       <Loader status={status} focused={focused} />
 
       <button className={clsx(styles.button)} disabled={status !== SearchStatus.Available}>
         Register
-        <div className={styles.buttonStatus}>
-          {status === SearchStatus.Available ? 'available' : 'not available'}
-        </div>
       </button>
     </div>
   )

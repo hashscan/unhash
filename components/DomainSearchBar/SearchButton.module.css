@@ -1,10 +1,9 @@
 .container {
-  margin-right: 16px;
-  transition: opacity 0.3s ease;
-}
-
-.containerHidden {
-  opacity: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 0 16px;
+  padding: 0 24px;
 }
 
 .button {
@@ -12,15 +11,22 @@
   border-radius: var(--radii-lg);
   box-shadow: none;
   border: none;
-  color: var(--color-slate-8);
-  font: var(--type-regular);
   padding: 12px 32px;
+  cursor: pointer;
+
+  font-weight: 600;
+  font: var(--type-regular);
+  color: var(--color-slate-8);
+
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  cursor: pointer;
+}
+
+.button[disabled] {
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -55,22 +61,38 @@
 }
 
 .loader {
-  --size: 10px;
-  animation: 0.5s linear infinite spin;
-  display: none;
-  margin-right: 32px;
+  background: var(--color-slate-6);
+  transition: opacity 0.2s ease;
+  opacity: 0;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loaderVisible {
-  display: block;
+  opacity: 1;
 }
 
-.loader::after {
+.loaderSpinner {
+  --size: 6px;
+  animation: 0.35s linear infinite spin;
+}
+
+.loaderSpinner::after {
   content: '';
   display: inline-block;
   width: var(--size);
   height: var(--size);
   border-radius: var(--size);
   background: var(--color-slate-1);
-  transform: translateY(-18px);
+  transform: translateY(-14px);
+  opacity: 0;
+}
+
+.loader.loaderActive .loaderSpinner::after {
+  opacity: 1;
 }
