@@ -23,7 +23,6 @@ const Profile = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
   const [domainInfo, setDomainInfo] = useState<DomainInfo | null>(null)
-  const [mode, setMode] = useState<'view' | 'edit'>('view')
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
@@ -36,7 +35,7 @@ const Profile = () => {
     isRemoteError,
     isWriteError,
     config
-  } = useSendSetFields({ domain, fields, onSuccess: () => setMode('view') })
+  } = useSendSetFields({ domain, fields })
   const { data: feeData } = useFeeData()
   const txPrice = useTxPrice({ config, feeData })
   const isMounted = useIsMounted()
@@ -52,15 +51,114 @@ const Profile = () => {
           })
       })
     }
-  }, [chainId, mode, address])
+  }, [chainId, address])
+
+  const { isLoading: isPrimaryEnsLoading, write: setPrimaryEns } = useSetPrimaryEns({ domain })
 
   if (isDisconnected) return <p>Please connect wallet</p>
 
   return (
     <main className={styles.main}>
-      {isMounted() ? <Avatar {...{ chainId, address }} /> : null}
-      <h1 className={styles.domain}>{formatAddress(address)}</h1>
-      <p className={styles.desc}>{domainInfo?.records.description}</p>
+      {isMounted() ? (
+        <>
+          <Avatar {...{ chainId, address }} />
+          <h1 className={styles.domain}>{formatAddress(address!)}</h1>
+        </>
+      ) : null}
+      <div className={styles.domains}>
+        {userInfo ? (
+          <select
+            className={ui.select}
+            defaultValue={userInfo?.primaryEns || userInfo?.domains.resolved[0]}
+          >
+            {userInfo?.domains.resolved.map((domain) => (
+              <option key={domain}>{domain}</option>
+            ))}
+          </select>
+        ) : null}
+        <button className={ui.button} onClick={() => setPrimaryEns?.()}>
+          {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set as primary'}{' '}
+        </button>
+      </div>
+      <form
+        className={styles.form}
+        onSubmit={(e) => {
+          e.preventDefault()
+
+          if (e.currentTarget.reportValidity()) {
+            const fd = new FormData(e.currentTarget)
+            const f: Fields = {}
+
+            for (const [k, v] of fd.entries()) {
+              f[k] = v as string
+            }
+
+            setFields(f)
+
+            if (typeof write !== 'undefined') write()
+          }
+        }}
+      >
+        <div className={styles.field}>
+          <label htmlFor="name">Name</label>
+          <input
+            className={`${ui.input} ${styles.desc}`}
+            defaultValue={domainInfo?.records.name}
+            placeholder="name"
+            name="name"
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="description">Description</label>
+          <input
+            className={`${ui.input} ${styles.desc}`}
+            defaultValue={domainInfo?.records.description}
+            placeholder="description"
+            name="description"
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="email">Email</label>
+          <input
+            className={`${ui.input} ${styles.desc}`}
+            defaultValue={domainInfo?.records.email}
+            placeholder="email"
+            type="email"
+            name="email"
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="url">Website URL</label>
+          <input
+            className={`${ui.input} ${styles.desc}`}
+            defaultValue={domainInfo?.records.url}
+            placeholder="https://example.com"
+            type="url"
+            name="url"
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="url">Twitter username</label>
+          <input
+            className={`${ui.input} ${styles.desc}`}
+            defaultValue={domainInfo?.records['com.twitter']}
+            placeholder="test_420"
+            name="com.twitter"
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="url">GitHub username</label>
+          <input
+            className={`${ui.input} ${styles.desc}`}
+            defaultValue={domainInfo?.records['com.github']}
+            placeholder="test_420"
+            name="com.github"
+          />
+        </div>
+        <button type="submit" className={ui.button}>
+          Submit
+        </button>
+      </form>
     </main>
   )
 }

@@ -2,7 +2,7 @@ import { ETH_REVERSE_REGISTRAR_ABI, ETH_REVERSE_REGISTRAR_ADDRESS } from 'lib/co
 import { Domain, toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-export const useSetPrimaryEns = ({ domain }: { domain: Domain }) => {
+export const useSetPrimaryEns = ({ domain }: { domain: Domain | null }) => {
   const chainId = useChainId()
 
   const { config } = usePrepareContractWrite({

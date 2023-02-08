@@ -15,6 +15,15 @@
   gap: 16px;
 }
 
+.field,
+.domains {
+  width: 325px;
+}
+
+.field {
+  color: var(--text-primary);
+}
+
 .field > label {
   display: block;
   margin-bottom: 8px;
@@ -34,6 +43,11 @@
   border-radius: var(--round);
   height: 250px;
   width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: var(--color-slate-f);
 }
 
 .domain {
