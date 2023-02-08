@@ -15,7 +15,7 @@
   display: flex;
   flex-flow: column nowrap;
 
-  min-height: calc(90vh - var(--nav-height));
+  min-height: calc(80vh - var(--nav-height));
 }
 
 .hero {
@@ -47,6 +47,7 @@
 
 .searchBar {
   margin-top: 48px;
+  margin-bottom: 64px;
 }
 
 .pricingSection {
