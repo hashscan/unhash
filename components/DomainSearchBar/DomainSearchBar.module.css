@@ -1,7 +1,6 @@
 .searchBar {
   position: relative;
   max-width: 640px;
-  overflow: hidden;
 }
 
 .action {
@@ -49,6 +48,7 @@
   pointer-events: none;
   border-color: transparent;
   color: transparent;
+  overflow: hidden;
 
   opacity: 0;
 }
@@ -81,5 +81,5 @@
 .input:focus {
   box-shadow: none;
   border-color: var(--color-slate-1);
-  box-shadow: inset 0px 0px 4px -2px var(--color-slate-5);
+  box-shadow: var(--shadow-md);
 }

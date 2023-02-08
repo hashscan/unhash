@@ -2,7 +2,6 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  gap: 0 16px;
   padding: 10px;
   height: 100%;
 }
@@ -24,22 +23,13 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+
+  user-select: none;
 }
 
 .button[disabled] {
   opacity: 0.25;
   pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .container {
-    margin-right: 0;
-  }
-
-  .button {
-    display: block;
-    width: 100%;
-  }
 }
 
 .buttonStatus {
@@ -63,40 +53,38 @@
 }
 
 .loader {
-  background: var(--color-slate-7);
-  border: 1px solid var(--color-slate-6);
   transition: opacity 0.2s ease;
+  color: var(--color-slate-2);
   opacity: 0;
 
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 18px;
+  animation: 0.4s linear infinite spin;
 }
 
 .loaderVisible {
   opacity: 1;
 }
 
-.loaderSpinner {
-  --size: 6px;
-  animation: 0.4s linear infinite spin;
-}
+@media (max-width: 768px) {
+  .container {
+    margin-right: 0;
+    padding: 0;
+  }
 
-.loaderSpinner::after {
-  content: '';
-  display: inline-block;
-  width: var(--size);
-  height: var(--size);
-  border-radius: var(--size);
-  background: var(--color-slate-2);
-  transform: translateY(-14px);
-  opacity: 0;
-}
+  .button {
+    width: 100%;
+    height: 64px;
+  }
 
-.loader.loaderActive .loaderSpinner::after {
-  opacity: 1;
+  .loader {
+    position: absolute;
+    left: 8px;
+  }
 }

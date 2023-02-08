@@ -29,6 +29,10 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const { status } = useSearch(normalized)
   const router = useRouter()
 
+  const onRegister = useCallback(() => {
+    router.push(`/checkout?domain=${normalized}`)
+  }, [router, normalized])
+
   useImperativeHandle(ref, () => ({
     setSearch(value: string) {
       setSearchQuery(value)
@@ -56,13 +60,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
       </div>
 
       <div className={styles.action}>
-        <SearchButton
-          focused={focused}
-          status={status}
-          onClick={() => {
-            router.push(`/checkout?domain=${searchQuery}`)
-          }}
-        />
+        <SearchButton focused={focused} status={status} onClick={onRegister} />
       </div>
     </div>
   )
