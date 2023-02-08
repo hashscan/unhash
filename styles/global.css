@@ -60,6 +60,7 @@
   --color-toxic-green: rgb(var(--color-toxic-green) / 100%);
 
   /** System colors */
+  --color-background: var(--color-slate-f);
 
   /* slate colors */
   --color-slate-0: var(--color-black);
@@ -73,20 +74,22 @@
   --color-slate-8: var(--color-gray-8);
   --color-slate-f: var(--color-white);
 
+  --color-slate-0-rgb: var(--color-black-rgb);
+  --color-slate-1-rgb: var(--color-gray-1-rgb);
+  --color-slate-2-rgb: var(--color-gray-2-rgb);
+  --color-slate-3-rgb: var(--color-gray-3-rgb);
+  --color-slate-4-rgb: var(--color-gray-4-rgb);
+  --color-slate-5-rgb: var(--color-gray-5-rgb);
+  --color-slate-6-rgb: var(--color-gray-6-rgb);
+  --color-slate-7-rgb: var(--color-gray-7-rgb);
+  --color-slate-8-rgb: var(--color-gray-8-rgb);
+  --color-slate-f-rgb: var(--color-white-rgb);
+
   /* TODO: refactor these! */
-  --background: var(--color-slate-f);
-  --background-card: var(--color-slate-7);
   --background-highlight: #273f5e;
   --text-primary: var(--color-slate-1);
   --text-secondary: var(--color-slate-3);
-  --text-hint: var(--color-slate-4);
-  --text-highlight: #7db5ff;
   --primary: #2e87fb;
-  --primary-hover: #4694fa;
-  --border-1: #14171c;
-  --border-2: #262626;
-  --border-3: #4f4f4f;
-  --border-card: rgba(255, 255, 255, 0.04);
   --error: #f74748;
 }
 
@@ -117,7 +120,7 @@
   --ease-250: 0.25s ease;
 
   /* toastify */
-  --toastify-color-dark: var(--background-card);
+  --toastify-color-dark: var(--color-slate-7);
   --toastify-font-family: var(--font-ui);
   --toastify-icon-color-error: var(--error);
 
@@ -131,7 +134,7 @@ body {
   padding: 0;
   margin: 0;
 
-  background: var(--background);
+  background: var(--color-background);
   color: var(--color-slate-0);
   height: 100%;
 

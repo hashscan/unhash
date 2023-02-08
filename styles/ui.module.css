@@ -60,8 +60,8 @@
 
   padding: 8px;
   border-radius: var(--radii-md);
-  background-color: var(--background-card);
-  border: 1px solid var(--border-card);
+  background-color: var(--color-slate-7);
+  border: 1px solid rgb(var(--color-slate-2-rgb) / 0.04);
 
   transition: 100ms;
   z-index: 1;
@@ -97,8 +97,8 @@
 }
 
 .card {
-  background-color: var(--background-card);
-  border: 1px solid var(--border-card);
+  background-color: var(--color-slate-7);
+  border: 1px solid rgb(var(--color-slate-2-rgb) / 0.04);
   border-radius: var(--radii-md);
 }
 
@@ -127,7 +127,7 @@
 }
 
 .input::placeholder {
-  color: var(--text-hint);
+  color: var(--color-slate-4);
   opacity: 1;
 }
 
