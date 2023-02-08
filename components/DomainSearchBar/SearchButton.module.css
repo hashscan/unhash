@@ -3,7 +3,8 @@
   flex-flow: row nowrap;
   align-items: center;
   gap: 0 16px;
-  padding: 0 24px;
+  padding: 10px;
+  height: 100%;
 }
 
 .button {
@@ -12,11 +13,12 @@
   box-shadow: none;
   border: none;
   padding: 12px 32px;
+  height: 100%;
   cursor: pointer;
 
-  font-weight: 600;
   font: var(--type-regular);
   color: var(--color-slate-8);
+  font-weight: 500;
 
   display: flex;
   flex-flow: column nowrap;
@@ -61,12 +63,13 @@
 }
 
 .loader {
-  background: var(--color-slate-6);
+  background: var(--color-slate-7);
+  border: 1px solid var(--color-slate-6);
   transition: opacity 0.2s ease;
   opacity: 0;
 
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: 40px;
   display: flex;
@@ -80,7 +83,7 @@
 
 .loaderSpinner {
   --size: 6px;
-  animation: 0.35s linear infinite spin;
+  animation: 0.4s linear infinite spin;
 }
 
 .loaderSpinner::after {
@@ -89,7 +92,7 @@
   width: var(--size);
   height: var(--size);
   border-radius: var(--size);
-  background: var(--color-slate-1);
+  background: var(--color-slate-2);
   transform: translateY(-14px);
   opacity: 0;
 }
