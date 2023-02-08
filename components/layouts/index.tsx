@@ -8,7 +8,7 @@ import {
 import { NextPage } from 'next'
 import clsx from 'clsx'
 
-import { Nav } from 'components/Nav'
+import { Nav } from 'components/Nav/Nav'
 import styles from './layouts.module.css'
 
 /**
@@ -33,10 +33,7 @@ export interface BaseLayoutProps {
   nav?: boolean
 }
 
-export const FullWidthLayout = ({
-  nav = true,
-  children
-}: PropsWithChildren<BaseLayoutProps>) => {
+export const FullWidthLayout = ({ nav = true, children }: PropsWithChildren<BaseLayoutProps>) => {
   return (
     <>
       {nav && <Nav />}
@@ -71,9 +68,9 @@ export const ContainerLayout = ({
   )
 }
 
-export const CenteredLayout = (
-  props: ComponentProps<typeof ContainerLayout>
-) => <ContainerLayout {...props} centered />
+export const CenteredLayout = (props: ComponentProps<typeof ContainerLayout>) => (
+  <ContainerLayout {...props} centered />
+)
 
 export const DefaultLayout = ContainerLayout
 
@@ -82,10 +79,7 @@ export const DefaultLayout = ContainerLayout
  * @param layout
  * @param children
  */
-export const wrapInLayout = (
-  pageComponent: PageWithLayout<any>,
-  children: ReactElement
-) => {
+export const wrapInLayout = (pageComponent: PageWithLayout<any>, children: ReactElement) => {
   let layout: PageWithLayout['layout'] = pageComponent.layout
 
   if (typeof layout === 'undefined') {
