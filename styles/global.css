@@ -127,7 +127,3 @@ input {
   border: none;
   outline: none;
 }
-
-input:focus {
-  box-shadow: inset 0px 0px 0px 1px var(--color-slate-6);
-}
