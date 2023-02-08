@@ -39,4 +39,4 @@ export const ETH_REVERSE_REGISTRAR_ABI = ['function setName(string) returns (byt
 
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24
 
-export const COMMIT_WAIT_MS = 15 * 1000
+export const COMMIT_WAIT_MS = 60 * 1000
