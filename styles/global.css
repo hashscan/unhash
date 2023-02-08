@@ -57,10 +57,9 @@
   --color-gray-8: rgb(var(--color-gray-8-rgb) / 100%);
   --color-white: rgb(var(--color-white-rgb) / 100%);
 
-  --color-toxic-green: rgb(var(--color-toxic-green) / 100%);
+  --color-toxic-green: rgb(var(--color-toxic-green-rgb) / 100%);
 
   /** System colors */
-  --color-background: var(--color-slate-f);
 
   /* slate colors */
   --color-slate-0: var(--color-black);
@@ -84,6 +83,9 @@
   --color-slate-7-rgb: var(--color-gray-7-rgb);
   --color-slate-8-rgb: var(--color-gray-8-rgb);
   --color-slate-f-rgb: var(--color-white-rgb);
+
+  --color-background: var(--color-slate-f);
+  --color-highlight-green: var(--color-toxic-green);
 
   /* TODO: refactor these! */
   --background-highlight: #273f5e;
@@ -142,6 +144,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   -webkit-text-size-adjust: 100%;
+}
+
+::selection {
+  color: var(--color-gray-1);
+  background-color: var(--color-highlight-green);
 }
 
 button,
