@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { COMMIT_GAS_LIMIT, REGISTER_GAS_LIMIT, YEAR_IN_SECONDS } from 'lib/constants'
+import { COMMIT_GAS_LIMIT, REGISTER_AVERAGE_GAS, REGISTER_GAS_LIMIT, YEAR_IN_SECONDS } from 'lib/constants'
 import { formatNetworkFee, formatUSDPrice, formatYears } from 'lib/format'
 import { useDomainPrice } from 'lib/hooks/useDomainPrice'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
@@ -18,7 +18,7 @@ export const CheckoutOrder = ({ domain, duration }: CheckoutOrderProps) => {
   const domainPrice = useDomainPrice(domain, duration)?.usd
 
   // fixed network fees for estimation
-  const networkFeesGas = COMMIT_GAS_LIMIT + REGISTER_GAS_LIMIT
+  const networkFeesGas = COMMIT_GAS_LIMIT + REGISTER_AVERAGE_GAS
   const networkFees = useTxPrice(BigNumber.from(networkFeesGas))
 
   const totalPrice = domainPrice && networkFees ? domainPrice + networkFees : undefined

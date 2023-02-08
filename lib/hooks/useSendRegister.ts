@@ -3,8 +3,7 @@ import {
   ETH_REGISTRAR_ADDRESS,
   ETH_REGISTRAR_ABI,
   YEAR_IN_SECONDS,
-  ETH_RESOLVER_ADDRESS,
-  REGISTER_GAS_LIMIT
+  ETH_RESOLVER_ADDRESS
 } from 'lib/constants'
 import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
@@ -23,6 +22,10 @@ export const useSendRegister = (name: string) => {
   const price = useDomainPrice(`${name}.eth`, registration?.duration)?.wei
   const value = price ? BigNumber.from(price) : undefined
 
+  // Note: 280K gas is not enough to refund extra ETH sent to registerWithConfig
+  // TODO: make sure fixed gas limit always works
+  const gasLimit = 280_000
+
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_REGISTRAR_ABI,
@@ -37,7 +40,7 @@ export const useSendRegister = (name: string) => {
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner) && Boolean(value),
     overrides: {
-      gasLimit: BigNumber.from(REGISTER_GAS_LIMIT), // make sure fixed gas limit always works
+      gasLimit: BigNumber.from(gasLimit),
       value: value
     }
   })

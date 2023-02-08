@@ -5,6 +5,7 @@ import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { Gas } from 'components/icons'
 import { formatNetworkFee } from 'lib/format'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
+import { REGISTER_AVERAGE_GAS } from 'lib/constants'
 
 interface CheckoutRegisterStepProps {
   domain: string
@@ -13,7 +14,7 @@ interface CheckoutRegisterStepProps {
 
 export const CheckoutRegisterStep = ({ name }: CheckoutRegisterStepProps) => {
   const { gasLimit, write, isLoading, error } = useSendRegister(name)
-  const networkFee = useTxPrice(gasLimit)
+  const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
   const onRegisterClick = () => {
     // TODO: is this really the best way to check hook is ready?
