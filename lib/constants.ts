@@ -44,4 +44,5 @@ export const COMMIT_WAIT_MS = 60 * 1000
 // Estimated gas limit for transactions. Should only 
 // be used for UI purposes, not for actual gas limit calculations.
 export const COMMIT_GAS_LIMIT = 46_267
+// Note: 280K gas is not enough to refund extra ETH sent to registerWithConfig
 export const REGISTER_GAS_LIMIT = 280_000
