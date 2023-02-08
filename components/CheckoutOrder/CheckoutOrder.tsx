@@ -1,5 +1,8 @@
-import { formatUSDPrice, formatYears } from 'lib/format'
+import { BigNumber } from 'ethers'
+import { COMMIT_GAS_LIMIT, REGISTER_GAS_LIMIT } from 'lib/constants'
+import { formatNetworkFee, formatUSDPrice, formatYears } from 'lib/format'
 import { useDomainPrice } from 'lib/hooks/useDomainPrice'
+import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { Domain } from 'lib/types'
 import React from 'react'
 import styles from './CheckoutOrder.module.css'
@@ -13,8 +16,11 @@ interface CheckoutOrderProps {
 export const CheckoutOrder = ({ domain, durationYears }: CheckoutOrderProps) => {
   // get domain price from api
   const domainPrice = useDomainPrice(domain, durationYears)
-  // TODO: calculate network fees with api or ethers
-  const networkFees: number | undefined = 14.2
+
+  // fixed network fees for estimation
+  const networkFeesGas = COMMIT_GAS_LIMIT + REGISTER_GAS_LIMIT
+  const networkFees = useTxPrice(BigNumber.from(networkFeesGas))
+
   const totalPrice = domainPrice && networkFees ? domainPrice + networkFees : undefined
 
   return (
@@ -23,14 +29,14 @@ export const CheckoutOrder = ({ domain, durationYears }: CheckoutOrderProps) => 
       <OrderItem title={`${domain}`} hint={formatYears(durationYears)} price={domainPrice} />
       <div className={styles.line}>
         <span>Estimated network fees</span>
-        <span>{`$${networkFees}`}</span>
+        <span>{formatNetworkFee(networkFees)}</span>
       </div>
 
       <div className={styles.divider} />
 
       <div className={styles.line}>
-        <span className={styles.total}>Estimated total</span>
-        <span className={styles.total}>{formatUSDPrice(totalPrice)}</span>
+        <span className={styles.totalLabel}>Estimated total</span>
+        <span className={styles.totalValue}>{formatUSDPrice(totalPrice)}</span>
       </div>
     </div>
   )
