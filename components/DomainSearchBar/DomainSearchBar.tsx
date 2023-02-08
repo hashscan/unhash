@@ -1,24 +1,37 @@
-import React, { forwardRef, useState, useImperativeHandle } from 'react'
+import React, { forwardRef, useState, useImperativeHandle, useCallback } from 'react'
 import { useRouter } from 'next/router'
 
 import { SearchButton } from './SearchButton'
 import styles from './DomainSearchBar.module.css'
 import { useSearch } from './useSearch'
+import clsx from 'clsx'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
   setSearch: (val: string) => void
 }
 
+const stripDotETH = (s: string) => s.replace(/\.eth$/i, '')
+
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBarWithRef(
   _props,
   ref
 ) {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQueryRaw] = useState('')
   const [focused, setFocused] = useState(false)
 
-  const { status } = useSearch(searchQuery)
+  const setSearchQuery = useCallback((val: string) => {
+    setSearchQueryRaw(stripDotETH(val)) // strips .eth at the end
+  }, [])
+
+  const normalized = searchQuery.length ? searchQuery + '.eth' : ''
+
+  const { status } = useSearch(normalized)
   const router = useRouter()
+
+  const onRegister = useCallback(() => {
+    router.push(`/checkout?domain=${normalized}`)
+  }, [router, normalized])
 
   useImperativeHandle(ref, () => ({
     setSearch(value: string) {
@@ -28,25 +41,26 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
 
   return (
     <div className={styles.searchBar}>
-      <input
-        autoFocus
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className={styles.input}
-        spellCheck="false"
-        placeholder="Look up .eth domain..."
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      ></input>
+      <div className={styles.inputWithSuffix}>
+        <input
+          autoFocus
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className={styles.input}
+          spellCheck="false"
+          placeholder="Look up .eth domain..."
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+        ></input>
+
+        <div className={clsx(styles.suffix, { [styles.suffixVisible]: searchQuery.length !== 0 })}>
+          {searchQuery}
+          <span>.eth</span>
+        </div>
+      </div>
 
       <div className={styles.action}>
-        <SearchButton
-          focused={focused}
-          status={status}
-          onClick={() => {
-            router.push(`/checkout?domain=${searchQuery}`)
-          }}
-        />
+        <SearchButton focused={focused} status={status} onClick={onRegister} />
       </div>
     </div>
   )

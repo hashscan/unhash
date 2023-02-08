@@ -3,6 +3,7 @@ import React, { ComponentProps } from 'react'
 import clsx from 'clsx'
 import styles from './SearchButton.module.css'
 import { SearchStatus } from './types'
+import { LoaderHorseshoe } from 'components/icons'
 
 export interface SearchButtonProps extends ComponentProps<'div'> {
   status: SearchStatus
@@ -12,11 +13,11 @@ export interface SearchButtonProps extends ComponentProps<'div'> {
 const Loader = ({ status, focused }: { status: SearchStatus; focused: boolean }) => (
   <div
     className={clsx(styles.loader, {
-      [styles.loaderVisible]: focused,
+      [styles.loaderVisible]: [SearchStatus.Loading].includes(status),
       [styles.loaderActive]: [SearchStatus.Loading].includes(status)
     })}
   >
-    <div className={styles.loaderSpinner}></div>
+    <LoaderHorseshoe />
   </div>
 )
 
@@ -26,7 +27,7 @@ export const SearchButton = ({ status, focused, ...props }: SearchButtonProps) =
       <Loader status={status} focused={focused} />
 
       <button className={clsx(styles.button)} disabled={status !== SearchStatus.Available}>
-        Register
+        Register&nbsp;&nbsp;→
       </button>
     </div>
   )

@@ -129,6 +129,9 @@
   /* sizes */
   --nav-height: 72px;
   --container-width: 1280px;
+
+  --border-width-md: 1.5px;
+  --border-width-lg: 2px;
 }
 
 html,
