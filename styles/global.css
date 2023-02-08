@@ -1,4 +1,4 @@
-/* Typography */
+/** Typography */
 :root {
   --font-system: system-ui;
 
@@ -29,7 +29,7 @@
   --ls-xx-lg: -0.04em;
 }
 
-/* Colors */
+/** Colors */
 :root {
   /* Reference colors: they always reference real colors */
 
@@ -44,16 +44,20 @@
   --color-gray-8-rgb: 252 252 252;
   --color-white-rgb: 255 255 255;
 
-  --color-black: rgba(var(--color-black-rgb) / 100%);
-  --color-gray-1: rgba(var(--color-gray-1-rgb) / 100%);
-  --color-gray-2: rgba(var(--color-gray-2-rgb) / 100%);
-  --color-gray-3: rgba(var(--color-gray-3-rgb) / 100%);
-  --color-gray-4: rgba(var(--color-gray-4-rgb) / 100%);
-  --color-gray-5: rgba(var(--color-gray-5-rgb) / 100%);
-  --color-gray-6: rgba(var(--color-gray-6-rgb) / 100%);
-  --color-gray-7: rgba(var(--color-gray-7-rgb) / 100%);
-  --color-gray-8: rgba(var(--color-gray-8-rgb) / 100%);
-  --color-white: rgba(var(--color-white-rgb) / 100%);
+  --color-toxic-green-rgb: 126 255 0;
+
+  --color-black: rgb(var(--color-black-rgb) / 100%);
+  --color-gray-1: rgb(var(--color-gray-1-rgb) / 100%);
+  --color-gray-2: rgb(var(--color-gray-2-rgb) / 100%);
+  --color-gray-3: rgb(var(--color-gray-3-rgb) / 100%);
+  --color-gray-4: rgb(var(--color-gray-4-rgb) / 100%);
+  --color-gray-5: rgb(var(--color-gray-5-rgb) / 100%);
+  --color-gray-6: rgb(var(--color-gray-6-rgb) / 100%);
+  --color-gray-7: rgb(var(--color-gray-7-rgb) / 100%);
+  --color-gray-8: rgb(var(--color-gray-8-rgb) / 100%);
+  --color-white: rgb(var(--color-white-rgb) / 100%);
+
+  --color-toxic-green: rgb(var(--color-toxic-green) / 100%);
 
   /** System colors */
 
@@ -84,6 +88,22 @@
   --border-3: #4f4f4f;
   --border-card: rgba(255, 255, 255, 0.04);
   --error: #f74748;
+}
+
+/** Shadows */
+:root {
+  --shadow-color-rgb: 0 0 0;
+
+  --shadow-sm: 1px 1px 0 rgb(var(--shadow-color-rgb) / 0.04);
+
+  --shadow-reg: 0 1px 3px 0 rgb(var(--shadow-color-rgb) / 0.08),
+    0 1px 2px -1px rgb(var(--shadow-color-rgb) / 0.08);
+
+  --shadow-md: 0 4px 6px -1px rgb(var(--shadow-color-rgb) / 0.08),
+    0 2px 4px -2px rgb(var(--shadow-color-rgb) / 0.08);
+
+  --shadow-lg: 0 10px 15px -3px rgb(var(--shadow-color-rgb) / 0.08),
+    0 4px 6px -4px rgb(var(--shadow-color-rgb) / 0.08);
 }
 
 /* Etc. */
