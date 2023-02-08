@@ -2,13 +2,14 @@ import { Domain, toNetwork } from 'lib/types'
 import React from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
-import { EthereumIcon, ProgressBar } from 'components/icons'
+import { EthereumIcon } from 'components/icons'
 import clsx from 'clsx'
 import { formatYears } from 'lib/format'
 import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
 import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
+import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
@@ -92,18 +93,13 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
       <input name="email" placeholder="Personal email" autoComplete="off" className={clsx(styles.profileInput, ui.input)} />
       <input name="twitter" placeholder="@username" autoComplete="off" className={clsx(styles.profileInput, ui.input, styles.profileInputLast)} />
 
-      {/* TODO: replace by button with loader component */}
-      <button
-        className={clsx(ui.button, styles.commitButton)}
+      <LoadingButton
+        className={styles.commitButton}
         onClick={() => !isLoading && onStartClick()}
-        disabled={isLoading}
-      >
-        {!isLoading && 'Start registration'}
-      </button>
-      {isLoading && (
-        <ProgressBar className={styles.loader} color='var(--color-slate-f)' width={'32px'} height={'32px'} />
-      )}
-
+        isLoading={isLoading}
+        text='Start registration'
+      />
+      
       {/* TODO: remove temp error solution */}
       {error && (
         <div className={styles.error}>

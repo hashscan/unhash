@@ -1,9 +1,7 @@
-import clsx from 'clsx'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import React from 'react'
 import styles from './CheckoutRegisterStep.module.css'
-import ui from 'styles/ui.module.css'
-import { ProgressBar } from 'components/icons'
+import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 
 interface CheckoutRegisterStepProps {
   domain: string
@@ -26,22 +24,12 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
         Confirm below to register your domain and configure the profile
       </div>
 
-      {/* TODO: replace by button with loader component */}
-      <button
-        className={clsx(ui.button, styles.registerButton)}
+      <LoadingButton
+        className={styles.registerButton}
         onClick={() => !isLoading && onRegisterClick()}
-        disabled={isLoading}
-      >
-        {!isLoading && 'Complete registration'}
-      </button>
-      {isLoading && (
-        <ProgressBar
-          className={styles.loader}
-          color="var(--color-slate-f)"
-          width={'32px'}
-          height={'32px'}
-        />
-      )}
+        isLoading={isLoading}
+        text="Complete registration"
+      />
 
       {/* TODO: remove temp error solution */}
       {error && <div className={styles.error}>{error.message}</div>}
