@@ -53,7 +53,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
     reg?.status === 'committed' && reg?.commitTimestamp
       ? Math.max(0, reg.commitTimestamp + COMMIT_WAIT_MS - Date.now())
       : 0
-  useTimeout(() => dispatchStep(reg), waitTimeout) // TODO: dispatchStep callback called twice; not a problem but why?
+  useTimeout(() => dispatchStep(reg), waitTimeout)
 
   const onDurationChanged = (year: number) => {
     setDurationYears(clamp(year, 1, 4))
