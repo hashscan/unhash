@@ -1,5 +1,5 @@
+/* Typography */
 :root {
-  /* typography */
   --font-system: system-ui;
 
   /* font sizes: we use font scale with base 18px and 1.333 scale factor */
@@ -27,22 +27,50 @@
   --ls-lg: -0.03em;
   --ls-x-lg: -0.05em;
   --ls-xx-lg: -0.04em;
+}
+
+/* Colors */
+:root {
+  /* Reference colors: they always reference real colors */
+
+  --color-black-rgb: 0 0 0;
+  --color-gray-1-rgb: 26 26 26;
+  --color-gray-2-rgb: 47 47 47;
+  --color-gray-3-rgb: 106 106 106;
+  --color-gray-4-rgb: 158 158 158;
+  --color-gray-5-rgb: 216 216 216;
+  --color-gray-6-rgb: 242 242 242;
+  --color-gray-7-rgb: 250 250 250;
+  --color-gray-8-rgb: 252 252 252;
+  --color-white-rgb: 255 255 255;
+
+  --color-black: rgba(var(--color-black-rgb) / 100%);
+  --color-gray-1: rgba(var(--color-gray-1-rgb) / 100%);
+  --color-gray-2: rgba(var(--color-gray-2-rgb) / 100%);
+  --color-gray-3: rgba(var(--color-gray-3-rgb) / 100%);
+  --color-gray-4: rgba(var(--color-gray-4-rgb) / 100%);
+  --color-gray-5: rgba(var(--color-gray-5-rgb) / 100%);
+  --color-gray-6: rgba(var(--color-gray-6-rgb) / 100%);
+  --color-gray-7: rgba(var(--color-gray-7-rgb) / 100%);
+  --color-gray-8: rgba(var(--color-gray-8-rgb) / 100%);
+  --color-white: rgba(var(--color-white-rgb) / 100%);
+
+  /** System colors */
 
   /* slate colors */
-  --color-slate-0: #000000;
-  --color-slate-1: #1a1a1a;
-  --color-slate-2: #2f2f2f;
-  --color-slate-3: #6a6a6a;
-  --color-slate-4: #9e9e9e;
-  --color-slate-5: #d8d8d8;
-  --color-slate-6: #f2f2f2;
-  --color-slate-7: #fafafa;
-  --color-slate-8: #fefefe;
-  --color-slate-f: #ffffff;
+  --color-slate-0: var(--color-black);
+  --color-slate-1: var(--color-gray-1);
+  --color-slate-2: var(--color-gray-2);
+  --color-slate-3: var(--color-gray-3);
+  --color-slate-4: var(--color-gray-4);
+  --color-slate-5: var(--color-gray-5);
+  --color-slate-6: var(--color-gray-6);
+  --color-slate-7: var(--color-gray-7);
+  --color-slate-8: var(--color-gray-8);
+  --color-slate-f: var(--color-white);
 
-  /* colors */
+  /* TODO: refactor these! */
   --background: var(--color-slate-f);
-  --background-3: var(--color-slate-8);
   --background-card: var(--color-slate-7);
   --background-highlight: #273f5e;
   --text-primary: var(--color-slate-1);
@@ -55,13 +83,11 @@
   --border-2: #262626;
   --border-3: #4f4f4f;
   --border-card: rgba(255, 255, 255, 0.04);
-  --green: #3dc676;
-  --yellow: #f7d154;
   --error: #f74748;
-  --shadow-card: rgba(46, 47, 54, 0.24);
-  --twitter: #1da1f2;
-  --discord: #5865f2;
+}
 
+/* Etc. */
+:root {
   /* border radiuses */
   --radii-sm: 4px;
   --radii-md: 8px;
@@ -91,6 +117,7 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   -webkit-text-size-adjust: 100%;
 }
 
