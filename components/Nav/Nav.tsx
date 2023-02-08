@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { RefObject, useRef, useState } from 'react'
-import styles from 'styles/Nav.module.css'
 import ui from 'styles/ui.module.css'
 import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
-import { LogoutIcon, ProfileIcon } from './icons'
+import { LogoutIcon, ProfileIcon } from 'components/icons'
 import Link from 'next/link'
 import clsx from 'clsx'
+
+import styles from './Nav.module.css'
 
 export const Nav = () => {
   const [isOpen, setOpen] = useState(false)
@@ -28,10 +29,7 @@ export const Nav = () => {
 
       <div className={styles.sub}>
         <div className={styles.links}>
-          <Link
-            href="/"
-            className={clsx(styles.navLink, { [styles.navLinkActive]: true })}
-          >
+          <Link href="/" className={clsx(styles.navLink, { [styles.navLinkActive]: true })}>
             Get ENS Domain
           </Link>
 
@@ -59,8 +57,7 @@ export const Nav = () => {
               chain &&
               ready &&
               account &&
-              (!authenticationStatus ||
-                authenticationStatus === 'authenticated')
+              (!authenticationStatus || authenticationStatus === 'authenticated')
 
             return (
               <div
@@ -87,11 +84,7 @@ export const Nav = () => {
                   }
                   if (chain.unsupported) {
                     return (
-                      <button
-                        className={styles.chains}
-                        onClick={openChainModal}
-                        type="button"
-                      >
+                      <button className={styles.chains} onClick={openChainModal} type="button">
                         Wrong network
                       </button>
                     )
@@ -99,18 +92,11 @@ export const Nav = () => {
 
                   return (
                     <div className={styles.buttons}>
-                      <button
-                        onClick={openChainModal}
-                        className={styles.chains}
-                        type="button"
-                      >
+                      <button onClick={openChainModal} className={styles.chains} type="button">
                         {chain.name}
                       </button>
                       {' | '}
-                      <button
-                        className={styles.account}
-                        onClick={() => setOpen(!isOpen)}
-                      >
+                      <button className={styles.account} onClick={() => setOpen(!isOpen)}>
                         <div
                           className={clsx(styles.accountIcon, {
                             [styles.accountIconPlaceholder]: !account.ensAvatar
@@ -131,9 +117,7 @@ export const Nav = () => {
                           )}
                         </div>
                         <div className={styles.accountName}>
-                          {account.ensName
-                            ? account.ensName
-                            : formatAddress(account.address)}
+                          {account.ensName ? account.ensName : formatAddress(account.address)}
                         </div>
                       </button>
                     </div>

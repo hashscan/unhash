@@ -16,7 +16,7 @@
 
   padding: 32px 40px;
   padding-right: calc((100vw - var(--container-width)) / 2);
-  background-color: var(--background-card);
+  background-color: var(--color-slate-7);
   border-left: 1.5px solid var(--color-slate-6);
 }
 
@@ -60,7 +60,8 @@
   padding-top: 20px;
 }
 
-.buttonPrev {}
+.buttonPrev {
+}
 
 .buttonSpace {
   flex-grow: 1;

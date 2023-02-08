@@ -1,5 +1,5 @@
+/** Typography */
 :root {
-  /* typography */
   --font-system: system-ui;
 
   /* font sizes: we use font scale with base 18px and 1.333 scale factor */
@@ -27,41 +27,92 @@
   --ls-lg: -0.03em;
   --ls-x-lg: -0.05em;
   --ls-xx-lg: -0.04em;
+}
+
+/** Colors */
+:root {
+  /* Reference colors: they always reference real colors */
+
+  --color-black-rgb: 0 0 0;
+  --color-gray-1-rgb: 26 26 26;
+  --color-gray-2-rgb: 47 47 47;
+  --color-gray-3-rgb: 106 106 106;
+  --color-gray-4-rgb: 158 158 158;
+  --color-gray-5-rgb: 216 216 216;
+  --color-gray-6-rgb: 242 242 242;
+  --color-gray-7-rgb: 250 250 250;
+  --color-gray-8-rgb: 252 252 252;
+  --color-white-rgb: 255 255 255;
+
+  --color-toxic-green-rgb: 126 255 0;
+
+  --color-black: rgb(var(--color-black-rgb) / 100%);
+  --color-gray-1: rgb(var(--color-gray-1-rgb) / 100%);
+  --color-gray-2: rgb(var(--color-gray-2-rgb) / 100%);
+  --color-gray-3: rgb(var(--color-gray-3-rgb) / 100%);
+  --color-gray-4: rgb(var(--color-gray-4-rgb) / 100%);
+  --color-gray-5: rgb(var(--color-gray-5-rgb) / 100%);
+  --color-gray-6: rgb(var(--color-gray-6-rgb) / 100%);
+  --color-gray-7: rgb(var(--color-gray-7-rgb) / 100%);
+  --color-gray-8: rgb(var(--color-gray-8-rgb) / 100%);
+  --color-white: rgb(var(--color-white-rgb) / 100%);
+
+  --color-toxic-green: rgb(var(--color-toxic-green-rgb) / 100%);
+
+  /** System colors */
 
   /* slate colors */
-  --color-slate-0: #000000;
-  --color-slate-1: #1a1a1a;
-  --color-slate-2: #2f2f2f;
-  --color-slate-3: #6a6a6a;
-  --color-slate-4: #9e9e9e;
-  --color-slate-5: #d8d8d8;
-  --color-slate-6: #f2f2f2;
-  --color-slate-7: #fafafa;
-  --color-slate-8: #fefefe;
-  --color-slate-f: #ffffff;
+  --color-slate-0: var(--color-black);
+  --color-slate-1: var(--color-gray-1);
+  --color-slate-2: var(--color-gray-2);
+  --color-slate-3: var(--color-gray-3);
+  --color-slate-4: var(--color-gray-4);
+  --color-slate-5: var(--color-gray-5);
+  --color-slate-6: var(--color-gray-6);
+  --color-slate-7: var(--color-gray-7);
+  --color-slate-8: var(--color-gray-8);
+  --color-slate-f: var(--color-white);
 
-  /* colors */
-  --background: var(--color-slate-f);
-  --background-3: var(--color-slate-8);
-  --background-card: var(--color-slate-7);
+  --color-slate-0-rgb: var(--color-black-rgb);
+  --color-slate-1-rgb: var(--color-gray-1-rgb);
+  --color-slate-2-rgb: var(--color-gray-2-rgb);
+  --color-slate-3-rgb: var(--color-gray-3-rgb);
+  --color-slate-4-rgb: var(--color-gray-4-rgb);
+  --color-slate-5-rgb: var(--color-gray-5-rgb);
+  --color-slate-6-rgb: var(--color-gray-6-rgb);
+  --color-slate-7-rgb: var(--color-gray-7-rgb);
+  --color-slate-8-rgb: var(--color-gray-8-rgb);
+  --color-slate-f-rgb: var(--color-white-rgb);
+
+  --color-background: var(--color-slate-f);
+  --color-highlight-green: var(--color-toxic-green);
+
+  /* TODO: refactor these! */
   --background-highlight: #273f5e;
   --text-primary: var(--color-slate-1);
   --text-secondary: var(--color-slate-3);
-  --text-hint: var(--color-slate-4);
-  --text-highlight: #7db5ff;
   --primary: #2e87fb;
-  --primary-hover: #4694fa;
-  --border-1: #14171c;
-  --border-2: #262626;
-  --border-3: #4f4f4f;
-  --border-card: rgba(255, 255, 255, 0.04);
-  --green: #3dc676;
-  --yellow: #f7d154;
   --error: #f74748;
-  --shadow-card: rgba(46, 47, 54, 0.24);
-  --twitter: #1da1f2;
-  --discord: #5865f2;
+}
 
+/** Shadows */
+:root {
+  --shadow-color-rgb: 0 0 0;
+
+  --shadow-sm: 1px 1px 0 rgb(var(--shadow-color-rgb) / 0.04);
+
+  --shadow-reg: 0 1px 3px 0 rgb(var(--shadow-color-rgb) / 0.08),
+    0 1px 2px -1px rgb(var(--shadow-color-rgb) / 0.08);
+
+  --shadow-md: 0 4px 6px -1px rgb(var(--shadow-color-rgb) / 0.08),
+    0 2px 4px -2px rgb(var(--shadow-color-rgb) / 0.08);
+
+  --shadow-lg: 0 10px 15px -3px rgb(var(--shadow-color-rgb) / 0.08),
+    0 4px 6px -4px rgb(var(--shadow-color-rgb) / 0.08);
+}
+
+/* Etc. */
+:root {
   /* border radiuses */
   --radii-sm: 4px;
   --radii-md: 8px;
@@ -71,7 +122,7 @@
   --ease-250: 0.25s ease;
 
   /* toastify */
-  --toastify-color-dark: var(--background-card);
+  --toastify-color-dark: var(--color-slate-7);
   --toastify-font-family: var(--font-ui);
   --toastify-icon-color-error: var(--error);
 
@@ -85,13 +136,19 @@ body {
   padding: 0;
   margin: 0;
 
-  background: var(--background);
+  background: var(--color-background);
   color: var(--color-slate-0);
   height: 100%;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   -webkit-text-size-adjust: 100%;
+}
+
+::selection {
+  color: var(--color-gray-1);
+  background-color: var(--color-highlight-green);
 }
 
 button,
@@ -126,8 +183,4 @@ input {
   appearance: none;
   border: none;
   outline: none;
-}
-
-input:focus {
-  box-shadow: inset 0px 0px 0px 1px var(--color-slate-6);
 }
