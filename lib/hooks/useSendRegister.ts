@@ -1,5 +1,10 @@
 import { BigNumber, ethers } from 'ethers'
-import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import {
+  ETH_REGISTRAR_ADDRESS,
+  ETH_REGISTRAR_ABI,
+  YEAR_IN_SECONDS,
+  ETH_RESOLVER_ADDRESS
+} from 'lib/constants'
 import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useRegistration } from './useRegistration'
@@ -7,6 +12,11 @@ import { useRegistration } from './useRegistration'
 export const useSendRegister = (name: string) => {
   const chainId = useChainId()
   const { registration, setRegistering, setRegistered } = useRegistration(name)
+
+  // TODO: set fixed estimated fixed gas limit
+  const fixedGasLimit = BigNumber.from(280_000)
+  // TODO: set based on domain price from api
+  const value = ethers.utils.parseEther('0.1')
 
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
@@ -22,8 +32,8 @@ export const useSendRegister = (name: string) => {
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner),
     overrides: {
-      gasLimit: BigNumber.from(500_000),
-      value: ethers.utils.parseEther('0.1') // TODO: set correct price from api
+      gasLimit: fixedGasLimit,
+      value: value
     }
   })
 
@@ -31,7 +41,7 @@ export const useSendRegister = (name: string) => {
     write,
     data,
     isLoading: isWriteLoading,
-    error: sendError,
+    error: sendError
   } = useContractWrite({
     ...config,
     // update registration status when transaction is sent
@@ -49,11 +59,12 @@ export const useSendRegister = (name: string) => {
   })
 
   return {
+    gasLimit: fixedGasLimit,
     data,
     isLoading: isWriteLoading || isWaitLoading,
     write,
     config,
     isSuccess,
-    error: sendError || waitError,
+    error: sendError || waitError
   }
 }

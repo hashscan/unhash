@@ -2,14 +2,18 @@ import { useSendRegister } from 'lib/hooks/useSendRegister'
 import React from 'react'
 import styles from './CheckoutRegisterStep.module.css'
 import { LoadingButton } from 'components/LoadingButton/LoadingButton'
+import { Gas } from 'components/icons'
+import { formatNetworkFee } from 'lib/format'
+import { useTxPrice } from 'lib/hooks/useTxPrice'
 
 interface CheckoutRegisterStepProps {
   domain: string
   name: string
 }
 
-export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
-  const { write, isLoading, error } = useSendRegister(props.name)
+export const CheckoutRegisterStep = ({ name }: CheckoutRegisterStepProps) => {
+  const { gasLimit, write, isLoading, error } = useSendRegister(name)
+  const networkFee = useTxPrice(gasLimit)
 
   const onRegisterClick = () => {
     // TODO: is this really the best way to check hook is ready?
@@ -24,12 +28,25 @@ export const CheckoutRegisterStep = (props: CheckoutRegisterStepProps) => {
         Confirm below to register your domain and configure the profile
       </div>
 
-      <LoadingButton
-        className={styles.registerButton}
-        onClick={() => !isLoading && onRegisterClick()}
-        isLoading={isLoading}
-        text="Complete registration"
-      />
+      <div className={styles.buttonContainer}>
+        <LoadingButton
+          className={styles.registerButton}
+          onClick={() => !isLoading && onRegisterClick()}
+          isLoading={isLoading}
+          text="Complete registration"
+        />
+        {networkFee && (
+          <div className={styles.txFee}>
+            <div className={styles.txFeeLabel}>
+              <Gas />
+              Network fee
+            </div>
+            <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
+              {formatNetworkFee(networkFee)}
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* TODO: remove temp error solution */}
       {error && <div className={styles.error}>{error.message}</div>}

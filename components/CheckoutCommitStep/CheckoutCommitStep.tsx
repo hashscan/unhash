@@ -4,7 +4,7 @@ import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon, Gas } from 'components/icons'
 import clsx from 'clsx'
-import { formatUSDPrice, formatYears } from 'lib/format'
+import { formatNetworkFee, formatYears } from 'lib/format'
 import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
 import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
@@ -21,7 +21,11 @@ interface CheckoutCommitStepProps {
   onDurationChanged?: (year: number) => void
 }
 
-export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
+export const CheckoutCommitStep = ({
+  name,
+  durationYears,
+  onDurationChanged
+}: CheckoutCommitStepProps) => {
   // TODO: handle no network and no account
   const chainId = useChainId()
   const { address } = useAccount() // can be undefined
@@ -30,23 +34,21 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
   // const secret = useMemo(() => "1349404", [])
   const secret = '0xf9502d93b2a556e997ee7d177d3f3c620a00b02426100d91941a5915f6d5ad45'
 
-  const { commitmentHash } = useMakeCommitment(props.name, address, secret, toNetwork(chainId))
+  const { commitmentHash } = useMakeCommitment(name, address, secret, toNetwork(chainId))
+  console.log(`commitmentHash: ${commitmentHash}`)
 
   const { gasLimit, write, isLoading, error } = useSendCommit({
     commitmentHash,
     chainId: chainId,
     owner: address!,
-    name: props.name,
-    duration: props.durationYears * YEAR_IN_SECONDS,
+    name: name,
+    duration: durationYears * YEAR_IN_SECONDS,
     secret: secret,
     fields: {}
   })
-  const networkFee = useTxPrice(gasLimit)
 
-  console.log(
-    `name: ${props.name}, address: ${address}, secret: ${secret}, network: ${toNetwork(chainId)}`
-  )
-  console.log(`commitmentHash: ${commitmentHash}`)
+  // calculate network fee
+  const networkFee = useTxPrice(gasLimit)
 
   const onStartClick = () => {
     if (typeof write === 'undefined') return
@@ -65,9 +67,9 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
           <div
             key={year}
             className={clsx(styles.yearButton, {
-              [styles.yearButtonSelected]: year === props.durationYears
+              [styles.yearButtonSelected]: year === durationYears
             })}
-            onClick={() => props.onDurationChanged?.(year)}
+            onClick={() => onDurationChanged?.(year)}
           >
             {formatYears(year)}
           </div>
@@ -132,13 +134,15 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
           isLoading={isLoading}
           text="Start registration"
         />
-        {gasLimit && (
+        {networkFee && (
           <div className={styles.txFee}>
             <div className={styles.txFeeLabel}>
               <Gas />
               Network fee
             </div>
-            <div className={styles.txFeeValue}>~{formatUSDPrice(networkFee)}</div>
+            <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
+              {formatNetworkFee(networkFee)}
+            </div>
           </div>
         )}
       </div>
