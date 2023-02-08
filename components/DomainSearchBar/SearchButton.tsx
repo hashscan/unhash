@@ -26,7 +26,7 @@ export const SearchButton = ({ status, focused, ...props }: SearchButtonProps) =
       <Loader status={status} focused={focused} />
 
       <button className={clsx(styles.button)} disabled={status !== SearchStatus.Available}>
-        Register
+        Register&nbsp;&nbsp;→
       </button>
     </div>
   )
