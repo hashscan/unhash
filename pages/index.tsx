@@ -20,8 +20,10 @@ const Search: PageWithLayout = () => {
   return (
     <div className={styles.searchPage}>
       <div className={styles.heroSection}>
-        <div className={styles.container}>
+        <div className={styles.heroLayout}>
           <div className={styles.hero}>
+            <span className={styles.versionLabel}>Pre-Beta</span>
+
             <h1 className={styles.heroTitle}>
               <WrapBalancer>Get Your Unique .eth Domain</WrapBalancer>
             </h1>
@@ -31,19 +33,17 @@ const Search: PageWithLayout = () => {
                 A modern and better way of searching, buying and managing <b>ENS domains</b>
               </WrapBalancer>
             </h2>
+
+            <div className={styles.searchBar}>
+              <DomainSearchBar ref={searchBarRef} />
+            </div>
           </div>
+
+          <LandingSuggestions onSuggestionSelected={handleSuggestionSelected} />
         </div>
       </div>
 
       <div className={styles.container}>
-        <div className={styles.searchSection}>
-          <DomainSearchBar ref={searchBarRef} />
-        </div>
-
-        <div className={styles.suggestionsSection}>
-          <LandingSuggestions onSuggestionSelected={handleSuggestionSelected} />
-        </div>
-
         <div className={styles.pricingSection}>
           <LandingPricing />
         </div>
