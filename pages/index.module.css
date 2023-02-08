@@ -20,7 +20,7 @@
 
 .hero {
   max-width: calc(var(--container-width) / 2);
-  padding: 80px 0 0 0;
+  padding: 96px 0 0 0;
   flex: 1 1;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .searchBar {
-  margin-top: 40px;
+  margin-top: 48px;
 }
 
 .pricingSection {
@@ -64,7 +64,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 
-  padding: 8px;
+  padding: 6px 8px;
   margin-bottom: 16px;
 }
 

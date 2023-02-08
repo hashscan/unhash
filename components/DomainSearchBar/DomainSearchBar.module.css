@@ -1,6 +1,7 @@
 .searchBar {
   position: relative;
   max-width: 640px;
+  overflow: hidden;
 }
 
 .action {
@@ -32,7 +33,10 @@
 .input {
   font: var(--type-lg);
   letter-spacing: var(--ls-lg);
-  padding: 12px 16px;
+  padding: 14px 16px;
+  border-style: solid;
+  border-width: var(--border-md);
+  border-color: transparent;
 }
 
 .suffix {
@@ -43,7 +47,7 @@
   width: 100%;
 
   pointer-events: none;
-  border: 1px solid transparent;
+  border-color: transparent;
   color: transparent;
 
   opacity: 0;
@@ -61,10 +65,13 @@
 .input {
   color: var(--color-slate-0);
   background-color: var(--color-slate-8);
-  border: 1px solid var(--color-slate-5);
+  border-color: var(--color-slate-3);
 
   border-radius: var(--radii-lg);
   width: 100%;
+  box-shadow: var(--shadow-lg);
+
+  transition: border-color var(--ease-250), box-shadow var(--ease-250);
 }
 
 .input::placeholder {
@@ -73,6 +80,6 @@
 
 .input:focus {
   box-shadow: none;
-  border-color: var(--color-slate-3);
+  border-color: var(--color-slate-1);
   box-shadow: inset 0px 0px 4px -2px var(--color-slate-5);
 }

@@ -12,7 +12,7 @@ export interface SearchButtonProps extends ComponentProps<'div'> {
 const Loader = ({ status, focused }: { status: SearchStatus; focused: boolean }) => (
   <div
     className={clsx(styles.loader, {
-      [styles.loaderVisible]: focused,
+      [styles.loaderVisible]: [SearchStatus.Loading].includes(status),
       [styles.loaderActive]: [SearchStatus.Loading].includes(status)
     })}
   >
