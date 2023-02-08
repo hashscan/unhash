@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { COMMIT_GAS_LIMIT, REGISTER_AVERAGE_GAS, REGISTER_GAS_LIMIT, YEAR_IN_SECONDS } from 'lib/constants'
+import { COMMIT_GAS_LIMIT, REGISTER_AVERAGE_GAS, YEAR_IN_SECONDS } from 'lib/constants'
 import { formatNetworkFee, formatUSDPrice, formatYears } from 'lib/format'
 import { useDomainPrice } from 'lib/hooks/useDomainPrice'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
