@@ -2,14 +2,15 @@ import { Domain, toNetwork } from 'lib/types'
 import React from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
-import { EthereumIcon } from 'components/icons'
+import { EthereumIcon, Gas } from 'components/icons'
 import clsx from 'clsx'
-import { formatYears } from 'lib/format'
+import { formatUSDPrice, formatYears } from 'lib/format'
 import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
 import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { LoadingButton } from 'components/LoadingButton/LoadingButton'
+import { useTxPrice } from 'lib/hooks/useTxPrice'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -31,7 +32,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
 
   const { commitmentHash } = useMakeCommitment(props.name, address, secret, toNetwork(chainId))
 
-  const { write, isLoading, error } = useSendCommit({
+  const { gasLimit, write, isLoading, error } = useSendCommit({
     commitmentHash,
     chainId: chainId,
     owner: address!,
@@ -40,6 +41,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
     secret: secret,
     fields: {}
   })
+  const networkFee = useTxPrice(gasLimit)
 
   console.log(
     `name: ${props.name}, address: ${address}, secret: ${secret}, network: ${toNetwork(chainId)}`
@@ -123,12 +125,23 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
         className={clsx(styles.profileInput, ui.input, styles.profileInputLast)}
       />
 
-      <LoadingButton
-        className={styles.commitButton}
-        onClick={() => !isLoading && onStartClick()}
-        isLoading={isLoading}
-        text="Start registration"
-      />
+      <div className={styles.buttonContainer}>
+        <LoadingButton
+          className={styles.commitButton}
+          onClick={() => !isLoading && onStartClick()}
+          isLoading={isLoading}
+          text="Start registration"
+        />
+        {gasLimit && (
+          <div className={styles.txFee}>
+            <div className={styles.txFeeLabel}>
+              <Gas />
+              Network fee
+            </div>
+            <div className={styles.txFeeValue}>~{formatUSDPrice(networkFee)}</div>
+          </div>
+        )}
+      </div>
 
       {/* TODO: remove temp error solution */}
       {error && <div className={styles.error}>{error.message}</div>}
