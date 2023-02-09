@@ -5,12 +5,13 @@ import React, {
   useCallback,
   FormEventHandler
 } from 'react'
-import { useRouter } from 'next/router'
 
 import { SearchButton } from './SearchButton'
 import styles from './DomainSearchBar.module.css'
 import { useSearch } from './useSearch'
 import clsx from 'clsx'
+import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
+import { SearchStatus } from './types'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -24,7 +25,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   ref
 ) {
   const [searchQuery, setSearchQueryRaw] = useState('')
-  const [focused, setFocused] = useState(false)
+  const [, setIsFocused] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)
 
   const setSearchQuery = useCallback((val: string, options: { stripETH?: boolean } = {}) => {
     const { stripETH = true } = options
@@ -36,11 +38,17 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const normalized = searchQuery.length ? searchQuery + '.eth' : ''
 
   const { status } = useSearch(normalized)
-  const router = useRouter()
+  const navigate = useRouterNavigate()
 
   const registerDomain = useCallback(() => {
-    router.push(`/checkout?domain=${normalized}`)
-  }, [router, normalized])
+    if (isNavigating || status !== SearchStatus.Available) return
+
+    setIsNavigating(true)
+
+    navigate(`/checkout?domain=${normalized}`).finally(() => {
+      setIsNavigating(false)
+    })
+  }, [isNavigating, navigate, normalized, status])
 
   const handleSubmit: FormEventHandler = useCallback(
     (e) => {
@@ -67,8 +75,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
             className={styles.input}
             spellCheck="false"
             placeholder="Look up .eth domain..."
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           ></input>
         </form>
 
@@ -79,7 +87,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
       </div>
 
       <div className={styles.action}>
-        <SearchButton focused={focused} status={status} onClick={registerDomain} />
+        <SearchButton status={status} isNavigating={isNavigating} onClick={registerDomain} />
       </div>
     </div>
   )
