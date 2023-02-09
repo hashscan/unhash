@@ -10,7 +10,7 @@ import { useRegistration } from 'lib/hooks/useRegistration'
 import { Domain, Registration } from 'lib/types'
 import { clamp, parseDomainName, validateDomain } from 'lib/utils'
 import { GetServerSideProps } from 'next'
-import { useEffect, useMemo, useReducer, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import styles from 'styles/checkout.module.css'
 import { useTimeout } from 'usehooks-ts'
 
