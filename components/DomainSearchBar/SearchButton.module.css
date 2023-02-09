@@ -68,7 +68,7 @@
   animation: 0.4s linear infinite spin;
 }
 
-.loaderVisible {
+.loaderActive {
   opacity: 1;
 }
 
