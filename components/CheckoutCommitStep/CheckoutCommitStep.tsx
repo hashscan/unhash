@@ -6,7 +6,6 @@ import { EthereumIcon, Gas } from 'components/icons'
 import clsx from 'clsx'
 import { formatNetworkFee } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
-import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
 import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
@@ -27,30 +26,24 @@ export const CheckoutCommitStep = ({
   durationYears,
   onDurationChanged
 }: CheckoutCommitStepProps) => {
-  // TODO: handle no network and no account
   const chainId = useChainId()
-  const { address } = useAccount() // can be undefined
+  // TODO: handle no network and no account
+  const { address } = useAccount()
 
-  const { secret, commitment } = useMakeCommitment(name, address, toNetwork(chainId))
-
-  const { gasLimit, write, isLoading, error } = useSendCommit({
-    commitmentHash: commitment,
-    chainId: chainId,
-    owner: address!,
+  const { gasLimit, sendCommit, isLoading, error } = useSendCommit({
     name: name,
+    network: toNetwork(chainId),
     duration: durationYears * YEAR_IN_SECONDS,
-    secret: secret,
-    fields: {}
+    owner: address! // TODO: properly handle lack of address
   })
 
   // calculate network fee
   const networkFee = useTxPrice(gasLimit)
 
   const onStartClick = () => {
-    if (typeof write === 'undefined') return
-
-    // TODO: generate random secret
-    write()
+    if (typeof sendCommit !== 'undefined') {
+      sendCommit()
+    }
   }
 
   // TODO: show connect wallet button if not connected

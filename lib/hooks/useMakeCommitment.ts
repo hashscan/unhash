@@ -12,20 +12,19 @@ import { useContractRead } from 'wagmi'
  * @param owner address of future domain owner
  * @returns commitment hash and secret to be used in commit transaction
  */
-export function useMakeCommitment(name: string, owner: string | undefined, network: Network) {
+export function useMakeCommitment(name: string, network: Network, owner: string) {
   const [secret] = useState(() => generateCommitSecret())
 
-  const { data, isLoading, error } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
+  const { data, error } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
     abi: ETH_REGISTRAR_ABI,
     address: ETH_REGISTRAR_ADDRESS.get(network),
     functionName: 'makeCommitmentWithConfig',
-    enabled: Boolean(owner) && Boolean(secret),
+    enabled: Boolean(secret),
     args: [name, owner, secret, ETH_RESOLVER_ADDRESS.get(network), owner]
   })
   return {
     secret: secret,
     commitment: data,
-    isLoading: isLoading,
     error: error
   }
 }
