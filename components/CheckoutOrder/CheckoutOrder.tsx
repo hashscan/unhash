@@ -1,6 +1,7 @@
 import { BigNumber } from 'ethers'
+import { formatNetworkFee, formatUSDPrice } from 'lib/format'
+import { pluralize } from 'lib/pluralize'
 import { COMMIT_GAS_LIMIT, REGISTER_AVERAGE_GAS, YEAR_IN_SECONDS } from 'lib/constants'
-import { formatNetworkFee, formatUSDPrice, formatYears } from 'lib/format'
 import { useDomainPrice } from 'lib/hooks/useDomainPrice'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { Domain } from 'lib/types'
@@ -28,7 +29,7 @@ export const CheckoutOrder = ({ domain, duration }: CheckoutOrderProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>Your order</div>
-      <OrderItem title={`${domain}`} hint={formatYears(durationYears)} price={domainPrice} />
+      <OrderItem title={`${domain}`} hint={pluralize('year', durationYears)} price={domainPrice} />
       <div className={styles.line}>
         <span>Estimated network fees</span>
         <span>{formatNetworkFee(networkFees)}</span>
