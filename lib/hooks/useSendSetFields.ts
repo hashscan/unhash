@@ -2,7 +2,13 @@ import { BigNumber, providers } from 'ethers'
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { Domain, Fields, toNetwork } from 'lib/types'
-import { useChainId, useContract, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useChainId,
+  useContract,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction
+} from 'wagmi'
 
 export const useSendSetFields = ({
   domain,
@@ -20,9 +26,13 @@ export const useSendSetFields = ({
   const node = domain ? namehash(domain) : undefined
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })
   const filteredFields =
-    fields && node ? Object.entries(fields).filter(([_, v]) => typeof v === 'string' && v !== '') : []
+    fields && node
+      ? Object.entries(fields).filter(([_, v]) => typeof v === 'string' && v !== '')
+      : []
 
-  const encoded = filteredFields.map(([k, v]) => contract?.interface.encodeFunctionData('setText', [node, k, v]))
+  const encoded = filteredFields.map(([k, v]) =>
+    contract?.interface.encodeFunctionData('setText', [node, k, v])
+  )
 
   const { config } = usePrepareContractWrite({
     address: resolverAddress,
@@ -54,5 +64,15 @@ export const useSendSetFields = ({
     onSuccess
   })
 
-  return { data, isLoading, write, config, isSuccess, writeError, remoteError, isWriteError, isRemoteError }
+  return {
+    data,
+    isLoading,
+    write,
+    config,
+    isSuccess,
+    writeError,
+    remoteError,
+    isWriteError,
+    isRemoteError
+  }
 }

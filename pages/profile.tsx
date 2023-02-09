@@ -1,6 +1,6 @@
 import { ProgressBar } from 'components/icons'
 import api, { DomainInfo, UserInfo } from 'lib/api'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Address, useAccount, useChainId, useEnsAvatar, useFeeData } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import styles from './profile.module.css'
@@ -27,31 +27,28 @@ const Profile = () => {
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
 
-  const {
-    isLoading: isFieldsLoading,
-    write,
-    writeError,
-    remoteError,
-    isRemoteError,
-    isWriteError,
-    config
-  } = useSendSetFields({ domain, fields })
+  const { isLoading, write, writeError, remoteError, isRemoteError, isWriteError, config } =
+    useSendSetFields({ domain, fields })
   const { data: feeData } = useFeeData()
   const txPrice = useTxPrice({ config, feeData })
   const isMounted = useIsMounted()
 
   useEffect(() => {
-    if (address) {
+    if (address)
       api.userInfo(address, toNetwork(chainId)).then((res) => {
         setUserInfo(res)
-        setDomain(res.primaryEns!)
-        if (res.primaryEns)
-          api.domainInfo(res.primaryEns!, toNetwork(chainId)).then((res) => {
+
+        if (domain) {
+          api.domainInfo(domain, toNetwork(chainId)).then((res) => {
             setDomainInfo(res)
+
+            setFields(res.records)
           })
+        } else {
+          setDomain(res.primaryEns)
+        }
       })
-    }
-  }, [chainId, address])
+  }, [address, chainId, domain])
 
   const { isLoading: isPrimaryEnsLoading, write: setPrimaryEns } = useSetPrimaryEns({ domain })
 
@@ -62,21 +59,29 @@ const Profile = () => {
       {isMounted() ? (
         <>
           <Avatar {...{ chainId, address }} />
-          <h1 className={styles.domain}>{formatAddress(address!)}</h1>
+          <h1 className={styles.domain}>{address ? formatAddress(address) : null}</h1>
         </>
       ) : null}
       <div className={styles.domains}>
         {userInfo ? (
           <select
-            className={ui.select}
+            className={`${ui.select} ${styles.domainSelect}`}
             defaultValue={userInfo?.primaryEns || userInfo?.domains.resolved[0]}
+            onChange={(v) => setDomain(v.currentTarget.value as Domain | null)}
           >
             {userInfo?.domains.resolved.map((domain) => (
-              <option key={domain}>{domain}</option>
+              <option key={domain} value={domain}>
+                {domain === userInfo.primaryEns ? '[primary]' : ''} {domain}
+              </option>
             ))}
           </select>
         ) : null}
-        <button className={ui.button} onClick={() => setPrimaryEns?.()}>
+        <button
+          className={`${ui.button} ${styles.primaryButton}`}
+          onClick={() => {
+            setPrimaryEns?.()
+          }}
+        >
           {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set as primary'}{' '}
         </button>
       </div>
@@ -155,8 +160,11 @@ const Profile = () => {
             name="com.github"
           />
         </div>
-        <button type="submit" className={ui.button}>
-          Submit
+        {txPrice && <span>tx price: ${txPrice}</span>}
+        {isWriteError && <div className={ui.error}>Error sending transaction</div>}
+        {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
+        <button type="submit" disabled={isLoading} className={ui.button}>
+          {isLoading ? <ProgressBar color="white" /> : 'Submit'}
         </button>
       </form>
     </main>

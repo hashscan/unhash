@@ -16,8 +16,7 @@ export const useSetPrimaryEns = ({ domain }: { domain: Domain | null }) => {
   const { write, data } = useContractWrite(config)
 
   const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-    onSuccess: () => location.reload()
+    hash: data?.hash
   })
 
   return { data, isLoading, write, config, isSuccess }
