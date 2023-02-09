@@ -1,28 +1,29 @@
-import api from 'lib/api'
+import api, { DomainPrice } from 'lib/api'
 import { toNetwork } from 'lib/types'
 import { useEffect, useState } from 'react'
 import { useChainId } from 'wagmi'
 
-export const useDomainPrice = (domain: string, durationYears: number) => {
+export const useDomainPrice = (
+  domain: string,
+  duration: number | undefined
+): DomainPrice | undefined => {
   const chainId = useChainId()
-  const [price, setPrice] = useState<number>()
+  const [price, setPrice] = useState<DomainPrice>()
 
   useEffect(() => {
+    if (!duration) return setPrice(undefined)
+
     const fetchPrice = async () => {
       try {
-        const result = await api.getPrice(
-          domain,
-          toNetwork(chainId),
-          durationYears * 365 * 24 * 60 * 60
-        )
-        setPrice(result.usd)
+        const result = await api.getPrice(domain, toNetwork(chainId), duration)
+        setPrice(result)
       } catch (err) {
         console.log(`failed to fetch domain price: ${err}`)
         setPrice(undefined)
       }
     }
     fetchPrice()
-  }, [domain, durationYears, chainId])
+  }, [domain, duration, chainId])
 
   return price
 }
