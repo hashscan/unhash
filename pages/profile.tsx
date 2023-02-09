@@ -1,13 +1,14 @@
 import { ProgressBar } from 'components/icons'
 import api, { DomainInfo, UserInfo } from 'lib/api'
 import { useEffect, useState } from 'react'
-import { goerli, useAccount, useChainId, useFeeData } from 'wagmi'
+import { goerli, useAccount, useChainId } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import styles from 'styles/profile.module.css'
 import { Domain, Fields, toNetwork } from 'lib/types'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
+import { formatUSDPrice } from 'lib/format'
 
 const EnsToggle = ({ domain }: { domain: Domain }) => {
   const { isLoading, write } = useSetPrimaryEns({ domain })
@@ -42,8 +43,8 @@ const Profile = () => {
     isWriteError,
     config
   } = useSendSetFields({ domain, fields, onSuccess: () => setMode('view') })
-  const { data: feeData } = useFeeData()
-  const txPrice = useTxPrice({ config, feeData })
+  const gasLimit = config.request?.gasLimit
+  const txPrice = useTxPrice(gasLimit)
 
   useEffect(() => {
     if (address) {
@@ -178,7 +179,7 @@ const Profile = () => {
               <button disabled={isFieldsLoading} type="submit" className={ui.button}>
                 {isFieldsLoading ? <ProgressBar /> : 'Submit'}
               </button>
-              {txPrice && <>commit tx cost: ${txPrice}</>}
+              {txPrice && <>commit tx cost: {formatUSDPrice(txPrice)}</>}
               <div>
                 {isWriteError && <div className={ui.error}>{writeError?.message}</div>}
                 {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}

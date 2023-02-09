@@ -5,12 +5,12 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRe
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep/CheckoutSuccessStep'
 import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
-import { COMMIT_WAIT_MS } from 'lib/constants'
+import { COMMIT_WAIT_MS, YEAR_IN_SECONDS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
-import { Domain, Registration, RegistrationStatus } from 'lib/types'
+import { Domain, Registration } from 'lib/types'
 import { clamp, parseDomainName, validateDomain } from 'lib/utils'
 import { GetServerSideProps } from 'next'
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import styles from 'styles/checkout.module.css'
 import { useTimeout } from 'usehooks-ts'
 
@@ -39,11 +39,10 @@ function calculateStep(_: CheckoutStep, reg: Registration | undefined): Checkout
 
 const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const [durationYears, setDurationYears] = useState<number>(2)
+  const duration = useMemo(() => durationYears * YEAR_IN_SECONDS, [durationYears])
 
   // get registration and calculate step
   const { registration: reg } = useRegistration(props.name)
-  const status: RegistrationStatus | undefined = reg?.status
-
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
@@ -58,13 +57,6 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
   const onDurationChanged = (year: number) => {
     setDurationYears(clamp(year, 1, 4))
   }
-
-  // TODO: remove after PR review
-  console.log(
-    `[checkout] ${props.domain}: status = ${status}, step = ${step}, waitTimeout = ${Math.ceil(
-      waitTimeout / 1000
-    )}s`
-  )
 
   return (
     <div className={styles.checkout}>
@@ -90,7 +82,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
 
       {/* right as a side bar */}
       <div className={styles.right}>
-        <CheckoutOrder domain={props.domain} durationYears={durationYears} />
+        <CheckoutOrder domain={props.domain} duration={duration} />
       </div>
     </div>
   )
