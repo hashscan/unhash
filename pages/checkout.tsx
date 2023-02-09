@@ -38,14 +38,18 @@ function calculateStep(_: CheckoutStep, reg: Registration | undefined): Checkout
 }
 
 const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
-  const [durationYears, setDurationYears] = useState<number>(2)
-  const duration = useMemo(() => durationYears * YEAR_IN_SECONDS, [durationYears])
-
   // get registration and calculate step
   const { registration: reg } = useRegistration(props.name)
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
+
+  // durationYears is set from the UI and duration is from Registration
+  const [durationYears, setDurationYears] = useState<number>(2)
+  const [duration, setDuration] = useState<number>(durationYears * YEAR_IN_SECONDS)
+  useEffect(() => {
+    setDuration(reg?.duration ?? durationYears * YEAR_IN_SECONDS)
+  }, [reg, durationYears])
 
   // set timeout to trigger step update
   const waitTimeout =
