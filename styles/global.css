@@ -119,7 +119,9 @@
   --radii-lg: 12px;
 
   /* transition */
+  --ease-300: 0.25s ease;
   --ease-250: 0.25s ease;
+  --ease-200: 0.2s ease;
 
   /* toastify */
   --toastify-color-dark: var(--color-slate-7);

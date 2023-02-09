@@ -28,7 +28,7 @@
 }
 
 .button[disabled] {
-  opacity: 0.25;
+  background: var(--color-slate-5);
   pointer-events: none;
 }
 
@@ -60,12 +60,13 @@
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-  border-radius: 40px;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 18px;
   animation: 0.4s linear infinite spin;
+  background-color: var(--color-slate-f);
 }
 
 .loaderActive {
