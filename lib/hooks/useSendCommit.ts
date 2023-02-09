@@ -26,7 +26,7 @@ export const useSendCommit = ({
   name: string
   network: Network
   duration: number
-  owner: string
+  owner: string | undefined
 }) => {
   // ethers provider needed to get exact transaction timestamp
   const provider = useProvider()
@@ -56,7 +56,7 @@ export const useSendCommit = ({
     onSuccess: (data) =>
       create({
         name,
-        owner,
+        owner: owner!, // TODO: fix?
         duration,
         secret,
         commitTxHash: data.hash
