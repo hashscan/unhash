@@ -13,12 +13,12 @@ import clsx from 'clsx'
 import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 import { SearchStatus } from './types'
 
+import { normalizeDotETH, findSuffix } from './utils'
+
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
   setSearch: (val: string) => void
 }
-
-const stripDotETH = (s: string) => s.replace(/\.eth$/i, '')
 
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBarWithRef(
   _props,
@@ -28,14 +28,12 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const [, setIsFocused] = useState(false)
   const [isNavigating, setIsNavigating] = useState(false)
 
-  const setSearchQuery = useCallback((val: string, options: { stripETH?: boolean } = {}) => {
-    const { stripETH = true } = options
-    const value = stripETH ? stripDotETH(val) : val
-
-    setSearchQueryRaw(value) // strips .eth at the end
+  const setSearchQuery = useCallback((val: string) => {
+    setSearchQueryRaw(normalizeDotETH(val))
   }, [])
 
-  const normalized = searchQuery.length ? searchQuery + '.eth' : ''
+  const suffix = findSuffix(searchQuery)
+  const normalized = searchQuery.length ? normalizeDotETH(searchQuery + suffix) : ''
 
   const { status } = useSearch(normalized)
   const navigate = useRouterNavigate()
@@ -82,7 +80,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
 
         <div className={clsx(styles.suffix, { [styles.suffixVisible]: searchQuery.length !== 0 })}>
           {searchQuery}
-          <span>.eth</span>
+          <span>{suffix}</span>
         </div>
       </div>
 
