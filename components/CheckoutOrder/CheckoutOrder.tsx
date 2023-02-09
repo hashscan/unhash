@@ -1,4 +1,5 @@
-import { formatUSDPrice, formatYears } from 'lib/format'
+import { formatUSDPrice } from 'lib/format'
+import { pluralize } from 'lib/pluralize'
 import { useDomainPrice } from 'lib/hooks/useDomainPrice'
 import { Domain } from 'lib/types'
 import React from 'react'
@@ -20,7 +21,7 @@ export const CheckoutOrder = ({ domain, durationYears }: CheckoutOrderProps) => 
   return (
     <div className={styles.container}>
       <div className={styles.title}>Your order</div>
-      <OrderItem title={`${domain}`} hint={formatYears(durationYears)} price={domainPrice} />
+      <OrderItem title={`${domain}`} hint={pluralize('year', durationYears)} price={domainPrice} />
       <div className={styles.line}>
         <span>Estimated network fees</span>
         <span>{`$${networkFees}`}</span>

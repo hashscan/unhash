@@ -4,7 +4,7 @@ import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon } from 'components/icons'
 import clsx from 'clsx'
-import { formatYears } from 'lib/format'
+import { pluralize } from 'lib/pluralize'
 import { useMakeCommitment } from 'lib/hooks/useMakeCommitment'
 import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
@@ -67,7 +67,7 @@ export const CheckoutCommitStep = (props: CheckoutCommitStepProps) => {
             })}
             onClick={() => props.onDurationChanged?.(year)}
           >
-            {formatYears(year)}
+            {pluralize('year', year)}
           </div>
         ))}
       </div>
