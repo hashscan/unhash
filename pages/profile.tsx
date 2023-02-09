@@ -19,10 +19,28 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
   return <img className={styles.avatar} src={avatar!} alt="ENS Avatar" />
 }
 
+const Input: React.FC<
+  JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
+> = ({ fields, name, label, ...props }) => {
+  return (
+    <div className={styles.field}>
+      <label htmlFor={name}>{label}</label>
+      <input
+        {
+          ...props /* see https://stackoverflow.com/a/49714237/11889402 */
+        }
+        key={name === 'name' ? `${Math.floor(Math.random() * 1000)}-min` : undefined}
+        className={`${ui.input} ${styles.desc}`}
+        defaultValue={fields?.[name]}
+        name={name}
+      />
+    </div>
+  )
+}
+
 const Profile = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
-  const [domainInfo, setDomainInfo] = useState<DomainInfo | null>(null)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
@@ -39,9 +57,8 @@ const Profile = () => {
         setUserInfo(res)
 
         if (domain) {
+          setFields({})
           api.domainInfo(domain, toNetwork(chainId)).then((res) => {
-            setDomainInfo(res)
-
             setFields(res.records)
           })
         } else {
@@ -109,62 +126,24 @@ const Profile = () => {
           }
         }}
       >
-        <div className={styles.field}>
-          <label htmlFor="name">Name</label>
-          <input
-            className={`${ui.input} ${styles.desc}`}
-            defaultValue={domainInfo?.records.name}
-            placeholder="name"
-            name="name"
-          />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="description">Description</label>
-          <input
-            className={`${ui.input} ${styles.desc}`}
-            defaultValue={domainInfo?.records.description}
-            placeholder="description"
-            name="description"
-          />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="email">Email</label>
-          <input
-            className={`${ui.input} ${styles.desc}`}
-            defaultValue={domainInfo?.records.email}
-            placeholder="email"
-            type="email"
-            name="email"
-          />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="url">Website URL</label>
-          <input
-            className={`${ui.input} ${styles.desc}`}
-            defaultValue={domainInfo?.records.url}
-            placeholder="https://example.com"
-            type="url"
-            name="url"
-          />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="url">Twitter username</label>
-          <input
-            className={`${ui.input} ${styles.desc}`}
-            defaultValue={domainInfo?.records['com.twitter']}
-            placeholder="test_420"
-            name="com.twitter"
-          />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="url">GitHub username</label>
-          <input
-            className={`${ui.input} ${styles.desc}`}
-            defaultValue={domainInfo?.records['com.github']}
-            placeholder="test_420"
-            name="com.github"
-          />
-        </div>
+        <Input {...{ fields }} name="name" label="Name" placeholder="ens_user" />
+        <Input
+          {...{ fields }}
+          name="description"
+          label="Description"
+          placeholder="23 y.o. designer from Moscow"
+        />
+        <Input {...{ fields }} label="Email" placeholder="email" type="email" name="email" />
+        <Input
+          {...{ fields }}
+          label="Website URL"
+          placeholder="https://example.com"
+          type="url"
+          name="url"
+        />
+        <Input {...{ fields }} placeholder="test_420" name="com.twitter" label="Twitter username" />
+        <Input {...{ fields }} placeholder="test_420" name="com.github" label="GitHub username" />
+
         {txPrice && <span>tx price: ${txPrice}</span>}
         {isWriteError && <div className={ui.error}>Error sending transaction</div>}
         {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
