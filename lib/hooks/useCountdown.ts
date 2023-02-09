@@ -1,18 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+const secondsUntil = (target: number) => Math.ceil((target - Date.now()) / 1000)
+
+/**
+ * @param target - timestamp
+ * @returns number of seconds until the target timestamp
+ */
 export function useCountdown(target: number) {
-  const initCount = Math.ceil((target - Date.now()) / 1000)
-  const [count, setCount] = useState(initCount)
+  const [count, setCount] = useState(() => secondsUntil(target))
+
+  // holds the ref to the last timer
+  const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
-    if (count <= 0) return
+    const tick = () => {
+      const count = secondsUntil(target)
+      setCount(count)
 
-    const timer = setTimeout(() => {
-      setCount(Math.ceil((target - Date.now()) / 1000))
-    }, 1000)
+      if (count > 0) {
+        timerRef.current = setTimeout(tick, 1000)
+      }
+    }
 
-    return () => clearTimeout(timer)
-  }, [target, count])
+    tick()
+    return () => clearTimeout(timerRef.current!)
+  }, [target]) // when target changes everything gets cancelled and starts over
 
   return count
 }
