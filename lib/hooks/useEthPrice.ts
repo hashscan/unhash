@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export const useEthPrice = () => {
-  const [ethPrice, setEthPrice] = useState()
+  const [ethPrice, setEthPrice] = useState<number>()
 
   // TODO: replace CryptoCompare by custom API
   useEffect(() => {
