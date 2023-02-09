@@ -31,15 +31,10 @@ export const CheckoutCommitStep = ({
   const chainId = useChainId()
   const { address } = useAccount() // can be undefined
 
-  // TODO: fix ReferenceError: crypto is not defined
-  // const secret = useMemo(() => "1349404", [])
-  const secret = '0xf9502d93b2a556e997ee7d177d3f3c620a00b02426100d91941a5915f6d5ad45'
-
-  const { commitmentHash } = useMakeCommitment(name, address, secret, toNetwork(chainId))
-  console.log(`commitmentHash: ${commitmentHash}`)
+  const { secret, commitment } = useMakeCommitment(name, address, toNetwork(chainId))
 
   const { gasLimit, write, isLoading, error } = useSendCommit({
-    commitmentHash,
+    commitmentHash: commitment,
     chainId: chainId,
     owner: address!,
     name: name,

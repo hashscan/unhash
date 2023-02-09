@@ -1,21 +1,31 @@
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from "lib/constants"
-import { Network } from "lib/types"
-import { useContractRead } from "wagmi"
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { Network } from 'lib/types'
+import { generateCommitSecret } from 'lib/utils'
+import { useState } from 'react'
+import { useContractRead } from 'wagmi'
 
-// Generates a commitment hash for future ENS registration
-// 'name' is the name part of {name}.eth domain
-// https://github.com/ensdomains/ens-contracts/blob/934fd3ee5575de11958e40f9862a43ebb21bc22c/contracts/ethregistrar/ETHRegistrarController.sol#L70
-export function useMakeCommitment(
-  name: string,
-  address: string | undefined,
-  secret: string,
-  network: Network
-) {
-  const { data: commitmentHash, isError, isLoading } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
+/**
+ * Generates a commitment hash for ENS commit transaction.
+ * @see https://github.com/ensdomains/ens-contracts/blob/934fd3ee5575de11958e40f9862a43ebb21bc22c/contracts/ethregistrar/ETHRegistrarController.sol#L70
+ *
+ * @param name name part of {name}.eth domain
+ * @param owner address of future domain owner
+ * @returns commitment hash and secret to be used in commit transaction
+ */
+export function useMakeCommitment(name: string, owner: string | undefined, network: Network) {
+  const [secret] = useState(() => generateCommitSecret())
+
+  const { data, isLoading, error } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
     abi: ETH_REGISTRAR_ABI,
     address: ETH_REGISTRAR_ADDRESS.get(network),
     functionName: 'makeCommitmentWithConfig',
-    args: [name, address, secret, ETH_RESOLVER_ADDRESS.get(network), address]
+    enabled: Boolean(owner) && Boolean(secret),
+    args: [name, owner, secret, ETH_RESOLVER_ADDRESS.get(network), owner]
   })
-  return { commitmentHash, isError, isLoading }
+  return {
+    secret: secret,
+    commitment: data,
+    isLoading: isLoading,
+    error: error
+  }
 }
