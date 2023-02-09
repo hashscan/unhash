@@ -1,26 +1,36 @@
+.searchPage {
+  min-height: calc(100vh - var(--nav-height));
+}
+
 .container {
-  --padding: 16px; /* TODO: this probably needs to be set somewhere globally */
+  --padding: 16px;
   max-width: calc(2 * var(--padding) + var(--container-width));
   padding: 0 var(--padding) 0 var(--padding);
   margin: 0 auto;
 }
 
-.searchPage {
-  min-height: calc(100vh - var(--nav-height));
+.heroLayout {
+  composes: container;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  min-height: calc(90vh - var(--nav-height));
 }
 
 .hero {
   max-width: calc(var(--container-width) / 2);
-  padding: 96px 0 192px 0;
+  padding: 96px 0 0 0;
+  flex: 1 1;
 }
 
 .heroSection {
-  background: linear-gradient(
-      to bottom,
-      #ffffff00 70%,
-      var(--color-slate-f) 100%
-    ),
+  background: linear-gradient(to bottom, #ffffff00 70%, var(--color-slate-f) 100%),
     top left / 32px 32px repeat url('../styles/assets/grid-pattern.png');
+
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-slate-5);
+  margin-bottom: 96px;
 }
 
 .heroTitle {
@@ -35,20 +45,28 @@
   letter-spacing: var(--type-md);
 }
 
-.searchSection {
-  position: relative;
-  margin-top: -128px;
-  margin-bottom: 64px;
-}
-
-.suggestionsSection {
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--color-slate-5);
-  margin-bottom: 96px;
+.searchBar {
+  margin-top: 48px;
+  margin-bottom: 80px;
 }
 
 .pricingSection {
   margin-bottom: 96px;
+}
+
+.versionLabel {
+  display: inline-block;
+  background: var(--color-highlight-green);
+  color: var(--color-gray-1);
+  border-radius: var(--radii-sm);
+
+  font: var(--type-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  padding: 6px 8px;
+  margin-bottom: 16px;
 }
 
 @media (max-width: 768px) {

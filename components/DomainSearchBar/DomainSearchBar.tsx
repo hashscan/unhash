@@ -1,24 +1,62 @@
-import React, { forwardRef, useState, useImperativeHandle } from 'react'
-import { useRouter } from 'next/router'
+import React, {
+  forwardRef,
+  useState,
+  useImperativeHandle,
+  useCallback,
+  FormEventHandler
+} from 'react'
 
 import { SearchButton } from './SearchButton'
 import styles from './DomainSearchBar.module.css'
 import { useSearch } from './useSearch'
+import clsx from 'clsx'
+import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
+import { SearchStatus } from './types'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
   setSearch: (val: string) => void
 }
 
+const stripDotETH = (s: string) => s.replace(/\.eth$/i, '')
+
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBarWithRef(
   _props,
   ref
 ) {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [focused, setFocused] = useState(false)
+  const [searchQuery, setSearchQueryRaw] = useState('')
+  const [, setIsFocused] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)
 
-  const { status } = useSearch(searchQuery)
-  const router = useRouter()
+  const setSearchQuery = useCallback((val: string, options: { stripETH?: boolean } = {}) => {
+    const { stripETH = true } = options
+    const value = stripETH ? stripDotETH(val) : val
+
+    setSearchQueryRaw(value) // strips .eth at the end
+  }, [])
+
+  const normalized = searchQuery.length ? searchQuery + '.eth' : ''
+
+  const { status } = useSearch(normalized)
+  const navigate = useRouterNavigate()
+
+  const registerDomain = useCallback(() => {
+    if (isNavigating || status !== SearchStatus.Available) return
+
+    setIsNavigating(true)
+
+    navigate(`/checkout?domain=${normalized}`).finally(() => {
+      setIsNavigating(false)
+    })
+  }, [isNavigating, navigate, normalized, status])
+
+  const handleSubmit: FormEventHandler = useCallback(
+    (e) => {
+      e.preventDefault()
+      registerDomain()
+    },
+    [registerDomain]
+  )
 
   useImperativeHandle(ref, () => ({
     setSearch(value: string) {
@@ -28,25 +66,28 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
 
   return (
     <div className={styles.searchBar}>
-      <input
-        autoFocus
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className={styles.input}
-        spellCheck="false"
-        placeholder="Look up .eth domain..."
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      ></input>
+      <div className={styles.inputWithSuffix}>
+        <form onSubmit={handleSubmit}>
+          <input
+            autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={styles.input}
+            spellCheck="false"
+            placeholder="Look up .eth domain..."
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          ></input>
+        </form>
+
+        <div className={clsx(styles.suffix, { [styles.suffixVisible]: searchQuery.length !== 0 })}>
+          {searchQuery}
+          <span>.eth</span>
+        </div>
+      </div>
 
       <div className={styles.action}>
-        <SearchButton
-          focused={focused}
-          status={status}
-          onClick={() => {
-            router.push(`/checkout?domain=${searchQuery}`)
-          }}
-        />
+        <SearchButton status={status} isNavigating={isNavigating} onClick={registerDomain} />
       </div>
     </div>
   )

@@ -16,7 +16,7 @@
 
   padding: 32px 40px;
   padding-right: calc((100vw - var(--container-width)) / 2);
-  background-color: var(--background-card);
+  background-color: var(--color-slate-7);
   border-left: 1.5px solid var(--color-slate-6);
 }
 
@@ -24,6 +24,10 @@
   color: var(--color-slate-2);
   font: var(--type-lg);
   letter-spacing: var(--ls-lg);
+}
+
+.progress {
+  margin-top: 4px;
 }
 
 .back {
@@ -56,7 +60,8 @@
   padding-top: 20px;
 }
 
-.buttonPrev {}
+.buttonPrev {
+}
 
 .buttonSpace {
   flex-grow: 1;

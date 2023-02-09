@@ -37,7 +37,7 @@ export const LandingSuggestions = ({ onSuggestionSelected }: LandingSuggestionsP
     setSuggestions(
       Array(6)
         .fill(0)
-        .map((_) => generateSuggestion())
+        .map(() => generateSuggestion())
     )
   }, [])
 

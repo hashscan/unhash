@@ -2,11 +2,11 @@ import { BigNumber, ethers } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { useRegistration } from './storage'
+import { useRegistration } from './useRegistration'
 
 export const useSendRegister = (name: string) => {
   const chainId = useChainId()
-  const { registration, setRegistration } = useRegistration(name)
+  const { registration, setRegistering, setRegistered } = useRegistration(name)
 
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
@@ -34,11 +34,8 @@ export const useSendRegister = (name: string) => {
     error: sendError,
   } = useContractWrite({
     ...config,
-    onSuccess: (data) => {
-      if (!registration) return
-
-      setRegistration({ ...registration, registerTxHash: data.hash, status: 'registerPending' })
-    }
+    // update registration status when transaction is sent
+    onSuccess: (data) => setRegistering(data.hash)
   })
 
   const {
@@ -47,10 +44,8 @@ export const useSendRegister = (name: string) => {
     error: waitError
   } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: () => {
-      if (!registration) return
-      setRegistration({ ...registration, status: 'registered' })
-    }
+    // update registration status when transaction is confirmed
+    onSuccess: () => setRegistered()
   })
 
   return {
