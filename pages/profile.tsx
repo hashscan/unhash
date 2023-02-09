@@ -50,7 +50,12 @@ const Profile = () => {
       })
   }, [address, chainId, domain])
 
-  const { isLoading: isPrimaryEnsLoading, write: setPrimaryEns } = useSetPrimaryEns({ domain })
+  const { isLoading: isPrimaryEnsLoading, write: setPrimaryEns } = useSetPrimaryEns({
+    domain,
+    onSuccess: () => {
+      if (userInfo) setUserInfo(() => ({ ...userInfo, primaryEns: domain! }))
+    }
+  })
 
   if (isDisconnected) return <p>Please connect wallet</p>
 
