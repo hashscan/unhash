@@ -95,13 +95,13 @@ export const CheckoutCommitStep = ({
           <EthereumIcon />
         </div>
         <input
+          className={`${styles.owner} ${ui.input}`}
           onChange={(e) => setOwnerInputRaw(e.target.value)}
           onBlur={() => onOwnerInputBlur()}
           placeholder="0x01234...F0A0 (Optional)"
           autoComplete="off"
-          className={`${styles.owner} ${ui.input}`}
         />
-        {showOwnerError && <div>Invalid address!</div>}
+        {showOwnerError && <div className={styles.inputError}>Invalid address!</div>}
       </div>
 
       <div className={styles.header}>ENS Profile</div>
