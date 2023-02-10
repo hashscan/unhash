@@ -5,21 +5,20 @@ import {
   YEAR_IN_SECONDS,
   ETH_RESOLVER_ADDRESS
 } from 'lib/constants'
-import { toNetwork } from 'lib/types'
+import { Domain, toNetwork } from 'lib/types'
+import { getDomainName } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 import { useRegistration } from './useRegistration'
 
-export const useSendRegister = (name: string) => {
+export const useSendRegister = (domain: Domain) => {
   const chainId = useChainId()
-  const { registration, setRegistering, setRegistered } = useRegistration(name)
+  const { registration, setRegistering, setRegistered } = useRegistration(domain)
 
   // Docs suggests to pay 5% premium because oracle price may vary. Extra ETH gets refunded.
   // Let's try without extra ETH first as tx is sent right after price is fetched.
   // https://docs.ens.domains/contract-api-reference/.eth-permanent-registrar/controller#register-name
-
-  // TODO: pass domain instead of name
-  const price = useDomainPrice(`${name}.eth`, registration?.duration)?.wei
+  const price = useDomainPrice(domain, registration?.duration)?.wei
   const value = price ? BigNumber.from(price) : undefined
 
   // Note 1: 280K gas is not enough to refund extra ETH sent to registerWithConfig
@@ -32,7 +31,7 @@ export const useSendRegister = (name: string) => {
     abi: ETH_REGISTRAR_ABI,
     functionName: 'registerWithConfig',
     args: [
-      name,
+      getDomainName(domain),
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
