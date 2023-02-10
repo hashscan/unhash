@@ -23,8 +23,7 @@
   height: 40px;
   width: auto;
   padding: 0 16px;
-  font-weight: 500;
-  font-size: 16px;
+  font: var(--type-sm);
   box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 2px;
   border-radius: var(--radii-sm);
   border: none;
