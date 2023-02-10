@@ -1,6 +1,6 @@
 import { ProgressBar } from 'components/icons'
-import api, { DomainInfo, UserInfo } from 'lib/api'
-import { useCallback, useEffect, useState } from 'react'
+import api, { UserInfo } from 'lib/api'
+import { useEffect, useState } from 'react'
 import { Address, useAccount, useChainId, useEnsAvatar, useFeeData } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import styles from './profile.module.css'
@@ -10,6 +10,7 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { useIsMounted } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
+import { formatUSDPrice } from 'lib/format'
 
 const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
   const { data: avatar, isLoading, error } = useEnsAvatar({ chainId, address })
@@ -48,8 +49,10 @@ const Profile = () => {
   const { isLoading, write, writeError, remoteError, isRemoteError, isWriteError, config } =
     useSendSetFields({ domain, fields })
   const { data: feeData } = useFeeData()
-  const txPrice = useTxPrice({ config, feeData })
   const isMounted = useIsMounted()
+
+  const gasLimit = config.request?.gasLimit
+  const txPrice = useTxPrice(gasLimit)
 
   useEffect(() => {
     if (address)
@@ -144,7 +147,7 @@ const Profile = () => {
         <Input {...{ fields }} placeholder="test_420" name="com.twitter" label="Twitter username" />
         <Input {...{ fields }} placeholder="test_420" name="com.github" label="GitHub username" />
 
-        {txPrice && <span>tx price: ${txPrice}</span>}
+        {txPrice && <>commit tx cost: {formatUSDPrice(txPrice)}</>}
         {isWriteError && <div className={ui.error}>Error sending transaction</div>}
         {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
         <button type="submit" disabled={isLoading} className={ui.button}>

@@ -1,6 +1,11 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Fields, toNetwork } from 'lib/types'
-import { useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi'
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useProvider,
+  useWaitForTransaction
+} from 'wagmi'
 import { useRegistration } from './useRegistration'
 
 export const useSendCommit = ({
@@ -29,16 +34,22 @@ export const useSendCommit = ({
     args: [commitmentHash],
     enabled: Boolean(commitmentHash)
   })
-  const { write, data, isLoading: isWriteLoading, error: writeError } = useContractWrite({
+  const {
+    write,
+    data,
+    isLoading: isWriteLoading,
+    error: writeError
+  } = useContractWrite({
     ...config,
     // create new Registartion when transaction is sent
-    onSuccess: (data) => create({
-      name,
-      owner,
-      duration,
-      secret,
-      commitTxHash: data.hash
-    })
+    onSuccess: (data) =>
+      create({
+        name,
+        owner,
+        duration,
+        secret,
+        commitTxHash: data.hash
+      })
   })
 
   // ethers provider needed to get exact transaction timestamp
@@ -60,11 +71,12 @@ export const useSendCommit = ({
   })
 
   return {
+    gasLimit: config.request?.gasLimit,
     data,
     isLoading: isWriteLoading || isWaitLoading,
     write,
     config,
     isSuccess,
-    error: writeError ? writeError : waitError,
+    error: writeError ? writeError : waitError
   }
 }

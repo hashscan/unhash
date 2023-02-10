@@ -1,35 +1,18 @@
-import { BigNumber, BigNumberish, utils, providers } from 'ethers'
+import { BigNumber, BigNumberish, utils } from 'ethers'
 import { useMemo } from 'react'
-import { Address } from 'wagmi'
+import { useFeeData } from 'wagmi'
 import { useEthPrice } from './useEthPrice'
 
-export const useTxPrice = ({
-  config,
-  feeData
-}: {
-  config: {
-    request?: providers.TransactionRequest & {
-      to: Address
-      gasLimit: NonNullable<BigNumberish>
-    }
-  }
-  feeData?: providers.FeeData
-}) => {
+export const useTxPrice = (gasLimit?: BigNumberish): number | undefined => {
+  const { data: feeData } = useFeeData()
   const ethPrice = useEthPrice()
-  const txPrice = useMemo(
-    () =>
-      config.request && feeData
-        ? (
-            parseFloat(
-              utils.formatEther(
-                BigNumber.from(config.request.gasLimit).mul(
-                  feeData!.lastBaseFeePerGas!.add(feeData?.maxPriorityFeePerGas!)
-                )
-              )
-            ) * ethPrice
-          ).toPrecision(5)
-        : '',
-    [config.request, feeData, ethPrice]
-  )
-  return txPrice
+
+  return useMemo(() => {
+    if (!gasLimit || !feeData || !ethPrice) return undefined
+
+    const priceEther = BigNumber.from(gasLimit).mul(
+      feeData.lastBaseFeePerGas!.add(feeData.maxPriorityFeePerGas!)
+    )
+    return parseFloat(utils.formatEther(priceEther)) * ethPrice
+  }, [gasLimit, feeData, ethPrice])
 }

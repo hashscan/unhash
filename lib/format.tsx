@@ -9,3 +9,9 @@ export function formatUSDPrice(price?: number): string {
   const rounded = (Math.round(price * 100) / 100).toFixed(2)
   return `$${rounded}`
 }
+
+export function formatNetworkFee(fee?: number): string {
+  if (!fee) return ''
+  const rounded = (Math.round(fee * 100) / 100).toFixed(2)
+  return `~$${rounded}`
+}

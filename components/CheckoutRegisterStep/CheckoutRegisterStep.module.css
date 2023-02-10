@@ -18,11 +18,40 @@
   margin-bottom: 64px;
 }
 
-.registerButton {
+
+.buttonContainer {
+  width: fit-content;
   margin-left: auto;
   margin-right: 0;
   margin-top: 40px;
 }
+
+.txFee {
+  color: var(--color-slate-4);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+  padding: 4px 1px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.txFeeLabel {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2px;
+}
+
+.txFeeValue {
+  flex-grow: 1;
+  text-align: end;
+}
+
 
 /* TODO: remove temp error solution */
 .error {

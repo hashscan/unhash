@@ -21,6 +21,12 @@
   padding: 7px 0px;
 }
 
-.total {
+.totalLabel {
   font-weight: 500;
+  align-self: flex-start;
+}
+
+.totalValue {
+  font: var(--type-md);
+  font-weight: 400;
 }
