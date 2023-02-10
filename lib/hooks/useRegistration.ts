@@ -1,6 +1,7 @@
 import { Domain, Registration } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
+import { useAccount } from 'wagmi'
 
 // helper type to avoid long type declaration
 type CreateRegistrationParams = {
@@ -12,9 +13,23 @@ type CreateRegistrationParams = {
   commitTxHash: string
 }
 
+/**
+ * Hook for managing Registration in LocalStorage.
+ *
+ * Requires user to be connected to the wallet.
+ * @returns active Registration for the current user and undefined for non-authorized user.
+ */
 export function useRegistration(domain: Domain) {
+  const { address: sender } = useAccount()
   const [registrations, setRegistrations] = useLocalStorage<Registration[]>('ens.registrations', [])
-  const registration = registrations.find((reg) => reg.domain === domain)
+
+  // filter registration by domain and sender
+  const registration = useMemo(() => {
+    if (!sender) return undefined
+    return registrations.find(
+      (reg) => reg.domain === domain && reg.sender.toLowerCase() === sender?.toLowerCase()
+    )
+  }, [domain, sender, registrations])
 
   // Create new registration with the 'commitPending' status
   const create = useCallback(
