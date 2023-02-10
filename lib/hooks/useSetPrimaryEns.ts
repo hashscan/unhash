@@ -19,12 +19,18 @@ export const useSetPrimaryEns = ({
     enabled: Boolean(domain)
   })
 
-  const { write, data } = useContractWrite(config)
+  const { write, data, isLoading: isWriteLoading } = useContractWrite(config)
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading: isWaitLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess
   })
 
-  return { data, isLoading, write, config, isSuccess }
+  return {
+    data,
+    isLoading: isWriteLoading || isWaitLoading,
+    write,
+    gasLimit: config.request?.gasLimit,
+    isSuccess
+  }
 }

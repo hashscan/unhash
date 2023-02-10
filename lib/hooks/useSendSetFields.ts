@@ -48,17 +48,16 @@ export const useSendSetFields = ({
   const {
     write,
     data,
-    error: writeError,
-    isError: isWriteError
+    error: sendError,
+    isLoading: isWriteLoading
   } = useContractWrite({
     ...config
   })
 
   const {
-    isLoading,
+    isLoading: isWaitLoading,
     isSuccess,
-    isError: isRemoteError,
-    error: remoteError
+    error: waitError
   } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess
@@ -66,13 +65,10 @@ export const useSendSetFields = ({
 
   return {
     data,
-    isLoading,
+    isLoading: isWriteLoading || isWaitLoading,
+    error: sendError || waitError,
     write,
     gasLimit: config.request?.gasLimit,
-    isSuccess,
-    writeError,
-    remoteError,
-    isWriteError,
-    isRemoteError
+    isSuccess
   }
 }

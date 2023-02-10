@@ -50,8 +50,7 @@ const Profile = () => {
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
 
-  const { isLoading, write, writeError, remoteError, isRemoteError, isWriteError, gasLimit } =
-    useSendSetFields({ domain, fields })
+  const { isLoading, write, error, gasLimit } = useSendSetFields({ domain, fields })
   const isMounted = useIsMounted()
 
   const networkFee = useTxPrice(gasLimit)
@@ -148,8 +147,8 @@ const Profile = () => {
         <Input {...{ fields }} placeholder="test_420" name="com.twitter" label="Twitter username" />
         <Input {...{ fields }} placeholder="test_420" name="com.github" label="GitHub username" />
 
-        {isWriteError && <div className={ui.error}>Error sending transaction</div>}
-        {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
+        {error && <div className={ui.error}>{error.message}</div>}
+
         <button type="submit" disabled={isLoading} className={ui.button}>
           {isLoading ? <ProgressBar color="white" /> : 'Submit'}
         </button>
