@@ -23,6 +23,8 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
 const Input: React.FC<
   JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
 > = ({ fields, name, label, ...props }) => {
+  const [value, setValue] = useState(fields?.[name])
+
   return (
     <div className={styles.field}>
       <label htmlFor={name}>{label}</label>
@@ -33,7 +35,9 @@ const Input: React.FC<
         key={name === 'name' ? `${Math.floor(Math.random() * 1000)}-min` : undefined}
         className={`${ui.input} ${styles.desc}`}
         defaultValue={fields?.[name]}
+        value={value}
         name={name}
+        onChange={(e) => setValue(e.currentTarget.value)}
       />
     </div>
   )
