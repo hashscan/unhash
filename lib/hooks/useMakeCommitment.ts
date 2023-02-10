@@ -1,7 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { Network } from 'lib/types'
 import { generateCommitSecret } from 'lib/utils'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi'
 
 /**
@@ -13,7 +13,8 @@ import { useContractRead } from 'wagmi'
  * @returns commitment hash and secret to be used in commit transaction
  */
 export function useMakeCommitment(name: string, network: Network, owner: string | undefined) {
-  const [secret] = useState(() => generateCommitSecret())
+  const [secret, setSecret] = useState<string | undefined>(undefined)
+  useEffect(() => setSecret(generateCommitSecret()), [])
 
   const { data, error } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
     abi: ETH_REGISTRAR_ABI,
