@@ -29,7 +29,7 @@ export const LogoutIcon = () => (
 )
 
 export const ProgressBar = ({
-  color = 'var(--text-primary)',
+  color = 'var(--color-text-primary)',
   height = '40px',
   width = '40px',
   className

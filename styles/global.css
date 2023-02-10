@@ -102,12 +102,12 @@
   --color-warning: var(--color-orange);
   --color-success: var(--color-green);
 
+  --color-text-primary: var(--color-slate-1);
+  --color-text-secondary: var(--color-slate-3);
+
   /* TODO: refactor these! */
   --background-highlight: #273f5e;
-  --text-primary: var(--color-slate-1);
-  --text-secondary: var(--color-slate-3);
-  --primary: #2e87fb;
-  --error: rgb(237, 2, 0);
+  --primary: var(--color-green);
 }
 
 /** Shadows */
@@ -141,7 +141,7 @@
   /* toastify */
   --toastify-color-dark: var(--color-slate-7);
   --toastify-font-family: var(--font-ui);
-  --toastify-icon-color-error: var(--error);
+  --toastify-icon-color-error: var(--color-error);
 
   /* sizes */
   --nav-height: 72px;
