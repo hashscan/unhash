@@ -53,7 +53,7 @@ export function parseDomainName(domain: string): string {
  * Should only be used for valid domains.
  */
 export function getDomainName(domain: Domain): string {
-  return domain.substring(0, domain.indexOf('.eth'))
+  return domain.replace(/\.eth$/i, '')
 }
 
 export function clamp(value: number, min: number, max: number): number {
