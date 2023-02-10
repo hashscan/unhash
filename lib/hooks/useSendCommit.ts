@@ -58,7 +58,7 @@ export const useSendCommit = ({
         name,
         owner: owner!, // TODO: fix?
         duration,
-        secret,
+        secret: secret!, // TODO: fix?
         commitTxHash: data.hash
       })
   })
