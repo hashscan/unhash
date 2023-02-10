@@ -37,7 +37,7 @@ export type Fields = Partial<{
 }>
 
 export type Registration = {
-  name: string
+  domain: Domain
   owner: string
   duration: number // seconds
   secret: string

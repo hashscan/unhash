@@ -6,14 +6,14 @@ import { Gas } from 'components/icons'
 import { formatNetworkFee } from 'lib/format'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { REGISTER_AVERAGE_GAS } from 'lib/constants'
+import { Domain } from 'lib/types'
 
 interface CheckoutRegisterStepProps {
-  domain: string
-  name: string
+  domain: Domain
 }
 
-export const CheckoutRegisterStep = ({ name }: CheckoutRegisterStepProps) => {
-  const { gasLimit, write, isLoading, error } = useSendRegister(name)
+export const CheckoutRegisterStep = ({ domain }: CheckoutRegisterStepProps) => {
+  const { gasLimit, write, isLoading, error } = useSendRegister(domain)
   const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
   const onRegisterClick = () => {

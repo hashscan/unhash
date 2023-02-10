@@ -17,13 +17,12 @@ const YEAR_BUTTONS = [1, 2, 3, 4]
 
 interface CheckoutCommitStepProps {
   domain: Domain
-  name: string
   durationYears: number
   onDurationChanged?: (year: number) => void
 }
 
 export const CheckoutCommitStep = ({
-  name,
+  domain,
   durationYears,
   onDurationChanged
 }: CheckoutCommitStepProps) => {
@@ -45,7 +44,7 @@ export const CheckoutCommitStep = ({
   }, [ownerInputRaw])
 
   const { gasLimit, sendCommit, isLoading, error } = useSendCommit({
-    name: name,
+    domain: domain,
     network: toNetwork(chainId),
     duration: durationYears * YEAR_IN_SECONDS,
     // TODO:

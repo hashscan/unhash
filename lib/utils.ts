@@ -1,3 +1,5 @@
+import { Domain } from './types'
+
 export function formatAddress(address: string): string {
   const leadingChars = 6
   const trailingChars = 4
@@ -44,6 +46,14 @@ export function validateDomain(domain: string): string | null {
 export function parseDomainName(domain: string): string {
   if (validateDomain(domain)) throw Error('Invalid domain')
   return domain.split('.')[0]
+}
+
+/**
+ * Returns domain name from domain.
+ * Should only be used for valid domains.
+ */
+export function getDomainName(domain: Domain): string {
+  return domain.substring(0, domain.indexOf('.eth'))
 }
 
 export function clamp(value: number, min: number, max: number): number {

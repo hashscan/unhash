@@ -16,7 +16,6 @@ import { useTimeout } from 'usehooks-ts'
 
 interface CheckoutProps {
   domain: Domain
-  name: string
 }
 
 // exported to be used by CheckoutProgress
@@ -37,9 +36,9 @@ function calculateStep(_: CheckoutStep, reg: Registration | undefined): Checkout
   return 'initializing' // eslint asks to add this
 }
 
-const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
+const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
   // get registration and calculate step
-  const { registration: reg } = useRegistration(props.name)
+  const { registration: reg } = useRegistration(domain)
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
@@ -71,8 +70,7 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
         {step === 'initializing' && <div></div>}
         {step === 'commit' && (
           <CheckoutCommitStep
-            domain={props.domain}
-            name={props.name}
+            domain={domain}
             durationYears={durationYears}
             onDurationChanged={onDurationChanged}
           />
@@ -80,13 +78,13 @@ const Checkout: PageWithLayout<CheckoutProps> = (props: CheckoutProps) => {
         {step === 'wait' && reg?.commitTimestamp && (
           <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
         )}
-        {step === 'register' && <CheckoutRegisterStep domain={props.domain} name={props.name} />}
-        {step === 'success' && <CheckoutSuccessStep domain={props.domain} />}
+        {step === 'register' && <CheckoutRegisterStep domain={domain} />}
+        {step === 'success' && <CheckoutSuccessStep domain={domain} />}
       </main>
 
       {/* right as a side bar */}
       <div className={styles.right}>
-        <CheckoutOrder domain={props.domain} duration={duration} />
+        <CheckoutOrder domain={domain} duration={duration} />
       </div>
     </div>
   )

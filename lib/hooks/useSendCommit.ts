@@ -1,5 +1,6 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
-import { Network } from 'lib/types'
+import { Domain, Network } from 'lib/types'
+import { getDomainName } from 'lib/utils'
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -18,21 +19,22 @@ import { useRegistration } from './useRegistration'
  * Note: Registration won't be created if parent component is unmounted.
  */
 export const useSendCommit = ({
-  name,
+  domain,
   network,
   duration,
   owner
 }: {
-  name: string
+  domain: Domain
   network: Network
   duration: number
   owner: string | undefined
 }) => {
   // ethers provider needed to get exact transaction timestamp
   const provider = useProvider()
-  const { create, setCommited } = useRegistration(name)
+  const { create, setCommited } = useRegistration(domain)
 
   // generate secret and commitment
+  const name = getDomainName(domain)
   const { secret, commitment, error: commitmentError } = useMakeCommitment(name, network, owner)
 
   // prepare commit transaction
@@ -55,7 +57,7 @@ export const useSendCommit = ({
     // create new Registartion when transaction is sent
     onSuccess: (data) =>
       create({
-        name,
+        domain,
         owner: owner!, // TODO: fix?
         duration,
         secret: secret!, // TODO: fix?
