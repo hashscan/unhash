@@ -25,7 +25,7 @@ export const useSendSetFields = ({
 
   const node = domain ? namehash(domain) : undefined
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })
-  const filteredFields =
+  const filteredFields: [string, string | undefined][] =
     fields && node
       ? Object.entries(fields).filter(([_, v]) => typeof v === 'string' && v !== '')
       : []
@@ -68,7 +68,7 @@ export const useSendSetFields = ({
     data,
     isLoading,
     write,
-    config,
+    gasLimit: config.request?.gasLimit,
     isSuccess,
     writeError,
     remoteError,

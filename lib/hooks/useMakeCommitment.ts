@@ -1,6 +1,6 @@
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from "lib/constants"
-import { Network } from "lib/types"
-import { useContractRead } from "wagmi"
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { Network } from 'lib/types'
+import { useContractRead } from 'wagmi'
 
 // Generates a commitment hash for future ENS registration
 // 'name' is the name part of {name}.eth domain
@@ -11,7 +11,11 @@ export function useMakeCommitment(
   secret: string,
   network: Network
 ) {
-  const { data: commitmentHash, isError, isLoading } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
+  const {
+    data: commitmentHash,
+    isError,
+    isLoading
+  } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
     abi: ETH_REGISTRAR_ABI,
     address: ETH_REGISTRAR_ADDRESS.get(network),
     functionName: 'makeCommitmentWithConfig',

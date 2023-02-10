@@ -1,4 +1,4 @@
-import { ProgressBar } from 'components/icons'
+import { Gas, ProgressBar } from 'components/icons'
 import api, { UserInfo } from 'lib/api'
 import { FormEvent, useEffect, useState } from 'react'
 import { Address, useAccount, useChainId, useEnsAvatar } from 'wagmi'
@@ -10,7 +10,7 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { useIsMounted } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
-import { formatUSDPrice } from 'lib/format'
+import { formatNetworkFee, formatUSDPrice } from 'lib/format'
 
 const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
   const { data: avatar, isLoading, error } = useEnsAvatar({ chainId, address })
@@ -50,12 +50,11 @@ const Profile = () => {
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
 
-  const { isLoading, write, writeError, remoteError, isRemoteError, isWriteError, config } =
+  const { isLoading, write, writeError, remoteError, isRemoteError, isWriteError, gasLimit } =
     useSendSetFields({ domain, fields })
   const isMounted = useIsMounted()
 
-  const gasLimit = config.request?.gasLimit
-  const txPrice = useTxPrice(gasLimit)
+  const networkFee = useTxPrice(gasLimit)
 
   useEffect(() => {
     if (address)
@@ -149,12 +148,22 @@ const Profile = () => {
         <Input {...{ fields }} placeholder="test_420" name="com.twitter" label="Twitter username" />
         <Input {...{ fields }} placeholder="test_420" name="com.github" label="GitHub username" />
 
-        {txPrice && <>commit tx cost: {formatUSDPrice(txPrice)}</>}
         {isWriteError && <div className={ui.error}>Error sending transaction</div>}
         {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
         <button type="submit" disabled={isLoading} className={ui.button}>
           {isLoading ? <ProgressBar color="white" /> : 'Submit'}
         </button>
+        {networkFee && (
+          <div className={styles.txFee}>
+            <div className={styles.txFeeLabel}>
+              <Gas />
+              Network fee
+            </div>
+            <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
+              {formatNetworkFee(networkFee)}
+            </div>
+          </div>
+        )}
       </form>
     </main>
   )
