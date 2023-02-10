@@ -52,7 +52,6 @@ const Profile = () => {
 
   const { isLoading, write, writeError, remoteError, isRemoteError, isWriteError, config } =
     useSendSetFields({ domain, fields })
-  const { data: feeData } = useFeeData()
   const isMounted = useIsMounted()
 
   const gasLimit = config.request?.gasLimit
