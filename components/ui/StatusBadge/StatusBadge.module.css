@@ -1,0 +1,44 @@
+.badge {
+  padding: 0 12px;
+  height: 32px;
+  border-radius: var(--radii-md);
+  background: var(--color-slate-7);
+  border: 1px solid rgb(var(--color-slate-5-rgb) / 0.85);
+
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+/** LEDs */
+.badge:before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+.badge.none:before {
+  display: none; /* off by default */
+}
+
+.badge.info:before {
+  background: var(--color-slate-4);
+}
+
+.badge.error:before {
+  background: var(--color-error);
+}
+
+.badge.warning:before {
+  background: var(--color-warning);
+}
+
+.badge.success:before {
+  background: var(--color-success);
+}

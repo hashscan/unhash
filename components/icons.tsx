@@ -29,7 +29,7 @@ export const LogoutIcon = () => (
 )
 
 export const ProgressBar = ({
-  color = 'var(--text-primary)',
+  color = 'var(--color-text-primary)',
   height = '40px',
   width = '40px',
   className
@@ -144,7 +144,6 @@ export const Gas = () => (
 
 export const LoaderHorseshoe = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="40" height="40" fill="white" />
     <path
       d="M36.3597 26.0005C37.7102 26.0005 38.6691 27.3152 38.092 28.5362C34.8894 35.3122 27.9921 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C27.9926 0 34.8901 4.68833 38.0925 11.4649C38.6696 12.6859 37.7106 14.0005 36.3601 14.0005H36.1853C35.3704 14.0005 34.6475 13.5003 34.279 12.7736C31.6392 7.5678 26.2362 4 20 4C11.1634 4 4 11.1634 4 20C4 28.8366 11.1634 36 20 36C26.2359 36 31.6386 32.4326 34.2785 27.2273C34.6471 26.5006 35.37 26.0005 36.1848 26.0005H36.3597Z"
       fill="currentColor"

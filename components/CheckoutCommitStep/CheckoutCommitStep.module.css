@@ -68,7 +68,7 @@
   height: 38px;
 }
 
-.inputContainer>input {
+.inputContainer > input {
   height: 100%;
   width: 100%;
   padding-left: 50px;
@@ -135,7 +135,7 @@
   margin-left: auto;
   margin-right: 0px;
 
-  color: var(--error);
+  color: var(--color-error);
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   font-weight: 400;

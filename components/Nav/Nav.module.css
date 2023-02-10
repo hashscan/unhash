@@ -41,7 +41,7 @@
 
 .connect {
   border-radius: var(--radii-sm);
-  background-color: var(--text-primary) !important;
+  background-color: var(--color-text-primary) !important;
   white-space: nowrap;
 }
 
@@ -92,8 +92,8 @@
 
 .account {
   background-color: transparent;
-  border: 1.5px solid var(--text-primary);
-  color: var(--text-primary);
+  border: 1.5px solid var(--color-text-primary);
+  color: var(--color-text-primary);
   white-space: nowrap;
 }
 

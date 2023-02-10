@@ -18,7 +18,6 @@
   margin-bottom: 64px;
 }
 
-
 .buttonContainer {
   width: fit-content;
   margin-left: auto;
@@ -52,7 +51,6 @@
   text-align: end;
 }
 
-
 /* TODO: remove temp error solution */
 .error {
   width: fit-content;
@@ -61,7 +59,7 @@
   margin-left: auto;
   margin-right: 0px;
 
-  color: var(--error);
+  color: var(--color-error);
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   font-weight: 400;

@@ -13,7 +13,7 @@ export const CheckoutWaitStep = (props: CheckoutWaitStepProps) => {
   return (
     <div className={styles.container}>
       <p>Wait {count} seconds</p>
-      <ProgressBar color="var(--text-primary)" />
+      <ProgressBar color="var(--color-text-primary)" />
     </div>
   )
 }

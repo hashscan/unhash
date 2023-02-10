@@ -36,6 +36,7 @@
   border-style: solid;
   border-width: var(--border-md);
   border-color: transparent;
+  white-space: nowrap;
 }
 
 .suffix {
@@ -82,4 +83,19 @@
   box-shadow: none;
   border-color: var(--color-slate-1);
   box-shadow: var(--shadow-md);
+}
+
+.availability {
+  margin-top: 10px;
+  will-change: transform;
+  transform: translateY(-16px);
+  opacity: 0;
+  transition: opacity var(--ease-300), transform var(--ease-250) 0.25s;
+}
+
+.availabilityVisible {
+  opacity: 1;
+  transform: none;
+
+  transition: opacity var(--ease-200) 0.05s, transform var(--ease-250);
 }
