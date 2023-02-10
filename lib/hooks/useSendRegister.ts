@@ -22,7 +22,8 @@ export const useSendRegister = (name: string) => {
   const price = useDomainPrice(`${name}.eth`, registration?.duration)?.wei
   const value = price ? BigNumber.from(price) : undefined
 
-  // Note: 280K gas is not enough to refund extra ETH sent to registerWithConfig
+  // Note 1: 280K gas is not enough to refund extra ETH sent to registerWithConfig
+  // Note 2: 280K gas may not be enough if registering for another account
   // TODO: make sure fixed gas limit always works
   const gasLimit = 280_000
 

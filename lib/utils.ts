@@ -7,6 +7,14 @@ export function formatAddress(address: string): string {
     : `${address.substring(0, leadingChars)}\u2026${address.substring(address.length - trailingChars)}`
 }
 
+export function isValidAddress(address: string): boolean {
+  return /^0x[0-9a-fA-F]{40}$/.test(address)
+}
+
+/** 
+ * A function to generate secret for commit transaction. 
+ * It uses Web Crypto API.
+ */
 export function generateCommitSecret() {
   const bytes = new Uint8Array(32)
   crypto.getRandomValues(bytes)
