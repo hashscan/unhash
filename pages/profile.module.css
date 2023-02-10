@@ -42,8 +42,8 @@
 
 .avatar {
   border-radius: var(--radii-round);
-  height: 250px;
-  width: 250px;
+  height: 96px;
+  width: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
