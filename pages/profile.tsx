@@ -1,7 +1,7 @@
 import { ProgressBar } from 'components/icons'
 import api, { UserInfo } from 'lib/api'
 import { FormEvent, useEffect, useState } from 'react'
-import { Address, useAccount, useChainId, useEnsAvatar, useFeeData } from 'wagmi'
+import { Address, useAccount, useChainId, useEnsAvatar } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import styles from './profile.module.css'
 import { Domain, Fields, toNetwork } from 'lib/types'
