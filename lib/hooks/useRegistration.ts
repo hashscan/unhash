@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 // helper type to avoid long type declaration
 type CreateRegistrationParams = {
   domain: Domain
+  sender: string
   owner: string
   duration: number
   secret: string

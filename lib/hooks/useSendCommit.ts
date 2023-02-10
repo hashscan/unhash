@@ -2,6 +2,7 @@ import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Domain, Network } from 'lib/types'
 import { getDomainName } from 'lib/utils'
 import {
+  useAccount,
   useContractWrite,
   usePrepareContractWrite,
   useProvider,
@@ -31,6 +32,7 @@ export const useSendCommit = ({
 }) => {
   // ethers provider needed to get exact transaction timestamp
   const provider = useProvider()
+  const { address: sender } = useAccount()
   const { create, setCommited } = useRegistration(domain)
 
   // generate secret and commitment
@@ -42,7 +44,7 @@ export const useSendCommit = ({
     address: ETH_REGISTRAR_ADDRESS.get(network),
     abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
-    enabled: Boolean(owner) && Boolean(commitment),
+    enabled: Boolean(sender) && Boolean(owner) && Boolean(commitment),
     args: [commitment]
   })
 
@@ -58,6 +60,7 @@ export const useSendCommit = ({
     onSuccess: (data) =>
       create({
         domain,
+        sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner!, // TODO: fix?
         duration,
         secret: secret!, // TODO: fix?

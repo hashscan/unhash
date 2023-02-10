@@ -38,7 +38,8 @@ export type Fields = Partial<{
 
 export type Registration = {
   domain: Domain
-  owner: string
+  sender: string // who is registering the domain
+  owner: string // who will own the domain
   duration: number // seconds
   secret: string
   status: RegistrationStatus
