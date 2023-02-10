@@ -25,9 +25,9 @@ export const useSendSetFields = ({
 
   const node = domain ? namehash(domain) : undefined
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })
-  const filteredFields: [string, string | undefined][] =
+  const filteredFields: [string, string][] =
     fields && node
-      ? Object.entries(fields).filter(([_, v]) => typeof v === 'string' && v !== '')
+      ? Object.entries<string>(fields).filter(([_, v]) => typeof v === 'string' && v !== '')
       : []
 
   const encoded = filteredFields.map(([k, v]) =>
