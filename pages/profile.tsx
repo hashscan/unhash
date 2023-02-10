@@ -1,6 +1,6 @@
 import { ProgressBar } from 'components/icons'
 import api, { UserInfo } from 'lib/api'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Address, useAccount, useChainId, useEnsAvatar, useFeeData } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import styles from './profile.module.css'
@@ -81,6 +81,23 @@ const Profile = () => {
     }
   })
 
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (e.currentTarget.reportValidity()) {
+      const fd = new FormData(e.currentTarget)
+      const f: Fields = {}
+
+      for (const [k, v] of fd.entries()) {
+        f[k] = v as string
+      }
+
+      setFields(f)
+
+      if (typeof write !== 'undefined') write()
+    }
+  }
+
   if (isDisconnected) return <p>Please connect wallet</p>
 
   return (
@@ -114,25 +131,7 @@ const Profile = () => {
           {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set as primary'}{' '}
         </button>
       </div>
-      <form
-        className={styles.form}
-        onSubmit={(e) => {
-          e.preventDefault()
-
-          if (e.currentTarget.reportValidity()) {
-            const fd = new FormData(e.currentTarget)
-            const f: Fields = {}
-
-            for (const [k, v] of fd.entries()) {
-              f[k] = v as string
-            }
-
-            setFields(f)
-
-            if (typeof write !== 'undefined') write()
-          }
-        }}
-      >
+      <form className={styles.form} onSubmit={onSubmit}>
         <Input {...{ fields }} name="name" label="Name" placeholder="ens_user" />
         <Input
           {...{ fields }}
