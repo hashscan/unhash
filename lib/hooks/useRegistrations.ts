@@ -5,14 +5,14 @@ import { useAccount } from 'wagmi'
 
 /**
  * Read-only hook to read all registrations with optional status filter.
- * @returns all registrations for the current user and undefined for non-authorized user.
+ * @returns all registrations for the current user and empty array for a non-authorized user.
  */
 export function useRegistrations(status?: RegistrationStatus) {
   const { address: sender } = useAccount()
   const [registrations] = useLocalStorage<Registration[]>('ens.registrations', [])
 
   return useMemo(() => {
-    if (!sender) return undefined
+    if (!sender) return []
     return registrations.filter(
       (r) => r.sender.toLowerCase() === sender.toLowerCase() && (!status || r.status === status)
     )
