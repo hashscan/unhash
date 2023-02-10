@@ -32,13 +32,13 @@
 }
 
 .badge.error:before {
-  background: red;
+  background: var(--color-error);
 }
 
 .badge.warning:before {
-  background: orange;
+  background: var(--color-warning);
 }
 
 .badge.success:before {
-  background: var(--color-toxic-green);
+  background: var(--color-success);
 }

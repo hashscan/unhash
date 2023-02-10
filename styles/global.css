@@ -44,8 +44,6 @@
   --color-gray-8-rgb: 252 252 252;
   --color-white-rgb: 255 255 255;
 
-  --color-toxic-green-rgb: 126 255 0;
-
   --color-black: rgb(var(--color-black-rgb) / 100%);
   --color-gray-1: rgb(var(--color-gray-1-rgb) / 100%);
   --color-gray-2: rgb(var(--color-gray-2-rgb) / 100%);
@@ -57,7 +55,19 @@
   --color-gray-8: rgb(var(--color-gray-8-rgb) / 100%);
   --color-white: rgb(var(--color-white-rgb) / 100%);
 
-  --color-toxic-green: rgb(var(--color-toxic-green-rgb) / 100%);
+  /* greens */
+  --color-green-light-rgb: 126 255 0;
+  --color-green-light: rgb(var(--color-green-light-rgb) / 100%);
+  --color-green-rgb: 116 230 0;
+  --color-green: rgb(var(--color-green-rgb) / 100%);
+
+  /* reds TODO: more variations */
+  --color-red-rgb: 237 2 0;
+  --color-red: rgb(var(--color-red-rgb) / 100%);
+
+  /* oranges TODO: more variations */
+  --color-orange-rgb: 244 166 34;
+  --color-orange: rgb(var(--color-orange-rgb) / 100%);
 
   /** System colors */
 
@@ -85,14 +95,19 @@
   --color-slate-f-rgb: var(--color-white-rgb);
 
   --color-background: var(--color-slate-f);
-  --color-highlight-green: var(--color-toxic-green);
+  --color-highlight-green: var(--color-green-light);
+
+  /* Status colors */
+  --color-error: var(--color-red);
+  --color-warning: var(--color-orange);
+  --color-success: var(--color-green);
 
   /* TODO: refactor these! */
   --background-highlight: #273f5e;
   --text-primary: var(--color-slate-1);
   --text-secondary: var(--color-slate-3);
   --primary: #2e87fb;
-  --error: #f74748;
+  --error: rgb(237, 2, 0);
 }
 
 /** Shadows */
