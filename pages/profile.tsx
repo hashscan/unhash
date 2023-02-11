@@ -23,7 +23,11 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
 const Input: React.FC<
   JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
 > = ({ fields, name, label, ...props }) => {
-  const [value, setValue] = useState(fields?.[name])
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    if (fields) setValue(fields[name]!)
+  }, [fields, name])
 
   return (
     <div className={styles.field}>
@@ -32,9 +36,7 @@ const Input: React.FC<
         {
           ...props /* see https://stackoverflow.com/a/49714237/11889402 */
         }
-        key={name === 'name' ? `${Math.floor(Math.random() * 1000)}-min` : undefined}
         className={`${ui.input} ${styles.desc}`}
-        defaultValue={fields?.[name]}
         value={value}
         name={name}
         onChange={(e) => setValue(e.currentTarget.value)}
