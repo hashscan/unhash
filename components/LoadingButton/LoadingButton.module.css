@@ -9,13 +9,13 @@
  * A hack to keep button width fixed while loader is spinning.
  */
 .buttonLoading {
-  color: var(--text-primary);
+  color: var(--color-text-primary);
 }
 
 .buttonLoading:hover {
   cursor: default;
-  background: var(--text-primary);
-  color: var(--text-primary);
+  background: var(--color-text-primary);
+  color: var(--color-text-primary);
 }
 
 .loader {

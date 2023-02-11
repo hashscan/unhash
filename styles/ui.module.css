@@ -11,7 +11,7 @@
   border-radius: var(--radii-sm);
   border: none;
   box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 2px;
-  background-color: var(--text-primary);
+  background-color: var(--color-text-primary);
 }
 
 .button:hover {
@@ -138,11 +138,11 @@
   letter-spacing: var(--ls-regular);
   font-weight: 400;
   padding: 6px 12px;
-  color: var(--text-primary);
+  color: var(--color-text-primary);
   border-radius: var(--radii-sm);
   outline: 1.25px solid var(--color-slate-5);
   box-sizing: border-box;
-  caret-color: var(--text-primary);
+  caret-color: var(--color-text-primary);
 }
 
 .input::placeholder {
@@ -157,7 +157,7 @@
 }
 
 .error {
-  background-color: var(--error);
+  background-color: var(--color-error);
   color: white;
   padding: 12px;
   border-radius: var(--radii-sm);

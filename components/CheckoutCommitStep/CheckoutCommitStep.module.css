@@ -68,7 +68,7 @@
   height: 38px;
 }
 
-.inputContainer>input {
+.inputContainer > input {
   height: 100%;
   width: 100%;
   padding-left: 50px;
@@ -83,6 +83,14 @@
   color: var(--color-slate-f);
   background-color: var(--color-slate-5);
   border-radius: var(--radii-sm) 0 0 var(--radii-sm);
+}
+
+.inputError {
+  color: var(--error);
+  font: var(--type-sm);
+  font-weight: 500;
+  letter-spacing: var(--ls-sm);
+  padding-top: 4px;
 }
 
 .profileInput {
@@ -135,7 +143,7 @@
   margin-left: auto;
   margin-right: 0px;
 
-  color: var(--error);
+  color: var(--color-error);
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   font-weight: 400;

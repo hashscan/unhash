@@ -1,39 +1,54 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
-import { Fields, toNetwork } from 'lib/types'
+import { Domain, Network } from 'lib/types'
+import { getDomainName } from 'lib/utils'
 import {
+  useAccount,
   useContractWrite,
   usePrepareContractWrite,
   useProvider,
   useWaitForTransaction
 } from 'wagmi'
+import { useMakeCommitment } from './useMakeCommitment'
 import { useRegistration } from './useRegistration'
 
+/**
+ * Hook for sending commit transaction.
+ * Generates commitment, sends a commit transaction by user,
+ * and waits for transaction to get confirmed.
+ *
+ * Creates new Registration in LocalStorage when transaction is sent.
+ * Note: Registration won't be created if parent component is unmounted.
+ */
 export const useSendCommit = ({
-  commitmentHash,
-  chainId,
-  owner,
-  name,
+  domain,
+  network,
   duration,
-  secret,
-  fields // TODO: support storing fields in Registartion
+  owner
 }: {
-  commitmentHash?: string
-  chainId: number
-  name: string
-  owner: string
+  domain: Domain
+  network: Network
   duration: number
-  secret: string
-  fields: Fields
+  owner: string | undefined
 }) => {
-  const { create, setCommited } = useRegistration(name)
+  // ethers provider needed to get exact transaction timestamp
+  const provider = useProvider()
+  const { address: sender } = useAccount()
+  const { create, setCommited } = useRegistration(domain)
 
+  // generate secret and commitment
+  const name = getDomainName(domain)
+  const { secret, commitment, error: commitmentError } = useMakeCommitment(name, network, owner)
+
+  // prepare commit transaction
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
+    address: ETH_REGISTRAR_ADDRESS.get(network),
     abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
-    args: [commitmentHash],
-    enabled: Boolean(commitmentHash)
+    enabled: Boolean(sender) && Boolean(owner) && Boolean(commitment),
+    args: [commitment]
   })
+
+  // hook for sending commit transaction
   const {
     write,
     data,
@@ -44,22 +59,17 @@ export const useSendCommit = ({
     // create new Registartion when transaction is sent
     onSuccess: (data) =>
       create({
-        name,
-        owner,
+        domain,
+        sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
+        owner: owner!, // TODO: fix?
         duration,
-        secret,
+        secret: secret!, // TODO: fix?
         commitTxHash: data.hash
       })
   })
 
-  // ethers provider needed to get exact transaction timestamp
-  const provider = useProvider()
   // wait for transaction success to update Registration status
-  const {
-    isLoading: isWaitLoading,
-    isSuccess,
-    error: waitError
-  } = useWaitForTransaction({
+  const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: async (data) => {
       // get timestamp from block
@@ -72,11 +82,8 @@ export const useSendCommit = ({
 
   return {
     gasLimit: config.request?.gasLimit,
-    data,
+    sendCommit: write,
     isLoading: isWriteLoading || isWaitLoading,
-    write,
-    config,
-    isSuccess,
-    error: writeError ? writeError : waitError
+    error: commitmentError ?? writeError ?? waitError
   }
 }

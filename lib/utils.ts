@@ -1,3 +1,5 @@
+import { Domain } from './types'
+
 export function formatAddress(address: string): string {
   const leadingChars = 6
   const trailingChars = 4
@@ -7,6 +9,14 @@ export function formatAddress(address: string): string {
     : `${address.substring(0, leadingChars)}\u2026${address.substring(address.length - trailingChars)}`
 }
 
+export function isValidAddress(address: string): boolean {
+  return /^0x[0-9a-fA-F]{40}$/.test(address)
+}
+
+/** 
+ * A function to generate secret for commit transaction. 
+ * It uses Web Crypto API.
+ */
 export function generateCommitSecret() {
   const bytes = new Uint8Array(32)
   crypto.getRandomValues(bytes)
@@ -36,6 +46,14 @@ export function validateDomain(domain: string): string | null {
 export function parseDomainName(domain: string): string {
   if (validateDomain(domain)) throw Error('Invalid domain')
   return domain.split('.')[0]
+}
+
+/**
+ * Returns domain name from domain.
+ * Should only be used for valid domains.
+ */
+export function getDomainName(domain: Domain): string {
+  return domain.replace(/\.eth$/i, '')
 }
 
 export function clamp(value: number, min: number, max: number): number {

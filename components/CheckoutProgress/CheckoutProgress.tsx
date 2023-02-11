@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { CheckoutStep } from 'pages/checkout'
+import { CheckoutStep } from 'pages/[domain]/register'
 import React from 'react'
 import styles from './CheckoutProgress.module.css'
 
