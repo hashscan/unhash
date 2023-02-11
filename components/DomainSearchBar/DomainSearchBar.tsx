@@ -44,7 +44,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
 
     setIsNavigating(true)
 
-    navigate(`/checkout?domain=${normalized}`).finally(() => {
+    navigate(`${normalized}/register`).finally(() => {
       setIsNavigating(false)
     })
   }, [isNavigating, navigate, normalized, status])
