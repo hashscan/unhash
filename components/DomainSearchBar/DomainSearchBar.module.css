@@ -50,6 +50,7 @@
   border-color: transparent;
   color: transparent;
   overflow: hidden;
+  white-space: pre;
 
   opacity: 0;
 }
