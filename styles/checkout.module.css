@@ -1,23 +1,25 @@
 .checkout {
   --sidebar-width: 520px;
+  display: flex;
+  justify-content: space-between;
+  column-gap: 32px;
+  margin-right: -16px;
 }
 
 .main {
-  width: 520px;
+  max-width: 520px;
+  flex-shrink: 1;
   padding: 40px 0;
 }
 
 .right {
-  width: calc(var(--sidebar-width) + (100vw - var(--container-width)) / 2);
-  position: fixed;
-  top: var(--nav-height);
-  bottom: 0;
-  right: 0;
-
-  padding: 32px 40px;
-  padding-right: calc((100vw - var(--container-width)) / 2);
   background-color: var(--color-slate-7);
   border-left: 1.5px solid var(--color-slate-6);
+  flex-shrink: 0;
+
+  /* extends the right side to the end to of the viewport using negative margin */
+  margin-right: calc(-0.5 * max(0px, 100vw - var(--container-width)));
+  padding-right: calc(0.5 * max(0px, 100vw - var(--container-width) - 32px));
 }
 
 .title {

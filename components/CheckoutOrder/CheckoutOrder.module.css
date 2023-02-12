@@ -1,5 +1,9 @@
 .container {
-  width: 100%;
+  min-width: 432px;
+  padding: 48px 40px;
+
+  position: sticky;
+  top: calc(var(--nav-height));
 }
 
 .title {
