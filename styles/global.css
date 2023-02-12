@@ -94,7 +94,8 @@
   --color-slate-8-rgb: var(--color-gray-8-rgb);
   --color-slate-f-rgb: var(--color-white-rgb);
 
-  --color-background: var(--color-slate-f);
+  --color-background-rgb: var(--color-slate-f-rgb);
+  --color-background: rgb(var(--color-background-rgb));
   --color-highlight-green: var(--color-green-light);
 
   /* Status colors */

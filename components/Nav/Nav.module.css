@@ -1,14 +1,16 @@
 .nav {
-  height: var(--nav-height);
-  width: 100%;
   position: sticky;
   top: 0;
+
+  height: var(--nav-height);
+  width: 100%;
   z-index: 200;
   padding: 0px 32px;
-  border-bottom: 1px solid var(--color-slate-6);
+
   box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
-  background-color: var(--color-background);
-  position: relative;
+  box-shadow: var(--shadow-reg);
+  background-color: rgb(var(--color-background-rgb) / 0.95);
+  backdrop-filter: blur(3px);
 }
 
 .sub {
