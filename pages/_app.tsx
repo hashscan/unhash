@@ -1,5 +1,6 @@
 import { darkTheme, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
 import { createClient, WagmiConfig } from 'wagmi'
+import { Provider as WrapBalancerProvider } from 'react-wrap-balancer'
 
 import '@rainbow-me/rainbowkit/styles.css'
 import 'styles/global.css'
@@ -34,7 +35,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
-          {wrapInLayout(Component, <Component {...pageProps} />)}
+          <WrapBalancerProvider>
+            {wrapInLayout(Component, <Component {...pageProps} />)}
+          </WrapBalancerProvider>
         </RainbowKitProvider>
       </WagmiConfig>
     </>

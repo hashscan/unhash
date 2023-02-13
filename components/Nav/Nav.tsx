@@ -95,7 +95,7 @@ export const Nav = () => {
                       <button onClick={openChainModal} className={styles.chains} type="button">
                         {chain.name}
                       </button>
-                      {' | '}
+                      <span className={styles.sep}> | </span>
                       <button className={styles.account} onClick={() => setOpen(!isOpen)}>
                         <div
                           className={clsx(styles.accountIcon, {
@@ -104,8 +104,8 @@ export const Nav = () => {
                         >
                           {account.ensAvatar ? (
                             <img
-                              width={28}
-                              height={28}
+                              width={24}
+                              height={24}
                               alt="avatar"
                               src={account.ensAvatar.replace(
                                 'gateway.ipfs.io',
@@ -113,7 +113,7 @@ export const Nav = () => {
                               )}
                             />
                           ) : (
-                            <ProfileIcon color="var(--text-secondary)" />
+                            <ProfileIcon color="var(--color-text-secondary)" />
                           )}
                         </div>
                         <div className={styles.accountName}>

@@ -22,6 +22,7 @@
     (CSS doesn't allow setting letter-spacing via a `font` property,
     so these need to be set separately
   */
+  --ls-sm: 0em;
   --ls-regular: -0.01em;
   --ls-md: -0.02em;
   --ls-lg: -0.03em;
@@ -94,7 +95,8 @@
   --color-slate-8-rgb: var(--color-gray-8-rgb);
   --color-slate-f-rgb: var(--color-white-rgb);
 
-  --color-background: var(--color-slate-f);
+  --color-background-rgb: var(--color-slate-f-rgb);
+  --color-background: rgb(var(--color-background-rgb));
   --color-highlight-green: var(--color-green-light);
 
   /* Status colors */
@@ -147,6 +149,7 @@
   --nav-height: 72px;
   --container-width: 1280px;
 
+  --border-width-reg: 1px;
   --border-width-md: 1.5px;
   --border-width-lg: 2px;
 }
