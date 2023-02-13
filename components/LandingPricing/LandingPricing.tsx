@@ -1,10 +1,13 @@
+import WrapBalancer from 'react-wrap-balancer'
 import styles from './LandingPricing.module.css'
 
 export const LandingPricing = () => {
   return (
     <div className={styles.pricing}>
       <div className={styles.texts}>
-        <h2 className={styles.header}>How much does it cost to register an&nbsp;.ETH domain?</h2>
+        <h2 className={styles.header}>
+          <WrapBalancer>How much does it cost to register an&nbsp;.ETH domain?</WrapBalancer>
+        </h2>
 
         <div className={styles.explainer}>
           The base price is determined by the length of the name and the registration period, plus
