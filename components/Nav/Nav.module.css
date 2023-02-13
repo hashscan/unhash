@@ -1,14 +1,15 @@
 .nav {
-  height: var(--nav-height);
-  width: 100%;
   position: sticky;
   top: 0;
+
+  height: var(--nav-height);
+  width: 100%;
   z-index: 200;
   padding: 0px 32px;
-  border-bottom: 1px solid var(--color-slate-6);
-  box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.05);
-  background-color: var(--color-background);
-  position: relative;
+
+  box-shadow: var(--shadow-reg);
+  background-color: rgb(var(--color-background-rgb) / 0.95);
+  backdrop-filter: blur(3px);
 }
 
 .sub {
@@ -63,12 +64,9 @@
   background-color: transparent;
 }
 
-.accountName,
-.chains {
-  font-size: 16px;
-  line-height: 150%;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+.accountName {
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
 }
 
 .buttons {
@@ -78,34 +76,46 @@
   align-items: center;
 }
 
-.chains,
 .account {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  padding: 6px 12px;
-  border-radius: var(--radii-sm);
-  cursor: pointer;
-  transition: var(--ease-250);
-}
 
-.account {
+  padding: 4px 8px;
+  cursor: pointer;
+  user-select: none;
+
+  border: none;
+  border-radius: var(--radii-sm);
+  transition: var(--ease-200);
   background-color: transparent;
-  border: 1.5px solid var(--color-text-primary);
   color: var(--color-text-primary);
   white-space: nowrap;
 }
 
+.account:hover {
+  text-decoration: underline;
+}
+
 .chains {
-  background-color: var(--color-slate-5);
-  color: white;
-  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: var(--radii-md);
+  cursor: pointer;
+  transition: var(--ease-200);
+  background-color: var(--color-slate-6);
+  color: var(--color-slate-2);
   border: 1.5px solid transparent;
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
 }
 
 .chains:hover {
-  background-color: var(--color-slate-4);
+  background-color: var(--color-highlight-green);
+}
+
+.sep {
+  color: var(--color-slate-5);
 }
 
 .links {
