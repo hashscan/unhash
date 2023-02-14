@@ -10,7 +10,7 @@ import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { useIsMounted } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
-import { formatNetworkFee, formatUSDPrice } from 'lib/format'
+import { formatNetworkFee } from 'lib/format'
 
 const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
   const { data: avatar, isLoading, error } = useEnsAvatar({ chainId, address })
@@ -48,6 +48,7 @@ const Input: React.FC<
 const Profile = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
+
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
@@ -57,6 +58,7 @@ const Profile = () => {
 
   const networkFee = useTxPrice(gasLimit)
 
+  // TODO: refactor
   useEffect(() => {
     if (address)
       api.userInfo(address, toNetwork(chainId)).then((res) => {
@@ -80,6 +82,7 @@ const Profile = () => {
     }
   })
 
+  // TODO: save and validate using React state
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -101,12 +104,15 @@ const Profile = () => {
 
   return (
     <main className={styles.main}>
+      {/* Header */}
       {isMounted() ? (
         <>
           <Avatar {...{ chainId, address }} />
           <h1 className={styles.domain}>{address ? formatAddress(address) : null}</h1>
         </>
       ) : null}
+
+      {/* Primary ENS select */}
       <div className={styles.domains}>
         {userInfo ? (
           <select
@@ -130,6 +136,8 @@ const Profile = () => {
           {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set as primary'}{' '}
         </button>
       </div>
+
+      {/* Profile fields */}
       <form className={styles.form} onSubmit={onSubmit}>
         <Input {...{ fields }} name="name" label="Name" placeholder="ens_user" />
         <Input
@@ -149,8 +157,8 @@ const Profile = () => {
         <Input {...{ fields }} placeholder="test_420" name="com.twitter" label="Twitter username" />
         <Input {...{ fields }} placeholder="test_420" name="com.github" label="GitHub username" />
 
+        {/* Save button */}
         {error && <div className={ui.error}>{error.message}</div>}
-
         <button type="submit" disabled={isLoading} className={ui.button}>
           {isLoading ? <ProgressBar color="white" /> : 'Submit'}
         </button>
