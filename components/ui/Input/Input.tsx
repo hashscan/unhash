@@ -17,7 +17,10 @@ export const Input = ({ label, icon, hint, error, className, children, ...rest }
       {label && <div className={styles.label}>{label}</div>}
       <div className={clsx(styles.wrapper, { [styles.wrapperHintSpace]: !error && !hint })}>
         {icon && <div className={styles.icon}>{icon}</div>}
-        <input {...rest} className={clsx(styles.input, className)}>
+        <input
+          {...rest}
+          className={clsx(styles.input, className, { [styles.inputWithIcon]: icon !== undefined })}
+        >
           {/* TODO: remove children? */}
           {children}
         </input>
