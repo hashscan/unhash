@@ -1,5 +1,5 @@
 .main {
-  max-width: var(--container-width);
+  max-width: var(--profile-width);
   margin: 0 auto;
   padding: 24px 0;
   display: flex;
@@ -17,43 +17,64 @@
 
 .domains,
 .form {
-  width: calc(var(--container-width) / 2);
+  width: var(--profile-width);
 }
 
-.field {
-  color: var(--text-primary);
-}
-
-.field > label {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.field > input {
+.divider {
   width: 100%;
-  box-sizing: border-box;
+  height: 1px;
+  background-color: var(--color-slate-6);
+  margin-top: 24px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+}
+
+.form>.field {
+  margin-bottom: 8px;
+}
+
+.field>input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field {
+  color: var(--text-primary);
+  margin-top: 8px;
+}
+
+.field>label {
+  display: block;
+  margin-bottom: 0px;
+}
+
+.avatarWrapper {
+  border-radius: var(--radii-round);
+  height: 96px;
+  width: 96px;
+  background-color: var(--color-slate-6);
 }
 
 .avatar {
   border-radius: var(--radii-round);
   height: 96px;
   width: 96px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--primary);
-  color: var(--color-slate-f);
 }
 
-.domain {
+.address {
   color: var(--text-primary);
   margin: 0;
+
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.saveButton {
+  margin-top: 24px;
 }
 
 .desc {
@@ -61,7 +82,7 @@
 }
 
 .primaryButton {
-  width: 168px;
+  width: 80px;
 }
 
 .domainSelect {
