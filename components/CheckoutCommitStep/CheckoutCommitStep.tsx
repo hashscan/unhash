@@ -1,5 +1,5 @@
 import { Domain, toNetwork } from 'lib/types'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon, Gas } from 'components/icons'
@@ -11,8 +11,6 @@ import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
-import { isValidAddress } from 'lib/utils'
-import { Input } from 'components/ui/Input/Input'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
@@ -83,7 +81,7 @@ export const CheckoutCommitStep = ({
         onAddressChange={(address) => setOwner(address)}
       />
 
-      <div className={clsx(styles.header, styles.headerProfile)}>ENS Profile</div>
+      <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>
         Configure public ENS profile for this domain if you are setting it for your wallet. You can
         skip it or complete after registration

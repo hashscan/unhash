@@ -10,7 +10,7 @@ export interface InputProps extends ComponentProps<'input'> {
 }
 
 // TODO: add error border & outer color on focus
-// TODO: pass className for container?
+// TODO: also pass className for container?
 export const Input = ({ label, icon, hint, error, className, children, ...rest }: InputProps) => {
   return (
     <div className={clsx(styles.container)}>
@@ -28,8 +28,6 @@ export const Input = ({ label, icon, hint, error, className, children, ...rest }
       <div className={clsx(styles.hint, { [styles.error]: error })}>
         {!error && hint && hint}
         {error && error}
-        {/* keep it here to avoid size changes on error */}
-        &nbsp;
       </div>
     </div>
   )

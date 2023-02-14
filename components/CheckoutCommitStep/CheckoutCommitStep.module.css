@@ -9,10 +9,6 @@
   margin-top: 40px;
 }
 
-.headerProfile {
-  margin-top: 16px;
-}
-
 .subheader {
   color: var(--color-slate-2);
   font: var(--type-sm);
@@ -71,7 +67,7 @@
   height: 38px;
 }
 
-.inputContainer > input {
+.inputContainer>input {
   height: 100%;
   width: 100%;
   padding-left: 50px;
