@@ -134,6 +134,7 @@
   --radii-sm: 4px;
   --radii-md: 8px;
   --radii-lg: 12px;
+  --radii-round: 999px;
 
   /* transition */
   --ease-300: 0.25s ease;

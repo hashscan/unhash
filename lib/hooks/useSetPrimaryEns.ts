@@ -2,7 +2,13 @@ import { ETH_REVERSE_REGISTRAR_ABI, ETH_REVERSE_REGISTRAR_ADDRESS } from 'lib/co
 import { Domain, toNetwork } from 'lib/types'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-export const useSetPrimaryEns = ({ domain }: { domain: Domain }) => {
+export const useSetPrimaryEns = ({
+  domain,
+  onSuccess
+}: {
+  domain: Domain | null
+  onSuccess: () => void
+}) => {
   const chainId = useChainId()
 
   const { config } = usePrepareContractWrite({
@@ -13,12 +19,18 @@ export const useSetPrimaryEns = ({ domain }: { domain: Domain }) => {
     enabled: Boolean(domain)
   })
 
-  const { write, data } = useContractWrite(config)
+  const { write, data, isLoading: isWriteLoading } = useContractWrite(config)
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading: isWaitLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: () => location.reload()
+    onSuccess
   })
 
-  return { data, isLoading, write, config, isSuccess }
+  return {
+    data,
+    isLoading: isWriteLoading || isWaitLoading,
+    write,
+    gasLimit: config.request?.gasLimit,
+    isSuccess
+  }
 }

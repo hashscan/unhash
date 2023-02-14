@@ -1,195 +1,171 @@
-import { ProgressBar } from 'components/icons'
-import api, { DomainInfo, UserInfo } from 'lib/api'
-import { useEffect, useState } from 'react'
-import { goerli, useAccount, useChainId } from 'wagmi'
+import { Gas, ProgressBar } from 'components/icons'
+import api, { UserInfo } from 'lib/api'
+import { FormEvent, useEffect, useState } from 'react'
+import { Address, useAccount, useChainId, useEnsAvatar } from 'wagmi'
 import ui from 'styles/ui.module.css'
-import styles from 'styles/profile.module.css'
+import styles from './profile.module.css'
 import { Domain, Fields, toNetwork } from 'lib/types'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
-import { formatUSDPrice } from 'lib/format'
+import { useIsMounted } from 'usehooks-ts'
+import { formatAddress } from 'lib/utils'
+import { formatNetworkFee, formatUSDPrice } from 'lib/format'
 
-const EnsToggle = ({ domain }: { domain: Domain }) => {
-  const { isLoading, write } = useSetPrimaryEns({ domain })
+const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
+  const { data: avatar, isLoading, error } = useEnsAvatar({ chainId, address })
+
+  if (isLoading) return <>Loading...</>
+  if (error) return <div className={ui.error}>{error?.message}</div>
+  return <img className={styles.avatar} src={avatar!} alt="ENS Avatar" />
+}
+
+const Input: React.FC<
+  JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
+> = ({ fields, name, label, ...props }) => {
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    if (fields) setValue(fields[name]!)
+  }, [fields, name])
 
   return (
-    <button
-      disabled={isLoading}
-      className={ui.buttonSecondary}
-      onClick={() => {
-        write?.()
-      }}
-    >
-      {isLoading ? <ProgressBar height={16} width={16} /> : domain}
-    </button>
+    <div className={styles.field}>
+      <label htmlFor={name}>{label}</label>
+      <input
+        {
+          ...props /* see https://stackoverflow.com/a/49714237/11889402 */
+        }
+        className={`${ui.input} ${styles.desc}`}
+        value={value}
+        name={name}
+        onChange={(e) => setValue(e.currentTarget.value)}
+      />
+    </div>
   )
 }
 
 const Profile = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
-  const [info, setInfo] = useState<DomainInfo | null>(null)
-  const [mode, setMode] = useState<'view' | 'edit'>('view')
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
-  const {
-    isLoading: isFieldsLoading,
-    write,
-    writeError,
-    remoteError,
-    isRemoteError,
-    isWriteError,
-    config
-  } = useSendSetFields({ domain, fields, onSuccess: () => setMode('view') })
-  const gasLimit = config.request?.gasLimit
-  const txPrice = useTxPrice(gasLimit)
+
+  const { isLoading, write, error, gasLimit } = useSendSetFields({ domain, fields })
+  const isMounted = useIsMounted()
+
+  const networkFee = useTxPrice(gasLimit)
 
   useEffect(() => {
-    if (address) {
+    if (address)
       api.userInfo(address, toNetwork(chainId)).then((res) => {
         setUserInfo(res)
-        setDomain(res.primaryEns!)
-        if (res.primaryEns)
-          api.domainInfo(res.primaryEns!, toNetwork(chainId)).then((res) => {
-            setInfo(res)
-          })
-      })
-    }
-  }, [chainId, mode, address])
 
-  if (isDisconnected) return 'Connect Wallet'
+        if (domain) {
+          setFields({})
+          api.domainInfo(domain, toNetwork(chainId)).then((res) => {
+            setFields(res.records)
+          })
+        } else {
+          setDomain(res.primaryEns)
+        }
+      })
+  }, [address, chainId, domain])
+
+  const { isLoading: isPrimaryEnsLoading, write: setPrimaryEns } = useSetPrimaryEns({
+    domain,
+    onSuccess: () => {
+      if (userInfo) setUserInfo(() => ({ ...userInfo, primaryEns: domain! }))
+    }
+  })
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (e.currentTarget.reportValidity()) {
+      const fd = new FormData(e.currentTarget)
+      const f: Fields = {}
+
+      for (const [k, v] of fd.entries()) {
+        f[k] = v as string
+      }
+
+      setFields(f)
+
+      if (typeof write !== 'undefined') write()
+    }
+  }
+
+  if (isDisconnected) return <p>Please connect wallet</p>
 
   return (
     <main className={styles.main}>
-      <h1>{domain}</h1>
-      <button className={ui.button} onClick={() => setMode(mode === 'view' ? 'edit' : 'view')}>
-        {mode === 'view' ? 'edit' : 'view'}
-      </button>
-      {info ? (
-        mode === 'view' ? (
-          <div>
-            <div className={styles.domains}>
-              {userInfo?.domains.resolved.map((domain) => (
-                <EnsToggle {...{ domain }} key={domain} />
-              ))}
+      {isMounted() ? (
+        <>
+          <Avatar {...{ chainId, address }} />
+          <h1 className={styles.domain}>{address ? formatAddress(address) : null}</h1>
+        </>
+      ) : null}
+      <div className={styles.domains}>
+        {userInfo ? (
+          <select
+            className={`${ui.select} ${styles.domainSelect}`}
+            defaultValue={userInfo?.primaryEns || userInfo?.domains.resolved[0]}
+            onChange={(v) => setDomain(v.currentTarget.value as Domain | null)}
+          >
+            {userInfo?.domains.resolved.map((domain) => (
+              <option key={domain} value={domain}>
+                {domain === userInfo.primaryEns ? '[primary]' : ''} {domain}
+              </option>
+            ))}
+          </select>
+        ) : null}
+        <button
+          className={`${ui.button} ${styles.primaryButton}`}
+          onClick={() => {
+            setPrimaryEns?.()
+          }}
+        >
+          {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set as primary'}{' '}
+        </button>
+      </div>
+      <form className={styles.form} onSubmit={onSubmit}>
+        <Input {...{ fields }} name="name" label="Name" placeholder="ens_user" />
+        <Input
+          {...{ fields }}
+          name="description"
+          label="Description"
+          placeholder="23 y.o. designer from Moscow"
+        />
+        <Input {...{ fields }} label="Email" placeholder="email" type="email" name="email" />
+        <Input
+          {...{ fields }}
+          label="Website URL"
+          placeholder="https://example.com"
+          type="url"
+          name="url"
+        />
+        <Input {...{ fields }} placeholder="test_420" name="com.twitter" label="Twitter username" />
+        <Input {...{ fields }} placeholder="test_420" name="com.github" label="GitHub username" />
+
+        {error && <div className={ui.error}>{error.message}</div>}
+
+        <button type="submit" disabled={isLoading} className={ui.button}>
+          {isLoading ? <ProgressBar color="white" /> : 'Submit'}
+        </button>
+        {networkFee && (
+          <div className={styles.txFee}>
+            <div className={styles.txFeeLabel}>
+              <Gas />
+              Network fee
             </div>
-            <h2>Records</h2>
-            {Object.entries(info.records).map(([k, v]) => {
-              return v ? (
-                <div key={`${k}-${v}`}>
-                  <span>{k}</span> - <span>{v}</span>
-                </div>
-              ) : null
-            })}
-            {chainId !== goerli.id && (
-              <>
-                <h2>Misc</h2>
-                <div>Controller: {info.controller}</div>
-                <div>Registrant: {info.registrant}</div>
-                <div>Resolver: {info.resolver}</div>
-              </>
-            )}
+            <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
+              {formatNetworkFee(networkFee)}
+            </div>
           </div>
-        ) : (
-          <>
-            <h2>Records</h2>
-            <form
-              className={styles.form}
-              onSubmit={(e) => {
-                e.preventDefault()
-
-                if (e.currentTarget.reportValidity()) {
-                  const fd = new FormData(e.currentTarget)
-                  const f: Fields = {}
-
-                  for (const [k, v] of fd.entries()) {
-                    f[k] = v as string
-                  }
-
-                  setFields(f)
-
-                  if (typeof write !== 'undefined') write()
-                }
-              }}
-            >
-              <div className={styles.field}>
-                <label htmlFor="name">Name</label>
-                <input name="name" placeholder="ens_user420" defaultValue={info.records.name} className={ui.input} />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="description">Bio</label>
-                <input
-                  name="description"
-                  placeholder="23 yo designer from Moscow"
-                  className={ui.input}
-                  defaultValue={info.records.description}
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="url">Website URL</label>
-                <input
-                  name="url"
-                  placeholder="https://example.com"
-                  minLength={3}
-                  defaultValue={info.records.url}
-                  className={ui.input}
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="email">Email</label>
-                <input
-                  name="email"
-                  placeholder="hello@example.com"
-                  minLength={5}
-                  className={ui.input}
-                  defaultValue={info.records.email}
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="com.twitter">Twitter handle</label>
-                <input
-                  name="com.twitter"
-                  placeholder="jake"
-                  className={ui.input}
-                  defaultValue={info.records['com.twitter']}
-                />
-              </div>
-              {/* <div className={form.field}>
-                <label htmlFor="com.github">GitHub username</label>
-                <input
-                  name="com.github"
-                  placeholder="ry"
-                  className={ui.input}
-                  defaultValue={info.records['com.github']}
-                />
-              </div>
-              <div className={form.field}>
-                <label htmlFor="avatar">Avatar URL</label>
-                <input
-                  name="avatar"
-                  placeholder="ipfs://ba..."
-                  minLength={4}
-                  className={ui.input}
-                  defaultValue={info.records.avatar}
-                />
-              </div> */}
-
-              <button disabled={isFieldsLoading} type="submit" className={ui.button}>
-                {isFieldsLoading ? <ProgressBar /> : 'Submit'}
-              </button>
-              {txPrice && <>commit tx cost: {formatUSDPrice(txPrice)}</>}
-              <div>
-                {isWriteError && <div className={ui.error}>{writeError?.message}</div>}
-                {isRemoteError && <div className={ui.error}>{remoteError?.message}</div>}
-              </div>
-            </form>
-          </>
-        )
-      ) : (
-        'No info / Loading'
-      )}
+        )}
+      </form>
     </main>
   )
 }

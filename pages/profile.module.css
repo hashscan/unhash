@@ -1,0 +1,95 @@
+.main {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.domains {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+}
+
+.domains,
+.form {
+  width: calc(var(--container-width) / 2);
+}
+
+.field {
+  color: var(--text-primary);
+}
+
+.field > label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.field > input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.avatar {
+  border-radius: var(--radii-round);
+  height: 96px;
+  width: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: var(--color-slate-f);
+}
+
+.domain {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.desc {
+  margin-top: 8px;
+}
+
+.primaryButton {
+  width: 168px;
+}
+
+.domainSelect {
+  width: 100%;
+}
+
+.txFee {
+  color: var(--color-slate-4);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+  padding: 4px 1px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.txFeeLabel {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2px;
+}
+
+.txFeeValue {
+  flex-grow: 1;
+  text-align: end;
+}
