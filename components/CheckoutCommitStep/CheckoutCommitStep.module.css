@@ -9,6 +9,10 @@
   margin-top: 40px;
 }
 
+.headerProfile {
+  margin-top: 16px;
+}
+
 .subheader {
   color: var(--color-slate-2);
   font: var(--type-sm);
@@ -56,8 +60,7 @@
   border: 1.5px solid var(--color-slate-1);
 }
 
-.owner {
-  /* TODO: use global style */
+.ownerInput {
   font-family: var(--font-mono);
   font-size: 16px;
   font-weight: 500;

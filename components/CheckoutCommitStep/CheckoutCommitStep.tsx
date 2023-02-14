@@ -12,6 +12,7 @@ import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { isValidAddress } from 'lib/utils'
+import { Input } from 'components/ui/Input/Input'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -87,23 +88,17 @@ export const CheckoutCommitStep = ({
 
       <div className={styles.header}>Domain Ownership</div>
       <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
+      <Input
+        icon={<EthereumIcon />}
+        className={styles.ownerInput}
+        placeholder="0xd07d...54aB"
+        autoComplete="off"
+        onChange={(e) => setOwnerInputRaw(e.target.value)}
+        onBlur={() => onOwnerInputBlur()}
+        error={showOwnerError ? 'Invalid address!' : undefined}
+      />
 
-      {/* TODO: create input component with validation */}
-      <div className={styles.inputContainer}>
-        <div className={styles.inputIcon}>
-          <EthereumIcon />
-        </div>
-        <input
-          className={`${styles.owner} ${ui.input}`}
-          onChange={(e) => setOwnerInputRaw(e.target.value)}
-          onBlur={() => onOwnerInputBlur()}
-          placeholder="0x01234...F0A0 (Optional)"
-          autoComplete="off"
-        />
-        {showOwnerError && <div className={styles.inputError}>Invalid address!</div>}
-      </div>
-
-      <div className={styles.header}>ENS Profile</div>
+      <div className={clsx(styles.header, styles.headerProfile)}>ENS Profile</div>
       <div className={styles.subheader}>
         Configure public ENS profile for this domain if you are setting it for your wallet. You can
         skip it or complete after registration
