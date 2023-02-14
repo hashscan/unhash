@@ -16,7 +16,7 @@
 
 .button:hover {
   cursor: pointer;
-  background-color: var(--text-secondary);
+  background-color: var(--color-text-secondary);
 }
 
 .select {

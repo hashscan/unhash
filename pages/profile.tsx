@@ -43,7 +43,7 @@ const Input: React.FC<
         {
           ...props /* see https://stackoverflow.com/a/49714237/11889402 */
         }
-        className={`${ui.input} ${styles.desc}`}
+        className={clsx(ui.input, styles.input)}
         value={value}
         name={name}
         onChange={(e) => setValue(e.currentTarget.value)}
@@ -131,7 +131,7 @@ const Profile = () => {
         </select>
 
         <button
-          className={`${ui.button} ${styles.primaryButton}`}
+          className={`${ui.button} ${styles.buttonSet}`}
           onClick={() => {
             setPrimaryEns?.()
           }}

@@ -77,13 +77,14 @@
   margin-top: 24px;
 }
 
-.desc {
+.buttonSet {
+  width: 96px;
+}
+
+.input {
   margin-top: 8px;
 }
 
-.primaryButton {
-  width: 80px;
-}
 
 .domainSelect {
   width: 100%;
