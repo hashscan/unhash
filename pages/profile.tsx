@@ -126,7 +126,7 @@ const Profile = () => {
     <main className={styles.main}>
       {/* Wallet */}
       <div className={styles.header}>Your wallet</div>
-      <div className={styles.walletHint}>
+      <div className={styles.subheader}>
         Your address is linked to jackqack.eth ENS profile. You can switch to another available ENS
         below.
       </div>
@@ -164,7 +164,24 @@ const Profile = () => {
       <div className={styles.divider}></div>
 
       {/* ENS profile */}
-      <Avatar {...{ chainId, address }} />
+
+      <div className={styles.header}>ENS profile</div>
+      <div className={styles.subheader}>
+        This is a public profile linked to your wallet. People can find you by your ENS name.
+      </div>
+
+      <div className={styles.profileInfo}>
+        <Avatar {...{ chainId, address }} />
+        <div>
+          <div className={styles.profileDomain}>jackqack.eth</div>
+          <div className={styles.profileLabels}>
+            <div className={styles.profileLabel}>Primary ENS</div>
+            <div className={styles.profileLabel}>Owner</div>
+            <div className={styles.profileLabel}>Controller</div>
+          </div>
+        </div>
+      </div>
+
       <form className={styles.form} onSubmit={onSubmit}>
         <Input
           label="Name"
