@@ -1,5 +1,5 @@
 import { Domain, toNetwork } from 'lib/types'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styles from './CheckoutCommitStep.module.css'
 import ui from 'styles/ui.module.css'
 import { EthereumIcon, Gas } from 'components/icons'
@@ -11,7 +11,7 @@ import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
-import { isValidAddress } from 'lib/utils'
+import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -30,18 +30,7 @@ export const CheckoutCommitStep = ({
   // TODO: handle no network and no account
   const { address } = useAccount()
 
-  // TODO: move owner input to separate component
-  const [ownerInputRaw, setOwnerInputRaw] = useState<string>('')
-  const [showOwnerError, setShowOwnerError] = useState<boolean>(false)
-  const onOwnerInputBlur = () => {
-    setShowOwnerError(owner === null)
-  }
-
   const [owner, setOwner] = useState<string | null>('') // empty string - not set, null - invalid input
-  useEffect(() => {
-    setShowOwnerError(false)
-    setOwner(ownerInputRaw === '' || isValidAddress(ownerInputRaw) ? ownerInputRaw : null)
-  }, [ownerInputRaw])
 
   const { gasLimit, sendCommit, isLoading, error } = useSendCommit({
     domain: domain,
@@ -54,17 +43,14 @@ export const CheckoutCommitStep = ({
   })
   const networkFee = useTxPrice(gasLimit)
 
-  const onStartClick = () => {
+  const onStartClick = useCallback(() => {
+    // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)
     if (typeof sendCommit === 'undefined') return
-
-    // handle invalid owner input
-    if (owner === null) {
-      setShowOwnerError(true)
-      return
-    }
+    // invalid owner input
+    if (owner === null) return
 
     sendCommit()
-  }
+  }, [sendCommit, owner])
 
   // TODO: show connect wallet button if not connected
   return (
@@ -87,21 +73,13 @@ export const CheckoutCommitStep = ({
 
       <div className={styles.header}>Domain Ownership</div>
       <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
-
-      {/* TODO: create input component with validation */}
-      <div className={styles.inputContainer}>
-        <div className={styles.inputIcon}>
-          <EthereumIcon />
-        </div>
-        <input
-          className={`${styles.owner} ${ui.input}`}
-          onChange={(e) => setOwnerInputRaw(e.target.value)}
-          onBlur={() => onOwnerInputBlur()}
-          placeholder="0x01234...F0A0 (Optional)"
-          autoComplete="off"
-        />
-        {showOwnerError && <div className={styles.inputError}>Invalid address!</div>}
-      </div>
+      <AddressInput
+        icon={<EthereumIcon />}
+        className={styles.ownerInput}
+        placeholder="0xd07d...54aB"
+        autoComplete="off"
+        onAddressChange={(address) => setOwner(address)}
+      />
 
       <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>

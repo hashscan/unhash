@@ -1,8 +1,8 @@
 import { Domain } from './types'
 
-export function formatAddress(address: string): string {
-  const leadingChars = 6
-  const trailingChars = 4
+export function formatAddress(address: string, displayLength: number = 4): string {
+  const leadingChars = 2 + displayLength
+  const trailingChars = displayLength
 
   return address.length < leadingChars + trailingChars
     ? address
