@@ -118,3 +118,8 @@
   background-color: var(--color-slate-2);
   color: var(--color-slate-6);
 }
+
+.icon {
+  width: 18px;
+  margin-right: 6px;
+}

@@ -5,7 +5,7 @@ import ui from 'styles/ui.module.css'
 import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
-import { LogoutIcon, ProfileIcon } from 'components/icons'
+import { InfoCircle, LogoutIcon, ProfileIcon } from 'components/icons'
 import { Links } from './Links'
 
 import clsx from 'clsx'
@@ -27,6 +27,8 @@ const Chain = ({ chain, onClick }: ChainProps) => {
   return (
     <>
       <button onClick={onClick} className={styles.chainWarning} type="button">
+        <InfoCircle className={styles.icon} />
+
         {isTestnet && 'Testnet'}
         {Boolean(chain.unsupported) && 'Unsupported Network'}
       </button>
