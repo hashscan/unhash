@@ -221,6 +221,44 @@ export const Twitter = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export interface CheckFilledIconProps extends BaseIconProps {
+  fillColor?: string
+}
+
+export const CheckFilled = (props: CheckFilledIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill={props.fillColor} />
+      <polyline
+        points="8.444 12.339 10.611 14.506 10.597 14.492 15.486 9.603"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+      />
+      <rect width="24" height="24" fill="none" />
+    </svg>
+  </BaseIcon>
+)
+
+export const ArrowDown = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg width="24px" height="24px" viewBox="0 0 24 24">
+      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Path" transform="translate(-0.000000, -0.000000)">
+          <polygon points="0 0 24.0000001 0 24.0000001 24.0000001 0 24.0000001"></polygon>
+          <path
+            d="M2.46966992,6.96966994 C2.73593649,6.70340338 3.15260017,6.67919733 3.44621167,6.89705179 L3.5303301,6.96966994 L12.0000001,15.4390001 L20.46967,6.96966994 C20.7359366,6.70340338 21.1526002,6.67919733 21.4462117,6.89705179 L21.5303302,6.96966994 C21.7965967,7.23593651 21.8208028,7.65260019 21.6029483,7.94621169 L21.5303302,8.03033012 L12.5303301,17.0303302 C12.2640636,17.2965967 11.8473999,17.3208028 11.5537884,17.1029483 L11.46967,17.0303302 L2.46966992,8.03033012 C2.1767767,7.7374369 2.1767767,7.26256316 2.46966992,6.96966994 Z"
+            fill="currentColor"
+            fill-rule="nonzero"
+          ></path>
+        </g>
+      </g>
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */

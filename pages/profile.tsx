@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Gas, ProgressBar } from 'components/icons'
+import { ArrowDown, CheckFilled, Gas, ProgressBar } from 'components/icons'
 import api, { UserInfo } from 'lib/api'
 import { FormEvent, useEffect, useState } from 'react'
 import { Address, useAccount, useChainId, useEnsAvatar } from 'wagmi'
@@ -126,9 +126,17 @@ const Profile = () => {
     <main className={styles.main}>
       {/* Wallet */}
       <div className={styles.header}>Your wallet</div>
-      <div className={styles.subheader}>The wallet is connected to ENS profile</div>
-      <div className={styles.address}>{address ? formatAddress(address, 12) : null}</div>
-      <div className={styles.primaryDomain}>jackqack.eth</div>
+
+      <div className={styles.address}>{address ? formatAddress(address, 100) : null}</div>
+      <div className={styles.primary}>
+        <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
+        <div className={styles.primaryDomain}>jackqack.eth</div>
+        <ArrowDown className={styles.primaryArrow} />
+      </div>
+      <div className={styles.walletHint}>
+        Your wallet is linked to jackqack.eth ENS profile. You can switch to another available ENS
+        above.
+      </div>
 
       {/* Primary ENS select */}
       {/* <div className={styles.domains}>
