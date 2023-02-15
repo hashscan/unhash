@@ -126,16 +126,15 @@ const Profile = () => {
     <main className={styles.main}>
       {/* Wallet */}
       <div className={styles.header}>Your wallet</div>
-
-      <div className={styles.address}>{address ? formatAddress(address, 100) : null}</div>
-      <div className={styles.primary}>
+      <div className={styles.walletHint}>
+        Your address is linked to jackqack.eth ENS profile. You can switch to another available ENS
+        below.
+      </div>
+      <div className={styles.address}>{address ? formatAddress(address, 4) : null}</div>
+      <div className={styles.primary} onClick={() => alert('ты лох')}>
         <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
         <div className={styles.primaryDomain}>jackqack.eth</div>
         <ArrowDown className={styles.primaryArrow} />
-      </div>
-      <div className={styles.walletHint}>
-        Your wallet is linked to jackqack.eth ENS profile. You can switch to another available ENS
-        above.
       </div>
 
       {/* Primary ENS select */}
