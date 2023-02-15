@@ -30,25 +30,7 @@
 .form {
   display: flex;
   flex-direction: column;
-}
-
-.form>.field {
-  margin-bottom: 8px;
-}
-
-.field>input {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.field {
-  color: var(--text-primary);
-  margin-top: 8px;
-}
-
-.field>label {
-  display: block;
-  margin-bottom: 0px;
+  gap: 8px;
 }
 
 .avatarWrapper {

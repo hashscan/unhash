@@ -13,6 +13,13 @@ import { useIsMounted } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
 import { formatNetworkFee } from 'lib/format'
 import clsx from 'clsx'
+import { Input } from 'components/ui/Input/Input'
+import {
+  Profile as ProfileIcon,
+  Description as DescriptionIcon,
+  Globe as GlobeIcon,
+  Twitter as TwitterIcon
+} from 'components/icons'
 
 const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
   // TODO: display avatar from selected domain not current wallet
@@ -27,36 +34,41 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
   )
 }
 
-const Input: React.FC<
-  JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
-> = ({ fields, name, label, ...props }) => {
-  const [value, setValue] = useState('')
+// const Input: React.FC<
+//   JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
+// > = ({ fields, name, label, ...props }) => {
+//   const [value, setValue] = useState('')
 
-  useEffect(() => {
-    if (fields) setValue(fields[name]!)
-  }, [fields, name])
+//   useEffect(() => {
+//     if (fields) setValue(fields[name]!)
+//   }, [fields, name])
 
-  return (
-    <div className={styles.field}>
-      <label htmlFor={name}>{label}</label>
-      <input
-        {
-          ...props /* see https://stackoverflow.com/a/49714237/11889402 */
-        }
-        className={clsx(ui.input, styles.input)}
-        value={value}
-        name={name}
-        onChange={(e) => setValue(e.currentTarget.value)}
-      />
-    </div>
-  )
-}
+//   return (
+//     <div className={styles.field}>
+//       <label htmlFor={name}>{label}</label>
+//       <input
+//         {
+//           ...props /* see https://stackoverflow.com/a/49714237/11889402 */
+//         }
+//         className={clsx(ui.input, styles.input)}
+//         value={value}
+//         name={name}
+//         onChange={(e) => setValue(e.currentTarget.value)}
+//       />
+//     </div>
+//   )
+// }
 
 const Profile = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+
+  // input values
+  const [name, setName] = useState<string>('')
+  // TODO: add other values
+
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
 
@@ -144,21 +156,34 @@ const Profile = () => {
 
       {/* Profile fields */}
       <form className={styles.form} onSubmit={onSubmit}>
-        <Input {...{ fields }} name="name" label="Name" placeholder="Mastodon" />
         <Input
-          {...{ fields }}
-          name="description"
-          label="Bio"
-          placeholder="Free and open-source social network"
+          label="Name"
+          placeholder="Mastodon"
+          icon={<ProfileIcon />}
+          autoComplete="off"
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
-          {...{ fields }}
+          label="Description"
+          placeholder="Mastodon"
+          icon={<DescriptionIcon />}
+          autoComplete="off"
+          // onChange={(e) => setDescription(e.target.value)}
+        />
+        <Input
           label="Website"
           placeholder="https://mastodon.social"
-          type="url"
-          name="url"
+          icon={<GlobeIcon />}
+          autoComplete="off"
+          // onChange={(e) => setWebsite(e.target.value)}
         />
-        <Input {...{ fields }} placeholder="@mastodon" name="com.twitter" label="Twitter" />
+        <Input
+          label="Twitter"
+          placeholder="@mastodon"
+          icon={<TwitterIcon />}
+          autoComplete="off"
+          // onChange={(e) => setTwitter(e.target.value)}
+        />
 
         {/* Save button */}
         {error && <div className={ui.error}>{error.message}</div>}
