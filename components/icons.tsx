@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { cloneElement, ComponentProps, ComponentPropsWithoutRef, ReactElement } from 'react'
 
 export const ProfileIcon = ({ color = 'var(--text-secondary)' }: { color?: string }) => (
   <svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -150,3 +150,41 @@ export const LoaderHorseshoe = () => (
     />
   </svg>
 )
+
+export const InfoCircle = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={20}>
+    <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M11 15V11M11 7H11.01M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </BaseIcon>
+)
+
+/*
+ * <BaseIcon />
+ */
+
+type BaseIconPropsInternal = ComponentPropsWithoutRef<'svg'> & {
+  children: ReactElement
+  baseSize: number
+  size?: number | string
+  color?: string
+}
+
+export type BaseIconProps = Partial<BaseIconPropsInternal>
+
+/*
+ * All icons can use this helper component internally
+ * It provides color and size customization as well as className and all other attrs
+ */
+const BaseIcon = ({ children, color, size, baseSize, ...rest }: BaseIconPropsInternal) => {
+  const sz = size || baseSize
+
+  const colorProp = color !== undefined ? { style: { color } } : {}
+  return cloneElement(children, { width: sz, height: sz, ...colorProp, ...rest })
+}

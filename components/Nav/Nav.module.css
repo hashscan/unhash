@@ -22,32 +22,9 @@
   height: 100%;
 }
 
-.title {
-  font-size: 24px;
-  padding: 4px;
-  font-weight: bold;
-  color: #7db5ff;
-  text-decoration: none;
-}
-
-@media screen and (max-width: 520px) {
-  .title {
-    font-size: 16px;
-  }
-}
-
-.space {
-  flex-grow: 1;
-}
-
 .connect {
   border-radius: var(--radii-sm);
-  background-color: var(--color-text-primary) !important;
   white-space: nowrap;
-}
-
-.connect:hover {
-  background-color: var(--text-secondary) !important;
 }
 
 .accountIcon {
@@ -72,8 +49,13 @@
 .buttons {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  gap: 16px;
   align-items: center;
+}
+
+.buttonsLoading {
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 .account {
@@ -98,49 +80,8 @@
   text-decoration: underline;
 }
 
-.chains {
-  padding: 3px 10px;
-  border-radius: var(--radii-md);
-  cursor: pointer;
-  transition: var(--ease-200);
-  background-color: var(--color-slate-6);
-  color: var(--color-slate-2);
-  border: 1.5px solid transparent;
-  font: var(--type-sm);
-  letter-spacing: var(--ls-sm);
-}
-
-.chains:hover {
-  background-color: var(--color-highlight-green);
-}
-
 .sep {
   color: var(--color-slate-5);
-}
-
-.links {
-  display: flex;
-  flex-direction: row;
-  gap: 48px;
-  margin-right: 32px;
-  flex-shrink: 1;
-  flex-grow: 1;
-  overflow: scroll;
-}
-
-.navLink {
-  color: var(--color-slate-4);
-  text-decoration: none;
-  font-weight: 400;
-  white-space: nowrap;
-}
-
-.navLink:hover {
-  color: var(--color-slate-1);
-}
-
-.navLinkActive {
-  color: var(--color-slate-2);
 }
 
 .logo {
@@ -155,4 +96,30 @@
   .logo {
     display: none;
   }
+}
+
+.chainWarning {
+  padding: 0 12px;
+  border-radius: var(--radii-lg);
+  cursor: pointer;
+  transition: var(--ease-200);
+  background-color: var(--color-warning);
+  color: var(--color-slate-2);
+  border: none;
+  font: var(--type-sm);
+  height: 32px;
+  letter-spacing: 0.01em;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.chainWarning:hover {
+  background-color: var(--color-slate-2);
+  color: var(--color-slate-6);
+}
+
+.icon {
+  width: 18px;
+  margin-right: 6px;
 }
