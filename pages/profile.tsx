@@ -12,6 +12,7 @@ import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { useIsMounted } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
 import { formatNetworkFee } from 'lib/format'
+import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import clsx from 'clsx'
 import { Input } from 'components/ui/Input/Input'
 import {
@@ -59,7 +60,7 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
 //   )
 // }
 
-const Profile = () => {
+const Profile: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
 
@@ -234,5 +235,7 @@ const Profile = () => {
     </main>
   )
 }
+
+Profile.layout = <ContainerLayout verticalPadding={false} />
 
 export default Profile
