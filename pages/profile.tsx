@@ -170,54 +170,55 @@ const Profile = () => {
         This is a public profile linked to your wallet. People can find you by your ENS name.
       </div>
 
-      <div className={styles.profileInfo}>
-        <Avatar {...{ chainId, address }} />
-        <div>
-          <div className={styles.profileDomain}>jackqack.eth</div>
-          <div className={styles.profileLabels}>
-            <div className={styles.profileLabel}>Primary ENS</div>
-            <div className={styles.profileLabel}>Owner</div>
-            <div className={styles.profileLabel}>Controller</div>
+      <div className={styles.profileCard}>
+        <div className={styles.profileInfo}>
+          <Avatar {...{ chainId, address }} />
+          <div>
+            <div className={styles.profileDomain}>jackqack.eth</div>
+            <div className={styles.profileLabels}>
+              <div className={styles.profileLabel}>Primary ENS</div>
+              <div className={styles.profileLabel}>Owner</div>
+              <div className={styles.profileLabel}>Controller</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <form className={styles.form} onSubmit={onSubmit}>
-        <Input
-          label="Name"
-          placeholder="Mastodon"
-          icon={<ProfileIcon />}
-          autoComplete="off"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Input
-          label="Description"
-          placeholder="Mastodon"
-          icon={<DescriptionIcon />}
-          autoComplete="off"
-          // onChange={(e) => setDescription(e.target.value)}
-        />
-        <Input
-          label="Website"
-          placeholder="https://mastodon.social"
-          icon={<GlobeIcon />}
-          autoComplete="off"
-          // onChange={(e) => setWebsite(e.target.value)}
-        />
-        <Input
-          label="Twitter"
-          placeholder="@mastodon"
-          icon={<TwitterIcon />}
-          autoComplete="off"
-          // onChange={(e) => setTwitter(e.target.value)}
-        />
+        <form className={styles.form} onSubmit={onSubmit}>
+          <Input
+            label="Name"
+            placeholder="Mastodon"
+            icon={<ProfileIcon />}
+            autoComplete="off"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            label="Description"
+            placeholder="Mastodon"
+            icon={<DescriptionIcon />}
+            autoComplete="off"
+            // onChange={(e) => setDescription(e.target.value)}
+          />
+          <Input
+            label="Website"
+            placeholder="https://mastodon.social"
+            icon={<GlobeIcon />}
+            autoComplete="off"
+            // onChange={(e) => setWebsite(e.target.value)}
+          />
+          <Input
+            label="Twitter"
+            placeholder="@mastodon"
+            icon={<TwitterIcon />}
+            autoComplete="off"
+            // onChange={(e) => setTwitter(e.target.value)}
+          />
 
-        {/* Save button */}
-        {error && <div className={ui.error}>{error.message}</div>}
-        <button type="submit" disabled={isLoading} className={clsx(styles.saveButton, ui.button)}>
-          {isLoading ? <ProgressBar color="white" /> : 'Save'}
-        </button>
-        {networkFee && (
+          {/* Save button */}
+          {error && <div className={ui.error}>{error.message}</div>}
+          <button type="submit" disabled={isLoading} className={clsx(styles.saveButton, ui.button)}>
+            {isLoading ? <ProgressBar color="white" /> : 'Save'}
+          </button>
+          {/* {networkFee && (
           <div className={styles.txFee}>
             <div className={styles.txFeeLabel}>
               <Gas />
@@ -227,8 +228,9 @@ const Profile = () => {
               {formatNetworkFee(networkFee)}
             </div>
           </div>
-        )}
-      </form>
+        )} */}
+        </form>
+      </div>
     </main>
   )
 }
