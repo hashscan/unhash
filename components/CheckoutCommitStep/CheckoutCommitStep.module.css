@@ -6,16 +6,15 @@
   color: var(--color-slate-2);
   font: var(--type-md);
   letter-spacing: var(--ls-md);
-  margin-top: 40px;
+  margin-top: 48px;
+  margin-bottom: 4px;
 }
 
 .subheader {
-  color: var(--color-slate-2);
-  font: var(--type-sm);
-  letter-spacing: var(--ls-sm);
-  font-weight: 400;
-  margin-top: 0px;
-  margin-bottom: 16px;
+  color: var(--color-slate-3);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  margin-bottom: 20px;
 }
 
 .years {
@@ -67,7 +66,7 @@
   height: 38px;
 }
 
-.inputContainer>input {
+.inputContainer > input {
   height: 100%;
   width: 100%;
   padding-left: 50px;

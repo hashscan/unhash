@@ -65,21 +65,23 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
     <div className={styles.checkout}>
       {/* left content */}
       <main className={styles.main}>
-        <span className={styles.title}>ENS domain registration</span>
-        <CheckoutProgress className={styles.progress} step={step} />
-        {step === 'initializing' && <div></div>}
-        {step === 'commit' && (
-          <CheckoutCommitStep
-            domain={domain}
-            durationYears={durationYears}
-            onDurationChanged={onDurationChanged}
-          />
-        )}
-        {step === 'wait' && reg?.commitTimestamp && (
-          <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
-        )}
-        {step === 'register' && <CheckoutRegisterStep domain={domain} />}
-        {step === 'success' && <CheckoutSuccessStep domain={domain} />}
+        <CheckoutProgress className={styles.progress} step={step} domain={domain} />
+
+        <div className={styles.content}>
+          {step === 'initializing' && <div></div>}
+          {step === 'commit' && (
+            <CheckoutCommitStep
+              domain={domain}
+              durationYears={durationYears}
+              onDurationChanged={onDurationChanged}
+            />
+          )}
+          {step === 'wait' && reg?.commitTimestamp && (
+            <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
+          )}
+          {step === 'register' && <CheckoutRegisterStep domain={domain} />}
+          {step === 'success' && <CheckoutSuccessStep domain={domain} />}
+        </div>
       </main>
 
       {/* right as a side bar */}
