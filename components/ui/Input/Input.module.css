@@ -1,9 +1,10 @@
 .label {
   color: var(--color-text-primary);
-  font: var(--type-regular);
-  letter-spacing: var(--ls-regular);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
 
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .wrapper {
@@ -33,7 +34,7 @@
 
   box-shadow: var(--shadow-sm);
   border-radius: var(--radii-sm);
-  border: 1px solid var(--color-slate-5);
+  border: 1px solid var(--color-slate-6);
 }
 
 .inputWithIcon {

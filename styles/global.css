@@ -118,7 +118,7 @@
 :root {
   --shadow-color-rgb: 0 0 0;
 
-  --shadow-sm: 1px 1px 0 rgb(var(--shadow-color-rgb) / 0.04);
+  --shadow-sm: 1px 1px 0 rgb(var(--shadow-color-rgb) / 0.02);
 
   --shadow-reg: 0 1px 3px 0 rgb(var(--shadow-color-rgb) / 0.08),
     0 1px 2px -1px rgb(var(--shadow-color-rgb) / 0.08);
