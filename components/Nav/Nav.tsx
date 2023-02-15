@@ -11,6 +11,30 @@ import { Links } from './Links'
 import clsx from 'clsx'
 
 import styles from './Nav.module.css'
+import { toNetwork } from 'lib/types'
+
+interface ChainProps {
+  chain: { id: number; unsupported?: boolean }
+  onClick: () => void
+}
+
+const Chain = ({ chain, onClick }: ChainProps) => {
+  const isTestnet = toNetwork(chain.id) === 'goerli'
+  const shouldDisplayWarn = isTestnet || Boolean(chain.unsupported)
+
+  if (!shouldDisplayWarn) return null
+
+  return (
+    <>
+      <button onClick={onClick} className={styles.chainWarning} type="button">
+        {isTestnet && 'Testnet'}
+        {Boolean(chain.unsupported) && 'Unsupported Network'}
+      </button>
+
+      <span className={styles.sep}> | </span>
+    </>
+  )
+}
 
 export const Nav = () => {
   const [isOpen, setOpen] = useState(false)
@@ -49,70 +73,53 @@ export const Nav = () => {
               account &&
               (!authenticationStatus || authenticationStatus === 'authenticated')
 
-            return (
-              <div
-                {...(!ready && {
-                  'aria-hidden': true,
-                  style: {
-                    opacity: 0,
-                    pointerEvents: 'none',
-                    userSelect: 'none'
-                  }
-                })}
-              >
-                {(() => {
-                  if (!connected) {
-                    return (
-                      <button
-                        onClick={openConnectModal}
-                        className={clsx(ui.button, styles.connect)}
-                        type="button"
-                      >
-                        Connect wallet
-                      </button>
-                    )
-                  }
-                  if (chain.unsupported) {
-                    return (
-                      <button className={styles.chains} onClick={openChainModal} type="button">
-                        Wrong network
-                      </button>
-                    )
-                  }
+            if (!connected) {
+              return (
+                <button
+                  onClick={openConnectModal}
+                  className={clsx(ui.button, styles.connect)}
+                  type="button"
+                >
+                  Connect wallet
+                </button>
+              )
+            }
 
-                  return (
-                    <div className={styles.buttons}>
-                      <button onClick={openChainModal} className={styles.chains} type="button">
-                        {chain.name}
-                      </button>
-                      <span className={styles.sep}> | </span>
-                      <button className={styles.account} onClick={() => setOpen(!isOpen)}>
-                        <div
-                          className={clsx(styles.accountIcon, {
-                            [styles.accountIconPlaceholder]: !account.ensAvatar
-                          })}
-                        >
-                          {account.ensAvatar ? (
-                            <img
-                              width={24}
-                              height={24}
-                              alt="avatar"
-                              src={account.ensAvatar.replace(
-                                'gateway.ipfs.io',
-                                'ipfs.eth.aragon.network'
-                              )}
-                            />
-                          ) : (
-                            <ProfileIcon color="var(--color-text-secondary)" />
-                          )}
-                        </div>
-                        <div className={styles.accountName}>
-                          {account.ensName ? account.ensName : formatAddress(account.address)}
-                        </div>
-                      </button>
-                    </div>
-                  )
-                })()}
+            return (
+              <div>
+                <div
+                  className={clsx(styles.buttons, { [styles.buttonsLoading]: !ready })}
+                  aria-hidden={!ready}
+                >
+                  <Chain chain={chain} onClick={openChainModal} />
+
+                  {account && (
+                    <button className={styles.account} onClick={() => setOpen(!isOpen)}>
+                      <div
+                        className={clsx(styles.accountIcon, {
+                          [styles.accountIconPlaceholder]: !account.ensAvatar
+                        })}
+                      >
+                        {account.ensAvatar ? (
+                          <img
+                            width={24}
+                            height={24}
+                            alt="avatar"
+                            src={account.ensAvatar.replace(
+                              'gateway.ipfs.io',
+                              'ipfs.eth.aragon.network'
+                            )}
+                          />
+                        ) : (
+                          <ProfileIcon color="var(--color-text-secondary)" />
+                        )}
+                      </div>
+                      <div className={styles.accountName}>
+                        {account.ensName ? account.ensName : formatAddress(account.address)}
+                      </div>
+                    </button>
+                  )}
+                </div>
               </div>
             )
           }}
