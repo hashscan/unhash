@@ -22,8 +22,8 @@
 
 .input {
   width: 100%;
-  min-height: 40px;
-  padding: 6px 13px;
+  min-height: 42px;
+  padding: 6px 14px;
 
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
@@ -37,7 +37,7 @@
 }
 
 .inputWithIcon {
-  padding-left: 43px;
+  padding-left: 44px;
 }
 
 .input::placeholder {
@@ -48,6 +48,15 @@
 .input:focus {
   border: 1px solid var(--color-green-light);
   outline: 4px solid rgb(var(--color-green-light-rgb) / 25%);
+}
+
+.inputError {
+  border: 1px solid rgb(var(--color-red-rgb) / 75%);
+}
+
+.inputError:focus {
+  border: 1px solid rgb(var(--color-red-rgb) / 75%);
+  outline: 4px solid rgb(var(--color-red-rgb) / 10%);
 }
 
 .hint {

@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 export interface InputProps extends ComponentProps<'input'> {
   label?: string
-  icon?: JSX.Element // TODO: what's the difference from ReactElement?
+  icon?: JSX.Element
   hint?: string
   error?: string
 }
@@ -19,9 +19,11 @@ export const Input = ({ label, icon, hint, error, className, children, ...rest }
         {icon && <div className={styles.icon}>{icon}</div>}
         <input
           {...rest}
-          className={clsx(styles.input, className, { [styles.inputWithIcon]: icon !== undefined })}
+          className={clsx(styles.input, className, {
+            [styles.inputWithIcon]: icon !== undefined,
+            [styles.inputError]: error
+          })}
         >
-          {/* TODO: remove children? */}
           {children}
         </input>
       </div>
