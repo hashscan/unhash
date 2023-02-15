@@ -8,29 +8,37 @@
 
 .header {
   color: var(--color-text-primary);
-  font: var(--type-md);
-  letter-spacing: var(--ls-md);
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
   font-weight: 500;
 
-  margin-bottom: 24px;
+  margin-bottom: 4px;
+}
+
+.walletHint {
+  color: var(--color-slate-2);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+
+  margin-bottom: 16px;
 }
 
 .address {
   font-family: var(--font-mono);
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 500;
-  letter-spacing: 0.0em;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
+
+  margin-bottom: 8px;
 }
 
 .primary {
   border-radius: var(--radii-sm);
-  border: 1px solid var(--color-slate-6);
+  border: 1px solid var(--color-success);
   padding: 8px 12px;
-
   box-shadow: var(--shadow-sm);
-
-  margin-top: 16px;
 
   display: flex;
   flex-direction: row;
@@ -61,15 +69,6 @@
   color: var(--color-slate-5);
   width: 20px;
   height: 20px;
-}
-
-.walletHint {
-  color: var(--color-slate-2);
-  font: var(--type-sm);
-  letter-spacing: var(--ls-sm);
-  font-weight: 400;
-
-  margin-top: 8px;
 }
 
 .domains {
