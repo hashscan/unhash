@@ -6,7 +6,8 @@ import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
 import { LogoutIcon, ProfileIcon } from 'components/icons'
-import Link from 'next/link'
+import { Links } from './Links'
+
 import clsx from 'clsx'
 
 import styles from './Nav.module.css'
@@ -28,18 +29,7 @@ export const Nav = () => {
       <div className={styles.logo}>ens-wallets.com</div>
 
       <div className={styles.sub}>
-        <div className={styles.links}>
-          <Link href="/" className={clsx(styles.navLink, { [styles.navLinkActive]: true })}>
-            Get ENS Domain
-          </Link>
-
-          <Link
-            href="https://docs.ens.domains/frequently-asked-questions"
-            className={clsx(styles.navLink)}
-          >
-            FAQ↗
-          </Link>
-        </div>
+        <Links />
 
         <ConnectButton.Custom>
           {({

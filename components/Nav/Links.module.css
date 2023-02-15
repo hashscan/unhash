@@ -1,0 +1,24 @@
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  margin-right: 32px;
+  flex-shrink: 1;
+  flex-grow: 1;
+  overflow: scroll;
+}
+
+.navLink {
+  color: var(--color-slate-4);
+  text-decoration: none;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--color-slate-1);
+}
+
+.navLinkActive {
+  color: var(--color-slate-2);
+}
