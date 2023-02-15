@@ -28,7 +28,7 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
   return (
     <div className={styles.avatarWrapper}>
       {address && avatar && (
-        <img className={styles.avatar} width={96} height={96} src={avatar} alt="" />
+        <img className={styles.avatar} width={56} height={56} src={avatar} alt="" />
       )}
     </div>
   )
@@ -124,12 +124,14 @@ const Profile = () => {
 
   return (
     <main className={styles.main}>
-      {/* Header */}
-      <Avatar {...{ chainId, address }} />
-      <div className={styles.address}>{address ? formatAddress(address, 6) : null}</div>
+      {/* Wallet */}
+      <div className={styles.header}>Your wallet</div>
+      <div className={styles.subheader}>The wallet is connected to ENS profile</div>
+      <div className={styles.address}>{address ? formatAddress(address, 12) : null}</div>
+      <div className={styles.primaryDomain}>jackqack.eth</div>
 
       {/* Primary ENS select */}
-      <div className={styles.domains}>
+      {/* <div className={styles.domains}>
         <select
           className={`${ui.select} ${styles.domainSelect}`}
           defaultValue={userInfo?.primaryEns || userInfo?.domains.resolved[0]}
@@ -150,11 +152,12 @@ const Profile = () => {
         >
           {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set'}{' '}
         </button>
-      </div>
+      </div> */}
 
       <div className={styles.divider}></div>
 
-      {/* Profile fields */}
+      {/* ENS profile */}
+      <Avatar {...{ chainId, address }} />
       <form className={styles.form} onSubmit={onSubmit}>
         <Input
           label="Name"
