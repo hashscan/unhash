@@ -4,11 +4,12 @@
   justify-content: space-between;
   column-gap: 32px;
   margin-right: -16px;
+  min-height: calc(100vh - var(--nav-height));
 }
 
 .main {
-  max-width: 520px;
   flex-shrink: 1;
+  flex-grow: 1;
   padding: 40px 0;
 }
 
@@ -22,14 +23,12 @@
   padding-right: calc(0.5 * max(0px, 100vw - var(--container-width) - 32px));
 }
 
-.title {
-  color: var(--color-slate-2);
-  font: var(--type-lg);
-  letter-spacing: var(--ls-lg);
+.content {
+  max-width: 520px;
 }
 
 .progress {
-  margin-top: 4px;
+  margin-bottom: 32px;
 }
 
 .back {
