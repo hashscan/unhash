@@ -3,6 +3,7 @@ import { Domain } from 'lib/types'
 import { CheckoutStep } from 'pages/[domain]/register'
 import { ComponentProps } from 'react'
 import styles from './CheckoutProgress.module.css'
+import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
 
 interface CheckoutProgressProps extends ComponentProps<'div'> {
   step: CheckoutStep
@@ -16,7 +17,7 @@ const STEP_NAMES: Record<CheckoutStep, string> = {
   commit: 'Confirming Your Order',
   wait: 'Reserving Domain Name',
   register: 'Complete Registration',
-  success: 'Congratulation!'
+  success: "You've bought the Domain!"
 }
 
 export const CheckoutProgress = (props: CheckoutProgressProps) => {
@@ -27,17 +28,24 @@ export const CheckoutProgress = (props: CheckoutProgressProps) => {
       <div className={styles.content}>
         <h1 className={styles.title}>{String(props.domain)}</h1>
 
-        <div className={styles.stepName}>
+        <SlideFlap
+          flipKey={String(stepIndex)}
+          className={styles.stepNameLine}
+          slotClassName={styles.stepName}
+        >
           <span>{stepIndex}</span>
           {STEP_NAMES[props.step]}
-        </div>
+        </SlideFlap>
+
         <div className={styles.bar}>
           {Array.from({ length: STEPS_IN_ORDER.length }, (v, i) => {
             return (
               <span
                 key={i}
-                className={clsx(styles.step, { [styles.stepActive]: i < stepIndex })}
-                style={{ transitionDelay: `${i}s` }}
+                className={clsx(styles.step, {
+                  [styles.stepComplete]: i < stepIndex - 1,
+                  [styles.stepActive]: i < stepIndex
+                })}
               />
             )
           })}

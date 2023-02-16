@@ -5,6 +5,6 @@
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "quotes": ["warn", "single"]
+    "quotes": ["warn", "single", { "avoidEscape": true }]
   }
 }
