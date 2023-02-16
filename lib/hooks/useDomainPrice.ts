@@ -11,7 +11,10 @@ export const useDomainPrice = (
   const [price, setPrice] = useState<DomainPrice>()
 
   useEffect(() => {
-    if (!duration) return setPrice(undefined)
+    if (!duration) {
+      setPrice(undefined)
+      return
+    }
 
     const fetchPrice = async () => {
       try {

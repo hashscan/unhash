@@ -1,14 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowDown, CheckFilled, Gas, ProgressBar } from 'components/icons'
-import api, { UserInfo } from 'lib/api'
-import { FormEvent, useEffect, useState } from 'react'
+import { ArrowDown, CheckFilled, ProgressBar } from 'components/icons'
+import { FormEvent, useState } from 'react'
 import { Address, useAccount, useChainId, useEnsAvatar } from 'wagmi'
 import ui from 'styles/ui.module.css'
 import styles from './profile.module.css'
-import { Domain, Fields, toNetwork } from 'lib/types'
+import { Domain, Fields } from 'lib/types'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
-import { useTxPrice } from 'lib/hooks/useTxPrice'
-import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { useIsMounted } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
@@ -20,6 +17,8 @@ import {
   Globe as GlobeIcon,
   Twitter as TwitterIcon
 } from 'components/icons'
+import { AuthLayout } from 'components/AuthLayout/AuthLayout'
+import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 
 const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) => {
   // TODO: display avatar from selected domain not current wallet
@@ -34,36 +33,15 @@ const Avatar = ({ chainId, address }: { chainId: number; address?: Address }) =>
   )
 }
 
-// const Input: React.FC<
-//   JSX.IntrinsicElements['input'] & { name: string; fields: Fields | null; label: string }
-// > = ({ fields, name, label, ...props }) => {
-//   const [value, setValue] = useState('')
-
-//   useEffect(() => {
-//     if (fields) setValue(fields[name]!)
-//   }, [fields, name])
-
-//   return (
-//     <div className={styles.field}>
-//       <label htmlFor={name}>{label}</label>
-//       <input
-//         {
-//           ...props /* see https://stackoverflow.com/a/49714237/11889402 */
-//         }
-//         className={clsx(ui.input, styles.input)}
-//         value={value}
-//         name={name}
-//         onChange={(e) => setValue(e.currentTarget.value)}
-//       />
-//     </div>
-//   )
-// }
-
 const Profile: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
   const chainId = useChainId()
 
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  // TODO: do all this only when address available
+  
+  const userInfo = useCurrentUserInfo()
+  // TODO: then, do card only when address with primary ENS domain available
+  // TODO: fetch primary ENS domain for userInfo?.primaryEns
 
   // input values
   const [name, setName] = useState<string>('')
@@ -72,34 +50,8 @@ const Profile: PageWithLayout = () => {
   const [fields, setFields] = useState<Fields>({})
   const [domain, setDomain] = useState<Domain | null>(null)
 
-  const { isLoading, write, error, gasLimit } = useSendSetFields({ domain, fields })
+  const { isLoading, write, error } = useSendSetFields({ domain, fields })
   const isMounted = useIsMounted()
-
-  const networkFee = useTxPrice(gasLimit)
-
-  // TODO: refactor
-  useEffect(() => {
-    if (address)
-      api.userInfo(address, toNetwork(chainId)).then((res) => {
-        setUserInfo(res)
-
-        if (domain) {
-          setFields({})
-          api.domainInfo(domain, toNetwork(chainId)).then((res) => {
-            setFields(res.records)
-          })
-        } else {
-          setDomain(res.primaryEns)
-        }
-      })
-  }, [address, chainId, domain])
-
-  const { isLoading: isPrimaryEnsLoading, write: setPrimaryEns } = useSetPrimaryEns({
-    domain,
-    onSuccess: () => {
-      if (userInfo) setUserInfo(() => ({ ...userInfo, primaryEns: domain! }))
-    }
-  })
 
   // TODO: save and validate using React state
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -119,21 +71,25 @@ const Profile: PageWithLayout = () => {
     }
   }
 
-  if (isDisconnected) return <p>Please connect wallet</p>
-  if (!isMounted()) return <p>Loading...</p>
+  if (isDisconnected) return <AuthLayout />
+  if (!userInfo) return <p>Fetching profile from API...</p>
+  // TODO: what's this state for?
+  if (!isMounted()) return <p>Loading to get mounted...</p>
 
   return (
     <main className={styles.main}>
       {/* Wallet */}
       <div className={styles.header}>Your wallet</div>
       <div className={styles.subheader}>
-        Your address is linked to jackqack.eth ENS profile. You can switch to another available ENS
-        below.
+        {userInfo?.primaryEns
+          ? `Your address is linked to ${userInfo.primaryEns} ENS profile. You can switch to another available ENS
+        below.`
+          : 'You are not connected to any ENS profile.'}
       </div>
       <div className={styles.address}>{address ? formatAddress(address, 4) : null}</div>
       <div className={styles.primary} onClick={() => alert('ты лох')}>
         <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
-        <div className={styles.primaryDomain}>jackqack.eth</div>
+        <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
         <ArrowDown className={styles.primaryArrow} />
       </div>
 
@@ -174,7 +130,7 @@ const Profile: PageWithLayout = () => {
         <div className={styles.profileInfo}>
           <Avatar {...{ chainId, address }} />
           <div>
-            <div className={styles.profileDomain}>jackqack.eth</div>
+            <div className={styles.profileDomain}>{userInfo.primaryEns}</div>
             <div className={styles.profileLabels}>
               <div className={styles.profileLabel}>Primary ENS</div>
               <div className={styles.profileLabel}>Owner</div>
