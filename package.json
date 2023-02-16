@@ -17,6 +17,7 @@
     "@rainbow-me/rainbowkit": "^0.10.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",
+    "framer-motion": "^9.0.3",
     "ky": "^0.33.2",
     "nanoid": "^4.0.0",
     "next": "^13.1.6",
