@@ -66,11 +66,11 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
       <div className={styles.info}>
         <Avatar address={address} />
         <div>
-          <div className={styles.profileDomain}>{domain}</div>
-          <div className={styles.profileLabels}>
-            <div className={styles.profileLabel}>Primary ENS</div>
-            <div className={styles.profileLabel}>Owner</div>
-            <div className={styles.profileLabel}>Controller</div>
+          <div className={styles.domain}>{domain}</div>
+          <div className={styles.labels}>
+            <div className={styles.label}>Primary ENS</div>
+            <div className={styles.label}>Owner</div>
+            <div className={styles.label}>Controller</div>
           </div>
         </div>
       </div>
