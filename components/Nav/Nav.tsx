@@ -5,7 +5,7 @@ import ui from 'styles/ui.module.css'
 import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
-import { InfoCircle, LogoutIcon, ProfileIcon } from 'components/icons'
+import { InfoCircle, Logout, Profile } from 'components/icons'
 import { Links } from './Links'
 
 import clsx from 'clsx'
@@ -113,7 +113,7 @@ export const Nav = () => {
                             )}
                           />
                         ) : (
-                          <ProfileIcon color="var(--color-text-secondary)" />
+                          <Profile color="var(--color-slate-2)" />
                         )}
                       </div>
                       <div className={styles.accountName}>
@@ -138,7 +138,7 @@ export const Nav = () => {
               className={ui.menuIcon}
               style={{ height: '24px', width: '24px', marginLeft: '-4px' }}
             >
-              <LogoutIcon />
+              <Logout />
             </div>
             <span className={ui.menuText}>Log out</span>
           </div>
