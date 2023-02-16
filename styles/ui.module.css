@@ -42,30 +42,6 @@
   font-size: 14px;
 }
 
-.buttonSecondary {
-  border-radius: var(--radii-sm);
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 8px;
-  padding-right: 8px;
-  font-size: 16px;
-  color: var(--primary);
-  background: transparent;
-  box-shadow: none;
-  border-style: solid;
-  border-color: var(--background-highlight);
-}
-
-.buttonSecondary:focus {
-  outline: 0;
-  background: var(--background-highlight);
-}
-
-.buttonSecondary:hover {
-  cursor: pointer;
-  background: var(--background-highlight);
-}
-
 .modal {
   min-width: 180px;
   position: absolute;
@@ -119,18 +95,6 @@
   background-color: var(--color-slate-7);
   border: 1px solid rgb(var(--color-slate-2-rgb) / 0.04);
   border-radius: var(--radii-md);
-}
-
-.link {
-  text-decoration: none;
-  color: inherit;
-  transition: var(--ease-250);
-}
-
-.link:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  color: var(--primary);
 }
 
 .input {

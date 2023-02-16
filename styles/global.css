@@ -108,10 +108,8 @@
 
   --color-text-primary: var(--color-slate-1);
   --color-text-secondary: var(--color-slate-3);
-
-  /* TODO: refactor these! */
-  --background-highlight: #273f5e;
-  --primary: var(--color-green);
+  --color-text-hint: var(--color-slate-4); /* placeholders, hints etc. */
+  --color-text-muted: var(--color-slate-5); /* disabled labels */
 }
 
 /** Shadows */
@@ -150,7 +148,7 @@
 
   /* sizes */
   --nav-height: 72px;
-  --container-width: 1280px;
+  --container-width: 1080px;
 
   --border-width-reg: 1px;
   --border-width-md: 1.5px;
