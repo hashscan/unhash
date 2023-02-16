@@ -14,7 +14,7 @@
   "dependencies": {
     "@next/font": "^13.1.6",
     "@radix-ui/react-toast": "^1.1.2",
-    "@rainbow-me/rainbowkit": "^0.8.1",
+    "@rainbow-me/rainbowkit": "^0.10.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",
     "ky": "^0.33.2",
