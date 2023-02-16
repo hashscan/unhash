@@ -1,31 +1,22 @@
-import React, { cloneElement, ComponentProps, ComponentPropsWithoutRef, ReactElement } from 'react'
+import React, { cloneElement, ComponentPropsWithoutRef, ReactElement } from 'react'
 
-export const ProfileIcon = ({ color = 'var(--text-secondary)' }: { color?: string }) => (
-  <svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <g strokeLinecap="round" strokeWidth="1.5" stroke={color} fill="none" strokeLinejoin="round">
-      <path d="M17.763,18.91l-0.35,-0.879c-0.177,-0.446 -0.452,-0.846 -0.804,-1.172l-0.064,-0.059c-0.554,-0.514 -1.282,-0.8 -2.038,-0.8h-5.014c-0.756,0 -1.484,0.286 -2.039,0.799l-0.064,0.06c-0.352,0.326 -0.626,0.726 -0.804,1.172l-0.35,0.879"></path>
-      <path d="M14.4749,7.44713c1.36684,1.36684 1.36684,3.58291 0,4.94975c-1.36684,1.36684 -3.58291,1.36684 -4.94975,1.77636e-15c-1.36684,-1.36684 -1.36684,-3.58291 -1.77636e-15,-4.94975c1.36684,-1.36684 3.58291,-1.36684 4.94975,-8.88178e-16"></path>
-      <path d="M18.364,5.63604c3.51472,3.51472 3.51472,9.2132 0,12.7279c-3.51472,3.51472 -9.2132,3.51472 -12.7279,0c-3.51472,-3.51472 -3.51472,-9.2132 -1.77636e-15,-12.7279c3.51472,-3.51472 9.2132,-3.51472 12.7279,-1.77636e-15"></path>
-    </g>
-    <path fill="none" d="M0,0h24v24h-24Z"></path>
-  </svg>
-)
-
-export const LogoutIcon = () => (
-  <svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <g
-      strokeLinecap="round"
-      strokeWidth="1.5"
-      stroke="var(--primary)"
-      fill="none"
-      strokeLinejoin="round"
-    >
-      <path d="M6 15v3l3.37508e-14 4.52987e-07c2.50178e-07 1.65685 1.34315 3 3 3h9l-1.31134e-07-3.55271e-15c1.65685 7.24234e-08 3-1.34315 3-3v-12 0c0-1.65685-1.34315-3-3-3h-9l-1.31134e-07 3.10862e-15c-1.65685 7.24234e-08-3 1.34315-3 3 0 0 0 8.88178e-16 0 8.88178e-16v3"></path>
-      <polyline points="12,15 15,12 12,9"></polyline>
-      <line x1="3" x2="15" y1="12" y2="12"></line>
-    </g>
-    <path fill="none" d="M0 0h24v24h-24Z"></path>
-  </svg>
+export const Logout = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <g
+        strokeLinecap="round"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        fill="none"
+        strokeLinejoin="round"
+      >
+        <path d="M6 15v3l3.37508e-14 4.52987e-07c2.50178e-07 1.65685 1.34315 3 3 3h9l-1.31134e-07-3.55271e-15c1.65685 7.24234e-08 3-1.34315 3-3v-12 0c0-1.65685-1.34315-3-3-3h-9l-1.31134e-07 3.10862e-15c-1.65685 7.24234e-08-3 1.34315-3 3 0 0 0 8.88178e-16 0 8.88178e-16v3"></path>
+        <polyline points="12,15 15,12 12,9"></polyline>
+        <line x1="3" x2="15" y1="12" y2="12"></line>
+      </g>
+      <path fill="none" d="M0 0h24v24h-24Z"></path>
+    </svg>
+  </BaseIcon>
 )
 
 export const ProgressBar = ({
@@ -66,16 +57,6 @@ export const ProgressBar = ({
     </svg>
   )
 }
-
-export const BackIcon = () => (
-  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="48" height="48" rx="4" fill="var(--color-slate-6)" />
-    <path
-      d="M13.2929 23.2929C12.9024 23.6834 12.9024 24.3166 13.2929 24.7071L19.6569 31.0711C20.0474 31.4616 20.6805 31.4616 21.0711 31.0711C21.4616 30.6805 21.4616 30.0474 21.0711 29.6569L15.4142 24L21.0711 18.3431C21.4616 17.9526 21.4616 17.3195 21.0711 16.9289C20.6805 16.5384 20.0474 16.5384 19.6569 16.9289L13.2929 23.2929ZM33 25C33.5523 25 34 24.5523 34 24C34 23.4477 33.5523 23 33 23V25ZM14 25H33V23H14V25Z"
-      fill="var(--color-slate-f)"
-    />
-  </svg>
-)
 
 export const EthereumIcon = () => (
   <svg
@@ -166,8 +147,8 @@ export const InfoCircle = (props: BaseIconProps) => (
 )
 
 export const Profile = (props: BaseIconProps) => (
-  <BaseIcon {...props} baseSize={20}>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
         stroke="currentColor"
@@ -180,8 +161,8 @@ export const Profile = (props: BaseIconProps) => (
 )
 
 export const Description = (props: BaseIconProps) => (
-  <BaseIcon {...props} baseSize={20}>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M3 12H17M3 6H21M3 18H21"
         stroke="currentColor"
@@ -194,8 +175,8 @@ export const Description = (props: BaseIconProps) => (
 )
 
 export const Globe = (props: BaseIconProps) => (
-  <BaseIcon {...props} baseSize={20}>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M22 12C22 17.5228 17.5228 22 12 22M22 12C22 6.47715 17.5228 2 12 2M22 12H2M12 22C6.47715 22 2 17.5228 2 12M12 22C14.5013 19.2616 15.9228 15.708 16 12C15.9228 8.29203 14.5013 4.73835 12 2M12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2M2 12C2 6.47715 6.47715 2 12 2"
         stroke="currentColor"
@@ -208,8 +189,8 @@ export const Globe = (props: BaseIconProps) => (
 )
 
 export const Twitter = (props: BaseIconProps) => (
-  <BaseIcon {...props} baseSize={20}>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M23 3.00005C22.0424 3.67552 20.9821 4.19216 19.86 4.53005C19.2577 3.83756 18.4573 3.34674 17.567 3.12397C16.6767 2.90121 15.7395 2.95724 14.8821 3.2845C14.0247 3.61176 13.2884 4.19445 12.773 4.95376C12.2575 5.71308 11.9877 6.61238 12 7.53005V8.53005C10.2426 8.57561 8.50127 8.18586 6.93101 7.39549C5.36074 6.60513 4.01032 5.43868 3 4.00005C3 4.00005 -1 13 8 17C5.94053 18.398 3.48716 19.099 1 19C10 24 21 19 21 7.50005C20.9991 7.2215 20.9723 6.94364 20.92 6.67005C21.9406 5.66354 22.6608 4.39276 23 3.00005Z"
         stroke="currentColor"
@@ -244,7 +225,7 @@ export const CheckFilled = (props: CheckFilledIconProps) => (
 
 export const ArrowDown = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={24}>
-    <svg width="24px" height="24px" viewBox="0 0 24 24">
+    <svg viewBox="0 0 24 24">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Path" transform="translate(-0.000000, -0.000000)">
           <polygon points="0 0 24.0000001 0 24.0000001 24.0000001 0 24.0000001"></polygon>
