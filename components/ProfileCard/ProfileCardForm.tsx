@@ -80,50 +80,53 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
 
   return (
     <div className={styles.form}>
-      <Input
-        label="Name"
-        placeholder="Mastodon"
-        icon={<ProfileIcon />}
-        autoComplete="off"
-        disabled={inputsDisabled}
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Input
-        label="Description"
-        placeholder="Mastodon"
-        icon={<DescriptionIcon />}
-        autoComplete="off"
-        disabled={inputsDisabled}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <Input
-        label="Website"
-        placeholder="https://mastodon.social"
-        icon={<GlobeIcon />}
-        autoComplete="off"
-        disabled={inputsDisabled}
-        value={website}
-        onChange={(e) => setWebsite(e.target.value)}
-      />
-      <Input
-        label="Twitter"
-        placeholder="@mastodon"
-        icon={<TwitterIcon />}
-        autoComplete="off"
-        disabled={inputsDisabled}
-        value={twitter}
-        onChange={(e) => setTwitter(e.target.value)}
-      />
-
-      <button
-        disabled={inputsDisabled || !hasChanges}
-        className={clsx(styles.saveButton, ui.button)}
-        onClick={save}
-      >
-        {isUpdating ? <ProgressBar color="white" /> : 'Save'}
-      </button>
+      <div className={styles.inputs}>
+        <Input
+          label="Name"
+          placeholder="Mastodon"
+          icon={<ProfileIcon />}
+          autoComplete="off"
+          disabled={inputsDisabled}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          label="Description"
+          placeholder="Mastodon"
+          icon={<DescriptionIcon />}
+          autoComplete="off"
+          disabled={inputsDisabled}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <Input
+          label="Website"
+          placeholder="https://mastodon.social"
+          icon={<GlobeIcon />}
+          autoComplete="off"
+          disabled={inputsDisabled}
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+        <Input
+          label="Twitter"
+          placeholder="@mastodon"
+          icon={<TwitterIcon />}
+          autoComplete="off"
+          disabled={inputsDisabled}
+          value={twitter}
+          onChange={(e) => setTwitter(e.target.value)}
+        />
+      </div>
+      <div className={styles.footer}>
+        <button
+          disabled={inputsDisabled || !hasChanges}
+          className={clsx(styles.saveButton, ui.button)}
+          onClick={save}
+        >
+          {isUpdating ? <ProgressBar color="white" /> : 'Save'}
+        </button>
+      </div>
     </div>
   )
 }
