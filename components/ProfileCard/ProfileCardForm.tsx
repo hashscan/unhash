@@ -23,6 +23,7 @@ interface ProfileCardFormProps {
 
 // TODO: handle new inputs when update in saved
 export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
+  const [initialized, setInitialized] = useState<boolean>(false) // fixes blinking on info set up
   // input values
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
@@ -37,12 +38,14 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
     setDescription(info.records.description || '')
     setWebsite(info.records.url || '')
     setTwitter(info.records['com.twitter'] || '')
+
+    setInitialized(true)
   }, [info])
 
   // TODO: fix blink on info load with "" record changes
   // save changes (can be optimized!)
   const changedRecords: DomainRecords = useMemo(() => {
-    if (!info) return {}
+    if (!info || !initialized) return {}
 
     const oldRecords = info.records
     const changes: DomainRecords = {}
@@ -53,7 +56,7 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
     if (twitter !== oldRecords['com.twitter']) changes['com.twitter'] = twitter
 
     return changes
-  }, [info, name, description, website, twitter])
+  }, [initialized, info, name, description, website, twitter])
 
   // update records transaction
   const {
@@ -68,7 +71,7 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
   // TODO: show error
 
   const hasChanges = Object.keys(changedRecords).length > 0
-  const inputsDisabled = !info || isUpdating
+  const inputsDisabled = !initialized || isUpdating
 
   return (
     <div className={styles.form}>
