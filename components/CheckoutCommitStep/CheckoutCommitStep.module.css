@@ -11,11 +11,11 @@
   color: var(--color-text);
   font: var(--type-md);
   letter-spacing: var(--ls-md);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .subheader {
-  /* color: var(--color-text-secondary); */
+  color: var(--color-text-secondary);
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
   margin-bottom: 24px;
@@ -169,12 +169,15 @@
 
   display: flex;
   align-items: center;
-  column-gap: 24px;
-  justify-content: space-between;
+  column-gap: 20px;
 
   padding: 28px 32px;
   cursor: pointer;
   user-select: none;
+}
+
+.additionalHeader > span {
+  flex: 1 1;
 }
 
 .additionalContent {
@@ -190,6 +193,11 @@
 .additionalHeader:hover .chevronButton,
 .additionalExpanded .chevronButton {
   color: var(--color-slate-2);
+}
+
+.additionalIcon {
+  color: var(--color-slate-1);
+  width: 22px;
 }
 
 .chevron {

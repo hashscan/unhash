@@ -13,7 +13,7 @@ import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
-import { Chevron } from 'components/icons'
+import { Chevron, Tool } from 'components/icons'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -61,7 +61,9 @@ export const CheckoutCommitStep = ({
     <div className={styles.container}>
       <div className={styles.formGroup}>
         <div className={styles.header}>Registration period</div>
-        <div className={styles.subheader}>Buy more years now to save on fees</div>
+        <div className={styles.subheader}>
+          By choosing a longer period, you can save on transaction fees later on.
+        </div>
         <div className={styles.years}>
           {YEAR_BUTTONS.map((year) => (
             <div
@@ -79,7 +81,8 @@ export const CheckoutCommitStep = ({
 
       <div className={clsx(styles.additional, { [styles.additionalExpanded]: showAdvanced })}>
         <div className={styles.additionalHeader} onClick={() => setShowAdvanced((t) => !t)}>
-          Advanced Settings
+          <Tool className={styles.additionalIcon} />
+          <span>Advanced Settings</span>
           <div className={styles.chevronButton}>
             <Chevron className={styles.chevron} />
           </div>
