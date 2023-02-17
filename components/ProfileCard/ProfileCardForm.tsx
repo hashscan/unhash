@@ -60,15 +60,15 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
     return records
   }, [initialized, info, name, description, website, twitter])
 
+  // TODO: don't show user rejected error
+  const onError = (error: Error) => notify(error.message, { status: 'error' })
+  const onSuccess = () => notify('Your profile has been updated!', { status: 'info' })
   // update records transaction
-  const onError = (error: Error) => {
-    // TODO: don't show user rejected error
-    notify(error.message, { status: 'error' })
-  }
   const { sendUpdate, isLoading: isUpdating } = useSendUpdateRecords({
     domain,
     records: changes,
-    onError
+    onError,
+    onSuccess
   })
   const save = () => {
     if (typeof sendUpdate === 'undefined') return
