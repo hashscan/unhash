@@ -9,17 +9,17 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction
 } from 'wagmi'
-import { useNotifier } from './useNotifier'
 
 export const useSendUpdateRecords = ({
   domain,
-  records
+  records,
+  onError
 }: {
   domain: Domain
   records: DomainRecords
+  onError?: (e: Error) => void
 }) => {
   const chainId = useChainId()
-  const notify = useNotifier() // TODO: handle by a hook user
 
   const resolverAddress = ETH_RESOLVER_ADDRESS.get(toNetwork(chainId))
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })! // must always be defined
@@ -47,7 +47,7 @@ export const useSendUpdateRecords = ({
     isLoading: isWriteLoading
   } = useContractWrite({
     ...config,
-    onError: (e) => notify(e.message, { status: 'error' })
+    onError: onError
   })
 
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({

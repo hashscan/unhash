@@ -15,6 +15,7 @@ import {
 
 import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
 import { DomainInfo } from 'lib/api'
+import { useNotifier } from 'lib/hooks/useNotifier'
 
 interface ProfileCardFormProps {
   domain: Domain
@@ -23,7 +24,8 @@ interface ProfileCardFormProps {
 
 // TODO: handle new inputs when update in saved
 export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
-  const [initialized, setInitialized] = useState<boolean>(false) // fixes blinking on info set up
+  const notify = useNotifier()
+
   // input values
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
@@ -31,6 +33,7 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
   const [twitter, setTwitter] = useState<string>('')
 
   // initialize from api
+  const [initialized, setInitialized] = useState<boolean>(false) // fixes blinking on info set up
   useEffect(() => {
     if (!info) return
 
@@ -42,35 +45,37 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
     setInitialized(true)
   }, [info])
 
-  // TODO: fix blink on info load with "" record changes
   // save changes (can be optimized!)
-  const changedRecords: DomainRecords = useMemo(() => {
+  const changes: DomainRecords = useMemo(() => {
     if (!info || !initialized) return {}
 
     const oldRecords = info.records
-    const changes: DomainRecords = {}
+    const records: DomainRecords = {}
 
-    if (name !== oldRecords.name) changes.name = name
-    if (description !== oldRecords.description) changes.description = description
-    if (website !== oldRecords.url) changes.url = website
-    if (twitter !== oldRecords['com.twitter']) changes['com.twitter'] = twitter
+    if (name !== oldRecords.name) records.name = name
+    if (description !== oldRecords.description) records.description = description
+    if (website !== oldRecords.url) records.url = website
+    if (twitter !== oldRecords['com.twitter']) records['com.twitter'] = twitter
 
-    return changes
+    return records
   }, [initialized, info, name, description, website, twitter])
 
   // update records transaction
-  const {
-    sendUpdate,
-    isLoading: isUpdating,
-    error: updateError
-  } = useSendUpdateRecords({ domain, records: changedRecords })
+  const onError = (error: Error) => {
+    // TODO: don't show user rejected error
+    notify(error.message, { status: 'error' })
+  }
+  const { sendUpdate, isLoading: isUpdating } = useSendUpdateRecords({
+    domain,
+    records: changes,
+    onError
+  })
   const save = () => {
     if (typeof sendUpdate === 'undefined') return
     sendUpdate()
   }
-  // TODO: show error
 
-  const hasChanges = Object.keys(changedRecords).length > 0
+  const hasChanges = Object.keys(changes).length > 0
   const inputsDisabled = !initialized || isUpdating
 
   return (
