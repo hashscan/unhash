@@ -1,19 +1,19 @@
-import { Domain, toNetwork } from 'lib/types'
 import React, { useCallback, useState } from 'react'
-import styles from './CheckoutCommitStep.module.css'
-import ui from 'styles/ui.module.css'
-import { EthereumIcon, Gas } from 'components/icons'
+import { useAccount, useChainId } from 'wagmi'
 import clsx from 'clsx'
+
+import { Domain, toNetwork } from 'lib/types'
+import styles from './CheckoutCommitStep.module.css'
 import { formatNetworkFee } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
-import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
-import { Chevron, Tool } from 'components/icons'
+import { Tool as ToolIcon, EthereumIcon, Gas } from 'components/icons'
+import { AdditionalInfo } from 'components/AdditionalInfo/AdditionalInfo'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -79,32 +79,20 @@ export const CheckoutCommitStep = ({
         </div>
       </div>
 
-      <div className={clsx(styles.additional, { [styles.additionalExpanded]: showAdvanced })}>
-        <div className={styles.additionalHeader} onClick={() => setShowAdvanced((t) => !t)}>
-          <Tool className={styles.additionalIcon} />
-          <span>Advanced Settings</span>
-          <div className={styles.chevronButton}>
-            <Chevron className={styles.chevron} />
-          </div>
+      <AdditionalInfo header="Advanced Settings" icon={<ToolIcon />}>
+        <div className={styles.subheader}>
+          You can specify a wallet address of the <b>domain owner</b>. For example, if you are
+          buying this domain for another person.
         </div>
 
-        {showAdvanced && (
-          <div className={styles.additionalContent}>
-            <div className={styles.subheader}>
-              You can specify a wallet address of the <b>domain owner</b>. For example, if you are
-              buying this domain for another person.
-            </div>
-
-            <AddressInput
-              icon={<EthereumIcon />}
-              className={styles.ownerInput}
-              placeholder="0xd07d...54aB"
-              autoComplete="off"
-              onAddressChange={(address) => setOwner(address)}
-            />
-          </div>
-        )}
-      </div>
+        <AddressInput
+          icon={<EthereumIcon />}
+          className={styles.ownerInput}
+          placeholder="0xd07d...54aB"
+          autoComplete="off"
+          onAddressChange={(address) => setOwner(address)}
+        />
+      </AdditionalInfo>
 
       {/* TODO: Profile */}
       {/* <div>
