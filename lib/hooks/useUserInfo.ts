@@ -5,6 +5,7 @@ import { useAccount, useChainId } from 'wagmi'
 
 /**
  * Fetches user domains info for currently connected wallet.
+ * Server error are ignored.
  * @returns user info if wallet connected
  */
 export const useCurrentUserInfo = (): UserInfo | undefined => {
