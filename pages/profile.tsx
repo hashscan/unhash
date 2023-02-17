@@ -21,6 +21,8 @@ const Profile: PageWithLayout = () => {
 
   return (
     <main className={styles.main}>
+      <div className={styles.title}>Profile</div>
+      <div className={styles.address}>{address ? formatAddress(address, 6) : null}</div>
       {/* Wallet */}
       <div className={styles.header}>Your wallet</div>
       <div className={styles.subheader}>
@@ -29,7 +31,6 @@ const Profile: PageWithLayout = () => {
         below.`
           : 'You are not connected to any ENS profile.'}
       </div>
-      <div className={styles.address}>{address ? formatAddress(address, 4) : null}</div>
       <div className={styles.primary} onClick={() => alert('ты лох')}>
         <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
         <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
@@ -60,15 +61,20 @@ const Profile: PageWithLayout = () => {
         </button>
       </div> */}
 
-      <div className={styles.divider}></div>
-
-      {/* ENS profile */}
-      <div className={styles.header}>ENS profile</div>
-      <div className={styles.subheader}>
-        This is a public profile linked to your wallet. People can find you by your ENS name.
-      </div>
+      {/* ENS profile layout */}
       {address && userInfo?.primaryEns && (
-        <ProfileCard network={toNetwork(chainId)} address={address} domain={userInfo.primaryEns} />
+        <>
+          <div className={styles.divider}></div>
+          <div className={styles.header}>ENS profile</div>
+          <div className={styles.subheader}>
+            This is a public profile linked to your wallet. People can find you by your ENS name.
+          </div>
+          <ProfileCard
+            network={toNetwork(chainId)}
+            address={address}
+            domain={userInfo.primaryEns}
+          />
+        </>
       )}
     </main>
   )
