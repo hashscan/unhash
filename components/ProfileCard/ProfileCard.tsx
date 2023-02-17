@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { FormEvent, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styles from './ProfileCard.module.css'
 import ui from 'styles/ui.module.css'
 import clsx from 'clsx'
-import { Domain, Fields, Network, toChain } from 'lib/types'
+import { Domain, DomainRecords, Network, toChain } from 'lib/types'
 import { Address, useEnsAvatar } from 'wagmi'
 import { Input } from 'components/ui/Input/Input'
 import {
@@ -13,8 +13,8 @@ import {
   Twitter as TwitterIcon,
   ProgressBar
 } from 'components/icons'
-import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
+import { useSendSetFields } from 'lib/hooks/useSendSetFields'
 
 interface ProfileCardProps {
   network: Network
@@ -46,15 +46,45 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
     }),
     [address, info]
   )
-  useEffect(() => {}, [info])
 
-  // // TODO: add other values
-  // // input values
-  // const [name, setName] = useState<string>('')
-  // // TODO: save and validate using React state
-  const [fields] = useState<Fields>({})
-  const { isLoading, error } = useSendSetFields({ domain, fields })
-  const save = () => {}
+  // TODO: create ProfileCardForm component
+  // input values
+  const [name, setName] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
+  const [website, setWebsite] = useState<string>('')
+  const [twitter, setTwitter] = useState<string>('')
+  // initialize from api
+  useEffect(() => {
+    if (!info) return
+
+    setName(info.records.name || '')
+    setDescription(info.records.description || '')
+    setWebsite(info.records.url || '')
+    setTwitter(info.records['com.twitter'] || '')
+  }, [info])
+
+  // save changes (can be optimized!)
+  const changedRecords: DomainRecords = useMemo(() => {
+    if (!info) return {}
+
+    const oldRecords = info.records
+    const changes: DomainRecords = {}
+
+    if (name !== oldRecords.name) changes.name = name
+    if (description !== oldRecords.description) changes.description = description
+    if (website !== oldRecords.url) changes.url = website
+    if (twitter !== oldRecords['com.twitter']) changes['com.twitter'] = twitter
+
+    return changes
+  }, [info, name, description, website, twitter])
+
+  const hasChanges = Object.keys(changedRecords).length > 0
+
+  // const { isLoading, error } = useSendSetFields({ domain, fields })
+  const isLoading = false
+  const save = () => {
+    console.log('hey')
+  }
 
   return (
     <div className={styles.card}>
@@ -78,8 +108,8 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           icon={<ProfileIcon />}
           autoComplete="off"
           disabled={!info}
-          value={info?.records?.name}
-          // onChange={(e) => setName(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           label="Description"
@@ -87,8 +117,8 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           icon={<DescriptionIcon />}
           autoComplete="off"
           disabled={!info}
-          value={info?.records?.description}
-          // onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <Input
           label="Website"
@@ -96,8 +126,8 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           icon={<GlobeIcon />}
           autoComplete="off"
           disabled={!info}
-          value={info?.records?.url}
-          // onChange={(e) => setWebsite(e.target.value)}
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
         />
         <Input
           label="Twitter"
@@ -105,16 +135,15 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           icon={<TwitterIcon />}
           autoComplete="off"
           disabled={!info}
-          value={info?.records?.['com.twitter']}
-          // onChange={(e) => setTwitter(e.target.value)}
+          value={twitter}
+          onChange={(e) => setTwitter(e.target.value)}
         />
 
         {/* Save button */}
-        {error && <div className={ui.error}>{error.message}</div>}
         <button
-          disabled={true}
+          disabled={!hasChanges}
           className={clsx(styles.saveButton, ui.button)}
-          onClick={() => save()}
+          onClick={save}
         >
           {isLoading ? <ProgressBar color="white" /> : 'Save'}
         </button>
