@@ -34,10 +34,7 @@ export const useSendUpdateRecords = ({
     abi: ETH_RESOLVER_ABI,
     functionName: 'multicall',
     enabled: encoded.length !== 0 && Boolean(domain),
-    args: [encoded],
-    overrides: {
-      gasLimit: BigNumber.from(250_000) // TODO: set proper gas limit
-    }
+    args: [encoded]
   })
 
   const {
