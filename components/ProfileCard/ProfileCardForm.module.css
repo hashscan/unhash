@@ -1,11 +1,20 @@
-.form {
+.form {}
+
+.inputs {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 24px;
+  padding: 16px 24px;
+}
+
+.footer {
+  padding: 12px 24px;
+  background-color: var(--color-slate-8);
+  border-top: 1px solid var(--color-slate-6);
 }
 
 .saveButton {
   width: 160px;
-  margin: 8px 0 0 auto;
+  display: block;
+  margin: 0 0 0 auto;
 }
