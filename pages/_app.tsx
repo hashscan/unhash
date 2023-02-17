@@ -24,25 +24,42 @@ const rainbowkitTheme: Theme = {
   fonts: { body: 'var(--font-ui)' }
 }
 
+/* TODO: adjust these before the release! */
+const publicURL = 'https://xens.vercel.app'
+
+const metaTitle = 'Get .ETH Domain For Your Ethereum Address'
+
+const metaDescription =
+  'Simple tool for buying Etherium Name Service domains. ' +
+  'Set up your public .eth profile to stand out in Metaverse ' +
+  '(zero crypto knowledge required!)'
+
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <title>Get .ETH Domain For Your Ethereum Address</title>
+        <title>{metaTitle}</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" key="favicon" type="image/svg+xml" href="/favicon.svg" />
 
-        <meta
-          name="description"
-          key="meta-description"
-          content={
-            'Simple tool for buying Etherium Name Service domains. ' +
-            'Set up your public .eth profile to stand out in Metaverse ' +
-            '(zero crypto knowledge required!)'
-          }
-        />
+        <meta name="description" key="meta-description" content={metaDescription} />
+
+        <meta property="og:url" content={publicURL} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content="/og-preview.png" />
+
+        {/* `summary_large_image` is an extended card preview, if this isn't set
+            twitter will display it in as a regular small link preview
+        */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@hashscanxyz" />
+        <meta name="twitter:title" content={metaTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content="/og-preview.png" />
       </Head>
 
       <style jsx global>
