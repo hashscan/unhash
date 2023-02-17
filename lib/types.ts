@@ -25,6 +25,17 @@ export function toNetwork(chainId: number): Network {
   }
 }
 
+// Records currently supported by API
+export type DomainRecords = {
+  eth?: string
+  name?: string
+  description?: string
+  email?: string
+  url?: string
+  'com.twitter'?: string
+}
+
+// TODO: remove this?
 export type Fields = Partial<{
   name: string
   email: `${string}@${string}.${string}`
