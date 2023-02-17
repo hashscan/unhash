@@ -11,14 +11,14 @@ import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
-  const { address, isDisconnected } = useAccount()
+  const { address, isConnecting, isDisconnected } = useAccount()
 
   // TODO: do all this only when address available
   const userInfo = useCurrentUserInfo()
   // TODO: then, do card only when address with primary ENS domain available
   // TODO: fetch primary ENS domain for userInfo?.primaryEns
 
-  if (isDisconnected) return <AuthLayout />
+  if (isConnecting || isDisconnected) return <AuthLayout />
   // TODO: skeleton
   if (!userInfo) return <p>Fetching profile from API...</p>
 
