@@ -13,6 +13,8 @@ import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
+import { Chevron } from 'components/icons'
+
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
 interface CheckoutCommitStepProps {
@@ -52,35 +54,53 @@ export const CheckoutCommitStep = ({
     sendCommit()
   }, [sendCommit, owner])
 
+  const [showAdvanced, setShowAdvanced] = useState(false)
+
   // TODO: show connect wallet button if not connected
   return (
     <div className={styles.container}>
-      <div className={styles.header}>Registration period</div>
-      <div className={styles.subheader}>Buy more years now to save on fees</div>
-      <div className={styles.years}>
-        {YEAR_BUTTONS.map((year) => (
-          <div
-            key={year}
-            className={clsx(styles.yearButton, {
-              [styles.yearButtonSelected]: year === durationYears
-            })}
-            onClick={() => onDurationChanged?.(year)}
-          >
-            {pluralize('year', year)}
-          </div>
-        ))}
+      <div className={styles.formGroup}>
+        <div className={styles.header}>Registration period</div>
+        <div className={styles.subheader}>Buy more years now to save on fees</div>
+        <div className={styles.years}>
+          {YEAR_BUTTONS.map((year) => (
+            <div
+              key={year}
+              className={clsx(styles.yearButton, {
+                [styles.yearButtonSelected]: year === durationYears
+              })}
+              onClick={() => onDurationChanged?.(year)}
+            >
+              {pluralize('year', year)}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className={styles.header}>Domain Ownership</div>
-      <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
-      <AddressInput
-        icon={<EthereumIcon />}
-        className={styles.ownerInput}
-        placeholder="0xd07d...54aB"
-        autoComplete="off"
-        onAddressChange={(address) => setOwner(address)}
-      />
+      <div className={clsx(styles.additional, { [styles.additionalExpanded]: showAdvanced })}>
+        <div className={styles.additionalHeader} onClick={() => setShowAdvanced((t) => !t)}>
+          Advanced Settings
+          <div className={styles.chevronButton}>
+            <Chevron className={styles.chevron} />
+          </div>
+        </div>
 
+        {showAdvanced && (
+          <div className={styles.additionalContent}>
+            <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
+            <AddressInput
+              icon={<EthereumIcon />}
+              className={styles.ownerInput}
+              placeholder="0xd07d...54aB"
+              autoComplete="off"
+              onAddressChange={(address) => setOwner(address)}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* TODO: Profile */}
+      {/* <div>
       <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>
         Configure public ENS profile for this domain if you are setting it for your wallet. You can
@@ -116,6 +136,7 @@ export const CheckoutCommitStep = ({
         autoComplete="off"
         className={clsx(styles.profileInput, ui.input, styles.profileInputLast)}
       />
+      </div> */}
 
       <div className={styles.buttonContainer}>
         <LoadingButton
