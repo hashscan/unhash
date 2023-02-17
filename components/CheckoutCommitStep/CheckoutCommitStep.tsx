@@ -87,7 +87,11 @@ export const CheckoutCommitStep = ({
 
         {showAdvanced && (
           <div className={styles.additionalContent}>
-            <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
+            <div className={styles.subheader}>
+              You can specify a wallet address of the <b>domain owner</b>. For example, if you are
+              buying this domain for another person.
+            </div>
+
             <AddressInput
               icon={<EthereumIcon />}
               className={styles.ownerInput}

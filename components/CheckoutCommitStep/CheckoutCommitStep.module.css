@@ -162,10 +162,6 @@
   transition: var(--ease-200);
 }
 
-.additionalExpanded {
-  border-color: var(--color-slate-4);
-}
-
 .additionalHeader {
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
@@ -183,7 +179,7 @@
 
 .additionalContent {
   padding: 32px 28px;
-  border-top: 1px solid var(--color-slate-4);
+  border-top: 1px solid var(--color-slate-5);
 }
 
 .additionalHeader:hover,
