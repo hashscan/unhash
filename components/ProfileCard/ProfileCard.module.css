@@ -4,7 +4,7 @@
 
   box-shadow: var(--shadow-sm);
   border-radius: var(--radii-lg);
-  border: 1px solid var(--color-slate-6);
+  border: 1px solid var(--color-slate-5);
 }
 
 .info {
@@ -22,6 +22,7 @@
   width: 56px;
   background-color: var(--color-slate-7);
   border: 1px solid var(--color-slate-6);
+  user-select: none;
 }
 
 .avatar {
@@ -54,6 +55,7 @@
   border-radius: var(--radii-lg);
   border: 1px solid var(--color-slate-6);
   padding: 2px 12px;
+  user-select: none;
 }
 
 .form {

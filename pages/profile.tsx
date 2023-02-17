@@ -14,7 +14,6 @@ const Profile: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
 
   // TODO: do all this only when address available
-
   const userInfo = useCurrentUserInfo()
   // TODO: then, do card only when address with primary ENS domain available
   // TODO: fetch primary ENS domain for userInfo?.primaryEns

@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import styles from './ProfileCard.module.css'
 import ui from 'styles/ui.module.css'
 import clsx from 'clsx'
-import { Domain, Fields, Network } from 'lib/types'
+import { Domain, Fields, Network, toChain } from 'lib/types'
 import { Address, useEnsAvatar } from 'wagmi'
 import { Input } from 'components/ui/Input/Input'
 import {
@@ -14,6 +14,7 @@ import {
   ProgressBar
 } from 'components/icons'
 import { useSendSetFields } from 'lib/hooks/useSendSetFields'
+import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 
 interface ProfileCardProps {
   network: Network
@@ -21,9 +22,10 @@ interface ProfileCardProps {
   domain: Domain
 }
 
-// TODO: display avatar from selected domain not current wallet
-const Avatar = ({ address }: { address: Address }) => {
-  const { data: avatar } = useEnsAvatar({ chainId: 1, address })
+// Later avatar should be resolved on API side
+const Avatar = ({ network, address }: { network: Network; address: Address }) => {
+  // TODO: handle loading and empty state
+  const { data: avatar } = useEnsAvatar({ chainId: toChain(network).id, address })
 
   return (
     <div className={styles.avatarWrapper}>
@@ -35,59 +37,57 @@ const Avatar = ({ address }: { address: Address }) => {
 }
 
 export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
-  // TODO: add other values
-  // input values
-  const [name, setName] = useState<string>('')
+  const info = useDomainInfo(network, domain)
 
-  // TODO: save and validate using React state
-  const [fields, setFields] = useState<Fields>({})
-  const { isLoading, write, error } = useSendSetFields({ domain, fields })
-  // const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
+  const labels = useMemo(
+    () => ({
+      isOwner: info?.registrant?.toLowerCase() === address.toLowerCase(),
+      isController: info?.controller?.toLowerCase() === address.toLowerCase()
+    }),
+    [address, info]
+  )
+  useEffect(() => {}, [info])
 
-  //   if (e.currentTarget.reportValidity()) {
-  //     const fd = new FormData(e.currentTarget)
-  //     const f: Fields = {}
-
-  //     for (const [k, v] of fd.entries()) {
-  //       f[k] = v as string
-  //     }
-
-  //     setFields(f)
-
-  //     if (typeof write !== 'undefined') write()
-  //   }
-  // }
-
-  const onSave = (e: FormEvent<HTMLFormElement>) => {}
+  // // TODO: add other values
+  // // input values
+  // const [name, setName] = useState<string>('')
+  // // TODO: save and validate using React state
+  const [fields] = useState<Fields>({})
+  const { isLoading, error } = useSendSetFields({ domain, fields })
+  const save = () => {}
 
   return (
     <div className={styles.card}>
+      {info && labels && <></>}
       <div className={styles.info}>
-        <Avatar address={address} />
+        <Avatar network={network} address={address} />
         <div>
           <div className={styles.domain}>{domain}</div>
           <div className={styles.labels}>
             <div className={styles.label}>Primary ENS</div>
-            <div className={styles.label}>Owner</div>
-            <div className={styles.label}>Controller</div>
+            {labels.isOwner && <div className={styles.label}>Owner</div>}
+            {labels.isController && <div className={styles.label}>Controller</div>}
           </div>
         </div>
       </div>
 
-      <form className={styles.form} onSubmit={onSave}>
+      <form className={styles.form}>
         <Input
           label="Name"
           placeholder="Mastodon"
           icon={<ProfileIcon />}
           autoComplete="off"
-          onChange={(e) => setName(e.target.value)}
+          disabled={!info}
+          value={info?.records?.name}
+          // onChange={(e) => setName(e.target.value)}
         />
         <Input
           label="Description"
           placeholder="Mastodon"
           icon={<DescriptionIcon />}
           autoComplete="off"
+          disabled={!info}
+          value={info?.records?.description}
           // onChange={(e) => setDescription(e.target.value)}
         />
         <Input
@@ -95,6 +95,8 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           placeholder="https://mastodon.social"
           icon={<GlobeIcon />}
           autoComplete="off"
+          disabled={!info}
+          value={info?.records?.url}
           // onChange={(e) => setWebsite(e.target.value)}
         />
         <Input
@@ -102,12 +104,18 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           placeholder="@mastodon"
           icon={<TwitterIcon />}
           autoComplete="off"
+          disabled={!info}
+          value={info?.records?.['com.twitter']}
           // onChange={(e) => setTwitter(e.target.value)}
         />
 
         {/* Save button */}
         {error && <div className={ui.error}>{error.message}</div>}
-        <button type="submit" disabled={isLoading} className={clsx(styles.saveButton, ui.button)}>
+        <button
+          disabled={true}
+          className={clsx(styles.saveButton, ui.button)}
+          onClick={() => save()}
+        >
           {isLoading ? <ProgressBar color="white" /> : 'Save'}
         </button>
       </form>
