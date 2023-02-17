@@ -13,11 +13,13 @@ import {
 export const useSendUpdateRecords = ({
   domain,
   records,
-  onError
+  onError,
+  onSuccess
 }: {
   domain: Domain
   records: DomainRecords
   onError?: (e: Error) => void
+  onSuccess?: () => void
 }) => {
   const chainId = useChainId()
 
@@ -44,11 +46,12 @@ export const useSendUpdateRecords = ({
     isLoading: isWriteLoading
   } = useContractWrite({
     ...config,
-    onError: onError
+    onError
   })
 
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
-    hash: data?.hash
+    hash: data?.hash,
+    onSuccess
   })
 
   return {
