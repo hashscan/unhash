@@ -7,12 +7,24 @@ import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
+import { useMemo, useRef, useState } from 'react'
+import { ProfileDomainItem } from 'components/ProfileDomainItem/ProfileDomainItem'
+import clsx from 'clsx'
+import { useOnClickOutside } from 'usehooks-ts'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
   const { address, isDisconnected } = useAccount()
-
   const userInfo = useCurrentUserInfo()
+
+  // TODO: move to a component
+  // TODO: set actually available for primary ENS
+  // TODO: make floating dropdown
+  const [isOpen, setOpen] = useState<boolean>(false)
+  const availableDomains = useMemo(() => userInfo?.domains.controlled || [], [userInfo])
+  const onPrimaryClick = () => setOpen(!isOpen)
+  const primaryDomainListRef = useRef<HTMLDivElement>(null)
+  useOnClickOutside(primaryDomainListRef, () => setOpen(false))
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
@@ -31,10 +43,25 @@ const Profile: PageWithLayout = () => {
         below.`
           : 'You are not connected to any ENS profile.'}
       </div>
-      <div className={styles.primary} onClick={() => alert('ты лох')}>
-        <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
-        <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
-        <ArrowDown className={styles.primaryArrow} />
+
+      {/* TODO: move to a component */}
+      <div ref={primaryDomainListRef} className={styles.primaryContainer}>
+        <div className={styles.primary} onClick={() => onPrimaryClick()}>
+          <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
+          <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
+          <ArrowDown className={styles.primaryArrow} />
+        </div>
+        <div className={clsx(styles.primaryDomainList, { [styles.primaryDomainListOpen]: isOpen })}>
+          {availableDomains.map((domain) => {
+            return (
+              <ProfileDomainItem
+                domain={domain}
+                isPrimary={domain === userInfo.primaryEns}
+                key={domain}
+              />
+            )
+          })}
+        </div>
       </div>
 
       {/* Primary ENS select */}

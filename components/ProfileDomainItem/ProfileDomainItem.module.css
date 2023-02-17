@@ -1,0 +1,17 @@
+.item {
+  padding: 8px 24px;
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  color: var(--color-text-primary);
+  user-select: none;
+  overflow: hidden;
+}
+
+.itemSelected {
+  font-weight: 500;
+}
+
+.item:hover {
+  cursor: pointer;
+  background-color: var(--color-slate-7);
+}
