@@ -14,7 +14,8 @@ import {
   ProgressBar
 } from 'components/icons'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
-import { useSendSetFields } from 'lib/hooks/useSendSetFields'
+import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
+import { useIsMounted } from 'usehooks-ts'
 
 interface ProfileCardProps {
   network: Network
@@ -48,6 +49,7 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
   )
 
   // TODO: create ProfileCardForm component
+  // TODO: handle new inputs when update in saved
   // input values
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
@@ -63,6 +65,7 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
     setTwitter(info.records['com.twitter'] || '')
   }, [info])
 
+  // TODO: fix blink on info load with "" record changes
   // save changes (can be optimized!)
   const changedRecords: DomainRecords = useMemo(() => {
     if (!info) return {}
@@ -78,13 +81,20 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
     return changes
   }, [info, name, description, website, twitter])
 
-  const hasChanges = Object.keys(changedRecords).length > 0
-
-  // const { isLoading, error } = useSendSetFields({ domain, fields })
-  const isLoading = false
+  // update records transaction
+  const {
+    sendUpdate,
+    isLoading: isUpdating,
+    error: updateError
+  } = useSendUpdateRecords({ domain, records: changedRecords })
   const save = () => {
-    console.log('hey')
+    if (typeof sendUpdate === 'undefined') return
+    sendUpdate()
   }
+  // TODO: show error
+
+  const hasChanges = Object.keys(changedRecords).length > 0
+  const inputsDisabled = !info || isUpdating
 
   return (
     <div className={styles.card}>
@@ -101,13 +111,13 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
         </div>
       </div>
 
-      <form className={styles.form}>
+      <div className={styles.form}>
         <Input
           label="Name"
           placeholder="Mastodon"
           icon={<ProfileIcon />}
           autoComplete="off"
-          disabled={!info}
+          disabled={inputsDisabled}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -116,7 +126,7 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           placeholder="Mastodon"
           icon={<DescriptionIcon />}
           autoComplete="off"
-          disabled={!info}
+          disabled={inputsDisabled}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -125,7 +135,7 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           placeholder="https://mastodon.social"
           icon={<GlobeIcon />}
           autoComplete="off"
-          disabled={!info}
+          disabled={inputsDisabled}
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
         />
@@ -134,20 +144,19 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
           placeholder="@mastodon"
           icon={<TwitterIcon />}
           autoComplete="off"
-          disabled={!info}
+          disabled={inputsDisabled}
           value={twitter}
           onChange={(e) => setTwitter(e.target.value)}
         />
 
-        {/* Save button */}
         <button
-          disabled={!hasChanges}
+          disabled={inputsDisabled || !hasChanges}
           className={clsx(styles.saveButton, ui.button)}
           onClick={save}
         >
-          {isLoading ? <ProgressBar color="white" /> : 'Save'}
+          {isUpdating ? <ProgressBar color="white" /> : 'Save'}
         </button>
-      </form>
+      </div>
     </div>
   )
 }
