@@ -8,6 +8,7 @@ import { Domain } from 'lib/types'
 import React from 'react'
 import styles from './CheckoutOrder.module.css'
 import { OrderItem } from './OrderItem'
+import clsx from 'clsx'
 
 interface CheckoutOrderProps {
   domain: Domain
@@ -28,18 +29,23 @@ export const CheckoutOrder = ({ domain, duration }: CheckoutOrderProps) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Your order</div>
-      <OrderItem title={`${domain}`} hint={pluralize('year', durationYears)} price={domainPrice} />
+      <div className={styles.title}>Your Order</div>
+
+      <OrderItem
+        className={styles.line}
+        title={`${domain}`}
+        hint={pluralize('year', durationYears)}
+        price={domainPrice}
+      />
+
       <div className={styles.line}>
-        <span>Estimated network fees</span>
-        <span>{formatNetworkFee(networkFees)}</span>
+        <div className={styles.fees}>Estimated network fees</div>
+        <div className={styles.fees}>{formatNetworkFee(networkFees)}</div>
       </div>
 
-      <div className={styles.divider} />
-
-      <div className={styles.line}>
-        <span className={styles.totalLabel}>Estimated total</span>
-        <span className={styles.totalValue}>{formatUSDPrice(totalPrice)}</span>
+      <div className={clsx(styles.line, styles.lineTotal)}>
+        <div className={styles.totalLabel}>Estimated total</div>
+        <div className={styles.totalValue}>{formatUSDPrice(totalPrice)}</div>
       </div>
     </div>
   )
