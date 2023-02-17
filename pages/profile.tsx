@@ -4,21 +4,18 @@ import styles from './profile.module.css'
 import { toNetwork } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
-
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
-  const { address, isConnecting, isDisconnected } = useAccount()
+  const { address, isDisconnected } = useAccount()
 
-  // TODO: do all this only when address available
   const userInfo = useCurrentUserInfo()
-  // TODO: then, do card only when address with primary ENS domain available
-  // TODO: fetch primary ENS domain for userInfo?.primaryEns
 
-  if (isConnecting || isDisconnected) return <AuthLayout />
+  // TODO: handle isConnecting state when metamask asked to log in
+  if (isDisconnected) return <AuthLayout />
   // TODO: skeleton
   if (!userInfo) return <p>Fetching profile from API...</p>
 
