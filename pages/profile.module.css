@@ -1,5 +1,6 @@
 .main {
-  max-width: 496px;
+  --profile-width: 496px;
+  max-width: var(--profile-width);
   margin: 40px 0;
   padding: 0 0;
   display: flex;
@@ -37,6 +38,33 @@
   margin-bottom: 24px;
 }
 
+.primaryContainer {
+  position: relative;
+}
+
+.primaryDomainList {
+  display: none;
+  position: absolute;
+  width: var(--profile-width);
+  max-height: 320px;
+  overflow: scroll;
+
+  margin-top: -2px;
+
+  background-color: var(--color-background);
+  border-radius: 0 0 var(--radii-sm) var(--radii-sm);
+  border: 1px solid var(--color-slate-5);
+  box-shadow: var(--shadow-lg);
+}
+
+.primaryDomainListOpen {
+  display: block;
+}
+
+.primaryDomainList>div:not(:last-child) {
+  border-bottom: 1px solid var(--color-slate-5);
+}
+
 .primary {
   border-radius: var(--radii-sm);
   border: 1px solid var(--color-slate-5);
@@ -47,6 +75,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  user-select: none;
 }
 
 .primary:hover {
@@ -72,18 +101,6 @@
   color: var(--color-slate-4);
   width: 20px;
   height: 20px;
-}
-
-.domains {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 16px;
-}
-
-.domains,
-.form {
-  width: 100%;
 }
 
 .divider {
