@@ -1,3 +1,8 @@
+import { useEffect, useReducer, useState } from 'react'
+import { GetServerSideProps } from 'next'
+import Head from 'next/head'
+import { useTimeout } from 'usehooks-ts'
+
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
@@ -9,10 +14,8 @@ import { COMMIT_WAIT_MS, YEAR_IN_SECONDS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
 import { Domain, Registration } from 'lib/types'
 import { clamp, parseDomainName, validateDomain } from 'lib/utils'
-import { GetServerSideProps } from 'next'
-import { useEffect, useReducer, useState } from 'react'
+
 import styles from 'styles/checkout.module.css'
-import { useTimeout } from 'usehooks-ts'
 
 interface CheckoutProps {
   domain: Domain
@@ -62,33 +65,39 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
   }
 
   return (
-    <div className={styles.checkout}>
-      {/* left content */}
-      <main className={styles.main}>
-        <CheckoutProgress className={styles.progress} step={step} domain={domain} />
+    <>
+      <Head>
+        <title>{`${domain} / ENS Domain Registration`}</title>
+      </Head>
 
-        <div className={styles.content}>
-          {step === 'initializing' && <div></div>}
-          {step === 'commit' && (
-            <CheckoutCommitStep
-              domain={domain}
-              durationYears={durationYears}
-              onDurationChanged={onDurationChanged}
-            />
-          )}
-          {step === 'wait' && reg?.commitTimestamp && (
-            <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
-          )}
-          {step === 'register' && <CheckoutRegisterStep domain={domain} />}
-          {step === 'success' && <CheckoutSuccessStep domain={domain} />}
+      <div className={styles.checkout}>
+        {/* left content */}
+        <main className={styles.main}>
+          <CheckoutProgress className={styles.progress} step={step} domain={domain} />
+
+          <div className={styles.content}>
+            {step === 'initializing' && <div></div>}
+            {step === 'commit' && (
+              <CheckoutCommitStep
+                domain={domain}
+                durationYears={durationYears}
+                onDurationChanged={onDurationChanged}
+              />
+            )}
+            {step === 'wait' && reg?.commitTimestamp && (
+              <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
+            )}
+            {step === 'register' && <CheckoutRegisterStep domain={domain} />}
+            {step === 'success' && <CheckoutSuccessStep domain={domain} />}
+          </div>
+        </main>
+
+        {/* right as a side bar */}
+        <div className={styles.right}>
+          <CheckoutOrder domain={domain} duration={duration} />
         </div>
-      </main>
-
-      {/* right as a side bar */}
-      <div className={styles.right}>
-        <CheckoutOrder domain={domain} duration={duration} />
       </div>
-    </div>
+    </>
   )
 }
 
