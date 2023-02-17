@@ -152,7 +152,7 @@ export const Profile = (props: BaseIconProps) => (
       <path
         d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
         stroke="currentColor"
-        stroke-width="2"
+        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -166,7 +166,7 @@ export const Description = (props: BaseIconProps) => (
       <path
         d="M3 12H17M3 6H21M3 18H21"
         stroke="currentColor"
-        stroke-width="2"
+        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -180,7 +180,7 @@ export const Globe = (props: BaseIconProps) => (
       <path
         d="M22 12C22 17.5228 17.5228 22 12 22M22 12C22 6.47715 17.5228 2 12 2M22 12H2M12 22C6.47715 22 2 17.5228 2 12M12 22C14.5013 19.2616 15.9228 15.708 16 12C15.9228 8.29203 14.5013 4.73835 12 2M12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2M2 12C2 6.47715 6.47715 2 12 2"
         stroke="currentColor"
-        stroke-width="2"
+        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -194,7 +194,7 @@ export const Twitter = (props: BaseIconProps) => (
       <path
         d="M23 3.00005C22.0424 3.67552 20.9821 4.19216 19.86 4.53005C19.2577 3.83756 18.4573 3.34674 17.567 3.12397C16.6767 2.90121 15.7395 2.95724 14.8821 3.2845C14.0247 3.61176 13.2884 4.19445 12.773 4.95376C12.2575 5.71308 11.9877 6.61238 12 7.53005V8.53005C10.2426 8.57561 8.50127 8.18586 6.93101 7.39549C5.36074 6.60513 4.01032 5.43868 3 4.00005C3 4.00005 -1 13 8 17C5.94053 18.398 3.48716 19.099 1 19C10 24 21 19 21 7.50005C20.9991 7.2215 20.9723 6.94364 20.92 6.67005C21.9406 5.66354 22.6608 4.39276 23 3.00005Z"
         stroke="currentColor"
-        stroke-width="2"
+        stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
