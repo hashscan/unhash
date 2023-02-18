@@ -8,7 +8,7 @@ import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ProfileDomainItem } from 'components/ProfileDomainItem/ProfileDomainItem'
 import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
@@ -32,6 +32,8 @@ const Profile: PageWithLayout = () => {
 
   // TODO: move to a component
   const [newDomain, setNewDomain] = useState<Domain | null>(null)
+  useEffect(() => setNewDomain(null), [chainId, address]) // reset on chain and address change
+
   const onSuccess = () => {
     window.location.reload()
     // so smart right?
