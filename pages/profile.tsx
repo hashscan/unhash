@@ -15,6 +15,7 @@ import { useOnClickOutside } from 'usehooks-ts'
 import Link from 'next/link'
 import { pluralize } from 'lib/pluralize'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
+import { PrimaryENSDropdown } from 'components/PrimaryENSDropdown/PrimaryENSDropdown'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -42,7 +43,7 @@ const Profile: PageWithLayout = () => {
     domain: newDomain,
     onSuccess
   })
-  const onDomainClick = (domain: string) => {
+  const onDomainSelect = (domain: Domain) => {
     setOpen(false)
     // TODO: fix types
     setNewDomain(domain === userInfo?.primaryEns ? null : (domain as Domain))
@@ -111,20 +112,13 @@ const Profile: PageWithLayout = () => {
             <ArrowDown className={styles.primaryArrow} />
           </div>
 
-          <div
-            className={clsx(styles.primaryDomainList, { [styles.primaryDomainListOpen]: isOpen })}
-          >
-            {availableDomains.map((domain) => {
-              return (
-                <ProfileDomainItem
-                  domain={domain}
-                  isPrimary={domain === userInfo.primaryEns}
-                  key={domain}
-                  onClick={() => onDomainClick(domain)}
-                />
-              )
-            })}
-          </div>
+          {/* TODO: show and hide */}
+          <PrimaryENSDropdown
+            className={clsx({ [styles.dropdownHidden]: !isOpen })}
+            domains={availableDomains}
+            primaryDomain={userInfo.primaryEns ? userInfo.primaryEns : undefined}
+            onDomainSelect={onDomainSelect}
+          />
 
           {newDomain && (
             <div>
