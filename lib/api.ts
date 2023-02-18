@@ -35,8 +35,8 @@ export type DomainListing = {
 export type UserInfo = {
   primaryEns: Domain | null
   domains: {
-    owned: string[]
-    controlled: string[]
+    owned: Domain[]
+    controlled: Domain[]
     resolved: Domain[]
   }
 }
