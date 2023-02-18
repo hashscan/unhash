@@ -1,7 +1,8 @@
-import { ArrowDown, CheckFilled } from 'components/icons'
+import { ArrowDown, CheckFilled, ProgressBar } from 'components/icons'
 import { useAccount, useChainId } from 'wagmi'
 import styles from './profile.module.css'
-import { toNetwork } from 'lib/types'
+import ui from 'styles/ui.module.css'
+import { Domain, toNetwork } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
@@ -13,6 +14,7 @@ import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
 import Link from 'next/link'
 import { pluralize } from 'lib/pluralize'
+import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -27,6 +29,26 @@ const Profile: PageWithLayout = () => {
   const onPrimaryClick = () => setOpen(!isOpen)
   const primaryContainerRef = useRef<HTMLDivElement>(null)
   useOnClickOutside(primaryContainerRef, () => setOpen(false))
+
+  // TODO: move to a component
+  const [newDomain, setNewDomain] = useState<Domain | null>(null)
+  const onSuccess = () => {
+    window.location.reload()
+    // so smart right?
+  }
+  const { write: updatePrimaryEns, isLoading: isPrimaryUpdating } = useSetPrimaryEns({
+    domain: newDomain,
+    onSuccess
+  })
+  const onDomainClick = (domain: string) => {
+    setOpen(false)
+    // TODO: fix types
+    setNewDomain(domain === userInfo?.primaryEns ? null : (domain as Domain))
+  }
+  const savePrimaryEns = () => {
+    if (typeof updatePrimaryEns === 'undefined') return
+    updatePrimaryEns()
+  }
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
@@ -71,7 +93,9 @@ const Profile: PageWithLayout = () => {
       {availableDomains.length > 0 && (
         <div ref={primaryContainerRef} className={styles.primaryContainer}>
           <div className={styles.primary} onClick={() => onPrimaryClick()}>
-            {userInfo.primaryEns ? (
+            {newDomain ? (
+              <div className={clsx(styles.primaryDomain, styles.primaryHint)}>{newDomain}</div>
+            ) : userInfo.primaryEns ? (
               <>
                 <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
                 <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
@@ -82,7 +106,6 @@ const Profile: PageWithLayout = () => {
                 {`Select from ${pluralize('domain', availableDomains.length)} available`}
               </div>
             )}
-
             <ArrowDown className={styles.primaryArrow} />
           </div>
 
@@ -95,36 +118,24 @@ const Profile: PageWithLayout = () => {
                   domain={domain}
                   isPrimary={domain === userInfo.primaryEns}
                   key={domain}
+                  onClick={() => onDomainClick(domain)}
                 />
               )
             })}
           </div>
+
+          {newDomain && (
+            <div>
+              <button
+                className={clsx(styles.savePrimaryButton, ui.button)}
+                onClick={savePrimaryEns}
+              >
+                {isPrimaryUpdating ? <ProgressBar color="white" /> : 'Save'}
+              </button>
+            </div>
+          )}
         </div>
       )}
-
-      {/* Primary ENS select */}
-      {/* <div className={styles.domains}>
-        <select
-          className={`${ui.select} ${styles.domainSelect}`}
-          defaultValue={userInfo?.primaryEns || userInfo?.domains.resolved[0]}
-          onChange={(v) => setDomain(v.currentTarget.value as Domain | null)}
-        >
-          {userInfo?.domains.resolved.map((domain) => (
-            <option key={domain} value={domain}>
-              {domain === userInfo.primaryEns ? '[primary]' : ''} {domain}
-            </option>
-          ))}
-        </select>
-
-        <button
-          className={`${ui.button} ${styles.buttonSet}`}
-          onClick={() => {
-            setPrimaryEns?.()
-          }}
-        >
-          {isPrimaryEnsLoading ? <ProgressBar color="white" /> : 'Set'}{' '}
-        </button>
-      </div> */}
 
       {/* ENS profile layout */}
       {address && userInfo?.primaryEns && (
