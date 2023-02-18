@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ProfileDomainItem } from 'components/ProfileDomainItem/ProfileDomainItem'
+import { PrimaryEnsItem } from './PrimaryEnsItem'
 import { Domain } from 'lib/types'
 import { ComponentProps } from 'react'
 import styles from './PrimaryENSDropdown.module.css'
@@ -18,9 +18,9 @@ export const PrimaryENSDropdown = ({
   ...rest
 }: PrimaryENSDropdownProps) => {
   return (
-    <div {...rest} className={clsx(styles.dropdown, className)} >
+    <div {...rest} className={clsx(styles.dropdown, className)}>
       {domains.map((domain) => (
-        <ProfileDomainItem
+        <PrimaryEnsItem
           domain={domain}
           isPrimary={domain === primaryDomain}
           key={domain}
