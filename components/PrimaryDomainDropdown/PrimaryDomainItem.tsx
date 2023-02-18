@@ -1,18 +1,18 @@
 import clsx from 'clsx'
 import React, { ComponentProps } from 'react'
-import styles from './PrimaryEnsItem.module.css'
+import styles from './PrimaryDomainItem.module.css'
 
-interface PrimaryEnsItemProps extends ComponentProps<'div'> {
+interface PrimaryDomainItemProps extends ComponentProps<'div'> {
   domain: string
   isPrimary: boolean
 }
 
-export const PrimaryEnsItem = ({
+export const PrimaryDomainItem = ({
   domain,
   isPrimary,
   className,
   ...rest
-}: PrimaryEnsItemProps) => {
+}: PrimaryDomainItemProps) => {
   return (
     <div {...rest} className={clsx(className, styles.item, { [styles.itemSelected]: isPrimary })}>
       {domain}

@@ -13,7 +13,7 @@ import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
 import Link from 'next/link'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
-import { PrimaryENSDropdown } from 'components/PrimaryEnsDropdown/PrimaryEnsDropdown'
+import { PrimaryDomainDropdown } from 'components/PrimaryDomainDropdown/PrimaryDomainDropdown'
 import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
 
 const Profile: PageWithLayout = () => {
@@ -101,7 +101,7 @@ const Profile: PageWithLayout = () => {
             onClick={onPrimaryClick}
           />
 
-          <PrimaryENSDropdown
+          <PrimaryDomainDropdown
             className={clsx({ [styles.dropdownHidden]: !isOpen })}
             domains={availableDomains}
             primaryDomain={userInfo.primaryEns ?? undefined}
