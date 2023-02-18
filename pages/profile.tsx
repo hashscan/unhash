@@ -9,6 +9,7 @@ import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 import { useMemo } from 'react'
 import Link from 'next/link'
 import { ProfilePrimaryDomain } from 'components/ProfilePrimaryDomain/ProfilePrimaryDomain'
+import { ProgressBar } from 'components/icons'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -20,8 +21,15 @@ const Profile: PageWithLayout = () => {
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
-  // TODO: show loader instead of primary ens select
-  if (!userInfo) return <p>Fetching profile from API...</p>
+
+  // loader
+  if (!userInfo) {
+    return (
+      <div className={styles.loading}>
+        <ProgressBar className={styles.loader} />
+      </div>
+    )
+  }
 
   return (
     <main className={styles.main}>
