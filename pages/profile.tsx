@@ -1,60 +1,26 @@
-import { ProgressBar } from 'components/icons'
 import { useAccount, useChainId } from 'wagmi'
 import styles from './profile.module.css'
-import ui from 'styles/ui.module.css'
-import { Domain, toNetwork } from 'lib/types'
+import { toNetwork } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import clsx from 'clsx'
-import { useOnClickOutside } from 'usehooks-ts'
+import { useMemo } from 'react'
 import Link from 'next/link'
-import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
-import { PrimaryDomainDropdown } from 'components/PrimaryDomainDropdown/PrimaryDomainDropdown'
-import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
+import { ProfilePrimaryDomain } from 'components/ProfilePrimaryDomain/ProfilePrimaryDomain'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
   const { address, isDisconnected } = useAccount()
   const userInfo = useCurrentUserInfo()
 
-  // TODO: move to a component
   // TODO: set actually available for primary ENS
-  // TODO: make floating dropdown
-  const [isOpen, setOpen] = useState<boolean>(false)
   const availableDomains = useMemo(() => userInfo?.domains.controlled || [], [userInfo])
-  const onPrimaryClick = () => setOpen(!isOpen)
-  const primaryContainerRef = useRef<HTMLDivElement>(null)
-  useOnClickOutside(primaryContainerRef, () => setOpen(false))
-
-  // TODO: move to a component
-  const [newDomain, setNewDomain] = useState<Domain | null>(null)
-  useEffect(() => setNewDomain(null), [chainId, address]) // reset on chain and address change
-
-  const onSuccess = () => {
-    window.location.reload()
-    // so smart right?
-  }
-  const { write: updatePrimaryEns, isLoading: isPrimaryUpdating } = useSetPrimaryEns({
-    domain: newDomain,
-    onSuccess
-  })
-  const onDomainSelect = (domain: Domain) => {
-    setOpen(false)
-    // TODO: fix types
-    setNewDomain(domain === userInfo?.primaryEns ? null : (domain as Domain))
-  }
-  const savePrimaryEns = () => {
-    if (typeof updatePrimaryEns === 'undefined') return
-    updatePrimaryEns()
-  }
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
-  // TODO: skeleton
+  // TODO: show loader instead of primary ens select
   if (!userInfo) return <p>Fetching profile from API...</p>
 
   return (
@@ -62,6 +28,7 @@ const Profile: PageWithLayout = () => {
       <div className={styles.title}>Profile</div>
       <div className={styles.address}>{address ? formatAddress(address, 6) : null}</div>
 
+      {/* Primary ENS header */}
       <div className={styles.header}>Primary ENS</div>
       <div className={styles.subheader}>
         {userInfo?.primaryEns ? (
@@ -91,34 +58,14 @@ const Profile: PageWithLayout = () => {
         )}
       </div>
 
-      {/* TODO: move to a PrimaryDomain component */}
-      {availableDomains.length > 0 && (
-        <div ref={primaryContainerRef} className={styles.primaryContainer}>
-          <PrimaryDomainSelect
-            primaryDomain={userInfo?.primaryEns ?? undefined}
-            newDomain={newDomain ?? undefined}
-            availableLength={availableDomains.length}
-            onClick={onPrimaryClick}
-          />
-
-          <PrimaryDomainDropdown
-            className={clsx({ [styles.dropdownHidden]: !isOpen })}
-            domains={availableDomains}
-            primaryDomain={userInfo.primaryEns ?? undefined}
-            onDomainSelect={onDomainSelect}
-          />
-
-          {newDomain && (
-            <div>
-              <button
-                className={clsx(styles.savePrimaryButton, ui.button)}
-                onClick={savePrimaryEns}
-              >
-                {isPrimaryUpdating ? <ProgressBar color="white" /> : 'Save'}
-              </button>
-            </div>
-          )}
-        </div>
+      {/* Primary ENS select */}
+      {userInfo && availableDomains.length > 0 && (
+        <ProfilePrimaryDomain
+          chainId={chainId}
+          address={address}
+          primaryDomain={userInfo.primaryEns}
+          availableDomains={availableDomains}
+        />
       )}
 
       {/* ENS profile layout */}

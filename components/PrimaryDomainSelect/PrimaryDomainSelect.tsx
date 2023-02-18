@@ -6,8 +6,8 @@ import { ComponentProps } from 'react'
 import styles from './PrimaryDomainSelect.module.css'
 
 interface PrimaryDomainSelectProps extends ComponentProps<'div'> {
-  primaryDomain?: Domain // currently primary domain
-  newDomain?: Domain // the domain which is about to be set, selected from dropdown
+  primaryDomain: Domain | null // currently primary domain or null if not set
+  newDomain: Domain | null // the domain which is about to be set, selected from dropdown
   availableLength: number
 }
 

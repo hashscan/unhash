@@ -6,7 +6,7 @@ import styles from './PrimaryDomainDropdown.module.css'
 
 interface PrimaryDomainDropdownProps extends ComponentProps<'div'> {
   domains: Domain[]
-  primaryDomain?: Domain
+  primaryDomain: Domain | null // null if no primary ENS set
   onDomainSelect?: (domain: Domain) => void
 }
 
