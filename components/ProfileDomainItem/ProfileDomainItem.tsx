@@ -1,16 +1,20 @@
 import clsx from 'clsx'
-import React from 'react'
+import React, { ComponentProps } from 'react'
 import styles from './ProfileDomainItem.module.css'
 
-interface ProfileDomainItemProps {
+interface ProfileDomainItemProps extends ComponentProps<'div'> {
   domain: string
   isPrimary: boolean
-  className?: string | undefined
 }
 
-export const ProfileDomainItem = ({ domain, isPrimary, className }: ProfileDomainItemProps) => {
+export const ProfileDomainItem = ({
+  domain,
+  isPrimary,
+  className,
+  ...rest
+}: ProfileDomainItemProps) => {
   return (
-    <div className={clsx(className, styles.item, { [styles.itemSelected]: isPrimary })}>
+    <div {...rest} className={clsx(className, styles.item, { [styles.itemSelected]: isPrimary })}>
       {domain}
     </div>
   )
