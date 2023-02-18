@@ -124,7 +124,7 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
           className={clsx(styles.saveButton, ui.button)}
           onClick={save}
         >
-          {isUpdating ? <ProgressBar color="white" /> : 'Save'}
+          {isUpdating ? <ProgressBar color="var(--color-slate-3)" /> : 'Save'}
         </button>
       </div>
     </div>
