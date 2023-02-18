@@ -38,6 +38,17 @@
   margin-bottom: 24px;
 }
 
+.link {
+  color: var(--color-green);
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  margin-bottom: 24px;
+}
+
+.link:hover {
+  filter: brightness(0.95);
+}
+
 .primaryContainer {
   position: relative;
 }

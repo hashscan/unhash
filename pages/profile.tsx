@@ -11,6 +11,7 @@ import { useMemo, useRef, useState } from 'react'
 import { ProfileDomainItem } from 'components/ProfileDomainItem/ProfileDomainItem'
 import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
+import Link from 'next/link'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -35,34 +36,48 @@ const Profile: PageWithLayout = () => {
     <main className={styles.main}>
       <div className={styles.title}>Profile</div>
       <div className={styles.address}>{address ? formatAddress(address, 6) : null}</div>
-      {/* Wallet */}
-      <div className={styles.header}>Your wallet</div>
+
+      <div className={styles.header}>Primary ENS</div>
       <div className={styles.subheader}>
-        {userInfo?.primaryEns
-          ? `Your address is linked to ${userInfo.primaryEns} ENS profile. You can switch to another available ENS
+        {userInfo?.primaryEns ? (
+          `Your address is linked to ${userInfo.primaryEns} ENS domain. You can switch to another available ENS
         below.`
-          : 'You are not connected to any ENS profile.'}
+        ) : availableDomains.length > 0 ? (
+          'You address is not linked any ENS domain. Choose one from the list below.'
+        ) : (
+          <span>
+            You address is not linked any ENS domain.{' '}
+            <Link className={styles.link} href="/">
+              Register ENS domain
+            </Link>{' '}
+            and come back here.
+          </span>
+        )}
       </div>
 
       {/* TODO: move to a component */}
-      <div ref={primaryDomainListRef} className={styles.primaryContainer}>
-        <div className={styles.primary} onClick={() => onPrimaryClick()}>
-          <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
-          <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
-          <ArrowDown className={styles.primaryArrow} />
+      {availableDomains.length > 0 && (
+        <div ref={primaryDomainListRef} className={styles.primaryContainer}>
+          <div className={styles.primary} onClick={() => onPrimaryClick()}>
+            <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
+            <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
+            <ArrowDown className={styles.primaryArrow} />
+          </div>
+          <div
+            className={clsx(styles.primaryDomainList, { [styles.primaryDomainListOpen]: isOpen })}
+          >
+            {availableDomains.map((domain) => {
+              return (
+                <ProfileDomainItem
+                  domain={domain}
+                  isPrimary={domain === userInfo.primaryEns}
+                  key={domain}
+                />
+              )
+            })}
+          </div>
         </div>
-        <div className={clsx(styles.primaryDomainList, { [styles.primaryDomainListOpen]: isOpen })}>
-          {availableDomains.map((domain) => {
-            return (
-              <ProfileDomainItem
-                domain={domain}
-                isPrimary={domain === userInfo.primaryEns}
-                key={domain}
-              />
-            )
-          })}
-        </div>
-      </div>
+      )}
 
       {/* Primary ENS select */}
       {/* <div className={styles.domains}>
