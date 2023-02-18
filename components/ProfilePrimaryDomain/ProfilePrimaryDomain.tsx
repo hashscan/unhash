@@ -9,7 +9,6 @@ import { ComponentProps, useEffect, useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
-import { LoadingButton } from 'components/LoadingButton/LoadingButton'
 
 interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   chainId: number
