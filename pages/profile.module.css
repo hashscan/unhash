@@ -58,50 +58,9 @@
   display: none;
 }
 
+/* TODO: remove */
 .primaryDomainList>div:not(:last-child) {
   border-bottom: 1px solid var(--color-slate-5);
-}
-
-.primary {
-  border-radius: var(--radii-sm);
-  border: 1px solid var(--color-slate-5);
-  padding: 8px 12px;
-  box-shadow: var(--shadow-sm);
-
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  user-select: none;
-}
-
-.primary:hover {
-  cursor: pointer;
-  background-color: var(--color-slate-7);
-}
-
-.primaryDomain {
-  color: var(--color-slate-2);
-  font: var(--type-reg);
-  letter-spacing: var(--ls-reg);
-  font-weight: 400;
-  color: var(--color-text-primary);
-  flex-grow: 1;
-  padding-left: 8px;
-}
-
-.primaryHint {
-  color: var(--color-text-hint);
-}
-
-.primarySuccess {
-  color: var(--color-background);
-}
-
-.primaryArrow {
-  color: var(--color-slate-4);
-  width: 20px;
-  height: 20px;
 }
 
 .savePrimaryButton {

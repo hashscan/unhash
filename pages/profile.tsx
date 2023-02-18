@@ -1,4 +1,4 @@
-import { ArrowDown, CheckFilled, ProgressBar } from 'components/icons'
+import { ProgressBar } from 'components/icons'
 import { useAccount, useChainId } from 'wagmi'
 import styles from './profile.module.css'
 import ui from 'styles/ui.module.css'
@@ -12,9 +12,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
 import Link from 'next/link'
-import { pluralize } from 'lib/pluralize'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { PrimaryENSDropdown } from 'components/PrimaryEnsDropdown/PrimaryEnsDropdown'
+import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -91,31 +91,20 @@ const Profile: PageWithLayout = () => {
         )}
       </div>
 
-      {/* TODO: move to a component */}
+      {/* TODO: move to a PrimaryDomain component */}
       {availableDomains.length > 0 && (
         <div ref={primaryContainerRef} className={styles.primaryContainer}>
-          <div className={styles.primary} onClick={() => onPrimaryClick()}>
-            {newDomain ? (
-              <div className={clsx(styles.primaryDomain, styles.primaryHint)}>{newDomain}</div>
-            ) : userInfo.primaryEns ? (
-              <>
-                <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
-                <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
-              </>
-            ) : (
-              <div className={clsx(styles.primaryDomain, styles.primaryHint)}>
-                {/* TODO: support pluralize without count */}
-                {`Select from ${pluralize('domain', availableDomains.length)} available`}
-              </div>
-            )}
-            <ArrowDown className={styles.primaryArrow} />
-          </div>
+          <PrimaryDomainSelect
+            primaryDomain={userInfo?.primaryEns ?? undefined}
+            newDomain={newDomain ?? undefined}
+            availableLength={availableDomains.length}
+            onClick={onPrimaryClick}
+          />
 
-          {/* TODO: show and hide */}
           <PrimaryENSDropdown
             className={clsx({ [styles.dropdownHidden]: !isOpen })}
             domains={availableDomains}
-            primaryDomain={userInfo.primaryEns ? userInfo.primaryEns : undefined}
+            primaryDomain={userInfo.primaryEns ?? undefined}
             onDomainSelect={onDomainSelect}
           />
 
