@@ -9,13 +9,12 @@ import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ProfileDomainItem } from 'components/ProfileDomainItem/ProfileDomainItem'
 import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
 import Link from 'next/link'
 import { pluralize } from 'lib/pluralize'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
-import { PrimaryENSDropdown } from 'components/PrimaryENSDropdown/PrimaryENSDropdown'
+import { PrimaryENSDropdown } from 'components/PrimaryEnsDropdown/PrimaryEnsDropdown'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
