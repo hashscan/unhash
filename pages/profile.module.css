@@ -7,6 +7,15 @@
   flex-direction: column;
 }
 
+.loading {
+  width: var(--profile-width);
+}
+
+.loader {
+  display: block;
+  margin: 120px auto;
+}
+
 .title {
   color: var(--color-slate-2);
   font: var(--type-x-lg);
