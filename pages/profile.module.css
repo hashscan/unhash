@@ -41,6 +41,7 @@
 .link {
   color: var(--color-green);
   font: var(--type-reg);
+  font-weight: 400;
   letter-spacing: var(--ls-reg);
   margin-bottom: 24px;
 }
@@ -60,10 +61,10 @@
   max-height: 320px;
   overflow: scroll;
 
-  margin-top: -2px;
+  margin-top: 4px;
 
   background-color: var(--color-background);
-  border-radius: 0 0 var(--radii-sm) var(--radii-sm);
+  border-radius: var(--radii-sm) var(--radii-sm);
   border: 1px solid var(--color-slate-5);
   box-shadow: var(--shadow-lg);
 }
@@ -102,6 +103,10 @@
   color: var(--color-text-primary);
   flex-grow: 1;
   padding-left: 8px;
+}
+
+.primaryHint {
+  color: var(--color-text-hint);
 }
 
 .primarySuccess {

@@ -1,4 +1,8 @@
 const DICT = {
+  domain: {
+    singular: 'domain',
+    plural: 'domains'
+  },
   year: {
     singular: 'year',
     plural: 'years'
