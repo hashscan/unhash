@@ -12,6 +12,7 @@ import { ProfileDomainItem } from 'components/ProfileDomainItem/ProfileDomainIte
 import clsx from 'clsx'
 import { useOnClickOutside } from 'usehooks-ts'
 import Link from 'next/link'
+import { pluralize } from 'lib/pluralize'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -24,8 +25,8 @@ const Profile: PageWithLayout = () => {
   const [isOpen, setOpen] = useState<boolean>(false)
   const availableDomains = useMemo(() => userInfo?.domains.controlled || [], [userInfo])
   const onPrimaryClick = () => setOpen(!isOpen)
-  const primaryDomainListRef = useRef<HTMLDivElement>(null)
-  useOnClickOutside(primaryDomainListRef, () => setOpen(false))
+  const primaryContainerRef = useRef<HTMLDivElement>(null)
+  useOnClickOutside(primaryContainerRef, () => setOpen(false))
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
@@ -40,10 +41,21 @@ const Profile: PageWithLayout = () => {
       <div className={styles.header}>Primary ENS</div>
       <div className={styles.subheader}>
         {userInfo?.primaryEns ? (
-          `Your address is linked to ${userInfo.primaryEns} ENS domain. You can switch to another available ENS
-        below.`
+          <span>
+            Your address is linked to{' '}
+            <Link
+              className={styles.link}
+              href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/address/${
+                userInfo.primaryEns
+              }`}
+              target="_blank"
+            >
+              {userInfo.primaryEns}
+            </Link>{' '}
+            ENS domain. You can switch to another available ENS below.
+          </span>
         ) : availableDomains.length > 0 ? (
-          'You address is not linked any ENS domain. Choose one from the list below.'
+          <span>You address is not linked any ENS domain. Choose one from the list below.</span>
         ) : (
           <span>
             You address is not linked any ENS domain.{' '}
@@ -57,12 +69,23 @@ const Profile: PageWithLayout = () => {
 
       {/* TODO: move to a component */}
       {availableDomains.length > 0 && (
-        <div ref={primaryDomainListRef} className={styles.primaryContainer}>
+        <div ref={primaryContainerRef} className={styles.primaryContainer}>
           <div className={styles.primary} onClick={() => onPrimaryClick()}>
-            <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
-            <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
+            {userInfo.primaryEns ? (
+              <>
+                <CheckFilled className={styles.primarySuccess} fillColor={'var(--color-success)'} />
+                <div className={styles.primaryDomain}>{userInfo.primaryEns}</div>
+              </>
+            ) : (
+              <div className={clsx(styles.primaryDomain, styles.primaryHint)}>
+                {/* TODO: support pluralize without count */}
+                {`Select from ${pluralize('domain', availableDomains.length)} available`}
+              </div>
+            )}
+
             <ArrowDown className={styles.primaryArrow} />
           </div>
+
           <div
             className={clsx(styles.primaryDomainList, { [styles.primaryDomainListOpen]: isOpen })}
           >
