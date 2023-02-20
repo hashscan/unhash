@@ -13,7 +13,7 @@ import { useRegistration } from './useRegistration'
 
 export const useSendRegister = (domain: Domain) => {
   const chainId = useChainId()
-  const { registration, setRegistering, setRegistered } = useRegistration(domain)
+  const { registration, setRegistering } = useRegistration(domain)
 
   // Docs suggests to pay 5% premium because oracle price may vary. Extra ETH gets refunded.
   // Let's try without extra ETH first as tx is sent right after price is fetched.
@@ -57,9 +57,9 @@ export const useSendRegister = (domain: Domain) => {
   })
 
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
-    hash: data?.hash,
-    // update registration status when transaction is confirmed
-    onSuccess: () => setRegistered()
+    hash: data?.hash
+    // // update registration status when transaction is confirmed
+    // onSuccess: () => setRegistered()
   })
 
   return {

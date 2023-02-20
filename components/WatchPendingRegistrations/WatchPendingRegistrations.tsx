@@ -6,9 +6,17 @@ import { useRegistration } from 'lib/hooks/useRegistration'
 
 // TODO: @molefrog, I'm not sure what's the best way to implement this, please advise:
 // --------------------------------
-// 1. What do you think about the TxUpdates being used in _app.tsx?
-// 2. What props type TxUpdates component should use if it doesn't draw any UI but still passes children?
-// 3. The transaction wait implementation is done in child components here vs hooks. Is this ok?
+// 1. What do you think about the way WatchPendingRegistrations being used in _app.tsx, similar to Context?
+// 2. What type of props WatchPendingRegistrations component should have if it doesn't draw any UI? (so we can remove <div>)
+// 3. The transaction wait implemented in child components here vs hooks. Is this ok?
+// 4. How is this working correctly with 2 tabs open in a browser? I guess 2 instances of this component will be created
+// --------------------------------
+// Note:
+// What I don't like this now is how API for sending transactions is implicitly split
+// between useSendRegister and WatchPendingRegistrations. In UI you send a transaction
+// with useSendRegister, and you can actually wait for it to be confirmed with that hook.
+// But a Registration status is updated only by WatchPendingRegistrations in background.
+// Maybe we should abstract all the logic here, similar to useNotifier?
 // --------------------------------
 
 /*
@@ -27,7 +35,7 @@ export const WaitForRegisterTx = ({
   useWaitForTransaction({
     hash: registerTxHash,
     // update registration status when transaction is confirmed
-    onSuccess: () => setRegistered()
+    onSuccess: (data) => setRegistered()
   })
 
   return <></>
@@ -63,7 +71,7 @@ export const WaitForCommitTx = ({
 
 /**
  * Stateful component to track and update pending Registration transactions.
- * 
+ *
  * It tracks all Registration with status 'commitPending' and 'registerPending',
  * and waits for their transactions to get confirmed. Once confirmed, it updates
  * Registration status to 'commited' or 'registered' respectively.
@@ -78,16 +86,6 @@ export const WatchPendingRegistrations = (props: ComponentProps<'div'>) => {
     () => regs.filter((reg) => reg.status === 'registerPending'),
     [regs]
   )
-
-  // // TODO: remove logs
-  // useEffect(() => {
-  //   console.log('[tx-updates] all registrations:', JSON.stringify(regs, null, 2))
-  //   console.log(
-  //     `[tx-updates] found ${pendingTxRegs.length} pending registration transactions: ${pendingTxRegs
-  //       .map((reg) => reg.domain)
-  //       .join(', ')}`
-  //   )
-  // }, [pendingTxRegs])
 
   return (
     <div>
