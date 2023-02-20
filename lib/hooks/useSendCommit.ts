@@ -1,13 +1,7 @@
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Domain, Network } from 'lib/types'
 import { getDomainName } from 'lib/utils'
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useProvider,
-  useWaitForTransaction
-} from 'wagmi'
+import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useMakeCommitment } from './useMakeCommitment'
 import { useRegistration } from './useRegistration'
 
@@ -17,7 +11,7 @@ import { useRegistration } from './useRegistration'
  * and waits for transaction to get confirmed.
  *
  * Creates new Registration in LocalStorage when transaction is sent.
- * Note: Registration won't be created if parent component is unmounted.
+ * Note: Registration status will be updated to `commited` by WatchPendingRegistrations.
  */
 export const useSendCommit = ({
   domain,
@@ -30,10 +24,8 @@ export const useSendCommit = ({
   duration: number
   owner: string | undefined
 }) => {
-  // ethers provider needed to get exact transaction timestamp
-  const provider = useProvider()
   const { address: sender } = useAccount()
-  const { create, setCommited } = useRegistration(domain)
+  const { create } = useRegistration(domain)
 
   // generate secret and commitment
   const name = getDomainName(domain)
@@ -68,16 +60,9 @@ export const useSendCommit = ({
       })
   })
 
-  // wait for transaction success to update Registration status
+  // wait for transaction success
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
-    hash: data?.hash,
-    onSuccess: async (data) => {
-      // get timestamp from block
-      const commitBlock = await provider.getBlock(data.blockNumber)
-      const commitTimestamp = commitBlock.timestamp * 1000
-      // update registration status
-      setCommited(data.blockNumber, commitTimestamp)
-    }
+    hash: data?.hash
   })
 
   return {
