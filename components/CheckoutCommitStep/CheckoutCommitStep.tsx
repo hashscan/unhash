@@ -1,17 +1,19 @@
-import { Domain, toNetwork } from 'lib/types'
 import React, { useCallback, useState } from 'react'
-import styles from './CheckoutCommitStep.module.css'
-import ui from 'styles/ui.module.css'
-import { EthereumIcon, Gas } from 'components/icons'
+import { useAccount, useChainId } from 'wagmi'
 import clsx from 'clsx'
+
+import { Domain, toNetwork } from 'lib/types'
+import styles from './CheckoutCommitStep.module.css'
 import { formatNetworkFee } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
-import { useAccount, useChainId } from 'wagmi'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
-import { LoadingButton } from 'components/LoadingButton/LoadingButton'
+import { Button } from 'components/ui/Button/Button'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
+
+import { Tool as ToolIcon, EthereumIcon, Gas } from 'components/icons'
+import { AdditionalInfo } from 'components/AdditionalInfo/AdditionalInfo'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -52,35 +54,48 @@ export const CheckoutCommitStep = ({
     sendCommit()
   }, [sendCommit, owner])
 
+  const [showAdvanced, setShowAdvanced] = useState(false)
+
   // TODO: show connect wallet button if not connected
   return (
     <div className={styles.container}>
-      <div className={styles.header}>Registration period</div>
-      <div className={styles.subheader}>Buy more years now to save on fees</div>
-      <div className={styles.years}>
-        {YEAR_BUTTONS.map((year) => (
-          <div
-            key={year}
-            className={clsx(styles.yearButton, {
-              [styles.yearButtonSelected]: year === durationYears
-            })}
-            onClick={() => onDurationChanged?.(year)}
-          >
-            {pluralize('year', year)}
-          </div>
-        ))}
+      <div className={styles.formGroup}>
+        <div className={styles.header}>Registration period</div>
+        <div className={styles.subheader}>
+          By choosing a longer period, you can save on transaction fees later on.
+        </div>
+        <div className={styles.years}>
+          {YEAR_BUTTONS.map((year) => (
+            <div
+              key={year}
+              className={clsx(styles.yearButton, {
+                [styles.yearButtonSelected]: year === durationYears
+              })}
+              onClick={() => onDurationChanged?.(year)}
+            >
+              {pluralize('year', year)}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className={styles.header}>Domain Ownership</div>
-      <div className={styles.subheader}>Optionally buy this domain on another wallet</div>
-      <AddressInput
-        icon={<EthereumIcon />}
-        className={styles.ownerInput}
-        placeholder="0xd07d...54aB"
-        autoComplete="off"
-        onAddressChange={(address) => setOwner(address)}
-      />
+      <AdditionalInfo header="Advanced Settings" icon={<ToolIcon />}>
+        <div className={styles.subheader}>
+          You can specify a wallet address of the <b>domain owner</b>. For example, if you are
+          buying this domain for another person.
+        </div>
 
+        <AddressInput
+          icon={<EthereumIcon />}
+          className={styles.ownerInput}
+          placeholder="0xd07d...54aB"
+          autoComplete="off"
+          onAddressChange={(address) => setOwner(address)}
+        />
+      </AdditionalInfo>
+
+      {/* TODO: Profile */}
+      {/* <div>
       <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>
         Configure public ENS profile for this domain if you are setting it for your wallet. You can
@@ -116,14 +131,13 @@ export const CheckoutCommitStep = ({
         autoComplete="off"
         className={clsx(styles.profileInput, ui.input, styles.profileInputLast)}
       />
+      </div> */}
 
       <div className={styles.buttonContainer}>
-        <LoadingButton
-          className={styles.commitButton}
-          onClick={() => !isLoading && onStartClick()}
-          isLoading={isLoading}
-          text="Start registration"
-        />
+        <Button onClick={() => !isLoading && onStartClick()} isLoading={isLoading}>
+          Start Registration
+        </Button>
+
         {networkFee && (
           <div className={styles.txFee}>
             <div className={styles.txFeeLabel}>

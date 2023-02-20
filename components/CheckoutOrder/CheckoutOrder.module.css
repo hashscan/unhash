@@ -4,6 +4,7 @@
 
   position: sticky;
   top: calc(var(--nav-height));
+  perspective: 1000px;
 }
 
 .title {
@@ -13,24 +14,30 @@
   margin-bottom: 20px;
 }
 
-.divider {
-  border-bottom: 1.25px solid var(--color-slate-5);
-  margin: 4px 0;
-}
-
 .line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 7px 0px;
+  padding: 12px 0px;
 }
 
-.totalLabel {
+.line + .line {
+  border-top: 1px solid var(--color-slate-5);
+}
+
+.line.lineTotal {
+  border-color: var(--color-slate-3);
   font-weight: 500;
-  align-self: flex-start;
 }
 
-.totalValue {
-  font: var(--type-md);
-  font-weight: 400;
+.fees {
+  color: var(--color-text-secondary);
+}
+
+.summary {
+  margin-bottom: 48px;
+}
+
+.registerButton {
+  width: 100%;
 }

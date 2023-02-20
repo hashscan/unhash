@@ -1,20 +1,24 @@
 .container {
   width: 100%;
+  padding: 24px 0 64px 0;
+}
+
+.formGroup {
+  margin-bottom: 64px;
 }
 
 .header {
-  color: var(--color-slate-2);
+  color: var(--color-text);
   font: var(--type-md);
   letter-spacing: var(--ls-md);
-  margin-top: 48px;
   margin-bottom: 4px;
 }
 
 .subheader {
-  color: var(--color-slate-3);
+  color: var(--color-text-secondary);
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .years {
@@ -32,17 +36,18 @@
   color: var(--color-slate-1);
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
-  font-weight: 400;
   text-align: center;
+  user-select: none;
+  transition: var(--ease-250);
 
-  border-radius: 6px;
-  border: 1.5px solid var(--color-slate-1);
+  border-radius: var(--radii-sm);
+  border: var(--border-width-md) solid var(--color-slate-1);
+  cursor: pointer;
 }
 
 .yearButton:hover {
-  cursor: pointer;
   color: var(--color-slate-3);
-  border: 1.5px solid var(--color-slate-3);
+  border-color: var(--color-slate-3);
 }
 
 .yearButtonSelected {

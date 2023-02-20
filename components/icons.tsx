@@ -19,45 +19,6 @@ export const Logout = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
-export const ProgressBar = ({
-  color = 'var(--color-text-primary)',
-  height = '40px',
-  width = '40px',
-  className
-}: Partial<{
-  color: string
-  height: string | number
-  width: string | number
-  className?: string
-}>) => {
-  return (
-    <svg
-      className={className}
-      x="0px"
-      y="0px"
-      width={width}
-      height={height}
-      viewBox="0 0 50 50"
-      xmlSpace="preserve"
-    >
-      <path
-        fill={color}
-        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
-      >
-        <animateTransform
-          attributeType="xml"
-          attributeName="transform"
-          type="rotate"
-          from="0 25 25"
-          to="360 25 25"
-          dur="0.6s"
-          repeatCount="indefinite"
-        />
-      </path>
-    </svg>
-  )
-}
-
 export const EthereumIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -123,14 +84,31 @@ export const Gas = () => (
   </svg>
 )
 
-export const LoaderHorseshoe = () => (
-  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M36.3597 26.0005C37.7102 26.0005 38.6691 27.3152 38.092 28.5362C34.8894 35.3122 27.9921 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C27.9926 0 34.8901 4.68833 38.0925 11.4649C38.6696 12.6859 37.7106 14.0005 36.3601 14.0005H36.1853C35.3704 14.0005 34.6475 13.5003 34.279 12.7736C31.6392 7.5678 26.2362 4 20 4C11.1634 4 4 11.1634 4 20C4 28.8366 11.1634 36 20 36C26.2359 36 31.6386 32.4326 34.2785 27.2273C34.6471 26.5006 35.37 26.0005 36.1848 26.0005H36.3597Z"
-      fill="currentColor"
-    />
-  </svg>
+export const LoaderSpinner = ({
+  animationSpeed = '0.5s',
+  ...props
+}: BaseIconProps & { animationSpeed?: string }) => (
+  <BaseIcon {...props} baseSize={50}>
+    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="currentColor"
+        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
+      >
+        <animateTransform
+          attributeType="xml"
+          attributeName="transform"
+          type="rotate"
+          from="0 25 25"
+          to="360 25 25"
+          dur={animationSpeed}
+          repeatCount="indefinite"
+        />
+      </path>
+    </svg>
+  </BaseIcon>
 )
+
+export const ProgressBar = LoaderSpinner
 
 export const InfoCircle = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={20}>
@@ -236,6 +214,36 @@ export const ArrowDown = (props: BaseIconProps) => (
           ></path>
         </g>
       </g>
+    </svg>
+  </BaseIcon>
+)
+
+// facing right
+export const Chevron = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M9 18L15 12L9 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </BaseIcon>
+)
+
+// facing right
+export const Tool = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M15.6314 7.63137C15.2353 7.23535 15.0373 7.03735 14.9631 6.80902C14.8979 6.60817 14.8979 6.39183 14.9631 6.19098C15.0373 5.96265 15.2353 5.76465 15.6314 5.36863L18.4697 2.53026C17.7165 2.18962 16.8804 2 16 2C12.6863 2 9.99998 4.68629 9.99998 8C9.99998 8.49104 10.059 8.9683 10.1702 9.42509C10.2894 9.91424 10.349 10.1588 10.3384 10.3133C10.3273 10.4751 10.3032 10.5612 10.2286 10.7051C10.1574 10.8426 10.0208 10.9791 9.7478 11.2522L3.49998 17.5C2.67156 18.3284 2.67156 19.6716 3.49998 20.5C4.32841 21.3284 5.67156 21.3284 6.49998 20.5L12.7478 14.2522C13.0208 13.9791 13.1574 13.8426 13.2949 13.7714C13.4388 13.6968 13.5249 13.6727 13.6867 13.6616C13.8412 13.651 14.0857 13.7106 14.5749 13.8297C15.0317 13.941 15.5089 14 16 14C19.3137 14 22 11.3137 22 8C22 7.11959 21.8104 6.28347 21.4697 5.53026L18.6314 8.36863C18.2353 8.76465 18.0373 8.96265 17.809 9.03684C17.6082 9.1021 17.3918 9.1021 17.191 9.03684C16.9626 8.96265 16.7646 8.76465 16.3686 8.36863L15.6314 7.63137Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   </BaseIcon>
 )
