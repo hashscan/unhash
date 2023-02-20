@@ -25,7 +25,7 @@ export const Button = ({
       })}
     >
       <span className={styles.content}>{children}</span>
-      {isLoading && <LoaderSpinner size={28} className={styles.loader} />}
+      {isLoading && <LoaderSpinner className={styles.loader} />}
     </button>
   )
 }
