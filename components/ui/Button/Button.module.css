@@ -1,0 +1,82 @@
+.button {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  box-shadow: none;
+  transition: var(--ease-200);
+
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  appearance: none;
+
+  background: var(--color-slate-1);
+  color: var(--color-slate-8);
+  position: relative;
+}
+
+.button:hover {
+  background-color: var(--color-slate-2);
+}
+
+.button:active {
+  background-color: var(--color-slate-3);
+}
+
+.button[disabled] {
+  background: var(--color-slate-5);
+  pointer-events: none;
+}
+
+.loader {
+  color: var(--color-slate-7);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button.button_loading {
+  pointer-events: none;
+}
+
+.button.button_loading .content {
+  opacity: 0;
+}
+
+.button.button_regular {
+  border-radius: var(--radii-sm);
+  padding: 0px 16px;
+  height: 40px;
+
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+}
+
+.button.button_cta {
+  border-radius: var(--radii-md);
+  padding: 0 32px;
+  height: 56px;
+
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-slate-8);
+  font-weight: 500;
+
+  box-shadow: var(--shadow-lg);
+  transition: var(--ease-200);
+}
+
+.button.button_cta:hover {
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-slate-2);
+}
+
+.button.button_cta:active {
+  box-shadow: none;
+  transform: rotate3d(1, 0, 0, 6deg) scale(0.99, 0.99) translateY(1px);
+}
