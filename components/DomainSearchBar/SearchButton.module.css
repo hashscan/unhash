@@ -43,10 +43,9 @@
   color: var(--color-slate-2);
   opacity: 0;
 
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
-  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -37,11 +37,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 22px;
+  width: 26px;
+  height: 26px;
 }
 
 .button.button_cta .loader {
-  width: 28px;
+  width: 34px;
+  height: 34px;
 }
 
 .button.button_loading {
