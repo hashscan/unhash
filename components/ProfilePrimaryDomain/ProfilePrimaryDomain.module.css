@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.dropdown {
+  margin-top: 4px;
+}
+
 .dropdownHidden {
   display: none;
 }

@@ -2,13 +2,13 @@ import ui from 'styles/ui.module.css'
 import styles from './ProfilePrimaryDomain.module.css'
 import clsx from 'clsx'
 import { ProgressBar } from 'components/icons'
-import { PrimaryDomainDropdown } from 'components/PrimaryDomainDropdown/PrimaryDomainDropdown'
 import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
 import { Domain } from 'lib/types'
 import { ComponentProps, useEffect, useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
+import { PrimaryDomainDropdown } from 'components/PrimaryDomainSelect/PrimaryDomainDropdown'
 
 interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   chainId: number
@@ -61,7 +61,7 @@ export const ProfilePrimaryDomain = ({
       />
 
       <PrimaryDomainDropdown
-        className={clsx({ [styles.dropdownHidden]: !showDropdown })}
+        className={clsx(styles.dropdown, { [styles.dropdownHidden]: !showDropdown })}
         domains={availableDomains}
         primaryDomain={primaryDomain}
         onDomainSelect={onDomainSelect}
