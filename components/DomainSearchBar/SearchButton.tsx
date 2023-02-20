@@ -3,7 +3,7 @@ import React, { ComponentProps, MouseEventHandler } from 'react'
 import clsx from 'clsx'
 import styles from './SearchButton.module.css'
 import { SearchStatus } from './types'
-import { LoaderHorseshoe } from 'components/icons'
+import { LoaderSpinner } from 'components/icons'
 
 export interface SearchButtonProps extends ComponentProps<'div'> {
   status: SearchStatus
@@ -16,7 +16,7 @@ const Loader = ({ status, isNavigating }: SearchButtonProps) => (
       [styles.loaderActive]: isNavigating || status === SearchStatus.Loading
     })}
   >
-    <LoaderHorseshoe />
+    <LoaderSpinner animationSpeed="0.4s" />
   </div>
 )
 

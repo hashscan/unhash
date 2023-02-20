@@ -8,7 +8,7 @@ import { formatNetworkFee } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
-import { LoadingButton } from 'components/LoadingButton/LoadingButton'
+import { Button } from 'components/ui/Button/Button'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
@@ -134,12 +134,10 @@ export const CheckoutCommitStep = ({
       </div> */}
 
       <div className={styles.buttonContainer}>
-        <LoadingButton
-          className={styles.commitButton}
-          onClick={() => !isLoading && onStartClick()}
-          isLoading={isLoading}
-          text="Start registration"
-        />
+        <Button onClick={() => !isLoading && onStartClick()} isLoading={isLoading}>
+          Start Registration
+        </Button>
+
         {networkFee && (
           <div className={styles.txFee}>
             <div className={styles.txFeeLabel}>

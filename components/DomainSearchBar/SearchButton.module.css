@@ -38,20 +38,6 @@
   font-weight: 400;
 }
 
-/*
- * Loading spinner 
- */
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .loader {
   transition: opacity 0.2s ease;
   color: var(--color-slate-2);
@@ -65,7 +51,6 @@
   align-items: center;
   justify-content: center;
   margin-right: 18px;
-  animation: 0.4s linear infinite spin;
 }
 
 .loaderActive {

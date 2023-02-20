@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ComponentProps } from 'react'
 
-import { LoaderHorseshoe } from 'components/icons'
+import { LoaderSpinner } from 'components/icons'
 
 import styles from './Button.module.css'
 
@@ -25,7 +25,7 @@ export const Button = ({
       })}
     >
       <span className={styles.content}>{children}</span>
-      {isLoading && <LoaderHorseshoe size={28} className={styles.loader} />}
+      {isLoading && <LoaderSpinner size={28} className={styles.loader} />}
     </button>
   )
 }

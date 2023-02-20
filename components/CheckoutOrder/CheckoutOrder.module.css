@@ -4,6 +4,7 @@
 
   position: sticky;
   top: calc(var(--nav-height));
+  perspective: 1000px;
 }
 
 .title {
@@ -31,4 +32,12 @@
 
 .fees {
   color: var(--color-text-secondary);
+}
+
+.summary {
+  margin-bottom: 48px;
+}
+
+.registerButton {
+  width: 100%;
 }

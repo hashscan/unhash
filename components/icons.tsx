@@ -123,7 +123,10 @@ export const Gas = () => (
   </svg>
 )
 
-export const LoaderHorseshoe = (props: BaseIconProps) => (
+export const LoaderSpinner = ({
+  animationSpeed = '0.5s',
+  ...props
+}: BaseIconProps & { animationSpeed?: string }) => (
   <BaseIcon {...props} baseSize={40}>
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -136,7 +139,7 @@ export const LoaderHorseshoe = (props: BaseIconProps) => (
           type="rotate"
           from="0 20 20"
           to="360 20 20"
-          dur="0.5s"
+          dur={animationSpeed}
           repeatCount="indefinite"
         />
       </path>

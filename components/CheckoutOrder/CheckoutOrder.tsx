@@ -10,6 +10,8 @@ import styles from './CheckoutOrder.module.css'
 import { OrderItem } from './OrderItem'
 import clsx from 'clsx'
 
+import { Button } from 'components/ui/Button/Button'
+
 interface CheckoutOrderProps {
   domain: Domain
   duration: number
@@ -31,22 +33,28 @@ export const CheckoutOrder = ({ domain, duration }: CheckoutOrderProps) => {
     <div className={styles.container}>
       <div className={styles.title}>Your Order</div>
 
-      <OrderItem
-        className={styles.line}
-        title={`${domain}`}
-        hint={pluralize('year', durationYears)}
-        price={domainPrice}
-      />
+      <div className={styles.summary}>
+        <OrderItem
+          className={styles.line}
+          title={`${domain}`}
+          hint={pluralize('year', durationYears)}
+          price={domainPrice}
+        />
 
-      <div className={styles.line}>
-        <div className={styles.fees}>Estimated network fees</div>
-        <div className={styles.fees}>{formatNetworkFee(networkFees)}</div>
+        <div className={styles.line}>
+          <div className={styles.fees}>Estimated network fees</div>
+          <div className={styles.fees}>{formatNetworkFee(networkFees)}</div>
+        </div>
+
+        <div className={clsx(styles.line, styles.lineTotal)}>
+          <div className={styles.totalLabel}>Estimated total</div>
+          <div className={styles.totalValue}>{formatUSDPrice(totalPrice)}</div>
+        </div>
       </div>
 
-      <div className={clsx(styles.line, styles.lineTotal)}>
-        <div className={styles.totalLabel}>Estimated total</div>
-        <div className={styles.totalValue}>{formatUSDPrice(totalPrice)}</div>
-      </div>
+      <Button size="cta" className={styles.registerButton}>
+        Register {domain}
+      </Button>
     </div>
   )
 }
