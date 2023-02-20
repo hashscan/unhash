@@ -34,8 +34,7 @@ export const PrimaryDomainSelect = ({
       {/* Show hint to set select new domain */}
       {!newDomain && !primaryDomain && (
         <div className={clsx(styles.text, styles.textHint)}>
-          {/* TODO: support pluralize without count */}
-          {`Select from ${pluralize('domain', availableLength)} available`}
+          {`Select from ${availableLength} available ${pluralize('domain', availableLength, true)}`}
         </div>
       )}
       <ArrowDown className={styles.suffixIcon} />

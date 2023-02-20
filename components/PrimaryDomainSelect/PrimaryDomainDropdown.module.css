@@ -5,8 +5,6 @@
   max-height: 320px;
   overflow: scroll;
 
-  margin-top: 4px;
-
   background-color: var(--color-background);
   border-radius: var(--radii-sm) var(--radii-sm);
   border: 1px solid var(--color-slate-5);

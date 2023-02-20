@@ -11,8 +11,12 @@ const DICT = {
 
 // When it becomes to hard to maintain this, replace the implementation
 // with https://www.npmjs.com/package/pluralize
-export function pluralize(word: keyof typeof DICT, count: number): string {
+export function pluralize(
+  word: keyof typeof DICT,
+  count: number,
+  onlyWord: boolean = false
+): string {
   const pluralized = count > 1 ? DICT[word].plural : DICT[word].singular
 
-  return [count, pluralized].join(' ')
+  return onlyWord ? pluralized : [count, pluralized].join(' ')
 }
