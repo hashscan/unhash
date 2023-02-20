@@ -52,9 +52,9 @@
   padding: 0px 16px;
   height: 40px;
 
-  font: var(--type-regular);
-  letter-spacing: var(--ls-regular);
-  font-weight: 400;
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 500;
 }
 
 .button.button_cta {

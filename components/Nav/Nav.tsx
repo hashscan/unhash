@@ -12,6 +12,7 @@ import clsx from 'clsx'
 
 import styles from './Nav.module.css'
 import { toNetwork } from 'lib/types'
+import { Button } from 'components/ui/Button/Button'
 
 interface ChainProps {
   chain: { id: number; unsupported?: boolean }
@@ -76,15 +77,7 @@ export const Nav = () => {
               (!authenticationStatus || authenticationStatus === 'authenticated')
 
             if (!connected) {
-              return (
-                <button
-                  onClick={openConnectModal}
-                  className={clsx(ui.button, styles.connect)}
-                  type="button"
-                >
-                  Connect wallet
-                </button>
-              )
+              return <Button onClick={openConnectModal}>Connect wallet</Button>
             }
 
             return (

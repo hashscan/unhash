@@ -1,7 +1,7 @@
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import React from 'react'
 import styles from './CheckoutRegisterStep.module.css'
-import { LoadingButton } from 'components/LoadingButton/LoadingButton'
+import { Button } from 'components/ui/Button/Button'
 import { Gas } from 'components/icons'
 import { formatNetworkFee } from 'lib/format'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
@@ -30,12 +30,13 @@ export const CheckoutRegisterStep = ({ domain }: CheckoutRegisterStepProps) => {
       </div>
 
       <div className={styles.buttonContainer}>
-        <LoadingButton
+        <Button
           className={styles.registerButton}
           onClick={() => !isLoading && onRegisterClick()}
           isLoading={isLoading}
-          text="Complete registration"
-        />
+        >
+          Complete Registration
+        </Button>
         {networkFee && (
           <div className={styles.txFee}>
             <div className={styles.txFeeLabel}>
