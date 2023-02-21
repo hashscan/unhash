@@ -35,8 +35,8 @@ export const useSendRegister = (domain: Domain) => {
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
-      ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)),
-      registration?.owner
+      '0x0000000000000000000000000000000000000000', // ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)), (no need to pass if addr is empty)
+      '0x0000000000000000000000000000000000000000' // temporary undefined until we it
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner) && Boolean(value),
     overrides: {

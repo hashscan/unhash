@@ -21,7 +21,13 @@ export function useMakeCommitment(name: string, network: Network, owner: string 
     address: ETH_REGISTRAR_ADDRESS.get(network),
     functionName: 'makeCommitmentWithConfig',
     enabled: Boolean(owner) && Boolean(secret),
-    args: [name, owner, secret, ETH_RESOLVER_ADDRESS.get(network), owner]
+    args: [
+      name,
+      owner,
+      secret,
+      '0x0000000000000000000000000000000000000000', // ETH_RESOLVER_ADDRESS.get(network) (no need to pass if addr is empty)
+      '0x0000000000000000000000000000000000000000' // temporary undefined until we it
+    ]
   })
   return {
     secret: secret,
