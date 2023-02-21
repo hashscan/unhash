@@ -5,6 +5,20 @@ import { useAccount, useChainId } from 'wagmi'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { formatAddress } from 'lib/utils'
+import clsx from 'clsx'
+
+const TxLink = ({ txHash, isFailed }: { txHash: string; isFailed?: boolean }) => {
+  const chainId = useChainId()
+  return (
+    <Link
+      className={clsx(styles.tx, { [styles.txFailed]: isFailed === true })}
+      href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/tx/${txHash}`}
+      target="_blank"
+    >
+      {formatAddress(txHash, 4)}
+    </Link>
+  )
+}
 
 const Debug: PageWithLayout = () => {
   const [initialized, setInitialized] = useState(false)
@@ -72,30 +86,18 @@ const Debug: PageWithLayout = () => {
             <td className={styles.status}>{reg.status}</td>
             <td>
               {reg.commitTxHash ? (
-                <Link
-                  className={styles.tx}
-                  href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/tx/${
-                    reg.commitTxHash
-                  }`}
-                  target="_blank"
-                >
-                  {formatAddress(reg.commitTxHash, 4)}
-                </Link>
+                <TxLink txHash={reg.commitTxHash} />
+              ) : reg.status === 'created' && reg.errorTxHash ? (
+                <TxLink txHash={reg.errorTxHash} isFailed={true} />
               ) : (
                 '—'
               )}
             </td>
             <td>
               {reg.registerTxHash ? (
-                <Link
-                  className={styles.tx}
-                  href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/tx/${
-                    reg.registerTxHash
-                  }`}
-                  target="_blank"
-                >
-                  {formatAddress(reg.registerTxHash, 4)}
-                </Link>
+                <TxLink txHash={reg.registerTxHash} />
+              ) : reg.status === 'committed' && reg.errorTxHash ? (
+                <TxLink txHash={reg.errorTxHash} isFailed={true} />
               ) : (
                 '—'
               )}
