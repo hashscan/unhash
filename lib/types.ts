@@ -35,6 +35,20 @@ export type DomainRecords = {
   'com.twitter'?: string
 }
 
+export type UserInfo = {
+  primaryEns: Domain | null
+  domains: UserDomain[]
+}
+
+export type UserDomain = {
+  domain: string
+  namehash: string | null
+  isValid: boolean
+  owned: boolean
+  controlled: boolean
+  resolved: boolean
+}
+
 // TODO: remove this?
 export type Fields = Partial<{
   name: string
