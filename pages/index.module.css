@@ -14,8 +14,6 @@
 
   display: flex;
   flex-flow: column nowrap;
-
-  min-height: calc(90vh - var(--nav-height));
 }
 
 .hero {

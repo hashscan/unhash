@@ -1,6 +1,6 @@
 .container {
   width: 432px;
-  padding: 48px 40px;
+  padding: 48px 0 48px 40px;
 
   position: sticky;
   top: calc(var(--nav-height));
