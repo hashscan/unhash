@@ -29,7 +29,7 @@ export const EthereumIcon = () => (
     textRendering="geometricPrecision"
     imageRendering="optimizeQuality"
     fillRule="evenodd"
-    clip-rule="evenodd"
+    clipRule="evenodd"
     viewBox="0 0 784.37 1277.39"
   >
     <g id="Layer_x0020_1">
@@ -182,10 +182,10 @@ export interface CheckFilledIconProps extends BaseIconProps {
   fillColor?: string
 }
 
-export const CheckFilled = (props: CheckFilledIconProps) => (
+export const CheckFilled = ({ fillColor, ...props }: CheckFilledIconProps) => (
   <BaseIcon {...props} baseSize={24}>
     <svg viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="10" fill={props.fillColor} />
+      <circle cx="12" cy="12" r="10" fill={fillColor} />
       <polyline
         points="8.444 12.339 10.611 14.506 10.597 14.492 15.486 9.603"
         fill="none"

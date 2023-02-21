@@ -67,44 +67,48 @@ const Debug: PageWithLayout = () => {
         </Link>
       </div>
 
-      <div className={styles.registrations}>
-        <tr className={styles.head}>
-          <th>#</th>
-          <th>Domain</th>
-          <th>Status</th>
-          <th>Commit Tx Hash</th>
-          <th>Register Tx Hash</th>
-        </tr>
-        {registrations.map((reg, i) => (
-          <tr key={reg.domain} className={styles.registration}>
-            <td className={styles.number}>{i + 1}</td>
-            <td>
-              <Link className={styles.domain} href={`/${reg.domain}/register`} target="_blank">
-                {reg.domain}
-              </Link>
-            </td>
-            <td className={styles.status}>{reg.status}</td>
-            <td>
-              {reg.commitTxHash ? (
-                <TxLink txHash={reg.commitTxHash} />
-              ) : reg.status === 'created' && reg.errorTxHash ? (
-                <TxLink txHash={reg.errorTxHash} isFailed={true} />
-              ) : (
-                '—'
-              )}
-            </td>
-            <td>
-              {reg.registerTxHash ? (
-                <TxLink txHash={reg.registerTxHash} />
-              ) : reg.status === 'committed' && reg.errorTxHash ? (
-                <TxLink txHash={reg.errorTxHash} isFailed={true} />
-              ) : (
-                '—'
-              )}
-            </td>
+      <table className={styles.registrations}>
+        <thead>
+          <tr className={styles.head}>
+            <th>#</th>
+            <th>Domain</th>
+            <th>Status</th>
+            <th>Commit Tx Hash</th>
+            <th>Register Tx Hash</th>
           </tr>
-        ))}
-      </div>
+        </thead>
+        <tbody>
+          {registrations.map((reg, i) => (
+            <tr key={reg.domain} className={styles.registration}>
+              <td className={styles.number}>{i + 1}</td>
+              <td>
+                <Link className={styles.domain} href={`/${reg.domain}/register`} target="_blank">
+                  {reg.domain}
+                </Link>
+              </td>
+              <td className={styles.status}>{reg.status}</td>
+              <td>
+                {reg.commitTxHash ? (
+                  <TxLink txHash={reg.commitTxHash} />
+                ) : reg.status === 'created' && reg.errorTxHash ? (
+                  <TxLink txHash={reg.errorTxHash} isFailed={true} />
+                ) : (
+                  '—'
+                )}
+              </td>
+              <td>
+                {reg.registerTxHash ? (
+                  <TxLink txHash={reg.registerTxHash} />
+                ) : reg.status === 'committed' && reg.errorTxHash ? (
+                  <TxLink txHash={reg.errorTxHash} isFailed={true} />
+                ) : (
+                  '—'
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       <div className={styles.divider} />
     </div>
