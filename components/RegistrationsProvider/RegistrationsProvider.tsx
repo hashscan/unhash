@@ -15,12 +15,13 @@ export const WaitForRegisterTx = ({
   domain: Domain
   registerTxHash: `0x${string}`
 }) => {
-  const { setRegistered } = useRegistration(domain)
+  const { setRegistered, setRegisterFailed } = useRegistration(domain)
 
   useWaitForTransaction({
     hash: registerTxHash,
-    // update registration status when transaction is confirmed
-    onSuccess: () => setRegistered()
+    // update registration status when transaction is confirmed or failed
+    onSuccess: () => setRegistered(),
+    onError: (e) => setRegisterFailed(registerTxHash, e.message)
   })
 
   return null
@@ -38,7 +39,7 @@ export const WaitForCommitTx = ({
   commitTxHash: `0x${string}`
 }) => {
   const provider = useProvider()
-  const { setCommited } = useRegistration(domain)
+  const { setCommited, setCommitFailed } = useRegistration(domain)
 
   useWaitForTransaction({
     hash: commitTxHash,
@@ -48,7 +49,8 @@ export const WaitForCommitTx = ({
       const commitTimestamp = commitBlock.timestamp * 1000
       // update registration status
       setCommited(data.blockNumber, commitTimestamp)
-    }
+    },
+    onError: (e) => setCommitFailed(commitTxHash, e.message)
   })
 
   return null

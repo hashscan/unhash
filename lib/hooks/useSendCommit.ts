@@ -25,7 +25,7 @@ export const useSendCommit = ({
   owner: string | undefined
 }) => {
   const { address: sender } = useAccount()
-  const { create } = useRegistration(domain)
+  const { setCommitting } = useRegistration(domain)
 
   // generate secret and commitment
   const name = getDomainName(domain)
@@ -50,7 +50,7 @@ export const useSendCommit = ({
     ...config,
     // create new Registartion when transaction is sent
     onSuccess: (data) =>
-      create({
+      setCommitting({
         domain,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner!, // TODO: fix?
