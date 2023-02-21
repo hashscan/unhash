@@ -5,6 +5,7 @@ specifiers:
   '@next/font': ^13.1.6
   '@radix-ui/react-toast': ^1.1.2
   '@rainbow-me/rainbowkit': ^0.10.0
+  '@react-hook/change': ^1.0.0
   '@types/node': ^18.11.18
   '@types/react': ^18.0.27
   '@typescript-eslint/eslint-plugin': ^5.51.0
@@ -30,6 +31,7 @@ dependencies:
   '@next/font': 13.1.6
   '@radix-ui/react-toast': 1.1.2_biqbaboplfbrettd7655fr4n2y
   '@rainbow-me/rainbowkit': 0.10.0_o7ub72yu4vluqwfonaykr7bjmq
+  '@react-hook/change': 1.0.0_react@18.2.0
   clsx: 1.2.1
   ethers: 5.7.2
   framer-motion: 9.0.3_biqbaboplfbrettd7655fr4n2y
@@ -1212,6 +1214,32 @@ packages:
       wagmi: 0.11.2_6dtkqnsw35o4ng2pbgry4nvbxi
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@react-hook/change/1.0.0_react@18.2.0:
+    resolution: {integrity: sha512-NwkNxq6PZ5XRZ9gcBhE1kmTXtNf4/YayZXaLviCWowBkmXWKcRKtmBZBlAj86LbWxReWZgyINaYsPDxEEa2MKQ==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@react-hook/latest': 1.0.3_react@18.2.0
+      '@react-hook/previous': 1.0.1_react@18.2.0
+      react: 18.2.0
+    dev: false
+
+  /@react-hook/latest/1.0.3_react@18.2.0:
+    resolution: {integrity: sha512-dy6duzl+JnAZcDbNTfmaP3xHiKtbXYOaz3G51MGVljh548Y8MWzTr+PHLOfvpypEVW9zwvl+VyKjbWKEVbV1Rg==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /@react-hook/previous/1.0.1_react@18.2.0:
+    resolution: {integrity: sha512-O7VaRLDEHRy1hxh03CmtWRxDhCwIVQBBkf1kYdYqUP3KNrPnQMIVIYYYQpHIIiNcS1BO6zmBKM4bugFDNgP8Iw==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@rushstack/eslint-patch/1.2.0:

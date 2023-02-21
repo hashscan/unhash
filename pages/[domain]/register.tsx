@@ -81,9 +81,7 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
         </main>
 
         {/* right as a side bar */}
-        <div className={styles.right}>
-          <CheckoutOrder order={order} />
-        </div>
+        <div className={styles.right}>{step === 'commit' && <CheckoutOrder order={order} />}</div>
       </div>
     </>
   )

@@ -1,5 +1,5 @@
 .container {
-  min-width: 432px;
+  width: 432px;
   padding: 48px 40px;
 
   position: sticky;
