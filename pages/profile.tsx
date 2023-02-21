@@ -16,10 +16,7 @@ const Profile: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
   const userInfo = useCurrentUserInfo()
 
-  const availableDomains = useMemo(
-    () => userInfo?.domains.filter((d) => d.isValid).map((d) => d.domain as `${string}.eth`) || [],
-    [userInfo]
-  )
+  const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
@@ -55,7 +52,7 @@ const Profile: PageWithLayout = () => {
             </Link>{' '}
             ENS domain. You can switch to another available ENS below.
           </span>
-        ) : availableDomains.length > 0 ? (
+        ) : userDomains.length > 0 ? (
           <span>You address is not linked any ENS domain. Choose one from the list below.</span>
         ) : (
           <span>
@@ -69,12 +66,12 @@ const Profile: PageWithLayout = () => {
       </div>
 
       {/* Primary ENS select */}
-      {userInfo && availableDomains.length > 0 && (
+      {userInfo && userDomains.length > 0 && (
         <ProfilePrimaryDomain
           chainId={chainId}
           address={address}
-          primaryDomain={userInfo.primaryEns}
-          availableDomains={availableDomains}
+          primaryName={userInfo.primaryEns || undefined}
+          userDomains={userDomains}
         />
       )}
 

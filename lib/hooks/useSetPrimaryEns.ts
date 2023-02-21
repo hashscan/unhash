@@ -6,7 +6,7 @@ export const useSetPrimaryEns = ({
   domain,
   onSuccess
 }: {
-  domain: Domain | null
+  domain?: Domain
   onSuccess?: () => void
 }) => {
   const chainId = useChainId()
