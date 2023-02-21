@@ -1,7 +1,7 @@
 import ky from 'ky'
 import { Address } from 'wagmi'
 import { API_URL } from './constants'
-import type { Network, Domain, DomainRecords } from './types'
+import type { Network, Domain, DomainRecords, UserInfo } from './types'
 
 type DomainStatus = {
   isAvailable: boolean
@@ -30,20 +30,6 @@ export type DomainListing = {
   priceUsd: number
   price: number
   currency: Currency
-}
-
-export type UserDomain = {
-  domain: string
-  namehash: string | null
-  isValid: boolean
-  owned: boolean
-  controlled: boolean
-  resolved: boolean
-}
-
-export type UserInfo = {
-  primaryEns: Domain | null
-  domains: UserDomain[]
 }
 
 export type Currency = {

@@ -1,5 +1,5 @@
-import api, { UserInfo } from 'lib/api'
-import { toNetwork } from 'lib/types'
+import api from 'lib/api'
+import { toNetwork, UserInfo } from 'lib/types'
 import { useEffect, useState } from 'react'
 import { useAccount, useChainId } from 'wagmi'
 

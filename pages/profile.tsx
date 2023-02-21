@@ -16,9 +16,8 @@ const Profile: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
   const userInfo = useCurrentUserInfo()
 
-  // TODO: set actually available for primary ENS
   const availableDomains = useMemo(
-    () => userInfo?.domains.filter((d) => d.isValid).map((d) => d.domain as `0x${string}`) || [],
+    () => userInfo?.domains.filter((d) => d.isValid).map((d) => d.domain as `${string}.eth`) || [],
     [userInfo]
   )
 
