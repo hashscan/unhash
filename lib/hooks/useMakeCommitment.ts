@@ -1,4 +1,4 @@
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Network } from 'lib/types'
 import { generateCommitSecret } from 'lib/utils'
 import { useEffect, useState } from 'react'

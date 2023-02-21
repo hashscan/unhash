@@ -1,10 +1,5 @@
 import { BigNumber } from 'ethers'
-import {
-  ETH_REGISTRAR_ADDRESS,
-  ETH_REGISTRAR_ABI,
-  YEAR_IN_SECONDS,
-  ETH_RESOLVER_ADDRESS
-} from 'lib/constants'
+import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
 import { getDomainName } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
