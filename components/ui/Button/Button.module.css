@@ -1,4 +1,6 @@
 .button {
+  all: unset;
+
   display: inline-flex;
   flex-direction: row;
   align-items: center;
