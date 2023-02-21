@@ -12,7 +12,7 @@ import { chains, provider, connectors } from 'lib/connectors'
 import { wrapInLayout } from 'components/layouts'
 
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
-import { WatchPendingRegistrations } from 'components/WatchPendingRegistrations/WatchPendingRegistrations'
+import { RegistrationsProvider } from 'components/RegistrationsProvider/RegistrationsProvider'
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -74,13 +74,13 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <WagmiConfig client={wagmiClient}>
         <NotifierProvider>
-          <WatchPendingRegistrations>
+          <RegistrationsProvider>
             <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
               <WrapBalancerProvider>
                 {wrapInLayout(Component, <Component {...pageProps} />)}
               </WrapBalancerProvider>
             </RainbowKitProvider>
-          </WatchPendingRegistrations>
+          </RegistrationsProvider>
         </NotifierProvider>
       </WagmiConfig>
     </>
