@@ -32,13 +32,18 @@ export type DomainListing = {
   currency: Currency
 }
 
+export type UserDomain = {
+  domain: string
+  namehash: string | null
+  isValid: boolean
+  owned: boolean
+  controlled: boolean
+  resolved: boolean
+}
+
 export type UserInfo = {
   primaryEns: Domain | null
-  domains: {
-    owned: Domain[]
-    controlled: Domain[]
-    resolved: Domain[]
-  }
+  domains: UserDomain[]
 }
 
 export type Currency = {

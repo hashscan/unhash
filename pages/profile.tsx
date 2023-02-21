@@ -17,7 +17,10 @@ const Profile: PageWithLayout = () => {
   const userInfo = useCurrentUserInfo()
 
   // TODO: set actually available for primary ENS
-  const availableDomains = useMemo(() => userInfo?.domains.controlled || [], [userInfo])
+  const availableDomains = useMemo(
+    () => userInfo?.domains.filter((d) => d.isValid).map((d) => d.domain as `0x${string}`) || [],
+    [userInfo]
+  )
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
