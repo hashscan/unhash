@@ -1,5 +1,4 @@
 .checkout {
-  --sidebar-width: 520px;
   display: flex;
   justify-content: space-between;
   column-gap: 64px;

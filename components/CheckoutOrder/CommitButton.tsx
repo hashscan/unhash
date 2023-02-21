@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useAccount, useChainId } from 'wagmi'
+import useChange from '@react-hook/change'
 
 import { RegistrationOrder, toNetwork } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
@@ -7,6 +8,7 @@ import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { Button } from 'components/ui/Button/Button'
 
 import styles from './CommitButton.module.css'
+import { useNotifier } from 'lib/hooks/useNotifier'
 
 interface CommitButtonProps {
   order: RegistrationOrder
@@ -25,10 +27,23 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
     owner: order.ownerAddress || address
   })
 
+  const notify = useNotifier()
+
+  useChange(error?.message, (current) => {
+    if (current) {
+      notify(current, { status: 'error', title: 'Error sending transaction' })
+    }
+  })
+
   const onStartClick = useCallback(() => {
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
-    sendCommit?.()
-  }, [sendCommit])
+    try {
+      sendCommit?.()
+    } catch (error) {
+      const msg = error instanceof Error ? error.toString() : 'Commit error'
+      notify(msg, { status: 'error' })
+    }
+  }, [sendCommit, notify])
 
   return (
     <div>
@@ -40,9 +55,6 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
       >
         Register {domain}
       </Button>
-
-      {/* TODO: remove temp error solution */}
-      {error && <div className={styles.error}>{error.message}</div>}
     </div>
   )
 }
