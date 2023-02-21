@@ -28,7 +28,7 @@ export type CheckoutStep = 'initializing' | 'commit' | 'wait' | 'register' | 'su
 function calculateStep(_: CheckoutStep, reg: Registration | undefined): CheckoutStep {
   const status = reg?.status
 
-  if (!status || status === 'commitPending') return 'commit'
+  if (!status || status === 'created' || status === 'commitPending') return 'commit'
   if (status === 'committed') {
     const commitTimestamp = reg?.commitTimestamp!
     return commitTimestamp + COMMIT_WAIT_MS > Date.now() ? 'wait' : 'register'
