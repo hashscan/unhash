@@ -8,6 +8,7 @@ import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
 import { PrimaryDomainDropdown } from 'components/PrimaryDomainSelect/PrimaryDomainDropdown'
 import { Button } from 'components/ui/Button/Button'
+import { PrimaryDomainUnresolvedEth } from 'components/PrimaryDomainSelect/PrimaryDomainUnresolvedEth'
 
 interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   chainId: number
@@ -67,16 +68,20 @@ export const ProfilePrimaryDomain = ({
       />
 
       {newDomain && (
-        <div>
+        <>
+          {!newDomain.resolved && (
+            <PrimaryDomainUnresolvedEth className={styles.unresolvedEth} domain={newDomain.name} />
+          )}
           <Button
             className={styles.saveButton}
+            disabled={!newDomain.resolved}
             isLoading={isUpdating}
             size={'regular'}
             onClick={savePrimaryEns}
           >
             Save
           </Button>
-        </div>
+        </>
       )}
     </div>
   )

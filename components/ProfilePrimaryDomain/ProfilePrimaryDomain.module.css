@@ -10,6 +10,10 @@
   display: none;
 }
 
+.unresolvedEth {
+  margin-top: 8px;
+}
+
 .saveButton {
   width: 120px;
   display: block;
