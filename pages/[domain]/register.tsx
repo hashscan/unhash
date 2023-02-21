@@ -10,10 +10,10 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRe
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep/CheckoutSuccessStep'
 import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
-import { COMMIT_WAIT_MS, YEAR_IN_SECONDS } from 'lib/constants'
+import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
-import { Domain, Registration } from 'lib/types'
-import { clamp, parseDomainName, validateDomain } from 'lib/utils'
+import { Domain, Registration, RegistrationOrder } from 'lib/types'
+import { parseDomainName, validateDomain } from 'lib/utils'
 
 import styles from 'styles/checkout.module.css'
 
@@ -42,16 +42,14 @@ function calculateStep(_: CheckoutStep, reg: Registration | undefined): Checkout
 const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
   // get registration and calculate step
   const { registration: reg } = useRegistration(domain)
+
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
 
-  // durationYears is set from the UI and duration is from Registration
-  const [durationYears, setDurationYears] = useState<number>(2)
-  const [duration, setDuration] = useState<number>(durationYears * YEAR_IN_SECONDS)
-  useEffect(() => {
-    setDuration(reg?.duration ?? durationYears * YEAR_IN_SECONDS)
-  }, [reg, durationYears])
+  const [order, updateOrder] = useState<RegistrationOrder>(() => {
+    return { domain, durationInYears: 2, ownerAddress: undefined }
+  })
 
   // set timeout to trigger step update
   const waitTimeout =
@@ -59,10 +57,6 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
       ? Math.max(0, reg.commitTimestamp + COMMIT_WAIT_MS - Date.now())
       : 0
   useTimeout(() => dispatchStep(reg), waitTimeout)
-
-  const onDurationChanged = (year: number) => {
-    setDurationYears(clamp(year, 1, 4))
-  }
 
   return (
     <>
@@ -77,13 +71,7 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
 
           <div className={styles.content}>
             {step === 'initializing' && <div></div>}
-            {step === 'commit' && (
-              <CheckoutCommitStep
-                domain={domain}
-                durationYears={durationYears}
-                onDurationChanged={onDurationChanged}
-              />
-            )}
+            {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
             {step === 'wait' && reg?.commitTimestamp && (
               <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
             )}
@@ -94,7 +82,7 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
 
         {/* right as a side bar */}
         <div className={styles.right}>
-          <CheckoutOrder domain={domain} duration={duration} />
+          <CheckoutOrder order={order} />
         </div>
       </div>
     </>

@@ -70,4 +70,11 @@ export type RegistrationStatus =
   | 'registerPending'
   | 'registered'
 
+// holds current registration settings prior to the checkout (aka shopping cart)
+export type RegistrationOrder = {
+  domain: Domain
+  durationInYears: number
+  ownerAddress: string | undefined
+}
+
 export type Domain = `${string}.eth`

@@ -1,61 +1,22 @@
-import React, { useCallback, useState } from 'react'
-import { useAccount, useChainId } from 'wagmi'
+import React, { Dispatch, SetStateAction } from 'react'
 import clsx from 'clsx'
 
-import { Domain, toNetwork } from 'lib/types'
+import { RegistrationOrder } from 'lib/types'
 import styles from './CheckoutCommitStep.module.css'
-import { formatNetworkFee } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
-import { YEAR_IN_SECONDS } from 'lib/constants'
-import { useSendCommit } from 'lib/hooks/useSendCommit'
-import { Button } from 'components/ui/Button/Button'
-import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
-import { Tool as ToolIcon, EthereumIcon, Gas } from 'components/icons'
+import { Tool as ToolIcon, EthereumIcon } from 'components/icons'
 import { AdditionalInfo } from 'components/AdditionalInfo/AdditionalInfo'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
 interface CheckoutCommitStepProps {
-  domain: Domain
-  durationYears: number
-  onDurationChanged?: (year: number) => void
+  order: RegistrationOrder
+  updateOrder: Dispatch<SetStateAction<RegistrationOrder>>
 }
 
-export const CheckoutCommitStep = ({
-  domain,
-  durationYears,
-  onDurationChanged
-}: CheckoutCommitStepProps) => {
-  const chainId = useChainId()
-  // TODO: handle no network and no account
-  const { address } = useAccount()
-
-  const [owner, setOwner] = useState<string | null>('') // empty string - not set, null - invalid input
-
-  const { gasLimit, sendCommit, isLoading, error } = useSendCommit({
-    domain: domain,
-    network: toNetwork(chainId),
-    duration: durationYears * YEAR_IN_SECONDS,
-    // TODO:
-    // 1) properly handle lack of 'address'
-    // 2) make code easier to understand
-    owner: owner === '' ? address! : owner ?? undefined
-  })
-  const networkFee = useTxPrice(gasLimit)
-
-  const onStartClick = useCallback(() => {
-    // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)
-    if (typeof sendCommit === 'undefined') return
-    // invalid owner input
-    if (owner === null) return
-
-    sendCommit()
-  }, [sendCommit, owner])
-
-  const [showAdvanced, setShowAdvanced] = useState(false)
-
+export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepProps) => {
   // TODO: show connect wallet button if not connected
   return (
     <div className={styles.container}>
@@ -69,9 +30,11 @@ export const CheckoutCommitStep = ({
             <div
               key={year}
               className={clsx(styles.yearButton, {
-                [styles.yearButtonSelected]: year === durationYears
+                [styles.yearButtonSelected]: year === order.durationInYears
               })}
-              onClick={() => onDurationChanged?.(year)}
+              onClick={() => {
+                updateOrder((order) => ({ ...order, durationInYears: year }))
+              }}
             >
               {pluralize('year', year)}
             </div>
@@ -90,7 +53,10 @@ export const CheckoutCommitStep = ({
           className={styles.ownerInput}
           placeholder="0xd07d...54aB"
           autoComplete="off"
-          onAddressChange={(address) => setOwner(address)}
+          onAddressChange={(address) => {
+            const newOwner = address === null ? undefined : address // todo: make it less ugly
+            updateOrder((order) => ({ ...order, ownerAddress: newOwner }))
+          }}
         />
       </AdditionalInfo>
 
@@ -132,27 +98,6 @@ export const CheckoutCommitStep = ({
         className={clsx(styles.profileInput, ui.input, styles.profileInputLast)}
       />
       </div> */}
-
-      <div className={styles.buttonContainer}>
-        <Button onClick={() => !isLoading && onStartClick()} isLoading={isLoading}>
-          Start Registration
-        </Button>
-
-        {networkFee && (
-          <div className={styles.txFee}>
-            <div className={styles.txFeeLabel}>
-              <Gas />
-              Network fee
-            </div>
-            <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
-              {formatNetworkFee(networkFee)}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* TODO: remove temp error solution */}
-      {error && <div className={styles.error}>{error.message}</div>}
     </div>
   )
 }
