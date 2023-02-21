@@ -5,12 +5,18 @@ import { Button } from 'components/ui/Button/Button'
 import styles from './CheckoutSuccessStep.module.css'
 
 import { NextSteps } from './NextSteps'
+import { Registration } from 'lib/types'
+import Link from 'next/link'
 
 interface CheckoutSuccessStepProps {
   domain: string
+  registration: Registration | undefined
 }
 
 export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
+  const txnHash = props.registration?.registerTxHash
+  const etherscanLink = txnHash ? `https://etherscan.io/tx/${txnHash}` : undefined
+
   return (
     <div className={styles.container}>
       <div className={styles.titles}>
@@ -21,16 +27,25 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
           <p>
             <WrapBalancer>
               You can now{' '}
-              <a>
+              <Link href="/profile" className={styles.inlineLink}>
                 point <b>{props.domain}</b> to your wallet
-              </a>
+              </Link>
               , and create a public profile to use your username instead of a wallet address.
             </WrapBalancer>
           </p>
 
           <div className={styles.buttons}>
-            <Button size="medium">Set up Profile</Button>
-            <a>View on Ethescan ↗</a>
+            <Link href="/profile" passHref legacyBehavior>
+              <Button as="a" size="medium">
+                Set up Profile&nbsp;→
+              </Button>
+            </Link>
+
+            {etherscanLink && (
+              <Link href={etherscanLink} target="_blank" className={styles.inlineLink}>
+                View on Ethescan ↗
+              </Link>
+            )}
           </div>
         </div>
       </div>

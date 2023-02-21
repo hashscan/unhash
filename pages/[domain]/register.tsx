@@ -76,12 +76,16 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
               <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
             )}
             {step === 'register' && <CheckoutRegisterStep domain={domain} />}
-            {step === 'success' && <CheckoutSuccessStep domain={domain} />}
+            {step === 'success' && <CheckoutSuccessStep domain={domain} registration={reg} />}
           </div>
         </main>
 
         {/* right as a side bar */}
-        <div className={styles.right}>{step === 'commit' && <CheckoutOrder order={order} />}</div>
+        {step === 'commit' && (
+          <div className={styles.right}>
+            <CheckoutOrder order={order} />
+          </div>
+        )}
       </div>
     </>
   )

@@ -23,13 +23,13 @@
   margin-bottom: 54px;
 }
 
-.description a {
+.inlineLink {
   text-decoration: underline;
   color: inherit;
   cursor: pointer;
 }
 
-.description a:hover {
+.inlineLink:hover {
   color: var(--color-slate-3);
 }
 
