@@ -1,5 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
+import Link from 'next/link'
 
 import styles from './NextSteps.module.css'
 
@@ -9,13 +10,13 @@ interface NextStepsProps {
   domain: string
 }
 
-export const NextSteps = (props: NextStepsProps) => {
+export const NextSteps = ({ domain }: NextStepsProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.explore}>Explore the Next Steps</div>
 
       <div className={styles.grid}>
-        <div className={styles.card}>
+        <Link href="/profile" className={styles.card}>
           <div className={styles.icons}>
             <span className={styles.icon}>
               <Icons.FaceWink />
@@ -27,7 +28,7 @@ export const NextSteps = (props: NextStepsProps) => {
           <div className={styles.header}>Set up your public .ETH profile</div>
 
           <div className={styles.text}>
-            <p>Boost your blockchain presence by connecting {props.domain} to your wallet.</p>
+            <p>Boost your blockchain presence by connecting {domain} to your wallet.</p>
 
             <p>
               This lets others access your public info, like your website address, Twitter page, and
@@ -36,9 +37,9 @@ export const NextSteps = (props: NextStepsProps) => {
           </div>
 
           <div className={styles.arrow}>→</div>
-        </div>
+        </Link>
 
-        <div className={styles.card}>
+        <Link href="https://opensea.io/collection/ens" target="_blank" className={styles.card}>
           <div className={styles.icons}>
             <span className={styles.icon}>
               <Icons.CoinSwap />
@@ -57,9 +58,13 @@ export const NextSteps = (props: NextStepsProps) => {
           </div>
 
           <div className={styles.arrow}>→</div>
-        </div>
+        </Link>
 
-        <div className={styles.card}>
+        <Link
+          href={`https://app.ens.domains/name/${domain}/details`}
+          target="_blank"
+          className={styles.card}
+        >
           <div className={styles.icons}>
             <span className={styles.icon}>
               <Icons.Tool />
@@ -76,7 +81,7 @@ export const NextSteps = (props: NextStepsProps) => {
           </div>
 
           <div className={styles.arrow}>→</div>
-        </div>
+        </Link>
       </div>
     </div>
   )
