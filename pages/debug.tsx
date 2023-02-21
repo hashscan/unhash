@@ -19,6 +19,8 @@ const Debug: PageWithLayout = () => {
       [...allRegistrations].sort((r1, r2) => {
         // sort in the following order of status: 'commitPending', 'committed', 'registerPending', 'registered'
         if (r1.status === r2.status) return 0
+        if (r1.status === 'created') return -1
+        if (r2.status === 'created') return 1
         if (r1.status === 'commitPending') return -1
         if (r2.status === 'commitPending') return 1
         if (r1.status === 'committed') return -1

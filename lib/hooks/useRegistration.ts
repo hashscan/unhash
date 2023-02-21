@@ -32,15 +32,13 @@ export function useRegistration(domain: Domain) {
   }, [domain, sender, registrations])
 
   // Create new registration with the 'commitPending' status
-  const create = useCallback(
+  const setCommitting = useCallback(
     (r: CreateRegistrationParams) => {
       setRegistrations((_registrations) => {
-        if (_registrations.find((r) => r.domain === domain)) {
-          throw new Error('Registration already exists')
-        }
-
+        // just replace current if already exists,
+        // it can be the case when user repeat commit transaction after error
         return [
-          ..._registrations,
+          ..._registrations.filter((r) => r.domain !== domain),
           {
             ...r,
             status: 'commitPending'
@@ -64,7 +62,31 @@ export function useRegistration(domain: Domain) {
             ..._registration,
             status: 'committed',
             commitBlock,
-            commitTimestamp
+            commitTimestamp,
+            errorTxHash: undefined,
+            errorTxMessage: undefined
+          }
+        ]
+      })
+    },
+    [domain, setRegistrations]
+  )
+
+  // Update status back to 'created'
+  const setCommitFailed = useCallback(
+    (errorTxHash: string, errorTxMessage: string) => {
+      setRegistrations((_registrations) => {
+        const _registration = _registrations.find((r) => r.domain === domain)
+        if (!_registration) throw new Error('Registration not found')
+
+        return [
+          ..._registrations.filter((r) => r.domain !== domain),
+          {
+            ..._registration,
+            status: 'created',
+            commitTxHash: undefined,
+            errorTxHash,
+            errorTxMessage
           }
         ]
       })
@@ -84,7 +106,9 @@ export function useRegistration(domain: Domain) {
           {
             ..._registration,
             status: 'registerPending',
-            registerTxHash
+            registerTxHash,
+            errorTxHash: undefined,
+            errorTxMessage: undefined
           }
         ]
       })
@@ -102,11 +126,43 @@ export function useRegistration(domain: Domain) {
         ..._registrations.filter((r) => r.domain !== domain),
         {
           ..._registration,
-          status: 'registered'
+          status: 'registered',
+          errorTxHash: undefined,
+          errorTxMessage: undefined
         }
       ]
     })
   }, [domain, setRegistrations])
 
-  return { registration, create, setCommited, setRegistering, setRegistered }
+  // Update the registration status back to 'committed'
+  const setRegisterFailed = useCallback(
+    (errorTxHash: string, errorTxMessage: string) => {
+      setRegistrations((_registrations) => {
+        const _registration = _registrations.find((r) => r.domain === domain)
+        if (!_registration) throw new Error('Registration not found')
+
+        return [
+          ..._registrations.filter((r) => r.domain !== domain),
+          {
+            ..._registration,
+            status: 'committed',
+            registerTxHash: undefined,
+            errorTxHash,
+            errorTxMessage
+          }
+        ]
+      })
+    },
+    [domain, setRegistrations]
+  )
+
+  return {
+    registration,
+    setCommitting,
+    setCommited,
+    setCommitFailed,
+    setRegistering,
+    setRegistered,
+    setRegisterFailed
+  }
 }

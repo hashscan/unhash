@@ -58,9 +58,16 @@ export type Registration = {
   commitBlock?: number
   commitTimestamp?: number
   registerTxHash?: string
+  errorTxHash?: string // refers to commit if commitTxHash is not set or to registerTxHash otherwise
+  errorTxMessage?: string
   fields?: Fields
 }
 
-export type RegistrationStatus = 'commitPending' | 'committed' | 'registerPending' | 'registered'
+export type RegistrationStatus =
+  | 'created'
+  | 'commitPending'
+  | 'committed'
+  | 'registerPending'
+  | 'registered'
 
 export type Domain = `${string}.eth`
