@@ -1,7 +1,6 @@
 import WrapBalancer from 'react-wrap-balancer'
 import styles from './AuthLayout.module.css'
-import ui from 'styles/ui.module.css'
-import clsx from 'clsx'
+import { Button } from 'components/ui/Button/Button'
 
 export const AuthLayout = () => {
   const onClick = () => {
@@ -16,9 +15,9 @@ export const AuthLayout = () => {
           Sign in with Metamask or Wallet Connect to view and edit ENS profile.
         </WrapBalancer>
       </div>
-      <button className={clsx(ui.button, styles.button)} onClick={() => onClick}>
+      <Button className={styles.button} size={'medium'} onClick={onClick}>
         Connect Wallet
-      </button>
+      </Button>
     </div>
   )
 }

@@ -1,7 +1,5 @@
-import ui from 'styles/ui.module.css'
 import styles from './ProfilePrimaryDomain.module.css'
 import clsx from 'clsx'
-import { ProgressBar } from 'components/icons'
 import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
 import { Domain } from 'lib/types'
 import { ComponentProps, useEffect, useRef, useState } from 'react'
@@ -9,6 +7,7 @@ import { useOnClickOutside } from 'usehooks-ts'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
 import { PrimaryDomainDropdown } from 'components/PrimaryDomainSelect/PrimaryDomainDropdown'
+import { Button } from 'components/ui/Button/Button'
 
 interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   chainId: number
@@ -39,7 +38,7 @@ export const ProfilePrimaryDomain = ({
   useOnClickOutside(ref, () => setShowDropdown(false))
 
   // transaction to update primary ENS
-  const { write: sendUpdate, isLoading: isUpadting } = useSetPrimaryEns({
+  const { write: sendUpdate, isLoading: isUpdating } = useSetPrimaryEns({
     domain: newDomain,
     onSuccess: () => {
       // TODO: so smart right? make normal update
@@ -69,13 +68,14 @@ export const ProfilePrimaryDomain = ({
 
       {newDomain && (
         <div>
-          <button
-            className={clsx(styles.saveButton, ui.button)}
-            disabled={isUpadting}
+          <Button
+            className={styles.saveButton}
+            isLoading={isUpdating}
+            size={'regular'}
             onClick={savePrimaryEns}
           >
-            {isUpadting ? <ProgressBar color="var(--color-slate-3)" /> : 'Save'}
-          </button>
+            Save
+          </Button>
         </div>
       )}
     </div>

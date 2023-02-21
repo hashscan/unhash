@@ -9,7 +9,7 @@ import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 import { useMemo } from 'react'
 import Link from 'next/link'
 import { ProfilePrimaryDomain } from 'components/ProfilePrimaryDomain/ProfilePrimaryDomain'
-import { ProgressBar } from 'components/icons'
+import { LoaderSpinner } from 'components/icons'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -26,7 +26,7 @@ const Profile: PageWithLayout = () => {
   if (!userInfo) {
     return (
       <div className={styles.loading}>
-        <ProgressBar className={styles.loader} />
+        <LoaderSpinner className={styles.loader} />
       </div>
     )
   }

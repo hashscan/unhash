@@ -1,21 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useMemo, useState } from 'react'
 import styles from './ProfileCardForm.module.css'
-import ui from 'styles/ui.module.css'
-import clsx from 'clsx'
 import { Domain, DomainRecords } from 'lib/types'
 import { Input } from 'components/ui/Input/Input'
 import {
   Profile as ProfileIcon,
   Description as DescriptionIcon,
   Globe as GlobeIcon,
-  Twitter as TwitterIcon,
-  ProgressBar
+  Twitter as TwitterIcon
 } from 'components/icons'
 
 import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
 import { DomainInfo } from 'lib/api'
 import { useNotifier } from 'lib/hooks/useNotifier'
+import { Button } from 'components/ui/Button/Button'
 
 interface ProfileCardFormProps {
   domain: Domain
@@ -119,13 +117,15 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
         />
       </div>
       <div className={styles.footer}>
-        <button
+        <Button
+          className={styles.saveButton}
           disabled={inputsDisabled || !hasChanges}
-          className={clsx(styles.saveButton, ui.button)}
+          isLoading={isUpdating}
+          size={'regular'}
           onClick={save}
         >
-          {isUpdating ? <ProgressBar color="var(--color-slate-3)" /> : 'Save'}
-        </button>
+          Save
+        </Button>
       </div>
     </div>
   )

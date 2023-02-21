@@ -43,6 +43,10 @@
   height: 26px;
 }
 
+.content {
+  text-align: center;
+}
+
 .button.button_cta .loader {
   width: 34px;
   height: 34px;
@@ -61,9 +65,9 @@
   padding: 0px 16px;
   height: 40px;
 
-  font: var(--type-sm);
-  letter-spacing: var(--ls-sm);
-  font-weight: 500;
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  font-weight: 400;
 }
 
 .button.button_medium {

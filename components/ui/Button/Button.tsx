@@ -28,7 +28,7 @@ const ButtonWithRef = (
     as,
     buttonProps,
     <>
-      <span className={styles.content}>{children}</span>
+      <div className={styles.content}>{children}</div>
       {isLoading && <LoaderSpinner className={styles.loader} />}
     </>
   )
