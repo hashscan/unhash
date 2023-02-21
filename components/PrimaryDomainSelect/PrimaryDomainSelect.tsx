@@ -1,18 +1,18 @@
 import clsx from 'clsx'
 import { ArrowDown, CheckFilled } from 'components/icons'
 import { pluralize } from 'lib/pluralize'
-import { Domain } from 'lib/types'
+import { Domain, UserDomain } from 'lib/types'
 import { ComponentProps } from 'react'
 import styles from './PrimaryDomainSelect.module.css'
 
 interface PrimaryDomainSelectProps extends ComponentProps<'div'> {
-  primaryDomain: Domain | null // currently primary domain or null if not set
-  newDomain: Domain | null // the domain which is about to be set, selected from dropdown
+  primaryName?: Domain // currently primary domain or undefined if not set
+  newDomain?: UserDomain // the domain which is about to be set, selected from dropdown
   availableLength: number
 }
 
 export const PrimaryDomainSelect = ({
-  primaryDomain,
+  primaryName,
   newDomain,
   availableLength,
   className,
@@ -21,18 +21,18 @@ export const PrimaryDomainSelect = ({
   return (
     <div {...rest} className={clsx(styles.select, className)}>
       {/* Show new domain hint (still not saved) */}
-      {newDomain && <div className={clsx(styles.text, styles.textHint)}>{newDomain}</div>}
+      {newDomain && <div className={clsx(styles.text, styles.textHint)}>{newDomain.name}</div>}
 
-      {/* Show current primary domain set */}
-      {!newDomain && primaryDomain && (
+      {/* Show current primary name set */}
+      {!newDomain && primaryName && (
         <>
           <CheckFilled className={styles.prefixIcon} fillColor={'var(--color-success)'} />
-          <div className={clsx(styles.text)}>{primaryDomain}</div>
+          <div className={clsx(styles.text)}>{primaryName}</div>
         </>
       )}
 
       {/* Show hint to set select new domain */}
-      {!newDomain && !primaryDomain && (
+      {!newDomain && !primaryName && (
         <div className={clsx(styles.text, styles.textHint)}>
           {`Select from ${availableLength} available ${pluralize('domain', availableLength, true)}`}
         </div>

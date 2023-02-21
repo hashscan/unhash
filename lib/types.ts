@@ -41,7 +41,7 @@ export type UserInfo = {
 }
 
 export type UserDomain = {
-  domain: string
+  name: Domain
   namehash: string | null
   isValid: boolean
   owned: boolean
