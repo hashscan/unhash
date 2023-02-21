@@ -1,0 +1,27 @@
+.register {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 64px;
+  margin-right: -16px;
+  min-height: calc(100vh - var(--nav-height));
+}
+
+.main {
+  flex-shrink: 1;
+  flex-grow: 1;
+  padding: 40px 0;
+}
+
+.progress {
+  margin-bottom: 32px;
+}
+
+.order {
+  background-color: var(--color-slate-7);
+  border-left: 1.5px solid var(--color-slate-6);
+  flex-shrink: 0;
+
+  /* extends the right side to the end to of the viewport using negative margin */
+  margin-right: calc(-0.5 * max(0px, 100vw - var(--container-width)));
+  padding-right: calc(0.5 * max(0px, 100vw - var(--container-width) - 32px));
+}

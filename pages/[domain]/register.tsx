@@ -2,7 +2,6 @@ import { useEffect, useReducer, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTimeout } from 'usehooks-ts'
-
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
@@ -14,8 +13,7 @@ import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
 import { Domain, Registration, RegistrationOrder } from 'lib/types'
 import { parseDomainName, validateDomain } from 'lib/utils'
-
-import styles from 'styles/checkout.module.css'
+import styles from './register.module.css'
 
 interface CheckoutProps {
   domain: Domain
@@ -64,25 +62,21 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
         <title>{`${domain} / ENS Domain Registration`}</title>
       </Head>
 
-      <div className={styles.checkout}>
-        {/* left content */}
+      <div className={styles.register}>
         <main className={styles.main}>
           <CheckoutProgress className={styles.progress} step={step} domain={domain} />
 
-          <div className={styles.content}>
-            {step === 'initializing' && <div></div>}
-            {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
-            {step === 'wait' && reg?.commitTimestamp && (
-              <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
-            )}
-            {step === 'register' && <CheckoutRegisterStep domain={domain} />}
-            {step === 'success' && <CheckoutSuccessStep domain={domain} registration={reg} />}
-          </div>
+          {step === 'initializing' && <div></div>}
+          {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
+          {step === 'wait' && reg?.commitTimestamp && (
+            <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
+          )}
+          {step === 'register' && <CheckoutRegisterStep domain={domain} />}
+          {step === 'success' && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
-        {/* right as a side bar */}
         {step === 'commit' && (
-          <div className={styles.right}>
+          <div className={styles.order}>
             <CheckoutOrder order={order} />
           </div>
         )}
