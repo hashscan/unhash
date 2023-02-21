@@ -64,6 +64,20 @@
   font-weight: 500;
 }
 
+.button.button_medium {
+  border-radius: var(--radii-md);
+  padding: 0 28px;
+  height: 48px;
+
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-slate-8);
+  font-weight: 500;
+
+  box-shadow: var(--shadow-lg);
+  transition: var(--ease-200);
+}
+
 .button.button_cta {
   border-radius: var(--radii-md);
   padding: 0 32px;
