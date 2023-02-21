@@ -1,23 +1,8 @@
 import { useRegistrations } from 'lib/hooks/useRegistrations'
-import { ComponentProps, useMemo } from 'react'
+import { PropsWithChildren, useMemo } from 'react'
 import { Domain } from 'lib/types'
 import { useProvider, useWaitForTransaction } from 'wagmi'
 import { useRegistration } from 'lib/hooks/useRegistration'
-
-// TODO: @molefrog, I'm not sure what's the best way to implement this, please advise:
-// --------------------------------
-// 1. What do you think about the way WatchPendingRegistrations being used in _app.tsx, similar to Context?
-// 2. What type of props WatchPendingRegistrations component should have if it doesn't draw any UI? (so we can remove <div>)
-// 3. The transaction wait implemented in child components here vs hooks. Is this ok?
-// 4. How is this working correctly with 2 tabs open in a browser? I guess 2 instances of this component will be created
-// --------------------------------
-// Note:
-// What I don't like this now is how API for sending transactions is implicitly split
-// between useSendRegister and WatchPendingRegistrations. In UI you send a transaction
-// with useSendRegister, and you can actually wait for it to be confirmed with that hook.
-// But a Registration status is updated only by WatchPendingRegistrations in background.
-// Maybe we should abstract all the logic here, similar to useNotifier?
-// --------------------------------
 
 /*
  * A component that waits for register tx to get confirmed
@@ -35,10 +20,10 @@ export const WaitForRegisterTx = ({
   useWaitForTransaction({
     hash: registerTxHash,
     // update registration status when transaction is confirmed
-    onSuccess: (data) => setRegistered()
+    onSuccess: () => setRegistered()
   })
 
-  return <></>
+  return null
 }
 
 /*
@@ -66,7 +51,7 @@ export const WaitForCommitTx = ({
     }
   })
 
-  return <></>
+  return null
 }
 
 /**
@@ -76,7 +61,7 @@ export const WaitForCommitTx = ({
  * and waits for their transactions to get confirmed. Once confirmed, it updates
  * Registration status to 'commited' or 'registered' respectively.
  */
-export const WatchPendingRegistrations = (props: ComponentProps<'div'>) => {
+export const RegistrationsProvider = (props: PropsWithChildren<{}>) => {
   const regs = useRegistrations()
   const commitPendingRegs = useMemo(
     () => regs.filter((reg) => reg.status === 'commitPending'),
@@ -88,7 +73,7 @@ export const WatchPendingRegistrations = (props: ComponentProps<'div'>) => {
   )
 
   return (
-    <div>
+    <>
       {commitPendingRegs.map((reg) => (
         <WaitForCommitTx
           key={reg.domain}
@@ -104,6 +89,6 @@ export const WatchPendingRegistrations = (props: ComponentProps<'div'>) => {
         />
       ))}
       {props.children}
-    </div>
+    </>
   )
 }
