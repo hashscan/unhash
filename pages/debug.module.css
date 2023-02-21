@@ -116,3 +116,7 @@
 .tx:hover {
   text-decoration: underline;
 }
+
+.txFailed {
+  color: var(--color-error-light);
+}
