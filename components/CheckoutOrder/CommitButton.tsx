@@ -9,6 +9,7 @@ import { Button } from 'components/ui/Button/Button'
 
 import styles from './CommitButton.module.css'
 import { useNotifier } from 'lib/hooks/useNotifier'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 interface CommitButtonProps {
   order: RegistrationOrder
@@ -47,14 +48,30 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
 
   return (
     <div>
-      <Button
-        size="cta"
-        className={styles.commitButton}
-        onClick={() => onStartClick()}
-        isLoading={isLoading}
-      >
-        Register {domain}
-      </Button>
+      <ConnectButton.Custom>
+        {({ account, chain, mounted, openConnectModal }) => {
+          const walletConnected = account && chain && mounted
+
+          if (!walletConnected) {
+            return (
+              <Button size="cta" className={styles.commitButton} onClick={openConnectModal}>
+                Connect Wallet
+              </Button>
+            )
+          }
+
+          return (
+            <Button
+              size="cta"
+              className={styles.commitButton}
+              onClick={() => onStartClick()}
+              isLoading={isLoading}
+            >
+              Register {domain}
+            </Button>
+          )
+        }}
+      </ConnectButton.Custom>
     </div>
   )
 }
