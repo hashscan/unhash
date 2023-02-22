@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, InputProps } from '../Input/Input'
 import { isValidAddress } from 'lib/utils'
+import useEvent from 'react-use-event-hook'
 
 export interface AddressInputProps extends InputProps {
   onAddressChange?: (address: string | null) => void // empty string - not set, null - invalid input
@@ -10,29 +11,33 @@ export interface AddressInputProps extends InputProps {
 // TODO: support error message
 // Input with built-in address validation
 export const AddressInput = ({ onAddressChange, onChange, onBlur, ...rest }: AddressInputProps) => {
-  const [address, setAddress] = useState<string | null>('') // empty string - not set, null - invalid input
-  const [showError, setShowError] = useState<boolean>(false) // TODO: support validation error
-  const onInputBlur = useCallback(() => setShowError(address === null), [address])
+  const [address, setAddress] = useState<string>('')
+  const [showError, setShowError] = useState<boolean>(false)
 
-  const onInputChange = (value: string) => {
-    setShowError(false)
-    setAddress(value === '' || isValidAddress(value) ? value : null)
-  }
+  // just to ensure that we don't do extra re-renders
+  const onChangeStable = useEvent((value) => onAddressChange?.(value))
+  const isValid = isValidAddress(address)
 
   useEffect(() => {
-    if (onAddressChange) onAddressChange(address)
-  }, [onAddressChange, address])
+    if (isValid) {
+      onChangeStable(address)
+    } else {
+      onChangeStable(null)
+    }
+  }, [isValid, address, onChangeStable])
 
   return (
     <Input
-      error={showError ? 'Invalid address' : undefined}
+      error={showError && !isValid ? 'Invalid address' : undefined}
       onBlur={(e) => {
-        if (onBlur) onBlur(e)
-        onInputBlur()
+        setShowError(true)
+        onBlur?.(e)
       }}
+      value={address}
       onChange={(e) => {
-        if (onChange) onChange(e)
-        onInputChange(e.target.value)
+        setAddress(e.target.value)
+        setShowError(false)
+        onChange?.(e)
       }}
       {...rest}
     />
