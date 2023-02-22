@@ -1,6 +1,29 @@
-.card {
-  border-radius: var(--radii-sm);
+.hint {
+  color: var(--color-text-hint);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  margin-top: 4px;
+}
+
+.linkRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.input {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
   border: 1px solid var(--color-slate-5);
-  padding: 8px 12px;
-  box-shadow: var(--shadow-sm);
+}
+
+.input::placeholder {
+  color: var(--color-text-primary);
+}
+
+.linkButton {
+  width: 120px;
 }

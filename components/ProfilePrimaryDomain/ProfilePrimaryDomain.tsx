@@ -69,18 +69,19 @@ export const ProfilePrimaryDomain = ({
 
       {newDomain && (
         <>
-          {!newDomain.resolved && (
+          {!newDomain.resolved ? (
             <PrimaryDomainUnresolvedEth className={styles.unresolvedEth} domain={newDomain.name} />
+          ) : (
+            <Button
+              className={styles.saveButton}
+              disabled={!newDomain.resolved}
+              isLoading={isUpdating}
+              size={'regular'}
+              onClick={savePrimaryEns}
+            >
+              Save
+            </Button>
           )}
-          <Button
-            className={styles.saveButton}
-            disabled={!newDomain.resolved}
-            isLoading={isUpdating}
-            size={'regular'}
-            onClick={savePrimaryEns}
-          >
-            Save
-          </Button>
         </>
       )}
     </div>
