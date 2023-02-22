@@ -27,11 +27,9 @@ export const Input = ({ label, icon, hint, error, className, children, ...rest }
           {children}
         </input>
       </div>
-      {error ||
-        (hint && (
-          <div className={clsx(styles.hint, { [styles.error]: error })}>
-            {!error && hint && hint}
-            {error && error}
+      {(error || hint) && (
+          <div className={clsx(styles.hint, { [styles.error]: Boolean(error) })}>
+            {error || hint}
           </div>
         ))}
     </div>
