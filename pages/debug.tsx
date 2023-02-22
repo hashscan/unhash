@@ -1,7 +1,7 @@
 import styles from './debug.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { useRegistrations } from 'lib/hooks/useRegistrations'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount } from 'wagmi'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { formatAddress } from 'lib/utils'
