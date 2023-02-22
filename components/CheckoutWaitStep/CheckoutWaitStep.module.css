@@ -4,47 +4,8 @@
   margin: 0 auto;
 }
 
-.timer {
-  width: 128px;
-  height: 128px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: 0 auto;
+.countdown {
   margin-bottom: 40px;
-}
-
-.timer > svg {
-  width: 100%;
-  transform: rotate(-90deg);
-}
-
-.seconds {
-  font: var(--type-x-lg);
-  letter-spacing: var(--ls-x-lg);
-  font-weight: 900;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.second {
-  text-align: center;
-  width: 100%;
-}
-
-.digit {
-  width: 0.6em;
-  display: inline-block;
-  text-align: center;
-}
-
-.digit:first-of-type {
-  text-align: center;
 }
 
 .title {
@@ -66,4 +27,10 @@
   max-width: 340px;
   text-align: center;
   margin: 0 auto;
+}
+
+.registerButton {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }

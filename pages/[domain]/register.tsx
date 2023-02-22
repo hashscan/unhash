@@ -5,7 +5,6 @@ import { useTimeout } from 'usehooks-ts'
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
-import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRegisterStep'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep/CheckoutSuccessStep'
 import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
@@ -68,11 +67,15 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
 
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
-          {step === 'wait' && reg?.commitTimestamp && (
-            <CheckoutWaitStep commitTimestamp={reg?.commitTimestamp!} />
+
+          {reg && (
+            <>
+              {(step === 'wait' || step === 'register') && (
+                <CheckoutWaitStep step={step} registration={reg} />
+              )}
+              {step === 'success' && <CheckoutSuccessStep domain={domain} registration={reg} />}
+            </>
           )}
-          {step === 'register' && <CheckoutRegisterStep domain={domain} />}
-          {step === 'success' && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
         {step === 'commit' && (
