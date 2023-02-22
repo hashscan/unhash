@@ -2,7 +2,7 @@ import styles from './ProfilePrimaryDomain.module.css'
 import clsx from 'clsx'
 import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
 import { Domain, UserDomain } from 'lib/types'
-import { ComponentProps, useEffect, useRef, useState } from 'react'
+import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
@@ -38,6 +38,16 @@ export const ProfilePrimaryDomain = ({
   const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, () => setShowDropdown(false))
 
+  // locally update new domain property when it's resolved
+  const onNewDomainResolved = useCallback(
+    (domain: Domain) => {
+      if (newDomain && newDomain.name === domain) {
+        setNewDomain({ ...newDomain, resolved: true })
+      }
+    },
+    [newDomain, setNewDomain]
+  )
+
   // transaction to update primary ENS
   const { write: sendUpdate, isLoading: isUpdating } = useSetPrimaryEns({
     domain: newDomain?.name,
@@ -47,8 +57,7 @@ export const ProfilePrimaryDomain = ({
     }
   })
   const savePrimaryEns = () => {
-    if (typeof sendUpdate === 'undefined') return
-    sendUpdate()
+    sendUpdate?.()
   }
 
   return (
@@ -70,7 +79,11 @@ export const ProfilePrimaryDomain = ({
       {newDomain && (
         <>
           {!newDomain.resolved ? (
-            <PrimaryDomainUnresolvedEth className={styles.unresolvedEth} domain={newDomain.name} />
+            <PrimaryDomainUnresolvedEth
+              className={styles.unresolvedEth}
+              domain={newDomain.name}
+              onResolved={onNewDomainResolved}
+            />
           ) : (
             <Button
               className={styles.saveButton}

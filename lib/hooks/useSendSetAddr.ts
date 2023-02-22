@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'

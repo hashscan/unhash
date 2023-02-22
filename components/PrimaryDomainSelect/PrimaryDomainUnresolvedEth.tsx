@@ -4,7 +4,6 @@ import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 import { Button } from 'components/ui/Button/Button'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { useSendSetAddr } from 'lib/hooks/useSendSetAddr'
-import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
 import { Domain } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import React, { ComponentProps } from 'react'
@@ -13,10 +12,12 @@ import styles from './PrimaryDomainUnresolvedEth.module.css'
 
 interface PrimaryDomainUnresolvedEthProps extends ComponentProps<'div'> {
   domain: Domain
+  onResolved: (domain: Domain) => void
 }
 
 export const PrimaryDomainUnresolvedEth = ({
   domain,
+  onResolved,
   className,
   ...rest
 }: PrimaryDomainUnresolvedEthProps) => {
@@ -28,9 +29,7 @@ export const PrimaryDomainUnresolvedEth = ({
     domain,
     address,
     onError: (error) => notify(error.message, { status: 'error' }),
-    onSuccess: () => {
-      // TODO: make parent update
-    }
+    onSuccess: () => onResolved(domain)
   })
   const setEthRecord = () => {
     sendSetAddr?.()
