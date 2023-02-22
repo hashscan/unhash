@@ -15,6 +15,7 @@ interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   address?: Address
   primaryName?: Domain // undefined if no primary ENS set
   userDomains: UserDomain[] // domains that can be set as primary ENS by current user
+  onEditingChange?: (editing: boolean) => void // callback when start/stopped editing primary ens
 }
 
 export const ProfilePrimaryDomain = ({
@@ -22,11 +23,14 @@ export const ProfilePrimaryDomain = ({
   address,
   primaryName,
   userDomains,
+  onEditingChange,
   className,
   ...rest
 }: ProfilePrimaryDomainProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
   const [newDomain, setNewDomain] = useState<UserDomain | undefined>(undefined)
+
+  useEffect(() => onEditingChange?.(Boolean(newDomain)), [onEditingChange, newDomain])
 
   const onDomainSelect = (domain: UserDomain) => {
     setShowDropdown(false)
