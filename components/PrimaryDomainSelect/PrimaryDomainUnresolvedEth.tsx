@@ -2,6 +2,9 @@ import clsx from 'clsx'
 import { EthereumIcon } from 'components/icons'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 import { Button } from 'components/ui/Button/Button'
+import { useNotifier } from 'lib/hooks/useNotifier'
+import { useSendSetAddr } from 'lib/hooks/useSendSetAddr'
+import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
 import { Domain } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import React, { ComponentProps } from 'react'
@@ -17,12 +20,20 @@ export const PrimaryDomainUnresolvedEth = ({
   className,
   ...rest
 }: PrimaryDomainUnresolvedEthProps) => {
+  const notify = useNotifier()
   const { address } = useAccount()
 
-
-  const isUpdating = false
+  // update records transaction
+  const { sendSetAddr, isLoading: isUpdating } = useSendSetAddr({
+    domain,
+    address,
+    onError: (error) => notify(error.message, { status: 'error' }),
+    onSuccess: () => {
+      // TODO: make parent update
+    }
+  })
   const setEthRecord = () => {
-
+    sendSetAddr?.()
   }
 
   return (
@@ -37,7 +48,7 @@ export const PrimaryDomainUnresolvedEth = ({
             disabled={true}
           />
           <div className={styles.hint}>
-            {domain} is pointing to another wallet. To set as a primary ENS, link it to your wallet
+            {domain} is pointing to another wallet. To use as a primary ENS, link it to your wallet
             first.
           </div>
         </div>
