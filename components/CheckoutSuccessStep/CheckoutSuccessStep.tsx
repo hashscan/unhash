@@ -7,15 +7,23 @@ import styles from './CheckoutSuccessStep.module.css'
 import { NextSteps } from './NextSteps'
 import { Registration } from 'lib/types'
 import Link from 'next/link'
+import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
 
 interface CheckoutSuccessStepProps {
   domain: string
   registration: Registration | undefined
 }
 
+const EtherscanLink = ({ txn }: { txn: string }) => {
+  return (
+    <Link href={useEtherscanURL('txn', txn)} target="_blank" className={styles.inlineLink}>
+      View on Ethescan ↗
+    </Link>
+  )
+}
+
 export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
   const txnHash = props.registration?.registerTxHash
-  const etherscanLink = txnHash ? `https://etherscan.io/tx/${txnHash}` : undefined
 
   return (
     <div className={styles.container}>
@@ -41,11 +49,7 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
               </Button>
             </Link>
 
-            {etherscanLink && (
-              <Link href={etherscanLink} target="_blank" className={styles.inlineLink}>
-                View on Ethescan ↗
-              </Link>
-            )}
+            {txnHash && <EtherscanLink txn={txnHash} />}
           </div>
         </div>
       </div>
