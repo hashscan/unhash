@@ -6,13 +6,15 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { formatAddress } from 'lib/utils'
 import clsx from 'clsx'
+import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
 
 const TxLink = ({ txHash, isFailed }: { txHash: string; isFailed?: boolean }) => {
-  const chainId = useChainId()
+  const link = useEtherscanURL('txn', txHash)
+
   return (
     <Link
       className={clsx(styles.tx, { [styles.txFailed]: isFailed === true })}
-      href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/tx/${txHash}`}
+      href={link}
       target="_blank"
     >
       {formatAddress(txHash, 4)}
@@ -24,7 +26,6 @@ const Debug: PageWithLayout = () => {
   const [initialized, setInitialized] = useState(false)
   useEffect(() => setInitialized(true), []) // fixes react hydration issue
 
-  const chainId = useChainId()
   const { address } = useAccount()
   const allRegistrations = useRegistrations()
 
@@ -46,6 +47,8 @@ const Debug: PageWithLayout = () => {
     [allRegistrations]
   )
 
+  const addressLink = useEtherscanURL('address', address!)
+
   // loader
   if (!initialized || !address) {
     return null
@@ -58,11 +61,7 @@ const Debug: PageWithLayout = () => {
       <div className={styles.header}>Registrations</div>
       <div className={styles.subheader}>
         Showing all registrations for{' '}
-        <Link
-          className={styles.link}
-          href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/address/${address}`}
-          target="_blank"
-        >
+        <Link className={styles.link} href={addressLink} target="_blank">
           {address}
         </Link>
       </div>

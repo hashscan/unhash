@@ -10,6 +10,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ProfilePrimaryDomain } from 'components/ProfilePrimaryDomain/ProfilePrimaryDomain'
 import { LoaderSpinner } from 'components/icons'
+import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
 
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
@@ -19,6 +20,8 @@ const Profile: PageWithLayout = () => {
 
   const userInfo = useCurrentUserInfo()
   const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
+
+  const etherscanLink = useEtherscanURL('address', userInfo?.primaryEns!)
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected) return <AuthLayout />
@@ -43,13 +46,7 @@ const Profile: PageWithLayout = () => {
         {userInfo?.primaryEns ? (
           <span>
             Your address is linked to{' '}
-            <Link
-              className={styles.link}
-              href={`https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/address/${
-                userInfo.primaryEns
-              }`}
-              target="_blank"
-            >
+            <Link className={styles.link} href={etherscanLink} target="_blank">
               {userInfo.primaryEns}
             </Link>{' '}
             ENS domain. You can switch to another available ENS below.
