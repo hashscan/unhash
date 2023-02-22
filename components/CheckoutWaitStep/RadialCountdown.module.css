@@ -1,0 +1,31 @@
+.timer {
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+.timer > svg {
+  width: 100%;
+  transform: rotate(-90deg);
+}
+
+.seconds {
+  font: var(--type-x-lg);
+  letter-spacing: var(--ls-x-lg);
+  font-weight: 900;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.second {
+  text-align: center;
+  width: 100%;
+}
