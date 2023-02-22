@@ -6,7 +6,7 @@ import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ProfilePrimaryDomain } from 'components/ProfilePrimaryDomain/ProfilePrimaryDomain'
 import { LoaderSpinner } from 'components/icons'
@@ -14,8 +14,10 @@ import { LoaderSpinner } from 'components/icons'
 const Profile: PageWithLayout = () => {
   const chainId = useChainId()
   const { address, isDisconnected } = useAccount()
-  const userInfo = useCurrentUserInfo()
 
+  const [editingPrimaryName, setEditingPrimaryName] = useState(false)
+
+  const userInfo = useCurrentUserInfo()
   const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
 
   // TODO: handle isConnecting state when metamask asked to log in
@@ -72,11 +74,12 @@ const Profile: PageWithLayout = () => {
           address={address}
           primaryName={userInfo.primaryEns || undefined}
           userDomains={userDomains}
+          onEditingChange={setEditingPrimaryName}
         />
       )}
 
       {/* ENS profile layout */}
-      {address && userInfo?.primaryEns && (
+      {address && userInfo?.primaryEns && !editingPrimaryName && (
         <>
           <div className={styles.divider}></div>
           <div className={styles.header}>ENS profile</div>

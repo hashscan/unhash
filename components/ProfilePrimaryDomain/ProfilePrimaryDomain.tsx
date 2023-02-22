@@ -2,7 +2,7 @@ import styles from './ProfilePrimaryDomain.module.css'
 import clsx from 'clsx'
 import { PrimaryDomainSelect } from 'components/PrimaryDomainSelect/PrimaryDomainSelect'
 import { Domain, UserDomain } from 'lib/types'
-import { ComponentProps, useEffect, useRef, useState } from 'react'
+import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
@@ -15,6 +15,7 @@ interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   address?: Address
   primaryName?: Domain // undefined if no primary ENS set
   userDomains: UserDomain[] // domains that can be set as primary ENS by current user
+  onEditingChange?: (editing: boolean) => void // callback when start/stopped editing primary ens
 }
 
 export const ProfilePrimaryDomain = ({
@@ -22,11 +23,14 @@ export const ProfilePrimaryDomain = ({
   address,
   primaryName,
   userDomains,
+  onEditingChange,
   className,
   ...rest
 }: ProfilePrimaryDomainProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
   const [newDomain, setNewDomain] = useState<UserDomain | undefined>(undefined)
+
+  useEffect(() => onEditingChange?.(Boolean(newDomain)), [onEditingChange, newDomain])
 
   const onDomainSelect = (domain: UserDomain) => {
     setShowDropdown(false)
@@ -38,6 +42,16 @@ export const ProfilePrimaryDomain = ({
   const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, () => setShowDropdown(false))
 
+  // locally update new domain property when it's resolved
+  const onNewDomainResolved = useCallback(
+    (domain: Domain) => {
+      if (newDomain && newDomain.name === domain) {
+        setNewDomain({ ...newDomain, resolved: true })
+      }
+    },
+    [newDomain, setNewDomain]
+  )
+
   // transaction to update primary ENS
   const { write: sendUpdate, isLoading: isUpdating } = useSetPrimaryEns({
     domain: newDomain?.name,
@@ -47,8 +61,7 @@ export const ProfilePrimaryDomain = ({
     }
   })
   const savePrimaryEns = () => {
-    if (typeof sendUpdate === 'undefined') return
-    sendUpdate()
+    sendUpdate?.()
   }
 
   return (
@@ -69,18 +82,23 @@ export const ProfilePrimaryDomain = ({
 
       {newDomain && (
         <>
-          {!newDomain.resolved && (
-            <PrimaryDomainUnresolvedEth className={styles.unresolvedEth} domain={newDomain.name} />
+          {!newDomain.resolved ? (
+            <PrimaryDomainUnresolvedEth
+              className={styles.unresolvedEth}
+              domain={newDomain.name}
+              onResolved={onNewDomainResolved}
+            />
+          ) : (
+            <Button
+              className={styles.saveButton}
+              disabled={!newDomain.resolved}
+              isLoading={isUpdating}
+              size={'regular'}
+              onClick={savePrimaryEns}
+            >
+              Save
+            </Button>
           )}
-          <Button
-            className={styles.saveButton}
-            disabled={!newDomain.resolved}
-            isLoading={isUpdating}
-            size={'regular'}
-            onClick={savePrimaryEns}
-          >
-            Save
-          </Button>
         </>
       )}
     </div>

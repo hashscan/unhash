@@ -1,5 +1,10 @@
 import { BigNumber } from 'ethers'
-import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI, YEAR_IN_SECONDS } from 'lib/constants'
+import {
+  ETH_REGISTRAR_ADDRESS,
+  ETH_REGISTRAR_ABI,
+  YEAR_IN_SECONDS,
+  ETH_RESOLVER_ADDRESS
+} from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
 import { getDomainName } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
@@ -30,7 +35,7 @@ export const useSendRegister = (domain: Domain) => {
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
-      '0x0000000000000000000000000000000000000000', // ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)), (no need to pass if addr is empty)
+      ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)),
       '0x0000000000000000000000000000000000000000' // temporary undefined until we it
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner) && Boolean(value),

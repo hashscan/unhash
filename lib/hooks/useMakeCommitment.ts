@@ -1,4 +1,4 @@
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { Network } from 'lib/types'
 import { generateCommitSecret } from 'lib/utils'
 import { useEffect, useState } from 'react'
@@ -25,7 +25,7 @@ export function useMakeCommitment(name: string, network: Network, owner: string 
       name,
       owner,
       secret,
-      '0x0000000000000000000000000000000000000000', // ETH_RESOLVER_ADDRESS.get(network) (no need to pass if addr is empty)
+      ETH_RESOLVER_ADDRESS.get(network),
       '0x0000000000000000000000000000000000000000' // temporary undefined until we it
     ]
   })

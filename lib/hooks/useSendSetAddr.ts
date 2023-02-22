@@ -1,53 +1,53 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, DomainRecords, toNetwork } from 'lib/types'
+import { Domain, toNetwork } from 'lib/types'
 import {
+  Address,
   useChainId,
-  useContract,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction
 } from 'wagmi'
 
-export const useSendUpdateRecords = ({
+const COIN_TYPE_ETH = 60
+
+/**
+ * Updates ETH address for a domain.
+ */
+export const useSendSetAddr = ({
   domain,
-  records,
+  address,
   onError,
   onSuccess
 }: {
   domain: Domain
-  records: DomainRecords
+  address?: Address
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
   const chainId = useChainId()
-
-  const resolverAddress = ETH_RESOLVER_ADDRESS.get(toNetwork(chainId))
-  const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })! // must always be defined
-
   const node = domain ? namehash(domain) : undefined
-  const encoded = Object.entries(records).map(([key, record]) =>
-    contract?.interface.encodeFunctionData('setText', [node, key, record])
-  )
 
   const { config } = usePrepareContractWrite({
-    address: resolverAddress,
+    address: ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)),
     abi: ETH_RESOLVER_ABI,
-    functionName: 'multicall',
-    enabled: encoded.length !== 0 && Boolean(domain),
-    args: [encoded]
+    functionName: 'setAddr',
+    enabled: Boolean(node) && Boolean(address),
+    args: [node, COIN_TYPE_ETH, address?.toLowerCase()]
   })
 
+  // hook for sending setAddr transaction
   const {
     write,
     data,
-    error: sendError,
-    isLoading: isWriteLoading
+    isLoading: isWriteLoading,
+    error: writeError
   } = useContractWrite({
     ...config,
     onError
   })
 
+  // wait for transaction success
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
     hash: data?.hash,
     onError,
@@ -56,8 +56,8 @@ export const useSendUpdateRecords = ({
 
   return {
     isLoading: isWriteLoading || isWaitLoading,
-    error: sendError || waitError,
-    sendUpdate: write,
+    error: writeError || waitError,
+    sendSetAddr: write,
     gasLimit: config.request?.gasLimit
   }
 }

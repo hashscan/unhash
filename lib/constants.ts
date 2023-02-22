@@ -32,7 +32,8 @@ export const ETH_REGISTRAR_ABI = [
 export const ETH_RESOLVER_ABI = [
   'function setText(bytes32,string,string)',
   'function text(bytes32,key)',
-  'function multicall(bytes[])'
+  'function multicall(bytes[])',
+  'function setAddr(bytes32,uint256,bytes)',
 ]
 
 export const ETH_REVERSE_REGISTRAR_ABI = ['function setName(string) returns (bytes32)']
