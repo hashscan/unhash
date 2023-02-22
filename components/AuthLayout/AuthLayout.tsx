@@ -12,7 +12,7 @@ export const AuthLayout = () => {
       <div className={styles.header}>Connect your wallet</div>
       <div className={styles.subheader}>
         <WrapBalancer>
-          Sign in with Metamask or Wallet Connect to view and edit ENS profile.
+          Sign in with Metamask or Wallet&nbsp;Connect to view and edit your ENS profile
         </WrapBalancer>
       </div>
       <Button className={styles.button} size={'medium'} onClick={onClick}>
