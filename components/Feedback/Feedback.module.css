@@ -29,10 +29,21 @@
   margin-bottom: 24px;
 }
 
+.subheader>a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.subheader>a:hover {
+  text-decoration: underline;
+  color: var(--color-green);
+}
+
 .twitter {
   box-shadow: none;
   border-radius: var(--radii-sm);
   border: 1px solid var(--color-slate-6);
+  font-weight: 300;
 }
 
 /* Copied from Input's label */
