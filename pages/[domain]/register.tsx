@@ -7,6 +7,7 @@ import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep/CheckoutSuccessStep'
 import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
+import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRegisterStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
@@ -67,15 +68,9 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
 
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
-
-          {reg && (
-            <>
-              {(step === 'wait' || step === 'register') && (
-                <CheckoutWaitStep step={step} registration={reg} />
-              )}
-              {step === 'success' && <CheckoutSuccessStep domain={domain} registration={reg} />}
-            </>
-          )}
+          {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
+          {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
+          {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
         {step === 'commit' && (

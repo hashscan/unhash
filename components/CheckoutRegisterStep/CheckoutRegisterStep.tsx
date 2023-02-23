@@ -1,57 +1,70 @@
+import React, { useCallback } from 'react'
+import useChange from '@react-hook/change'
+
 import { useSendRegister } from 'lib/hooks/useSendRegister'
-import React from 'react'
-import styles from './CheckoutRegisterStep.module.css'
-import { Button } from 'components/ui/Button/Button'
-import { Gas } from 'components/icons'
-import { formatNetworkFee } from 'lib/format'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
+import { useNotifier } from 'lib/hooks/useNotifier'
+import { Registration } from 'lib/types'
+import { formatNetworkFee } from 'lib/format'
 import { REGISTER_AVERAGE_GAS } from 'lib/constants'
-import { Domain } from 'lib/types'
+import { Gas } from 'components/icons'
+import { Button } from 'components/ui/Button/Button'
+
+import styles from './CheckoutRegisterStep.module.css'
 
 interface CheckoutRegisterStepProps {
-  domain: Domain
+  registration: Registration
 }
 
-export const CheckoutRegisterStep = ({ domain }: CheckoutRegisterStepProps) => {
-  const { gasLimit, write, isLoading, error } = useSendRegister(domain)
+export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps) => {
+  const { gasLimit, write, isLoading, error } = useSendRegister(registration.domain)
   const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
-  const onRegisterClick = () => {
-    // TODO: is this really the best way to check hook is ready?
-    if (typeof write === 'undefined') return
-    write()
-  }
+  const onRegisterClick = useCallback(() => {
+    write?.()
+  }, [write])
+
+  const notify = useNotifier()
+
+  useChange(error?.message, (current) => {
+    if (current) {
+      notify(current, { status: 'error', title: 'Error sending transaction' })
+    }
+  })
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>Confirm registration</div>
-      <div className={styles.subheader}>
-        Confirm below to register your domain and configure the profile
-      </div>
+      <h1 className={styles.title}>Complete Registration</h1>
 
-      <div className={styles.buttonContainer}>
-        <Button
-          className={styles.registerButton}
-          onClick={() => !isLoading && onRegisterClick()}
-          isLoading={isLoading}
-        >
-          Complete Registration
-        </Button>
-        {networkFee && (
-          <div className={styles.txFee}>
-            <div className={styles.txFeeLabel}>
-              <Gas />
-              Network fee
-            </div>
-            <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
-              {formatNetworkFee(networkFee)}
-            </div>
-          </div>
-        )}
-      </div>
+      <p className={styles.description}>
+        You&apos;re only one click away from obtaining your new domain name! Confirm the last
+        transaction to finish the registration.
+      </p>
 
-      {/* TODO: remove temp error solution */}
-      {error && <div className={styles.error}>{error.message}</div>}
+      <div className={styles.buttons}>
+        <div className={styles.sendTransaction}>
+          <Button
+            className={styles.registerButton}
+            size="cta"
+            onClick={onRegisterClick}
+            isLoading={isLoading}
+          >
+            Complete Registration →
+          </Button>
+
+          {networkFee && (
+            <div className={styles.transactionStatus}>
+              <div className={styles.txFeeLabel}>
+                <Gas />
+                Network fee
+              </div>
+              <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
+                {formatNetworkFee(networkFee)}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
