@@ -1,7 +1,7 @@
 import ky from 'ky'
 import { Address } from 'wagmi'
 import { API_URL } from './constants'
-import type { Network, Domain, DomainRecords, UserInfo } from './types'
+import type { Network, Domain, UserInfo, AddrRecords, TextRecords } from './types'
 
 type DomainStatus = {
   isAvailable: boolean
@@ -18,7 +18,8 @@ export type DomainInfo = {
   registrant: Address | null
   controller: Address | null
   resolver: Address | null
-  records: DomainRecords
+  textRecords: TextRecords
+  addrRecords: AddrRecords
 }
 
 export type DomainListing = {

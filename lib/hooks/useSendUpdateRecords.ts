@@ -1,6 +1,6 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, DomainRecords, toNetwork } from 'lib/types'
+import { Domain, TextRecords, toNetwork } from 'lib/types'
 import {
   useChainId,
   useContract,
@@ -16,7 +16,7 @@ export const useSendUpdateRecords = ({
   onSuccess
 }: {
   domain: Domain
-  records: DomainRecords
+  records: TextRecords
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {

@@ -25,9 +25,13 @@ export function toNetwork(chainId: number): Network {
   }
 }
 
-// Records currently supported by API
-export type DomainRecords = {
-  eth?: string
+// Address domain currently supported by API
+export type AddrRecords = {
+  ethereum?: string
+}
+
+// Text domain records currently supported by API
+export type TextRecords = {
   name?: string
   description?: string
   email?: string
@@ -49,18 +53,6 @@ export type UserDomain = {
   resolved: boolean
 }
 
-// TODO: remove this?
-export type Fields = Partial<{
-  name: string
-  email: `${string}@${string}.${string}`
-  url: string
-  description: string
-  'com.github': string
-  'com.twitter': string
-  avatar: string
-  [k: string]: string
-}>
-
 export type Registration = {
   domain: Domain
   sender: string // who is registering the domain
@@ -74,7 +66,6 @@ export type Registration = {
   registerTxHash?: string
   errorTxHash?: string // refers to commit if commitTxHash is not set or to registerTxHash otherwise
   errorTxMessage?: string
-  fields?: Fields
 }
 
 export type RegistrationStatus =
