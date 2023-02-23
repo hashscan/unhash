@@ -1,31 +1,35 @@
 .container {
-  width: 100%;
+  max-width: 600px;
+  padding: 56px 24px 56px 24px;
+  margin: 0 auto;
 }
 
-.header {
+.title {
+  font: var(--type-lg);
+  letter-spacing: var(--ls-lg);
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.description {
+  text-align: center;
   color: var(--color-slate-2);
-  font: var(--type-md);
-  letter-spacing: var(--ls-md);
-  margin-top: 40px;
+  margin-bottom: 54px;
 }
 
-.subheader {
-  color: var(--color-slate-2);
-  font: var(--type-sm);
-  letter-spacing: var(--ls-sm);
-  font-weight: 400;
-  margin-top: 0px;
-  margin-bottom: 64px;
+.sendTransaction {
+  display: inline-block;
 }
 
-.buttonContainer {
-  width: fit-content;
-  margin-left: auto;
-  margin-right: 0;
-  margin-top: 40px;
-}
+.transactionStatus {
+  margin-top: 8px;
 
-.txFee {
   color: var(--color-slate-4);
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
@@ -49,21 +53,4 @@
 .txFeeValue {
   flex-grow: 1;
   text-align: end;
-}
-
-/* TODO: remove temp error solution */
-.error {
-  width: fit-content;
-  height: fit-content;
-  display: block;
-  margin-left: auto;
-  margin-right: 0px;
-
-  color: var(--color-error);
-  font: var(--type-sm);
-  letter-spacing: var(--ls-sm);
-  font-weight: 400;
-
-  border-radius: 4px;
-  padding: 4px 12px;
 }
