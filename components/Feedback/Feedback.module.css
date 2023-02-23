@@ -1,0 +1,74 @@
+.feedback {
+  width: 460px;
+  overflow: scroll;
+
+  background-color: var(--color-background);
+  border-radius: var(--radii-sm) var(--radii-sm);
+  border: 1px solid var(--color-slate-5);
+  box-shadow: var(--shadow-lg);
+
+  z-index: 1;
+}
+
+.content {
+  padding: 16px 24px 16px 24px;
+}
+
+.header {
+  color: var(--color-text-primary);
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.subheader {
+  color: var(--color-text-secondary);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  margin-bottom: 24px;
+}
+
+.twitter {
+  box-shadow: none;
+  border-radius: var(--radii-sm);
+  border: 1px solid var(--color-slate-6);
+}
+
+/* Copied from Input's label */
+.label {
+  color: var(--color-text-primary);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 400;
+
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.form {
+  width: 100%;
+  min-height: 120px;
+  /* TODO: remove once fonts are smaller */
+  font-size: 16px;
+  resize: vertical;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 24px;
+
+  padding: 12px 24px;
+  background-color: var(--color-slate-8);
+  border-top: 1px solid var(--color-slate-5);
+}
+
+.buttonSend {}
+
+/* .buttonCancel {
+  background-color: var(--color-slate-7);
+  color: var(--color-text-primary);
+} */

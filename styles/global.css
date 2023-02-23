@@ -100,7 +100,8 @@
   --color-highlight-green: var(--color-green-light);
 
   /* Status colors */
-  --color-error-light: rgb(255, 28, 26); /* TODO: move to resource colors! */
+  --color-error-light: rgb(255, 28, 26);
+  /* TODO: move to resource colors! */
   --color-error-lighter: rgb(247, 212, 214);
   --color-error: var(--color-red);
   --color-warning: var(--color-orange);
@@ -108,8 +109,10 @@
 
   --color-text-primary: var(--color-slate-1);
   --color-text-secondary: var(--color-slate-3);
-  --color-text-hint: var(--color-slate-4); /* placeholders, hints etc. */
-  --color-text-muted: var(--color-slate-5); /* disabled labels */
+  --color-text-hint: var(--color-slate-4);
+  /* placeholders, hints etc. */
+  --color-text-muted: var(--color-slate-5);
+  /* disabled labels */
 }
 
 /** Shadows */
@@ -207,4 +210,31 @@ input {
   appearance: none;
   border: none;
   outline: none;
+}
+
+textarea {
+  background-color: var(--color-slate-7);
+
+  padding: 8px 16px;
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-text-primary);
+  caret-color: var(--color-text-primary);
+
+  box-shadow: none;
+  border-radius: var(--radii-sm);
+  border: 1px solid var(--color-slate-6);
+
+  appearance: none;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: var(--color-slate-4);
+  opacity: 1;
+}
+
+textarea:focus {
+  border: 1px solid var(--color-green-light);
+  outline: 4px solid rgb(var(--color-green-light-rgb) / 25%);
 }
