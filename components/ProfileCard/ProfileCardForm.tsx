@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useMemo, useState } from 'react'
 import styles from './ProfileCardForm.module.css'
-import { Domain, DomainRecords } from 'lib/types'
+import { Domain, TextRecords } from 'lib/types'
 import { Input } from 'components/ui/Input/Input'
 import {
   Profile as ProfileIcon,
@@ -35,20 +35,20 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
   useEffect(() => {
     if (!info) return
 
-    setName(info.records.name || '')
-    setDescription(info.records.description || '')
-    setWebsite(info.records.url || '')
-    setTwitter(info.records['com.twitter'] || '')
+    setName(info.textRecords.name || '')
+    setDescription(info.textRecords.description || '')
+    setWebsite(info.textRecords.url || '')
+    setTwitter(info.textRecords['com.twitter'] || '')
 
     setInitialized(true)
   }, [info])
 
   // save changes (can be optimized!)
-  const changes: DomainRecords = useMemo(() => {
+  const changes: TextRecords = useMemo(() => {
     if (!info || !initialized) return {}
 
-    const oldRecords = info.records
-    const records: DomainRecords = {}
+    const oldRecords = info.textRecords
+    const records: TextRecords = {}
 
     if (name !== oldRecords.name) records.name = name
     if (description !== oldRecords.description) records.description = description
