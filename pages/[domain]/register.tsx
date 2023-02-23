@@ -2,6 +2,8 @@ import { useEffect, useReducer, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTimeout } from 'usehooks-ts'
+import { useBeforeUnload } from 'react-use'
+
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
@@ -55,6 +57,13 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
       ? Math.max(0, reg.commitTimestamp + COMMIT_WAIT_MS - Date.now())
       : 0
   useTimeout(() => dispatchStep(reg), waitTimeout)
+
+  // Display warning when user tries to close tab
+  const displayWarningOnClose = Boolean(reg && reg.status !== 'registered')
+  useBeforeUnload(
+    displayWarningOnClose,
+    'If you close the browser tab, you may interrupt the registration process.'
+  )
 
   return (
     <>
