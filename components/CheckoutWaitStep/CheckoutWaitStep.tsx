@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { Registration } from 'lib/types'
