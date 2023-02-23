@@ -16,10 +16,9 @@
 }
 
 .description {
-  color: var(--color-text-secondary);
-
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
+  color: var(--color-slate-2);
   margin-bottom: 54px;
 }
 
