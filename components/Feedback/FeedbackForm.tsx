@@ -12,29 +12,27 @@ interface FeedbackFormProps extends ComponentProps<'div'> {
   onSuccess?: () => void
 }
 
-export const FeedbackForm = ({ className, ...rest }: FeedbackFormProps) => {
+export const FeedbackForm = ({ onCancel, onSuccess, className, ...rest }: FeedbackFormProps) => {
   const notify = useNotifier()
   const [author, setAuthor] = useState<string>('')
   const [message, setMessage] = useState<string>('')
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [success, setSuccess] = useState<boolean>(false)
+  // const [success, setSuccess] = useState<boolean>(false)
 
   const onSend = async () => {
     if (isLoading) return
     try {
       setIsLoading(true)
       await api.saveFeedback(author, message)
-      setSuccess(true)
+      onSuccess?.()
+      // setSuccess(true)
     } catch (e) {
       notify('Failed to send feedback', { status: 'error' })
     } finally {
       setIsLoading(false)
     }
   }
-
-  // TODO: handle
-  if (success) return null
 
   return (
     <div className={clsx(className, styles.feedback)} {...rest}>
@@ -67,16 +65,16 @@ export const FeedbackForm = ({ className, ...rest }: FeedbackFormProps) => {
         />
       </div>
       <div className={styles.buttons}>
-        {/* <Button
+        <Button
           className={styles.buttonCancel}
           disabled={false}
           isLoading={false}
-          as={'button'}
           size={'regular'}
-          onClick={onCancel}
+          variant={'ghost'}
+          onClick={() => onCancel?.()}
         >
           Cancel
-        </Button> */}
+        </Button>
         <Button
           className={styles.buttonSend}
           disabled={message.length === 0}
