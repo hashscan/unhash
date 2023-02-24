@@ -1,18 +1,41 @@
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
-import { ComponentProps } from 'react'
+import { ComponentProps, useState } from 'react'
 import styles from './Feedback.module.css'
 import { Input } from 'components/ui/Input/Input'
 import { FEEDBACK_TELEGRAM, FEEDBACK_TWITTER } from 'lib/constants'
+import api from 'lib/api'
+import { useNotifier } from 'lib/hooks/useNotifier'
 
 interface FeedbackProps extends ComponentProps<'div'> {
   onCancel?: () => void
+  onSuccess?: () => void
 }
 
-export const Feedback = ({ onCancel, className, ...rest }: FeedbackProps) => {
-  const onSend = () => {
-    alert('Ты больше не лох')
+export const Feedback = ({ className, ...rest }: FeedbackProps) => {
+  const notify = useNotifier()
+  const [author, setAuthor] = useState<string>('')
+  const [message, setMessage] = useState<string>('')
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [success, setSuccess] = useState<boolean>(false)
+
+  const onSend = async () => {
+    if (isLoading) return
+    try {
+      setIsLoading(true)
+      await api.saveFeedback(author, message)
+      setSuccess(true)
+    } catch (e) {
+      notify('Failed to send feedback', { status: 'error' })
+    } finally {
+      setIsLoading(false)
+    }
   }
+
+  // TODO: handle
+  if (success) return null
+
   return (
     <div className={clsx(className, styles.feedback)} {...rest}>
       <div className={styles.content}>
@@ -32,6 +55,7 @@ export const Feedback = ({ onCancel, className, ...rest }: FeedbackProps) => {
           className={styles.twitter}
           label="Your Twitter / Telegram"
           placeholder="@mastodon (Optional)"
+          onChange={(e) => setAuthor(e.target.value)}
         />
         <div className={styles.label}>Message</div>
         <textarea
@@ -39,6 +63,7 @@ export const Feedback = ({ onCancel, className, ...rest }: FeedbackProps) => {
           placeholder={
             'Did you like the app? Share your ideas on what we should support and improve.'
           }
+          onChange={(e) => setMessage(e.target.value)}
         />
       </div>
       <div className={styles.buttons}>
@@ -54,8 +79,8 @@ export const Feedback = ({ onCancel, className, ...rest }: FeedbackProps) => {
         </Button> */}
         <Button
           className={styles.buttonSend}
-          disabled={false}
-          isLoading={false}
+          disabled={message.length === 0}
+          isLoading={isLoading}
           size={'regular'}
           onClick={onSend}
         >
