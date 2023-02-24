@@ -12,6 +12,7 @@ import { SearchStatus } from './types'
 import { useSearch } from './useSearch'
 import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 import { normalizeDotETH, findSuffix, statusToLEDColor } from './utils'
+import { trackGoal } from 'lib/analytics'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
@@ -42,6 +43,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const registerDomain = useCallback(() => {
     if (isNavigating || status !== SearchStatus.Available) return
 
+    trackGoal('SearchRegisterClick', { props: { domain: normalized } })
     setIsNavigating(true)
 
     navigate(`${normalized}/register`).finally(() => {

@@ -5,7 +5,17 @@ export const isActive = Boolean(TRACKING_DOMAIN)
 export const shouldOutputDebug: boolean = process.env.NEXT_PUBLIC_ANALYTICS_DEBUG === 'true'
 
 // list all goal types here
-export type GoalType = 'SuggestionClick' | 'Test'
+export type GoalType =
+  | 'SuggestionClick'
+  | 'SearchRegisterClick'
+  | 'CommitClick'
+  | 'Commit'
+  | 'CommitFail'
+  | 'Register'
+  | 'RegisterFail'
+  | 'LinkUnresolvedClick'
+  | 'SetPrimaryENSClick'
+  | 'UpdateProfileClick'
 
 /**
  * A proxy tracking method that abstracts the analytics provider

@@ -11,6 +11,8 @@ import styles from './CommitButton.module.css'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
+import { trackGoal } from 'lib/analytics'
+
 interface CommitButtonProps {
   order: RegistrationOrder
 }
@@ -37,6 +39,8 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   })
 
   const onStartClick = useCallback(() => {
+    trackGoal('CommitClick', { props: { domain } })
+
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
     try {
       sendCommit?.()
@@ -44,7 +48,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
       const msg = error instanceof Error ? error.toString() : 'Commit error'
       notify(msg, { status: 'error' })
     }
-  }, [sendCommit, notify])
+  }, [sendCommit, notify, domain])
 
   return (
     <div>
