@@ -7,8 +7,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { formatAddress } from 'lib/utils'
 import clsx from 'clsx'
 import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
-import { FeedbackForm } from 'components/Feedback/FeedbackForm'
-import { Feedback } from 'components/Feedback/Feedback'
 
 const TxLink = ({ txHash, isFailed }: { txHash: string; isFailed?: boolean }) => {
   const link = useEtherscanURL('txn', txHash)
@@ -58,7 +56,6 @@ const Debug: PageWithLayout = () => {
 
   return (
     <div className={styles.main}>
-      <Feedback />
       <div className={styles.title}>Debug</div>
 
       <div className={styles.header}>Registrations</div>
