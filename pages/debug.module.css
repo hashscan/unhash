@@ -120,11 +120,3 @@
 .txFailed {
   color: var(--color-error-light);
 }
-
-/* TODO: move to global parent component */
-.feedback {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 40px;
-}

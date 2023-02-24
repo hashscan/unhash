@@ -1,5 +1,5 @@
 .label {
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   font-weight: 400;
