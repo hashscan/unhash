@@ -7,5 +7,18 @@ module.exports = {
     // Read more about I18n routing:
     // https://nextjs.org/docs/advanced-features/i18n-routing
     defaultLocale: 'en-US'
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: '/stats/script.js',
+        destination: 'https://plausible.io/js/script.js'
+      },
+      {
+        source: '/stats/event',
+        destination: 'https://plausible.io/api/event'
+      }
+    ]
   }
 }
