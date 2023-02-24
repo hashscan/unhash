@@ -53,6 +53,7 @@ export const FeedbackForm = ({ onCancel, onSuccess, className, ...rest }: Feedba
           className={styles.twitter}
           label="Your Twitter / Telegram"
           placeholder="@mastodon (Optional)"
+          disabled={isLoading}
           onChange={(e) => setAuthor(e.target.value)}
         />
         <div className={styles.label}>Message</div>
@@ -61,7 +62,14 @@ export const FeedbackForm = ({ onCancel, onSuccess, className, ...rest }: Feedba
           placeholder={
             'Did you like the app? Share your ideas on what we should support and improve.'
           }
+          disabled={isLoading}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              onSend()
+            }
+          }}
         />
       </div>
       <div className={styles.buttons}>
