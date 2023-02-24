@@ -1,0 +1,43 @@
+.container {
+  padding: 24px 24px 12px 24px;
+  background-color: var(--color-background);
+}
+
+.content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-bottom: 80px;
+}
+
+.icon {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 4px;
+}
+
+.header {
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  font-weight: 500;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.subheader {
+  color: var(--color-text-secondary);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  text-align: center;
+  margin: 0 auto;
+}
+
+.close {
+  width: 100px;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+}

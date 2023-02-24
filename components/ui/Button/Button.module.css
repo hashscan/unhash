@@ -108,3 +108,13 @@
   box-shadow: none;
   transform: rotate3d(1, 0, 0, 6deg) scale(0.99, 0.99) translateY(1px);
 }
+
+.button.button_ghost {
+  color: var(--color-text-primary);
+  background: none;
+  box-shadow: none;
+}
+
+.button.button_ghost:hover {
+  background-color: var(--color-slate-6);
+}

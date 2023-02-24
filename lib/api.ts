@@ -60,11 +60,16 @@ async function userInfo(address: Address, network: Network = 'mainnet'): Promise
   return await ky.get(`${API_URL}/user?address=${address}&network=${network}`).json<UserInfo>()
 }
 
+async function saveFeedback(author: string, message: string): Promise<void> {
+  await ky.post(`${API_URL}/feedback`, { json: { author, message } })
+}
+
 const api = {
   checkDomain,
   getPrice,
   domainInfo,
-  userInfo
+  userInfo,
+  saveFeedback
 }
 
 export default api

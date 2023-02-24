@@ -1,19 +1,21 @@
 import { darkTheme, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
 import { createClient, WagmiConfig } from 'wagmi'
 import { Provider as WrapBalancerProvider } from 'react-wrap-balancer'
-import { NotifierProvider } from 'components/ui/Notifier/NotifierProvider'
-
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+
+import { wrapInLayout } from 'components/layouts'
+import { RegistrationsProvider } from 'components/RegistrationsProvider/RegistrationsProvider'
+import { NotifierProvider } from 'components/ui/Notifier/NotifierProvider'
+import { Feedback } from 'components/Feedback/Feedback'
 
 import 'styles/global.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import { chains, provider, connectors } from 'lib/connectors'
-import { wrapInLayout } from 'components/layouts'
+
 import { AnalyticsScript } from 'lib/analytics'
 
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
-import { RegistrationsProvider } from 'components/RegistrationsProvider/RegistrationsProvider'
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -81,6 +83,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
               <WrapBalancerProvider>
                 {wrapInLayout(Component, <Component {...pageProps} />)}
+                <Feedback />
               </WrapBalancerProvider>
             </RainbowKitProvider>
           </RegistrationsProvider>
