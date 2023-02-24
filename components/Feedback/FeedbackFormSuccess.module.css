@@ -8,7 +8,6 @@
   left: 0;
   right: 0;
   top: 50%;
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   padding-bottom: 80px;
 }
@@ -40,6 +39,5 @@
   position: absolute;
   bottom: 24px;
   left: 50%;
-  -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
