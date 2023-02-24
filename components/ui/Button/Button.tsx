@@ -9,19 +9,34 @@ import styles from './Button.module.css'
 export interface ButtonProps extends ComponentProps<'button'> {
   as?: 'button' | 'a'
   size?: 'regular' | 'medium' | 'cta'
+  variant?: 'primary' | 'ghost'
   isLoading?: boolean
 }
 
 const ButtonWithRef = (
-  { as = 'button', size = 'regular', isLoading = false, children, className, ...rest }: ButtonProps,
+  {
+    as = 'button',
+    size = 'regular',
+    variant = 'primary',
+    isLoading = false,
+    children,
+    className,
+    ...rest
+  }: ButtonProps,
   ref: ForwardedRef<HTMLElement>
 ) => {
   const buttonProps = {
     ref,
     ...rest,
-    className: clsx(className, styles.button, styles[`button_${size}`], {
-      [styles.button_loading]: isLoading
-    })
+    className: clsx(
+      className,
+      styles.button,
+      styles[`button_${size}`],
+      styles[`button_${variant}`],
+      {
+        [styles.button_loading]: isLoading
+      }
+    )
   }
 
   return createElement(
