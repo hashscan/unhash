@@ -14,6 +14,7 @@ import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
 import { DomainInfo } from 'lib/api'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { Button } from 'components/ui/Button/Button'
+import { trackGoal } from 'lib/analytics'
 
 interface ProfileCardFormProps {
   domain: Domain
@@ -69,6 +70,8 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
     onSuccess
   })
   const save = () => {
+    trackGoal('UpdateProfileClick')
+
     if (typeof sendUpdate === 'undefined') return
     sendUpdate()
   }

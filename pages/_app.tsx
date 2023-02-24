@@ -12,6 +12,9 @@ import { Feedback } from 'components/Feedback/Feedback'
 import 'styles/global.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import { chains, provider, connectors } from 'lib/connectors'
+
+import { AnalyticsScript } from 'lib/analytics'
+
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
 
 const wagmiClient = createClient({
@@ -62,11 +65,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content="/og-preview.png" />
 
-        <script
-          defer
-          data-domain="xens.vercel.com"
-          src="https://plausible.io/js/script.js"
-        ></script>
+        <AnalyticsScript key="analytics" />
       </Head>
 
       <style jsx global>

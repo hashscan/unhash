@@ -9,6 +9,7 @@ import { Address } from 'wagmi'
 import { PrimaryDomainDropdown } from 'components/PrimaryDomainSelect/PrimaryDomainDropdown'
 import { Button } from 'components/ui/Button/Button'
 import { PrimaryDomainUnresolvedEth } from 'components/PrimaryDomainSelect/PrimaryDomainUnresolvedEth'
+import { trackGoal } from 'lib/analytics'
 
 interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
   chainId: number
@@ -61,6 +62,7 @@ export const ProfilePrimaryDomain = ({
     }
   })
   const savePrimaryEns = () => {
+    trackGoal('SetPrimaryENSClick', { props: { domain: String(newDomain?.name) } })
     sendUpdate?.()
   }
 

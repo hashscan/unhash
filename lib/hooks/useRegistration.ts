@@ -3,6 +3,8 @@ import { useLocalStorage } from 'usehooks-ts'
 import { useCallback, useMemo } from 'react'
 import { useAccount } from 'wagmi'
 
+import { trackGoal } from 'lib/analytics'
+
 // helper type to avoid long type declaration
 type CreateRegistrationParams = {
   domain: Domain
@@ -52,6 +54,8 @@ export function useRegistration(domain: Domain) {
   // Update the registration status to 'committed'
   const setCommited = useCallback(
     (commitBlock: number, commitTimestamp: number) => {
+      trackGoal('Commit', { props: { domain } })
+
       setRegistrations((_registrations) => {
         const _registration = _registrations.find((r) => r.domain === domain)
         if (!_registration) throw new Error('Registration not found')
@@ -75,6 +79,8 @@ export function useRegistration(domain: Domain) {
   // Update status back to 'created'
   const setCommitFailed = useCallback(
     (errorTxHash: string, errorTxMessage: string) => {
+      trackGoal('CommitFail', { props: { domain, hsh: errorTxHash } })
+
       setRegistrations((_registrations) => {
         const _registration = _registrations.find((r) => r.domain === domain)
         if (!_registration) throw new Error('Registration not found')
@@ -118,6 +124,8 @@ export function useRegistration(domain: Domain) {
 
   // Update the registration status to 'registered'
   const setRegistered = useCallback(() => {
+    trackGoal('Register', { props: { domain } })
+
     setRegistrations((_registrations) => {
       const _registration = _registrations.find((r) => r.domain === domain)
       if (!_registration) throw new Error('Registration not found')
@@ -137,6 +145,8 @@ export function useRegistration(domain: Domain) {
   // Update the registration status back to 'committed'
   const setRegisterFailed = useCallback(
     (errorTxHash: string, errorTxMessage: string) => {
+      trackGoal('RegisterFail', { props: { domain, hsh: errorTxHash } })
+
       setRegistrations((_registrations) => {
         const _registration = _registrations.find((r) => r.domain === domain)
         if (!_registration) throw new Error('Registration not found')

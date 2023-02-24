@@ -10,6 +10,8 @@ import React, { ComponentProps } from 'react'
 import { useAccount } from 'wagmi'
 import styles from './PrimaryDomainUnresolvedEth.module.css'
 
+import { trackGoal } from 'lib/analytics'
+
 interface PrimaryDomainUnresolvedEthProps extends ComponentProps<'div'> {
   domain: Domain
   onResolved: (domain: Domain) => void
@@ -32,6 +34,7 @@ export const PrimaryDomainUnresolvedEth = ({
     onSuccess: () => onResolved(domain)
   })
   const setEthRecord = () => {
+    trackGoal('LinkUnresolvedClick', { props: { domain } })
     sendSetAddr?.()
   }
 
