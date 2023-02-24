@@ -10,10 +10,13 @@ import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 import styles from './index.module.css'
 import { Suggestion } from 'components/LandingSuggestions/types'
 
+import { trackGoal } from 'lib/analytics'
+
 const Search: PageWithLayout = () => {
   const searchBarRef = useRef<SearchBarHandle>(null)
 
   const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {
+    trackGoal('SuggestionClick', { props: { domain: suggestion.domain } })
     searchBarRef.current?.setSearch(suggestion.domain)
   }, [])
 
