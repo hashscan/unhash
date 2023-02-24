@@ -5,3 +5,26 @@
   margin: 40px;
   z-index: 1;
 }
+
+.menu {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-slate-0);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-slate-2);
+}
+
+.menu:hover {
+  background-color: var(--color-slate-1);
+  cursor: pointer;
+}
+
+.menu>svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-top: 10px;
+  margin-left: 11px;
+  color: var(--color-slate-7);
+}
