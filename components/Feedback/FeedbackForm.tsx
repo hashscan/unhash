@@ -73,7 +73,6 @@ export const FeedbackForm = ({ onClose, className, ...rest }: FeedbackFormProps)
       </div>
       <div className={styles.buttons}>
         <Button
-          className={styles.buttonCancel}
           disabled={false}
           isLoading={false}
           size={'regular'}
@@ -83,7 +82,6 @@ export const FeedbackForm = ({ onClose, className, ...rest }: FeedbackFormProps)
           Cancel
         </Button>
         <Button
-          className={styles.buttonSend}
           disabled={message.length === 0}
           isLoading={isLoading}
           size={'regular'}
