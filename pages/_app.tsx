@@ -61,6 +61,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="twitter:title" content={metaTitle} />
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content="/og-preview.png" />
+
+        <script
+          defer
+          data-domain="xens.vercel.com"
+          src="https://plausible.io/js/script.js"
+        ></script>
       </Head>
 
       <style jsx global>
