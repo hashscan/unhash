@@ -31,7 +31,12 @@ export const AnalyticsScript = () => {
 
   return (
     <>
-      <script defer data-domain={TRACKING_DOMAIN} src="https://plausible.io/js/script.js"></script>
+      <script
+        defer
+        data-domain={TRACKING_DOMAIN}
+        data-api="/stats/event"
+        src="/stats/script.js"
+      ></script>
       <script>
         {/* To be able to call Plausible before its script is loaded */}
         {`
