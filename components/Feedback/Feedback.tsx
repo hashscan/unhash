@@ -20,8 +20,7 @@ export const Feedback = ({ className, ...rest }: ComponentProps<'div'>) => {
     <FeedbackForm
       className={clsx(className, styles.feedback)}
       {...rest}
-      onSuccess={() => setIsOpen(false)}
-      onCancel={() => setIsOpen(false)}
+      onClose={() => setIsOpen(false)}
     />
   )
 }

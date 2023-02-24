@@ -6,27 +6,26 @@ import { Input } from 'components/ui/Input/Input'
 import { FEEDBACK_TELEGRAM, FEEDBACK_TWITTER } from 'lib/constants'
 import api from 'lib/api'
 import { useNotifier } from 'lib/hooks/useNotifier'
+import { FeedbackFormSuccess } from './FeedbackFormSuccess'
 
 interface FeedbackFormProps extends ComponentProps<'div'> {
-  onCancel?: () => void
-  onSuccess?: () => void
+  onClose?: () => void
 }
 
-export const FeedbackForm = ({ onCancel, onSuccess, className, ...rest }: FeedbackFormProps) => {
+export const FeedbackForm = ({ onClose, className, ...rest }: FeedbackFormProps) => {
   const notify = useNotifier()
   const [author, setAuthor] = useState<string>('')
   const [message, setMessage] = useState<string>('')
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  // const [success, setSuccess] = useState<boolean>(false)
+  const [success, setSuccess] = useState<boolean>(false)
 
   const onSend = async () => {
     if (isLoading) return
     try {
       setIsLoading(true)
       await api.saveFeedback(author, message)
-      onSuccess?.()
-      // setSuccess(true)
+      setSuccess(true)
     } catch (e) {
       notify('Failed to send feedback', { status: 'error' })
     } finally {
@@ -79,7 +78,7 @@ export const FeedbackForm = ({ onCancel, onSuccess, className, ...rest }: Feedba
           isLoading={false}
           size={'regular'}
           variant={'ghost'}
-          onClick={() => onCancel?.()}
+          onClick={() => onClose?.()}
         >
           Cancel
         </Button>
@@ -93,6 +92,8 @@ export const FeedbackForm = ({ onCancel, onSuccess, className, ...rest }: Feedba
           Send Feedback
         </Button>
       </div>
+      {/* Success overlay */}
+      {success && <FeedbackFormSuccess className={styles.success} onClose={() => onClose?.()} />}
     </div>
   )
 }
