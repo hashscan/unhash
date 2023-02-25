@@ -95,8 +95,7 @@ export const Nav = () => {
                       >
                         {account.ensAvatar ? (
                           <img
-                            width={24}
-                            height={24}
+                            className={styles.avatarImg}
                             alt="avatar"
                             src={account.ensAvatar.replace(
                               'gateway.ipfs.io',
