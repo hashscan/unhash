@@ -8,6 +8,12 @@
   box-shadow: var(--shadow-lg);
 }
 
+@media (max-width: 768px) {
+  .feedback {
+    width: auto;
+  }
+}
+
 .content {
   padding: 16px 24px 16px 24px;
 }
@@ -27,12 +33,12 @@
   margin-bottom: 24px;
 }
 
-.subheader>a {
+.subheader > a {
   color: var(--color-text-primary);
   text-decoration: none;
 }
 
-.subheader>a:hover {
+.subheader > a:hover {
   text-decoration: underline;
   color: var(--color-green);
 }

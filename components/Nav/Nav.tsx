@@ -53,8 +53,6 @@ export const Nav = () => {
 
   return (
     <nav className={styles.nav} ref={ref}>
-      <div className={styles.logo}>ens-wallets.com</div>
-
       <div className={styles.sub}>
         <Links />
 
