@@ -11,6 +11,8 @@
 @media (max-width: 768px) {
   .feedback {
     width: auto;
+    left: 24px;
+    right: 24px;
   }
 }
 

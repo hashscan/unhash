@@ -5,13 +5,6 @@
   z-index: 1000;
 }
 
-@media (max-width: 768px) {
-  .feedback {
-    left: 24px;
-    right: 24px;
-  }
-}
-
 .menu {
   width: 48px;
   height: 48px;
