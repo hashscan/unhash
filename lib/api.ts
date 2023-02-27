@@ -3,8 +3,10 @@ import { Address } from 'wagmi'
 import { API_URL } from './constants'
 import type { Network, Domain, UserInfo, AddrRecords, TextRecords } from './types'
 
-type DomainStatus = {
+export type DomainStatus = {
+  isValid: boolean
   isAvailable: boolean
+  validationMessage?: string
   listing?: DomainListing
 }
 
@@ -40,20 +42,30 @@ export type Currency = {
   decimals: number
 }
 
-
-async function checkDomain(domain: string, network: Network = 'mainnet', withListing: boolean = false): Promise<boolean> {
-  const res = await ky.get(`${API_URL}/domain/check?domain=${domain}&network=${network}&withListing=${withListing}`).json<DomainStatus>()
-  return res.isAvailable
+async function checkDomain(
+  domain: string,
+  network: Network = 'mainnet',
+  withListing: boolean = false
+): Promise<DomainStatus> {
+  return await ky
+    .get(`${API_URL}/domain/check?domain=${domain}&network=${network}&withListing=${withListing}`)
+    .json<DomainStatus>()
 }
 
-async function getPrice(domain: string, network: Network = 'mainnet', duration: number): Promise<DomainPrice> {
+async function getPrice(
+  domain: string,
+  network: Network = 'mainnet',
+  duration: number
+): Promise<DomainPrice> {
   return await ky
     .get(`${API_URL}/domain/price?domain=${domain}&network=${network}&duration=${duration}`)
     .json<DomainPrice>()
 }
 
 async function domainInfo(domain: Domain, network: Network = 'mainnet'): Promise<DomainInfo> {
-  return await ky.get(`${API_URL}/domain/info?domain=${domain}&network=${network}`).json<DomainInfo>()
+  return await ky
+    .get(`${API_URL}/domain/info?domain=${domain}&network=${network}`)
+    .json<DomainInfo>()
 }
 
 async function userInfo(address: Address, network: Network = 'mainnet'): Promise<UserInfo> {

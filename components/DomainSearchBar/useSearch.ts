@@ -1,4 +1,4 @@
-import api from 'lib/api'
+import api, { DomainStatus } from 'lib/api'
 import { toNetwork } from 'lib/types'
 import { validateDomain } from 'lib/utils'
 import { useEffect, useState } from 'react'
@@ -18,7 +18,7 @@ export const useSearch = (query: string) => {
   const chainId = useChainId()
 
   const [result, setResult] = useState<SearchResult>({ status: SearchStatus.Idle })
-  const { run, cancel } = useLatestPromise<boolean>()
+  const { run, cancel } = useLatestPromise<DomainStatus>()
   const debouncedQuery = useDebounce(query, 300)
 
   // query changes -> cancel everything and start loading
@@ -39,20 +39,24 @@ export const useSearch = (query: string) => {
       return
     }
 
-    const validationMessage = validateDomain(debouncedQuery)
-
-    if (validationMessage) {
-      setResult({ status: SearchStatus.Invalid, validationMessage })
-      return
-    }
-
     const fetchAvailability = async () => {
       setResult({ status: SearchStatus.Loading })
 
       try {
-        const available = await run(api.checkDomain(debouncedQuery, toNetwork(chainId)))
+        const { isValid, isAvailable, validationMessage } = await run(
+          api.checkDomain(debouncedQuery, toNetwork(chainId))
+        )
 
-        setResult({ status: available ? SearchStatus.Available : SearchStatus.NotAvailable })
+        if (!isValid) {
+          setResult({
+            status: SearchStatus.Invalid,
+            validationMessage
+          })
+        } else {
+          setResult({
+            status: isAvailable ? SearchStatus.Available : SearchStatus.NotAvailable
+          })
+        }
       } catch (err) {
         setResult({ status: SearchStatus.Error, errorMessage: String(err) })
       }
