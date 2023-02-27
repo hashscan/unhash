@@ -41,3 +41,26 @@
 .registerButton {
   width: 100%;
 }
+
+.mobileTotal {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .title,
+  .summary {
+    display: none;
+  }
+
+  .container {
+    width: auto;
+    padding: 24px 24px 64px 24px;
+  }
+
+  .mobileTotal {
+    display: block;
+    padding: 16px 0;
+    font-weight: 400;
+    text-align: center;
+  }
+}
