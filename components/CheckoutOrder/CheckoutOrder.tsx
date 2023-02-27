@@ -54,6 +54,9 @@ export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
       </div>
 
       <CommitButton order={order} />
+
+      {/* only on mobiles */}
+      <div className={styles.mobileTotal}>Estimated total {formatUSDPrice(totalPrice)}</div>
     </div>
   )
 }

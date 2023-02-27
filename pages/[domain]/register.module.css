@@ -8,19 +8,40 @@
 .main {
   flex-shrink: 1;
   flex-grow: 1;
-  padding: 40px 0;
-}
-
-.order {
-  background-color: var(--color-slate-7);
-  border-left: 1.5px solid var(--color-slate-6);
-  flex-shrink: 0;
-
-  /* extends the right side to the end to of the viewport using negative margin */
-  margin-right: calc(-0.5 * max(0px, 100vw - var(--container-width)));
-  padding-right: calc(0.5 * max(0px, 100vw - var(--container-width)));
+  padding: 40px 0 96px 0;
 }
 
 .progress {
   margin-bottom: 32px;
+}
+
+.order {
+  background-color: var(--color-slate-7);
+  flex-shrink: 0;
+}
+
+/* Desktop layout: displayed as a sidebar on the right */
+@media (min-width: 768px) {
+  .order {
+    border-left: 1.5px solid var(--color-slate-6);
+
+    /* extends the right side to the end to of the viewport using negative margin */
+    margin-right: calc(-0.5 * max(0px, 100vw - var(--container-width)));
+    padding-right: calc(0.5 * max(0px, 100vw - var(--container-width)));
+  }
+}
+
+/* Mobile layout: displayed as a fixed bar at the bottom */
+@media (max-width: 768px) {
+  .order {
+    border-top: 1.5px solid var(--color-slate-6);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .main {
+    padding-bottom: 256px;
+  }
 }
