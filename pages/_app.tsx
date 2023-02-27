@@ -28,8 +28,7 @@ const rainbowkitTheme: Theme = {
   fonts: { body: 'var(--font-ui)' }
 }
 
-/* TODO: adjust these before the release! */
-const publicURL = 'https://xens.vercel.app'
+const publicURL = 'https://xens.app'
 
 const metaTitle = 'Get .ETH Domain For Your Ethereum Address'
 
