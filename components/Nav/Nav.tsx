@@ -21,7 +21,9 @@ interface ChainProps {
 
 const Chain = ({ chain, onClick }: ChainProps) => {
   const isTestnet = toNetwork(chain.id) === 'goerli'
-  const shouldDisplayWarn = isTestnet || Boolean(chain.unsupported)
+  const isUnsupported = Boolean(chain.unsupported)
+
+  const shouldDisplayWarn = isTestnet || isUnsupported
 
   if (!shouldDisplayWarn) return null
 
@@ -30,8 +32,8 @@ const Chain = ({ chain, onClick }: ChainProps) => {
       <button onClick={onClick} className={styles.chainWarning} type="button">
         <InfoCircle className={styles.icon} />
 
-        {isTestnet && 'Testnet'}
-        {Boolean(chain.unsupported) && 'Unsupported Network'}
+        {isUnsupported && 'Unsupported Network'}
+        {!isUnsupported && isTestnet && 'Testnet'}
       </button>
 
       <span className={styles.sep}> | </span>
