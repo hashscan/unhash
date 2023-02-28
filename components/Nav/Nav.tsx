@@ -84,39 +84,41 @@ export const Nav = () => {
             }
 
             return (
-              <div>
-                <div
-                  className={clsx(styles.buttons, { [styles.buttonsLoading]: !ready })}
-                  aria-hidden={!ready}
-                >
-                  <Chain chain={chain} onClick={openChainModal} />
+              <div
+                className={clsx(styles.buttons, { [styles.buttonsLoading]: !ready })}
+                aria-hidden={!ready}
+              >
+                <Chain chain={chain} onClick={openChainModal} />
 
-                  {account && (
-                    <button className={styles.account} onClick={() => setOpen(!isOpen)}>
-                      <div
-                        className={clsx(styles.accountIcon, {
-                          [styles.accountIconPlaceholder]: !account.ensAvatar
-                        })}
-                      >
-                        {account.ensAvatar ? (
-                          <img
-                            className={styles.avatarImg}
-                            alt="avatar"
-                            src={account.ensAvatar.replace(
-                              'gateway.ipfs.io',
-                              'ipfs.eth.aragon.network'
-                            )}
-                          />
-                        ) : (
-                          <Profile color="var(--color-slate-2)" />
-                        )}
-                      </div>
-                      <div className={styles.accountName}>
-                        {account.ensName ? account.ensName : formatAddress(account.address)}
-                      </div>
-                    </button>
-                  )}
-                </div>
+                {account && (
+                  <button className={styles.account} onClick={() => setOpen(!isOpen)}>
+                    <div
+                      className={clsx(styles.acccountAvatar, {
+                        [styles.acccountAvatarPlaceholder]: !account.ensAvatar
+                      })}
+                    >
+                      {account.ensAvatar ? (
+                        <img
+                          className={styles.acccountAvatarImg}
+                          alt=""
+                          src={account.ensAvatar.replace(
+                            'gateway.ipfs.io',
+                            'ipfs.eth.aragon.network'
+                          )}
+                        />
+                      ) : (
+                        <Profile color="var(--color-slate-5)" />
+                      )}
+                    </div>
+                    <div
+                      className={clsx(styles.accountName, {
+                        [styles.accountNameAddress]: !account.ensName
+                      })}
+                    >
+                      {account.ensName ? account.ensName : formatAddress(account.address)}
+                    </div>
+                  </button>
+                )}
               </div>
             )
           }}
