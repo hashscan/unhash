@@ -19,15 +19,15 @@ import api from 'lib/api'
 
 import styles from './register.module.css'
 
-interface CheckoutProps {
+interface RegisterProps {
   domain: Domain
 }
 
 // exported to be used by CheckoutProgress
-export type CheckoutStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'
+export type RegisterStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'
 
 // this is actually a reducer
-function calculateStep(_: CheckoutStep, reg: Registration | undefined): CheckoutStep {
+function calculateStep(_: RegisterStep, reg: Registration | undefined): RegisterStep {
   const status = reg?.status
 
   if (!status || status === 'created' || status === 'commitPending') return 'commit'
@@ -41,7 +41,7 @@ function calculateStep(_: CheckoutStep, reg: Registration | undefined): Checkout
   return 'initializing' // eslint asks to add this
 }
 
-const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
+const Register: PageWithLayout<RegisterProps> = ({ domain }: RegisterProps) => {
   // get registration and calculate step
   const { registration: reg } = useRegistration(domain)
 
@@ -127,6 +127,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 }
 
-Checkout.layout = <ContainerLayout verticalPadding={false} />
+Register.layout = <ContainerLayout verticalPadding={false} />
 
-export default Checkout
+export default Register
