@@ -1,0 +1,41 @@
+.main {
+  margin: 40px 0;
+}
+
+.title {
+  color: var(--color-slate-2);
+  font: var(--type-x-lg);
+  letter-spacing: var(--ls-x-lg);
+  margin-bottom: 8px;
+}
+
+.address {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+
+  margin-bottom: 24px;
+}
+
+.info {
+  color: var(--color-slate-2);
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  margin-bottom: 24px;
+}
+
+.link {
+  color: var(--color-green);
+  font: var(--type-reg);
+  font-weight: 400;
+  letter-spacing: var(--ls-reg);
+  margin-bottom: 24px;
+  text-decoration: none;
+}
+
+.link:hover {
+  filter: brightness(0.95);
+  text-decoration: underline;
+}
