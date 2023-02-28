@@ -1,7 +1,7 @@
 .links {
   display: flex;
   flex-direction: row;
-  gap: 48px;
+  gap: 24px;
   margin-right: 32px;
   flex-shrink: 1;
   flex-grow: 1;
@@ -9,14 +9,16 @@
 }
 
 .navLink {
-  color: var(--color-slate-4);
-  text-decoration: none;
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-text-primary);
   font-weight: 400;
+  text-decoration: none;
   white-space: nowrap;
 }
 
 .navLink:hover {
-  color: var(--color-slate-1);
+  color: var(--color-text-secondary);
 }
 
 .navLinkActive {
