@@ -36,9 +36,9 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
             <WrapBalancer>
               You can now{' '}
               <Link href="/profile" className={styles.inlineLink}>
-                point <b>{props.domain}</b> to your wallet
-              </Link>
-              , and create a public profile to use your username instead of a wallet address.
+                set <b>{props.domain}</b> as a username
+              </Link>{' '}
+              for your wallet and create a public profile with NFT avatar.
             </WrapBalancer>
           </p>
 
