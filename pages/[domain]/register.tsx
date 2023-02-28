@@ -14,7 +14,9 @@ import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
 import { Domain, Registration, RegistrationOrder } from 'lib/types'
-import { parseDomainName, validateDomain } from 'lib/utils'
+import { parseDomainName } from 'lib/utils'
+import api from 'lib/api'
+
 import styles from './register.module.css'
 
 interface CheckoutProps {
@@ -95,14 +97,27 @@ const Checkout: PageWithLayout<CheckoutProps> = ({ domain }: CheckoutProps) => {
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const domain = query.domain as string
 
-  const e = validateDomain(domain)
-  if (e)
+  // TODO: figure out a way to obtain current network on the server-side
+  // ideas: standalone subdomain domain? cookies?
+  const { isValid, isAvailable } = await api.checkDomain(domain)
+
+  if (!isValid) {
     return {
       redirect: {
-        permanent: true,
-        destination: '/'
+        destination: '/',
+        permanent: false
       }
     }
+  }
+
+  if (!isAvailable) {
+    return {
+      redirect: {
+        destination: `/${domain}`,
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: {
