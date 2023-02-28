@@ -1,18 +1,18 @@
 import clsx from 'clsx'
 import { Domain } from 'lib/types'
-import { CheckoutStep } from 'pages/[domain]/register'
+import { RegisterStep } from 'pages/[domain]/register'
 import { ComponentProps } from 'react'
 import styles from './CheckoutProgress.module.css'
 import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
 
 interface CheckoutProgressProps extends ComponentProps<'div'> {
-  step: CheckoutStep
+  step: RegisterStep
   domain: Domain
 }
 
 const STEPS_IN_ORDER = ['commit', 'wait', 'register', 'success']
 
-const STEP_NAMES: Record<CheckoutStep, string> = {
+const STEP_NAMES: Record<RegisterStep, string> = {
   initializing: 'Loading...',
   commit: 'Confirming Your Order',
   wait: 'Reserving Domain Name',
