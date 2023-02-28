@@ -7,13 +7,10 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { configureChains } from 'wagmi'
-import { Network, toChain } from './types'
-
-// only one chain per environment
-const network: Network = process.env.NEXT_PUBLIC_CHAIN === 'mainnet' ? 'mainnet' : 'goerli'
+import { supportedNetwork, toChain } from './network'
 
 const { chains, provider } = configureChains(
-  [toChain(network)],
+  [toChain(supportedNetwork())],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!, priority: 0 })
     // no backup provider on purpose
