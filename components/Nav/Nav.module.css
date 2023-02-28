@@ -6,7 +6,6 @@
   width: 100%;
   z-index: 200;
 
-  /* box-shadow: var(--shadow-reg); */
   border-bottom: 1.5px solid var(--color-slate-6);
   background-color: rgb(var(--color-background-rgb) / 0.95);
   backdrop-filter: blur(3px);
@@ -147,23 +146,6 @@
 .sep {
   color: var(--color-slate-5);
 }
-
-/* .logo {
-  width: 32px;
-  height: 32px;
-
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--color-slate-4);
-}
-
-@media (max-width: 768px) {
-  .logo {
-    display: none;
-  }
-} */
 
 .chainWarning {
   padding: 0 12px;
