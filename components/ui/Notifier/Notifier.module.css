@@ -15,10 +15,10 @@
 }
 
 .toast {
-  background-color: var(--color-slate-1);
-  border-radius: var(--radii-md);
+  background-color: var(--color-background);
+  border-radius: var(--radii-lg);
+  border: 1px solid var(--color-slate-5);
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--color-slate-0);
   padding: 16px 24px;
   margin-top: 8px;
 
@@ -70,16 +70,16 @@
 }
 
 .title {
+  color: var(--color-text-primary);
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   font-weight: 500;
-  color: var(--color-slate-4);
 }
 
 .description {
-  font: var(--type-regular);
-  letter-spacing: var(--ls-regular);
-  color: var(--color-slate-6);
+  color: var(--color-text-secondary);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
 }
 
 .toast.error:before {
@@ -90,7 +90,7 @@
   /* height: 100%; */
   top: 8px;
   bottom: 8px;
-  left: 6px;
+  left: 8px;
   width: 4px;
   border-radius: var(--radii-sm);
 
@@ -98,11 +98,11 @@
 }
 
 .toast.error > .description {
-  color: var(--color-error-light);
+  /* color: var(--color-error-light); */
 }
 
 .toast.error > .title {
-  color: var(--color-error-lighter);
+  /* color: var(--color-error-lighter); */
 }
 
 .action {
