@@ -1,7 +1,7 @@
 import type { Address } from 'wagmi'
 import { Network } from './types'
 
-export const API_URL = 'https://xens-api.vercel.app'
+export const API_URL = 'https://api.xens.app'
 
 export const FEEDBACK_TWITTER = 'https://twitter.com/jackqack'
 export const FEEDBACK_TELEGRAM = 'https://t.me/jackqack'
