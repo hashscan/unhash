@@ -53,7 +53,7 @@ export const useSendCommit = ({
       setCommitting({
         domain,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
-        owner: owner!, // TODO: fix?
+        owner: owner,
         duration,
         secret: secret!, // TODO: fix?
         commitTxHash: data.hash

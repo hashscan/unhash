@@ -9,7 +9,7 @@ import { trackGoal } from 'lib/analytics'
 type CreateRegistrationParams = {
   domain: Domain
   sender: string
-  owner: string
+  owner?: string
   duration: number
   secret: string
   commitTxHash: string

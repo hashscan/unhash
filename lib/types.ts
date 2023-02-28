@@ -56,7 +56,7 @@ export type UserDomain = {
 export type Registration = {
   domain: Domain
   sender: string // who is registering the domain
-  owner: string // who will own the domain
+  owner?: string // who will own the domain
   duration: number // seconds
   secret: string
   status: RegistrationStatus
