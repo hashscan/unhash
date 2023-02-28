@@ -7,12 +7,11 @@ import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
 import { InfoCircle, Logout, Profile } from 'components/icons'
 import { Links } from './Links'
-
 import clsx from 'clsx'
-
 import styles from './Nav.module.css'
 import { toNetwork } from 'lib/types'
 import { Button } from 'components/ui/Button/Button'
+import Link from 'next/link'
 
 interface ChainProps {
   chain: { id: number; unsupported?: boolean }
@@ -28,7 +27,7 @@ const Chain = ({ chain, onClick }: ChainProps) => {
   return (
     <>
       <button onClick={onClick} className={styles.chainWarning} type="button">
-        <InfoCircle className={styles.icon} />
+        <InfoCircle className={styles.chainIcon} />
 
         {isTestnet && 'Testnet'}
         {Boolean(chain.unsupported) && 'Unsupported Network'}
@@ -54,7 +53,12 @@ export const Nav = () => {
   return (
     <nav className={styles.nav} ref={ref}>
       <div className={styles.sub}>
-        <Links />
+        <Link href="/" className={styles.brand}>
+          <div className={styles.logo} />
+          <div className={styles.name}>xens.app</div>
+        </Link>
+
+        <Links className={styles.links} />
 
         <ConnectButton.Custom>
           {({
@@ -74,6 +78,7 @@ export const Nav = () => {
               account &&
               (!authenticationStatus || authenticationStatus === 'authenticated')
 
+            if (!mounted) return null
             if (!connected) {
               return <Button onClick={openConnectModal}>Connect wallet</Button>
             }

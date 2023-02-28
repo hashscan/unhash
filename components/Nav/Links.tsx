@@ -39,21 +39,14 @@ export const Links = (props: ComponentPropsWithoutRef<'div'>) => {
           [styles.navLinkActive]: route === '/' || route.match(/\/register$/) !== null
         })}
       >
-        Get ENS Domain
+        Search
       </Link>
 
       <Link
         href="/profile"
         className={clsx(styles.navLink, { [styles.navLinkActive]: route === '/profile' })}
       >
-        Set up Profile
-      </Link>
-
-      <Link
-        href="https://docs.ens.domains/frequently-asked-questions"
-        className={clsx(styles.navLink)}
-      >
-        FAQ↗
+        Profile
       </Link>
     </div>
   )
