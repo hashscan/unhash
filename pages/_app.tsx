@@ -16,6 +16,7 @@ import { chains, provider, connectors } from 'lib/connectors'
 import { AnalyticsScript } from 'lib/analytics'
 
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
+import { supportedNetwork } from 'lib/network'
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -48,6 +49,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" key="favicon" type="image/svg+xml" href="/favicon.svg" />
 
         <meta name="description" key="meta-description" content={metaDescription} />
+
+        {/* Disables indexing on goerli.xens.app to avoid SEO penalties */}
+        {supportedNetwork() === 'goerli' && <meta name="robots" content="noindex,nofollow" />}
 
         <meta property="og:url" content={publicURL} />
         <meta property="og:type" content="website" />
