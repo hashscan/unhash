@@ -35,7 +35,7 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
         {info.addrRecords.ethereum ? (
           <>
             {' '}
-            and pointing to{' '}
+            and points to{' '}
             <Link
               className={styles.link}
               href={`https://etherscan.io/address/${info.addrRecords.ethereum}`}
