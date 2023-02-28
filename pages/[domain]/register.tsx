@@ -13,7 +13,7 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRe
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
-import { Domain, Registration, RegistrationOrder, supportedNetwork } from 'lib/types'
+import { Domain, Registration, RegistrationOrder, currentNetwork } from 'lib/types'
 import { parseDomainName } from 'lib/utils'
 import api from 'lib/api'
 
@@ -96,7 +96,7 @@ const Register: PageWithLayout<RegisterProps> = ({ domain }: RegisterProps) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const domain = query.domain as string
-  const network = supportedNetwork()
+  const network = currentNetwork()
 
   const { isValid, isAvailable } = await api.checkDomain(domain, network)
 

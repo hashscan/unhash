@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
-import { Domain, supportedNetwork } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
 import styles from './domain.module.css'
 import api, { DomainInfo } from 'lib/api'
 import { validateDomain } from 'lib/utils'
@@ -55,7 +55,7 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const domain = query.domain as string
-  const network = supportedNetwork()
+  const network = currentNetwork()
 
   if (validateDomain(domain)) {
     return {
