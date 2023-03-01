@@ -31,8 +31,10 @@ const Chain = ({ chain, onClick }: ChainProps) => {
       <button onClick={onClick} className={styles.chainWarning} type="button">
         <InfoCircle className={styles.chainIcon} />
 
-        {isUnsupported && 'Unsupported Network'}
-        {!isUnsupported && isTestnet && 'Testnet'}
+        <span>
+          {isUnsupported && 'Unsupported Network'}
+          {!isUnsupported && isTestnet && 'Testnet'}
+        </span>
       </button>
 
       <span className={styles.sep}> | </span>
@@ -95,13 +97,13 @@ export const Nav = () => {
                 {account && (
                   <button className={styles.account} onClick={() => setOpen(!isOpen)}>
                     <div
-                      className={clsx(styles.acccountAvatar, {
+                      className={clsx(styles.accountAvatar, {
                         [styles.acccountAvatarPlaceholder]: !account.ensAvatar
                       })}
                     >
                       {account.ensAvatar ? (
                         <img
-                          className={styles.acccountAvatarImg}
+                          className={styles.accountAvatarImg}
                           alt=""
                           src={account.ensAvatar.replace(
                             'gateway.ipfs.io',
