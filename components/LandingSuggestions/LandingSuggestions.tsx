@@ -43,7 +43,7 @@ export const LandingSuggestions = ({ onSuggestionSelected }: LandingSuggestionsP
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Suggested for you</div>
+      <div className={styles.title}>Suggested names</div>
       <div className={styles.suggestions}>
         {suggestions.map((item) => (
           <SuggestionTag

@@ -31,7 +31,7 @@ export const CheckoutWaitStep = ({ registration }: CheckoutWaitStepProps) => {
   return (
     <div className={styles.container}>
       <RadialCountdown className={styles.countdown} timestamp={endOfWaitPeriodTs} />
-      <h1 className={styles.title}>Just a Minute, Please</h1>
+      <h1 className={styles.title}>Wait for 1 minute</h1>
 
       <p className={styles.description}>
         Your domain name has been reserved! Please wait <b>60&nbsp;seconds</b> before completing the

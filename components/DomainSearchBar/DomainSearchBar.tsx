@@ -76,7 +76,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
               onChange={(e) => setSearchQuery(e.target.value)}
               className={styles.input}
               spellCheck="false"
-              placeholder="Look up .eth domain..."
+              placeholder="Search for .eth domain..."
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
             ></input>

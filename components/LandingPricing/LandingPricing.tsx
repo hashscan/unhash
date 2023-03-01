@@ -6,11 +6,11 @@ export const LandingPricing = () => {
     <div className={styles.pricing}>
       <div className={styles.texts}>
         <h2 className={styles.header}>
-          <WrapBalancer>How much does it cost to register an&nbsp;.ETH domain?</WrapBalancer>
+          <WrapBalancer>How much does it cost to register an&nbsp;.eth domain?</WrapBalancer>
         </h2>
 
         <div className={styles.explainer}>
-          The base price is determined by the length of the name and the registration period, plus
+          The price is determined by the length of the name and the registration period, plus
           the Ethereum network fees.
         </div>
       </div>

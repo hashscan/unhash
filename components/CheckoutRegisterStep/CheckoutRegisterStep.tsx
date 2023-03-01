@@ -37,8 +37,8 @@ export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps
       <h1 className={styles.title}>Complete Registration</h1>
 
       <p className={styles.description}>
-        You&apos;re only one click away from obtaining your new domain name! Confirm the last
-        transaction to finish the registration.
+        Your domain is ready to be registered. Confirm the last transaction to finish the
+        registration.
       </p>
 
       <div className={styles.buttons}>

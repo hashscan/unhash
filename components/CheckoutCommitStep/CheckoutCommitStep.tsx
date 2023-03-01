@@ -23,7 +23,8 @@ export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepPro
       <div className={styles.formGroup}>
         <div className={styles.header}>Registration period</div>
         <div className={styles.subheader}>
-          By choosing a longer period, you can save on transaction fees later on.
+          {"You'll"} get the domain for a selected period of time and can always renew it later. By
+          choosing a longer period, you will save on renewal network fees.
         </div>
         <div className={styles.years}>
           {YEAR_BUTTONS.map((year) => (
@@ -44,8 +45,8 @@ export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepPro
 
       <AdditionalInfo header="Advanced Settings" icon={<ToolIcon />}>
         <div className={styles.subheader}>
-          You can specify a wallet address of the <b>domain owner</b>. For example, if you are
-          buying this domain for another person.
+          Set <b>domain owner</b> address if {"you're"} buying this domain for another wallet. By
+          default it will be owned by your current wallet.
         </div>
 
         <AddressInput

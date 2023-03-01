@@ -28,12 +28,12 @@ const Search: PageWithLayout = () => {
             <span className={styles.versionLabel}>Pre-Beta</span>
 
             <h1 className={styles.heroTitle}>
-              <WrapBalancer>Get Your Unique .eth Domain</WrapBalancer>
+              <WrapBalancer>Regsiter and configure .eth domains</WrapBalancer>
             </h1>
 
             <h2 className={styles.heroSubtitle}>
               <WrapBalancer>
-                A modern and better way of searching, buying and managing <b>ENS domains</b>
+                A no-pain way to buy ENS domain, link it to your wallet, and set up public profile.
               </WrapBalancer>
             </h2>
 
