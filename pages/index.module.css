@@ -80,15 +80,27 @@
 }
 
 .explainerCard {
+  --gradient: linear-gradient(to bottom, #ffffff00 28%, var(--color-slate-7) 45%);
+
   all: unset;
-  background: var(--color-slate-7);
   border-radius: var(--radii-md);
-  padding: 32px 24px 40px 24px;
+  padding: 196px 24px 40px 24px;
+  background-color: var(--color-slate-7);
+}
 
-  will-change: transform;
-  transition: var(--ease-200);
+.explainerCard:nth-of-type(1) {
+  background: var(--gradient),
+    top left / contain no-repeat url('../styles/assets/explainer-domains.png'), var(--color-slate-7);
+}
 
-  position: relative;
+.explainerCard:nth-of-type(2) {
+  background: var(--gradient),
+    top left / contain no-repeat url('../styles/assets/explainer-wallet.png'), var(--color-slate-7);
+}
+
+.explainerCard:nth-of-type(3) {
+  background: var(--gradient),
+    top left / contain no-repeat url('../styles/assets/explainer-profile.png'), var(--color-slate-7);
 }
 
 .explainerHeader {
@@ -99,5 +111,10 @@
 @media (max-width: 768px) {
   .hero {
     max-width: unset;
+  }
+
+  .explainerCard {
+    --gradient: linear-gradient(to bottom, #ffffff00 40%, var(--color-slate-7) 50%);
+    padding-top: 240px;
   }
 }
