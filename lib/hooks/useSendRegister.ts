@@ -24,7 +24,7 @@ export const useSendRegister = (domain: Domain) => {
   // Note 1: 280K gas is not enough to refund extra ETH sent to registerWithConfig
   // Note 2: 280K gas may not be enough if registering for another account
   // TODO: make sure fixed gas limit always works
-  const gasLimit = 280_000
+  const gasLimit = 500_000
 
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
