@@ -31,10 +31,10 @@
   align-items: center;
   justify-content: flex-start;
 
-  padding: 2px 8px;
+  padding: 4px 8px;
   margin-right: 32px;
   background-color: var(--color-highlight-green);
-  border-radius: 2px;
+  border-radius: var(--radii-sm);
 
   text-decoration: none;
 }
@@ -126,7 +126,7 @@
   justify-content: center;
 }
 
-.acccountAvatar>svg {
+.acccountAvatar > svg {
   width: 16px;
   height: 16px;
 }

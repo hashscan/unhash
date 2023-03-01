@@ -54,12 +54,13 @@
 
 .versionLabel {
   display: inline-block;
-  background: var(--color-highlight-green);
-  color: var(--color-gray-1);
+  color: var(--color-slate-3);
   border-radius: var(--radii-sm);
+  border: 1px solid var(--color-slate-5);
+  background: var(--color-slate-8);
 
   font: var(--type-sm);
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 
