@@ -48,7 +48,7 @@
 }
 
 .link {
-  color: var(--color-green);
+  color: var(--color-text-primary);
   font: var(--type-reg);
   font-weight: 400;
   letter-spacing: var(--ls-reg);

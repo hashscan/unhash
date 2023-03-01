@@ -47,9 +47,10 @@ const Profile: PageWithLayout = () => {
           <span>
             Your address is linked to{' '}
             <Link className={styles.link} href={etherscanLink} target="_blank">
-              {userInfo.primaryEns}
+              <b>{userInfo.primaryEns}</b>
             </Link>{' '}
-            ENS domain. You can switch to another available ENS below.
+            ENS domain. You can share your <b>.eth username</b> with people instead of wallet
+            address.
           </span>
         ) : userDomains.length > 0 ? (
           <span>You address is not linked any ENS domain. Choose one from the list below.</span>
@@ -81,7 +82,9 @@ const Profile: PageWithLayout = () => {
           <div className={styles.divider}></div>
           <div className={styles.header}>ENS profile</div>
           <div className={styles.subheader}>
-            This is a public profile linked to your wallet. People can find you by your ENS name.
+            This is your {"wallet's"} public profile on Ethereum ecosystem. People can find it by
+            your address and <b>.eth username</b>.
+            {" You can't share it yet."}
           </div>
           <ProfileCard
             network={toNetwork(chainId)}
