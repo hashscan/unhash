@@ -47,9 +47,33 @@ const Search: PageWithLayout = () => {
         </div>
       </div>
 
-      <div className={styles.container}>
-        <div className={styles.pricingSection}>
+      <div className={styles.pricingSection}>
+        <div className={styles.container}>
           <LandingPricing />
+        </div>
+      </div>
+
+      <div className={styles.diagramSection}>
+        <div className={styles.container}>
+          <div className={styles.explainerGrid}>
+            <div className={styles.explainerCard}>
+              <div className={styles.explainerHeader}>ENS Domain</div>
+              It&apos;s a human-readable username that can point to an Ethereum wallet. These
+              domains are essentially NFTs that you can own, transfer, sell and fully control.
+            </div>
+
+            <div className={styles.explainerCard}>
+              <div className={styles.explainerHeader}>Wallet Linking</div>
+              Once a domain is linked to your wallet, it becomes much easier for other users to find
+              you and use Web3 apps where ENS is well adopted.
+            </div>
+
+            <div className={styles.explainerCard}>
+              <div className={styles.explainerHeader}>Public Profile</div>
+              After obtaining an ENS domain, make sure to fill out your profile with your website,
+              Twitter handle, avatar, and anything else that gives your wallet a personal touch.
+            </div>
+          </div>
         </div>
       </div>
 
