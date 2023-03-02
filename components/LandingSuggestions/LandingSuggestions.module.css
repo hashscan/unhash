@@ -32,7 +32,8 @@
 
 .suggestion {
   padding: 8px 16px;
-  border: 1px solid var(--color-slate-3);
+  border: 1px solid var(--color-slate-5);
+  background-color: var(--color-slate-7);
   border-radius: var(--radii-sm);
   font: var(--type-regular);
   user-select: none;
@@ -42,9 +43,8 @@
 }
 
 .suggestion:hover {
-  background-color: var(--color-slate-1);
-  border-color: transparent;
-  color: var(--color-slate-7);
+  border: 1px solid var(--color-slate-4);
+  background-color: var(--color-slate-6);
 }
 
 .suggestion > span {
