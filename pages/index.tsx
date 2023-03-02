@@ -47,13 +47,7 @@ const Search: PageWithLayout = () => {
         </div>
       </div>
 
-      <div className={styles.pricingSection}>
-        <div className={styles.container}>
-          <LandingPricing />
-        </div>
-      </div>
-
-      <div className={styles.diagramSection}>
+      <div className={styles.explainerSection}>
         <div className={styles.container}>
           <div className={styles.explainerGrid}>
             <div className={styles.explainerCard}>
@@ -74,6 +68,12 @@ const Search: PageWithLayout = () => {
               Twitter handle, avatar, and anything else that gives your wallet a personal touch.
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className={styles.pricingSection}>
+        <div className={styles.container}>
+          <LandingPricing />
         </div>
       </div>
 

@@ -28,7 +28,7 @@
   background-position-y: -1px;
 
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--color-slate-5);
+  border-bottom: 1px solid var(--color-slate-6);
 }
 
 .heroTitle {
@@ -50,7 +50,6 @@
 
 .pricingSection {
   padding: 96px 0;
-  border-bottom: 1px solid var(--color-slate-5);
 }
 
 .versionLabel {
@@ -69,8 +68,9 @@
   margin-bottom: 16px;
 }
 
-.diagramSection {
+.explainerSection {
   padding: 96px 0;
+  border-bottom: 1px solid var(--color-slate-6);
 }
 
 .explainerGrid {
