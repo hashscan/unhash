@@ -80,41 +80,46 @@
 }
 
 .explainerCard {
-  --gradient: linear-gradient(to bottom, #ffffff00 28%, var(--color-slate-7) 45%);
-
   all: unset;
   border-radius: var(--radii-md);
-  padding: 196px 24px 40px 24px;
   background-color: var(--color-slate-7);
+  overflow: hidden;
 }
 
-.explainerCard:nth-of-type(1) {
-  background: var(--gradient),
-    top left / contain no-repeat url('../styles/assets/explainer-domains.png'), var(--color-slate-7);
+.explainerImgFade {
+  position: relative;
 }
 
-.explainerCard:nth-of-type(2) {
-  background: var(--gradient),
-    top left / contain no-repeat url('../styles/assets/explainer-wallet.png'), var(--color-slate-7);
+.explainerImgFade:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #ffffff00 70%, var(--color-slate-7) 100%);
 }
 
-.explainerCard:nth-of-type(3) {
-  background: var(--gradient),
-    top left / contain no-repeat url('../styles/assets/explainer-profile.png'), var(--color-slate-7);
+.explainerImgFade > img {
+  width: 100%;
+  height: auto;
 }
 
 .explainerHeader {
   font-weight: 500;
   margin-bottom: 24px;
+  padding: 0px 24px 0px 24px;
+  position: relative;
+}
+
+.explainerText {
+  padding: 0px 24px 40px 24px;
 }
 
 @media (max-width: 768px) {
   .hero {
     max-width: unset;
-  }
-
-  .explainerCard {
-    --gradient: linear-gradient(to bottom, #ffffff00 40%, var(--color-slate-7) 50%);
-    padding-top: 240px;
   }
 }

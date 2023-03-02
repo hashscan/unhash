@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react'
+import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
 
 import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar/DomainSearchBar'
@@ -11,6 +12,10 @@ import styles from './index.module.css'
 import { Suggestion } from 'components/LandingSuggestions/types'
 
 import { trackGoal } from 'lib/analytics'
+
+import domainCardImg from '../styles/assets/explainer-domains.png'
+import walletCardImg from '../styles/assets/explainer-wallet.png'
+import profileCardImg from '../styles/assets/explainer-profile.png'
 
 const Search: PageWithLayout = () => {
   const searchBarRef = useRef<SearchBarHandle>(null)
@@ -51,21 +56,44 @@ const Search: PageWithLayout = () => {
         <div className={styles.container}>
           <div className={styles.explainerGrid}>
             <div className={styles.explainerCard}>
+              <div className={styles.explainerImgFade}>
+                <Image src={domainCardImg} alt="What is an ENS domain?" />
+              </div>
+
               <div className={styles.explainerHeader}>ENS Domain</div>
-              It&apos;s a human-readable username that can point to an Ethereum wallet. These
-              domains are essentially NFTs that you can own, transfer, sell and fully control.
+
+              <div className={styles.explainerText}>
+                It&apos;s a human-readable username that can point to an Ethereum wallet. These
+                domains are essentially NFTs that you can own, transfer, sell and fully control.
+              </div>
             </div>
 
             <div className={styles.explainerCard}>
+              <div className={styles.explainerImgFade}>
+                <Image src={walletCardImg} alt="How to link your wallet to ENS name" />
+              </div>
               <div className={styles.explainerHeader}>Wallet Linking</div>
-              Once a domain is linked to your wallet, it becomes much easier for other users to find
-              you and use Web3 apps where ENS is well adopted.
+
+              <div className={styles.explainerText}>
+                Once a domain is linked to your wallet, it becomes much easier for other users to
+                find you and use Web3 apps where ENS is well adopted.
+              </div>
             </div>
 
             <div className={styles.explainerCard}>
+              <div className={styles.explainerImgFade}>
+                <Image
+                  src={profileCardImg}
+                  alt="You can set up a public profile associated with your wallet and ENS name"
+                />
+              </div>
+
               <div className={styles.explainerHeader}>Public Profile</div>
-              After obtaining an ENS domain, make sure to fill out your profile with your website,
-              Twitter handle, avatar, and anything else that gives your wallet a personal touch.
+
+              <div className={styles.explainerText}>
+                After obtaining an ENS domain, make sure to fill out your profile with your website,
+                Twitter handle, avatar, and anything else that gives your wallet a personal touch.
+              </div>
             </div>
           </div>
         </div>
