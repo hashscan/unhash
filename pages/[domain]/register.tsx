@@ -50,7 +50,7 @@ const Register: PageWithLayout<RegisterProps> = ({ domain }: RegisterProps) => {
   useEffect(() => dispatchStep(reg), [reg])
 
   const [order, updateOrder] = useState<RegistrationOrder>(() => {
-    return { domain, durationInYears: 2, ownerAddress: undefined }
+    return { domain, durationInYears: 1, ownerAddress: undefined }
   })
 
   // set timeout to trigger step update
