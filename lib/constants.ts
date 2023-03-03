@@ -18,7 +18,7 @@ export const ETH_RESOLVER_ADDRESS = new Map<Network, Address>([
 
 export const ETH_REVERSE_REGISTRAR_ADDRESS = new Map<Network, Address>([
   ['mainnet', '0x084b1c3c81545d370f3634392de611caabff8148'],
-  ['goerli', '0x9a879320A9F7ad2BBb02063d67baF5551D6BD8B0']
+  ['goerli', '0x4f7A657451358a22dc397d5eE7981FfC526cd856']
 ])
 
 export const ETH_REGISTRAR_ABI = [
