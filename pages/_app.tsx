@@ -34,7 +34,7 @@ const publicURL = 'https://xens.app'
 const metaTitle = 'Get .ETH Domain For Your Ethereum Address'
 
 const metaDescription =
-  'Simple tool for buying Etherium Name Service domains. ' +
+  'Simple tool for buying Ethereum Name Service domains. ' +
   'Set up your public .eth profile to stand out in Metaverse ' +
   '(zero crypto knowledge required!)'
 

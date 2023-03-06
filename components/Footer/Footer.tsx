@@ -16,7 +16,7 @@ export const Footer = () => {
         (they appear in Google Trends as well)
       */}
       <div className={styles.links}>
-        we run on top of <a href="https://docs.ens.domains/">Etherium Name Service↗</a>
+        we run on top of <a href="https://docs.ens.domains/">Ethereum Name Service↗</a>
       </div>
 
       {/* Other ideas: gas price, current block, number of .ETH registered in 24h... */}
