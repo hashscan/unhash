@@ -1,7 +1,7 @@
 import ky from 'ky'
 import { Address } from 'wagmi'
 import { API_URL } from './constants'
-import type { Network, Domain, UserInfo, AddrRecords, TextRecords } from './types'
+import type { Network, Domain, UserInfo, AddrRecords, TextRecords, DomainListing } from './types'
 
 export type DomainStatus = {
   isValid: boolean
@@ -22,24 +22,6 @@ export type DomainInfo = {
   resolver: Address | null
   textRecords: TextRecords
   addrRecords: AddrRecords
-}
-
-export type DomainListing = {
-  url: string
-  source: {
-    name: string
-    url: string
-  }
-  priceUsd: number
-  price: number
-  currency: Currency
-}
-
-export type Currency = {
-  contract: string
-  name: string
-  symbol: string
-  decimals: number
 }
 
 async function checkDomain(

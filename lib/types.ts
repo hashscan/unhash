@@ -58,3 +58,21 @@ export type RegistrationOrder = {
 }
 
 export type Domain = `${string}.eth`
+
+export type Currency = {
+  contract: string
+  name: string
+  symbol: string
+  decimals: number
+}
+
+export type DomainListing = {
+  url: string
+  source: {
+    name: string
+    url: string
+  }
+  priceUsd: number
+  price: number
+  currency: Currency
+}
