@@ -1,0 +1,39 @@
+.badge {
+  padding: 0 12px 0 8px;
+  height: 32px;
+  border-radius: var(--radii-md);
+  background: var(--color-slate-7);
+  border: 1px solid rgb(var(--color-slate-5-rgb) / 0.85);
+
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 6px;
+
+  text-decoration: none;
+  color: var(--color-text-primary);
+  user-select: none;
+}
+
+.badge:hover {
+  background: var(--color-slate-6);
+  border: 1px solid rgb(var(--color-slate-5-rgb) / 0.85);
+}
+
+.logo {
+  height: 18px;
+  width: 18px;
+
+  object-fit: cover;
+  object-position: center;
+
+  background-color: var(--color-slate-6);
+  /* TODO: fix square border in Firefox when image not set */
+  border: 0px solid var(--color-slate-5);
+  border-radius: 9px;
+
+  box-shadow: none;
+}
