@@ -60,7 +60,7 @@
 }
 
 /* the actual suffix */
-.suffix > span {
+.suffix>span {
   color: var(--color-slate-5);
 }
 
@@ -86,8 +86,15 @@
   box-shadow: var(--shadow-md);
 }
 
-.availability {
+.badges {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 10px;
+}
+
+.availability {
   will-change: transform;
   transform: translateY(-16px);
   opacity: 0;
