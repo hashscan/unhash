@@ -7,7 +7,7 @@ export function formatYears(years: number): string {
 export function formatUSDPrice(price?: number, withDecimals: boolean = true): string {
   if (!price) return ''
   const rounded = (Math.round(price * 100) / 100).toFixed(withDecimals ? 2 : 0)
-  return `$${rounded}`
+  return `$${rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
 }
 
 export function formatNetworkFee(fee?: number): string {
