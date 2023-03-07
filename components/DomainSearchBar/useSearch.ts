@@ -1,6 +1,5 @@
 import api, { DomainStatus } from 'lib/api'
-import { toNetwork } from 'lib/types'
-import { validateDomain } from 'lib/utils'
+import { DomainListing, toNetwork } from 'lib/types'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 import { useChainId } from 'wagmi'
@@ -10,11 +9,12 @@ import { useLatestPromise } from './useLatestPromise'
 
 export interface SearchResult {
   status: SearchStatus
+  listing?: DomainListing
   errorMessage?: string
   validationMessage?: string
 }
 
-export const useSearch = (query: string) => {
+export const useSearch = (query: string, withListing: boolean = false) => {
   const chainId = useChainId()
 
   const [result, setResult] = useState<SearchResult>({ status: SearchStatus.Idle })
@@ -43,8 +43,8 @@ export const useSearch = (query: string) => {
       setResult({ status: SearchStatus.Loading })
 
       try {
-        const { isValid, isAvailable, validationMessage } = await run(
-          api.checkDomain(debouncedQuery, toNetwork(chainId))
+        const { isValid, isAvailable, validationMessage, listing } = await run(
+          api.checkDomain(debouncedQuery, toNetwork(chainId), withListing)
         )
 
         if (!isValid) {
@@ -54,7 +54,8 @@ export const useSearch = (query: string) => {
           })
         } else {
           setResult({
-            status: isAvailable ? SearchStatus.Available : SearchStatus.NotAvailable
+            status: isAvailable ? SearchStatus.Available : SearchStatus.NotAvailable,
+            listing: listing
           })
         }
       } catch (err) {
@@ -63,7 +64,7 @@ export const useSearch = (query: string) => {
     }
 
     fetchAvailability()
-  }, [debouncedQuery, chainId, run])
+  }, [debouncedQuery, chainId, withListing, run])
 
   return result
 }
