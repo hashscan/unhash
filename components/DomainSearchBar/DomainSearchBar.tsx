@@ -16,6 +16,7 @@ import { trackGoal } from 'lib/analytics'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
+import { BuyBadge } from 'components/ui/BuyBadge/BuyBadge'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -38,6 +39,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const normalized = searchQuery.length ? normalizeDotETH(searchQuery + suffix) : ''
 
   const { status, validationMessage, errorMessage } = useSearch(normalized)
+  const { listing } = useSearch(normalized, true) // run parallel search for listing
   const navigate = useRouterNavigate()
 
   const registerDomain = useCallback(() => {
@@ -95,28 +97,31 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         </div>
       </div>
 
-      <StatusBadge
-        className={clsx({
-          [styles.availability]: true,
-          [styles.availabilityVisible]: status !== SearchStatus.Idle
-        })}
-        led={statusToLEDColor(status)}
-      >
-        {status === SearchStatus.Available && (
-          <>
-            <b>{normalized}</b> is available!
-          </>
-        )}
-        {status === SearchStatus.NotAvailable && (
-          <>
-            <b>{normalized}</b> is not available
-          </>
-        )}
-        {status === SearchStatus.Invalid && <>{validationMessage}</>}
-        {status === SearchStatus.Error && <>{errorMessage}</>}
-        {status === SearchStatus.Loading && <>Please wait...</>}
-        {status === SearchStatus.Idle && <>Please wait...</>}
-      </StatusBadge>
+      <div className={styles.badges}>
+        <StatusBadge
+          className={clsx({
+            [styles.availability]: true,
+            [styles.availabilityVisible]: status !== SearchStatus.Idle
+          })}
+          led={statusToLEDColor(status)}
+        >
+          {status === SearchStatus.Available && (
+            <>
+              <b>{normalized}</b> is available!
+            </>
+          )}
+          {status === SearchStatus.NotAvailable && (
+            <>
+              <b>{normalized}</b> is not available
+            </>
+          )}
+          {status === SearchStatus.Invalid && <>{validationMessage}</>}
+          {status === SearchStatus.Error && <>{errorMessage}</>}
+          {status === SearchStatus.Loading && <>Please wait...</>}
+          {status === SearchStatus.Idle && <>Please wait...</>}
+        </StatusBadge>
+        {listing && <BuyBadge listing={listing} />}
+      </div>
     </>
   )
 })
