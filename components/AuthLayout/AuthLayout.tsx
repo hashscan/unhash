@@ -4,14 +4,16 @@ import { Button } from 'components/ui/Button/Button'
 
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-export const AuthLayout = () => {
+interface AuthLayoutProps {
+  text: string
+}
+
+export const AuthLayout = ({ text }: AuthLayoutProps) => {
   return (
     <div className={styles.layout}>
       <div className={styles.header}>Connect your wallet</div>
       <div className={styles.subheader}>
-        <WrapBalancer>
-          Sign in with Metamask or Wallet&nbsp;Connect to view and edit your ENS profile
-        </WrapBalancer>
+        <WrapBalancer>{text}</WrapBalancer>
       </div>
 
       <ConnectButton.Custom>

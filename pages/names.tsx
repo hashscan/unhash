@@ -13,7 +13,8 @@ const Names: PageWithLayout = () => {
   const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
 
   // TODO: handle isConnecting state when metamask asked to log in
-  if (isDisconnected) return <AuthLayout />
+  if (isDisconnected)
+    return <AuthLayout text="Sign in with your wallet to view and manage your ENS domains" />
 
   // loader
   if (!userInfo) {

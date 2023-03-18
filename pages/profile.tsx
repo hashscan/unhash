@@ -24,7 +24,8 @@ const Profile: PageWithLayout = () => {
   const etherscanLink = useEtherscanURL('address', userInfo?.primaryEns!)
 
   // TODO: handle isConnecting state when metamask asked to log in
-  if (isDisconnected) return <AuthLayout />
+  if (isDisconnected)
+    return <AuthLayout text="Sign in with your wallet to view and edit your public ENS profile" />
 
   // loader
   if (!userInfo) {
@@ -83,8 +84,7 @@ const Profile: PageWithLayout = () => {
           <div className={styles.header}>ENS profile</div>
           <div className={styles.subheader}>
             This is your {"wallet's"} public profile on Ethereum ecosystem. People can find it by
-            your address and <b>.eth username</b>.
-            {" You can't share it yet."}
+            your address and <b>.eth username</b>.{" You can't share it yet."}
           </div>
           <ProfileCard
             network={toNetwork(chainId)}
