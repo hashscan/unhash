@@ -24,6 +24,11 @@ export type DomainInfo = {
   addrRecords: AddrRecords
 }
 
+export type EthPrice = {
+  usd: number
+  updatedAt: number
+}
+
 async function checkDomain(
   domain: string,
   network: Network = 'mainnet',
@@ -58,12 +63,17 @@ async function saveFeedback(author: string, message: string): Promise<void> {
   await ky.post(`${API_URL}/feedback`, { json: { author, message } })
 }
 
+async function ethPrice(): Promise<EthPrice> {
+  return await ky.get(`${API_URL}/ethPrice`).json<EthPrice>()
+}
+
 const api = {
   checkDomain,
   getPrice,
   domainInfo,
   userInfo,
-  saveFeedback
+  saveFeedback,
+  ethPrice
 }
 
 export default api
