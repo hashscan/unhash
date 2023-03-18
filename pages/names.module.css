@@ -1,0 +1,28 @@
+.main {
+  width: 100%;
+  margin: 40px 0;
+  padding: 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--color-slate-2);
+  font: var(--type-x-lg);
+  letter-spacing: var(--ls-x-lg);
+  margin-bottom: 40px;
+}
+
+.header {
+  color: var(--color-text-primary);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  margin-bottom: 4px;
+}
+
+.subheader {
+  color: var(--color-slate-2);
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  margin-bottom: 24px;
+}

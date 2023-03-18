@@ -43,6 +43,13 @@ export const Links = (props: ComponentPropsWithoutRef<'div'>) => {
       </Link>
 
       <Link
+        href="/names"
+        className={clsx(styles.navLink, { [styles.navLinkActive]: route === '/names' })}
+      >
+        My names
+      </Link>
+
+      <Link
         href="/profile"
         className={clsx(styles.navLink, { [styles.navLinkActive]: route === '/profile' })}
       >
