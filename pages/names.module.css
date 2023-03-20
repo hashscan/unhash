@@ -33,25 +33,44 @@
 
   table-layout: fixed;
   border-spacing: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 
 .row {
   height: 52px;
-  border-bottom: 1px solid var(--color-slate-6);
 }
+
+.headRow {}
 
 .cell {
   text-align: left;
   color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-slate-6);
 }
 
 .headCell {
-  
+  color: var(--color-text-secondary);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+
+  border-bottom: 1px solid var(--color-slate-5);
+  border-top: 1px solid var(--color-slate-5);
+  background-color: var(--color-slate-7);
+}
+
+.headCell:first-child {
+  border-radius: 4px 0 0 4px;
+  border-left: 1px solid var(--color-slate-5);
+}
+
+.headCell:last-child {
+  border-radius: 0 4px 4px 0;
+  border-right: 1px solid var(--color-slate-5);
 }
 
 .selectCell {
   width: 40px;
+  text-align: center;
 }
 
 .rightsCell {

@@ -37,12 +37,9 @@ const Names: PageWithLayout = () => {
     <main className={styles.main}>
       <div className={styles.title}>My names</div>
 
-      <div className={styles.header}>All names</div>
-      <div className={styles.subheader}>This is all names you own or control.</div>
-
       <table className={styles.table}>
         <thead>
-          <tr className={clsx(styles.row, styles.head)}>
+          <tr className={clsx(styles.row, styles.headRow)}>
             <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>{'[ ]'}</th>
             <th className={clsx(styles.cell, styles.headCell, styles.nameCell)}>Domain</th>
             <th className={clsx(styles.cell, styles.headCell, styles.rightsCell)}>Rights</th>
