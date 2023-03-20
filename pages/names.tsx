@@ -4,7 +4,7 @@ import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { useMemo, useState } from 'react'
-import { LoaderSpinner } from 'components/icons'
+import { LoaderSpinner, Menu } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { formatExpiresIn } from 'lib/format'
@@ -16,7 +16,10 @@ const Names: PageWithLayout = () => {
 
   // get owned and controlled domains
   const domains = useMemo(
-    () => userInfo?.domains.filter((d) => d.isValid && (d.controlled || d.owned)) || [],
+    () =>
+      userInfo?.domains
+        .filter((d) => d.isValid && (d.controlled || d.owned))
+        .sort((a, b) => a.name.localeCompare(b.name)) || [],
     [userInfo]
   )
 
@@ -50,6 +53,7 @@ const Names: PageWithLayout = () => {
             <th className={clsx(styles.cell, styles.headCell, styles.expirationCell)}>
               Expiration
             </th>
+            <th className={clsx(styles.cell, styles.headCell, styles.menuCell)} />
           </tr>
         </thead>
         <tbody>
@@ -66,10 +70,18 @@ const Names: PageWithLayout = () => {
                 </Link>
               </td>
               <td className={clsx(styles.cell, styles.rightsCell)}>
-                {domain.owned ? 'Owner' : domain.controlled ? 'Controller' : ''}
+                <div className={styles.rights}>
+                  {domain.owned && <div className={styles.right}>Owner</div>}
+                  {domain.controlled && <div className={styles.right}>Controller</div>}
+                </div>
               </td>
               <td className={clsx(styles.cell, styles.expirationCell)}>
                 {domain.expiresAt ? formatExpiresIn(domain.expiresAt) : ''}
+              </td>
+              <td className={clsx(styles.cell, styles.menuCell)}>
+                <div className={styles.menuContainer}>
+                  <Menu />
+                </div>
               </td>
             </tr>
           ))}
