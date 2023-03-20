@@ -26,6 +26,8 @@ export type UserDomain = {
   owned: boolean
   controlled: boolean
   resolved: boolean
+  registeredAt?: number
+  expiresAt?: number
 }
 
 export type Registration = {
