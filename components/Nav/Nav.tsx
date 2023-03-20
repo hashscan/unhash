@@ -9,18 +9,23 @@ import { InfoCircle, Logout, Profile } from 'components/icons'
 import { Links } from './Links'
 import clsx from 'clsx'
 import styles from './Nav.module.css'
-import { toNetwork } from 'lib/types'
+import { toNetwork, currentNetwork, type Network } from 'lib/types'
 import { Button } from 'components/ui/Button/Button'
 import Link from 'next/link'
 
 interface ChainProps {
-  chain: { id: number; unsupported?: boolean }
-  onClick: () => void
+  chain?: { id: number; unsupported?: boolean }
+  onClick?: () => void
+}
+
+const getNetwork = (chainId?: number): Network => {
+  if (chainId) return toNetwork(chainId)
+  return currentNetwork()
 }
 
 const Chain = ({ chain, onClick }: ChainProps) => {
-  const isTestnet = toNetwork(chain.id) === 'goerli'
-  const isUnsupported = Boolean(chain.unsupported)
+  const isTestnet = getNetwork(chain?.id) === 'goerli'
+  const isUnsupported = Boolean(chain?.unsupported)
 
   const shouldDisplayWarn = isTestnet || isUnsupported
 
@@ -84,7 +89,12 @@ export const Nav = () => {
 
             if (!mounted) return null
             if (!connected) {
-              return <Button onClick={openConnectModal}>Connect wallet</Button>
+              return (
+                <div className={styles.buttons}>
+                  <Chain />
+                  <Button onClick={openConnectModal}>Connect wallet</Button>
+                </div>
+              )
             }
 
             return (

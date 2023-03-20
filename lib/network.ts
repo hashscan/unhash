@@ -25,7 +25,7 @@ export function toNetwork(chainId: number): Network {
 }
 
 /**
- * @returns The name of the nerwork that this application supports
+ * @returns The name of the network that this application supports
  */
 export const currentNetwork = (): Network => {
   if (process.env.NEXT_PUBLIC_CHAIN) return process.env.NEXT_PUBLIC_CHAIN as Network
