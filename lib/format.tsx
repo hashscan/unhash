@@ -1,3 +1,5 @@
+import { pluralize } from './pluralize'
+
 export function formatYears(years: number): string {
   return years === 1 ? '1 year' : `${years} years`
 }
@@ -14,4 +16,14 @@ export function formatNetworkFee(fee?: number): string {
   if (!fee) return ''
   const rounded = (Math.round(fee * 100) / 100).toFixed(2)
   return `~$${rounded}`
+}
+
+export function formatExpiresIn(expiresAt: number): string {
+  const now = new Date()
+  const expires = new Date(expiresAt * 1000)
+  const diff = expires.getTime() - now.getTime()
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const years = Math.floor(days / 365)
+  if (years > 0) return pluralize('year', years)
+  return pluralize('day', days)
 }

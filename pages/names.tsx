@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react'
 import { LoaderSpinner } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { formatExpiresIn } from 'lib/format'
 
 const Names: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
@@ -62,7 +63,9 @@ const Names: PageWithLayout = () => {
               <td className={clsx(styles.cell, styles.rightsCell)}>
                 {domain.owned ? 'Owner' : domain.controlled ? 'Controller' : ''}
               </td>
-              <td className={clsx(styles.cell, styles.expirationCell)}>{'2 years'}</td>
+              <td className={clsx(styles.cell, styles.expirationCell)}>
+                {domain.expiresAt ? formatExpiresIn(domain.expiresAt) : ''}
+              </td>
             </tr>
           ))}
         </tbody>
