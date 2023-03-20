@@ -36,13 +36,16 @@
   border-collapse: separate;
 }
 
-.row {
-  height: 52px;
+.row {}
+
+.row:hover {
+  background-color: var(--color-slate-7);
 }
 
 .headRow {}
 
 .cell {
+  padding: 12px 0;
   text-align: left;
   color: var(--color-text-primary);
   border-bottom: 1px solid var(--color-slate-6);
@@ -69,7 +72,7 @@
 }
 
 .selectCell {
-  width: 40px;
+  width: 52px;
   text-align: center;
 }
 
@@ -89,4 +92,22 @@
 .domain:hover {
   text-decoration: underline;
   color: var(--color-green)
+}
+
+.checkboxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TODO: move to component */
+.checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  padding: 0px;
+  margin-top: 0px;
+  border: 1px solid var(--color-slate-3);
+  border-radius: 3px;
+  cursor: pointer;
 }
