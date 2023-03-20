@@ -1,16 +1,23 @@
 import { useAccount } from 'wagmi'
-import styles from './profile.module.css'
+import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
 import { useMemo, useState } from 'react'
 import { LoaderSpinner } from 'components/icons'
+import clsx from 'clsx'
+import Link from 'next/link'
 
 const Names: PageWithLayout = () => {
   const { address, isDisconnected } = useAccount()
 
   const userInfo = useCurrentUserInfo()
-  const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
+
+  // get owned and controlled domains
+  const domains = useMemo(
+    () => userInfo?.domains.filter((d) => d.isValid && (d.controlled || d.owned)) || [],
+    [userInfo]
+  )
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected)
@@ -31,6 +38,35 @@ const Names: PageWithLayout = () => {
 
       <div className={styles.header}>All names</div>
       <div className={styles.subheader}>This is all names you own or control.</div>
+
+      <table className={styles.table}>
+        <thead>
+          <tr className={clsx(styles.row, styles.head)}>
+            <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>{'[ ]'}</th>
+            <th className={clsx(styles.cell, styles.headCell, styles.nameCell)}>Domain</th>
+            <th className={clsx(styles.cell, styles.headCell, styles.rightsCell)}>Rights</th>
+            <th className={clsx(styles.cell, styles.headCell, styles.expirationCell)}>
+              Expiration
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {domains.map((domain) => (
+            <tr key={domain.name} className={styles.row}>
+              <td className={clsx(styles.cell, styles.selectCell)}>{'[-]'}</td>
+              <td className={clsx(styles.cell, styles.nameCell)}>
+                <Link className={styles.domain} href={`/${domain.name}/`} target="_blank">
+                  {domain.name}
+                </Link>
+              </td>
+              <td className={clsx(styles.cell, styles.rightsCell)}>
+                {domain.owned ? 'Owner' : domain.controlled ? 'Controller' : ''}
+              </td>
+              <td className={clsx(styles.cell, styles.expirationCell)}>{'2 years'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </main>
   )
 }
