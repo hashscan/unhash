@@ -40,7 +40,11 @@ const Names: PageWithLayout = () => {
       <table className={styles.table}>
         <thead>
           <tr className={clsx(styles.row, styles.headRow)}>
-            <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>{'[ ]'}</th>
+            <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>
+              <div className={styles.checkboxContainer}>
+                <div className={styles.checkbox} />
+              </div>
+            </th>
             <th className={clsx(styles.cell, styles.headCell, styles.nameCell)}>Domain</th>
             <th className={clsx(styles.cell, styles.headCell, styles.rightsCell)}>Rights</th>
             <th className={clsx(styles.cell, styles.headCell, styles.expirationCell)}>
@@ -51,7 +55,11 @@ const Names: PageWithLayout = () => {
         <tbody>
           {domains.map((domain) => (
             <tr key={domain.name} className={styles.row}>
-              <td className={clsx(styles.cell, styles.selectCell)}>{'[-]'}</td>
+              <td className={clsx(styles.cell, styles.selectCell)}>
+                <div className={styles.checkboxContainer}>
+                  <div className={styles.checkbox} />
+                </div>
+              </td>
               <td className={clsx(styles.cell, styles.nameCell)}>
                 <Link className={styles.domain} href={`/${domain.name}/`} target="_blank">
                   {domain.name}
