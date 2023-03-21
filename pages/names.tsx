@@ -8,6 +8,7 @@ import { LoaderSpinner, Menu, Search } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { formatExpiresIn } from 'lib/format'
+import Checkbox from 'components/ui/Checkbox/Checkbox'
 
 const Names: PageWithLayout = () => {
   const { isDisconnected } = useAccount()
@@ -15,6 +16,15 @@ const Names: PageWithLayout = () => {
   const userInfo = useCurrentUserInfo()
 
   const [filter, setFilter] = useState('')
+  const [selectedNames, setSelectedNames] = useState<string[]>([])
+
+  const onCheckChange = (name: string, checked: boolean) => {
+    if (checked) {
+      setSelectedNames([...selectedNames, name])
+    } else {
+      setSelectedNames(selectedNames.filter((n) => n !== name))
+    }
+  }
 
   // get owned and controlled domains
   const domains = useMemo(
@@ -85,7 +95,10 @@ const Names: PageWithLayout = () => {
             <tr key={domain.name} className={styles.row}>
               <td className={clsx(styles.cell, styles.selectCell)}>
                 <div className={styles.checkboxContainer}>
-                  <div className={styles.checkbox} />
+                  <Checkbox
+                    checked={selectedNames.includes(domain.name)}
+                    onChange={(e) => onCheckChange(domain.name, e.target.checked)}
+                  />
                 </div>
               </td>
               <td className={clsx(styles.cell, styles.nameCell)}>
