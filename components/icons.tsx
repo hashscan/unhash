@@ -332,6 +332,20 @@ export const Search = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const Checkbox = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={16}>
+    <svg fill="none" height="16" viewBox="0 0 20 20" width="16">
+      <path
+        d="M14 7L8.5 12.5L6 10"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      ></path>
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */
