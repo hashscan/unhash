@@ -7,12 +7,22 @@ export interface InputProps extends ComponentProps<'input'> {
   icon?: JSX.Element
   hint?: string
   error?: string
+  labelClassName?: string
 }
 
-export const Input = ({ label, icon, hint, error, className, children, ...rest }: InputProps) => {
+export const Input = ({
+  label,
+  icon,
+  hint,
+  error,
+  className,
+  labelClassName,
+  children,
+  ...rest
+}: InputProps) => {
   return (
     <div className={clsx(styles.container)}>
-      {label && <div className={styles.label}>{label}</div>}
+      {label && <div className={clsx(styles.label, labelClassName)}>{label}</div>}
       <div className={clsx(styles.wrapper, { [styles.wrapperHintSpace]: !error && !hint })}>
         {icon && <div className={styles.icon}>{icon}</div>}
         <input

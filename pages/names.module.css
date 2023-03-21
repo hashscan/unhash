@@ -6,6 +6,36 @@
   flex-direction: column;
 }
 
+/* TODO: make generalized modal wrapper component */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2001;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #000;
+  opacity: 0.25;
+  z-index: 2000;
+
+  pointer-events: all;
+}
+
 .loading {
   width: var(--profile-width);
 }

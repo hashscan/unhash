@@ -1,0 +1,67 @@
+.modal {
+  background: var(--color-background);
+  border: 1px solid var(--color-slate-6);
+  border-radius: var(--radii-lg);
+  width: 460px;
+  max-height: min(80vh, 720px);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  padding: 16px 24px;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.text {
+  margin-bottom: 32px;
+}
+
+.text>b {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.addressLabel {
+  color: var(--color-text-primary);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+}
+
+.hint {
+  color: var(--color-text-hint);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 24px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--color-slate-8);
+  border-top: 1px solid var(--color-slate-5);
+  border-bottom-left-radius: var(--radii-lg);
+  border-bottom-right-radius: var(--radii-lg);
+
+}
+
+.buttonSend {
+  width: 120px;
+}
