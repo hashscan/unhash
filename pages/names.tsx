@@ -3,14 +3,14 @@ import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
-import { useMemo, useState } from 'react'
-import { LoaderSpinner, Menu } from 'components/icons'
+import { useMemo } from 'react'
+import { LoaderSpinner, Menu, Search } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { formatExpiresIn } from 'lib/format'
 
 const Names: PageWithLayout = () => {
-  const { address, isDisconnected } = useAccount()
+  const { isDisconnected } = useAccount()
 
   const userInfo = useCurrentUserInfo()
 
@@ -40,9 +40,24 @@ const Names: PageWithLayout = () => {
     <main className={styles.main}>
       <div className={styles.title}>My names</div>
 
+      <div className={styles.searchContainer}>
+        <div className={styles.searchIcon}>
+          <Search />
+        </div>
+        <input
+          className={styles.searchInput}
+          type="search"
+          spellCheck="false"
+          autoCorrect="false"
+          autoCapitalize="false"
+          autoComplete="false"
+          placeholder="Search..."
+        />
+      </div>
+
       <table className={styles.table}>
         <thead>
-          <tr className={clsx(styles.row, styles.headRow)}>
+          <tr className={clsx(styles.row)}>
             <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>
               <div className={styles.checkboxContainer}>
                 <div className={styles.checkbox} />
