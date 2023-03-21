@@ -3,7 +3,7 @@ import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { LoaderSpinner, Menu as MenuIcon, Search } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -12,6 +12,8 @@ import Checkbox from 'components/ui/Checkbox/Checkbox'
 import { Menu } from 'components/ui/Menu/Menu'
 import { UserDomain } from 'lib/types'
 import { useRouter } from 'next/router'
+import { SendName } from 'components/SendName/SendName'
+import { useOnClickOutside } from 'usehooks-ts'
 
 const Names: PageWithLayout = () => {
   const router = useRouter()
@@ -70,11 +72,18 @@ const Names: PageWithLayout = () => {
     router.push(`/${domain.name}/`)
   }
   const onTransferClick = (domain: UserDomain) => {
-    console.log('transfer', domain.name)
+    setSendModal(domain.name)
   }
   const onExtendClick = (domain: UserDomain) => {
     console.log('extend', domain.name)
   }
+
+  // TODO: make generalized modal wrapper component
+  // send modal
+  const [sendModal, setSendModal] = useState<string>()
+  // TODO: not working
+  // const ref = useRef<HTMLDivElement>(null)
+  // useOnClickOutside(ref, () => setSendModal(undefined))
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected)
@@ -91,6 +100,15 @@ const Names: PageWithLayout = () => {
 
   return (
     <main className={styles.main}>
+      {/* TODO: make generalized modal wrapper component */}
+      {sendModal && (
+        <>
+          <div className={styles.backdrop} />
+          <div className={styles.overlay}>
+            <SendName domain={sendModal} onClose={() => setSendModal(undefined)} />
+          </div>
+        </>
+      )}
       <div className={styles.title}>My names</div>
 
       <div className={styles.searchContainer}>
