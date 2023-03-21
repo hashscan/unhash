@@ -3,14 +3,18 @@ import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
-import { useCallback, useContext, useMemo, useState } from 'react'
-import { LoaderSpinner, Menu, Search } from 'components/icons'
+import { useCallback, useMemo, useState } from 'react'
+import { LoaderSpinner, Menu as MenuIcon, Search } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { formatExpiresIn } from 'lib/format'
 import Checkbox from 'components/ui/Checkbox/Checkbox'
+import { Menu } from 'components/ui/Menu/Menu'
+import { UserDomain } from 'lib/types'
+import { useRouter } from 'next/router'
 
 const Names: PageWithLayout = () => {
+  const router = useRouter()
   const { isDisconnected } = useAccount()
 
   // search input filter
@@ -59,6 +63,18 @@ const Names: PageWithLayout = () => {
     },
     [filteredDomains, setSelectedNames]
   )
+
+  // menu
+  const [openMenu, setOpenMenu] = useState<string | undefined>(undefined)
+  const onViewDetailsClick = (domain: UserDomain) => {
+    router.push(`/${domain.name}/`)
+  }
+  const onTransferClick = (domain: UserDomain) => {
+    console.log('transfer', domain.name)
+  }
+  const onExtendClick = (domain: UserDomain) => {
+    console.log('extend', domain.name)
+  }
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected)
@@ -126,7 +142,7 @@ const Names: PageWithLayout = () => {
                   </div>
                 </td>
                 <td className={clsx(styles.cell, styles.nameCell)}>
-                  <Link className={styles.domain} href={`/${domain.name}/`} target="_blank">
+                  <Link className={styles.domain} href={`/${domain.name}/`}>
                     {domain.name}
                   </Link>
                 </td>
@@ -140,9 +156,29 @@ const Names: PageWithLayout = () => {
                   {domain.expiresAt ? formatExpiresIn(domain.expiresAt) : ''}
                 </td>
                 <td className={clsx(styles.cell, styles.menuCell)}>
-                  <div className={styles.menuContainer}>
-                    <Menu />
+                  <div className={styles.menuContainer} onClick={() => setOpenMenu(domain.name)}>
+                    <MenuIcon />
                   </div>
+                  {openMenu === domain.name && (
+                    <Menu
+                      className={styles.menu}
+                      onClose={() => setOpenMenu(undefined)}
+                      items={[
+                        {
+                          label: 'View details',
+                          onClick: () => onViewDetailsClick(domain)
+                        },
+                        {
+                          label: 'Transfer',
+                          onClick: () => onTransferClick(domain)
+                        },
+                        {
+                          label: 'Extend',
+                          onClick: () => onExtendClick(domain)
+                        }
+                      ]}
+                    />
+                  )}
                 </td>
               </tr>
             ))}
