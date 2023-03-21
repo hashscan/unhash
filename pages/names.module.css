@@ -104,6 +104,12 @@
   text-align: center;
 }
 
+.checkboxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .rightsCell {
   width: 260px;
 }
@@ -154,22 +160,4 @@
 .domain:hover {
   text-decoration: underline;
   color: var(--color-green)
-}
-
-.checkboxContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* TODO: move to component */
-.checkbox {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  padding: 0px;
-  margin-top: 0px;
-  border: 1px solid var(--color-slate-3);
-  border-radius: 3px;
-  cursor: not-allowed;
 }
