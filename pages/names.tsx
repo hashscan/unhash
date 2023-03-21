@@ -110,6 +110,18 @@ const Names: PageWithLayout = () => {
         />
       </div>
 
+      {/* empty search layout */}
+      {filter.length > 0 && filteredDomains.length === 0 && (
+        <div className={styles.emptySearch}>
+          <div>
+            <b>No names found</b>
+            <br />
+            {`You search for "${filter}" didn't match any name`}
+          </div>
+        </div>
+      )}
+
+      {/* domains table */}
       {filteredDomains.length > 0 && (
         <table className={styles.table}>
           <thead>
