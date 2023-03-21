@@ -3,7 +3,7 @@ import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { LoaderSpinner, Menu, Search } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -14,13 +14,20 @@ const Names: PageWithLayout = () => {
 
   const userInfo = useCurrentUserInfo()
 
+  const [filter, setFilter] = useState('')
+
   // get owned and controlled domains
   const domains = useMemo(
     () =>
       userInfo?.domains
-        .filter((d) => d.isValid && (d.controlled || d.owned))
+        .filter(
+          (d) =>
+            d.isValid &&
+            (d.controlled || d.owned) &&
+            d.name.toLowerCase().includes(filter.toLowerCase())
+        )
         .sort((a, b) => a.name.localeCompare(b.name)) || [],
-    [userInfo]
+    [userInfo, filter]
   )
 
   // TODO: handle isConnecting state when metamask asked to log in
@@ -52,6 +59,8 @@ const Names: PageWithLayout = () => {
           autoCapitalize="false"
           autoComplete="false"
           placeholder="Search..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
         />
       </div>
 
