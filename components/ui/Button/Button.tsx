@@ -6,12 +6,21 @@ import { LoaderSpinner } from 'components/icons'
 
 import styles from './Button.module.css'
 
-export interface ButtonProps extends ComponentProps<'button'> {
+interface ButtonAsButton extends ComponentProps<'button'> {
   as?: 'button' | 'a'
   size?: 'regular' | 'medium' | 'cta'
   variant?: 'primary' | 'ghost'
   isLoading?: boolean
 }
+
+interface ButtonAsA extends ComponentProps<'a'> {
+  as?: 'a'
+  size?: 'regular' | 'medium' | 'cta'
+  variant?: 'primary' | 'ghost'
+  isLoading?: boolean
+}
+
+export type ButtonProps = ButtonAsButton | ButtonAsA
 
 const ButtonWithRef = (
   {
@@ -41,6 +50,7 @@ const ButtonWithRef = (
 
   return createElement(
     as,
+    // @ts-ignore
     buttonProps,
     <>
       <div className={styles.content}>{children}</div>

@@ -1,0 +1,80 @@
+.main {
+  background: wheat;
+  min-height: 80svh;
+
+  display: grid;
+}
+
+.card {
+  --avatar-size: 150px;
+  --avatar-ratio: 0.6;
+  --space: 24px;
+  --sm-space: calc(var(--space) / 2);
+
+  width: 450px;
+
+  border: 1px solid var(--color-slate-6);
+  border-radius: 8px;
+
+  background-color: var(--color-background);
+  color: var(--text-primary);
+
+  padding: calc(var(--avatar-size) * (1 - var(--avatar-ratio)) + var(--sm-space)) var(--space)
+    var(--space);
+
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm-space);
+}
+
+.avatarSlot {
+  position: absolute;
+  inset: 0 50%;
+  transform: translate(-50%, -60%);
+
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+
+  background-image: linear-gradient(180deg, var(--color-green), var(--color-green-light));
+}
+
+.nameSlot {
+  display: flex;
+  flex-direction: column;
+
+  gap: calc(var(--space) / 4);
+}
+
+.name {
+  align-self: center;
+  font: var(--type-lg);
+  line-height: 1;
+}
+
+.address {
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.description {
+  color: var(--color-slate-2);
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+}
+
+.links {
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--sm-space);
+}
+
+.link {
+  width: calc(50% - var(--sm-space) / 2);
+}

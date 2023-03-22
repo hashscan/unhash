@@ -1,5 +1,9 @@
 .main {
-  margin: 40px 0;
+  --padding: 16px;
+  max-width: calc(2 * var(--padding) + var(--container-width));
+  min-height: 80svh;
+  padding: 0 var(--padding);
+  margin: 0 auto;
 }
 
 .title {

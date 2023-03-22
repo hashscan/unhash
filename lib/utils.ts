@@ -59,3 +59,7 @@ export function getDomainName(domain: Domain): string {
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
 }
+
+export function notNull<T>(val: T): val is NonNullable<T> {
+  return !!val
+}
