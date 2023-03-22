@@ -3,7 +3,7 @@ import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { LoaderSpinner, Menu as MenuIcon, Search } from 'components/icons'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -13,7 +13,6 @@ import { Menu } from 'components/ui/Menu/Menu'
 import { Domain, UserDomain } from 'lib/types'
 import { useRouter } from 'next/router'
 import { SendName } from 'components/SendName/SendName'
-import { useOnClickOutside } from 'usehooks-ts'
 
 const Names: PageWithLayout = () => {
   const router = useRouter()
@@ -193,20 +192,34 @@ const Names: PageWithLayout = () => {
                     <Menu
                       className={styles.menu}
                       onClose={() => setOpenMenu(undefined)}
-                      items={[
-                        {
-                          label: 'View details',
-                          onClick: () => onViewDetailsClick(domain)
-                        },
-                        {
-                          label: 'Transfer',
-                          onClick: () => onTransferClick(domain)
-                        },
-                        {
-                          label: 'Extend',
-                          onClick: () => onExtendClick(domain)
-                        }
-                      ]}
+                      items={
+                        // TODO: omg this is ugly
+                        domain.owned
+                          ? [
+                              {
+                                label: 'View details',
+                                onClick: () => onViewDetailsClick(domain)
+                              },
+                              {
+                                label: 'Transfer',
+                                onClick: () => onTransferClick(domain)
+                              },
+                              {
+                                label: 'Extend',
+                                onClick: () => onExtendClick(domain)
+                              }
+                            ]
+                          : [
+                              {
+                                label: 'View details',
+                                onClick: () => onViewDetailsClick(domain)
+                              },
+                              {
+                                label: 'Extend',
+                                onClick: () => onExtendClick(domain)
+                              }
+                            ]
+                      }
                     />
                   )}
                 </td>
