@@ -10,7 +10,7 @@
 }
 
 .body {
-  padding: 16px 24px;
+  padding: 32px 24px;
 }
 
 .title {
@@ -42,7 +42,7 @@
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   margin-top: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .footer {

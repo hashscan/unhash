@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { formatExpiresIn } from 'lib/format'
 import Checkbox from 'components/ui/Checkbox/Checkbox'
 import { Menu } from 'components/ui/Menu/Menu'
-import { UserDomain } from 'lib/types'
+import { Domain, UserDomain } from 'lib/types'
 import { useRouter } from 'next/router'
 import { SendName } from 'components/SendName/SendName'
 import { useOnClickOutside } from 'usehooks-ts'
@@ -80,7 +80,7 @@ const Names: PageWithLayout = () => {
 
   // TODO: make generalized modal wrapper component
   // send modal
-  const [sendModal, setSendModal] = useState<string>()
+  const [sendModal, setSendModal] = useState<Domain | undefined>()
   // TODO: not working
   // const ref = useRef<HTMLDivElement>(null)
   // useOnClickOutside(ref, () => setSendModal(undefined))

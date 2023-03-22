@@ -17,6 +17,7 @@ export type DomainPrice = {
 }
 
 export type DomainInfo = {
+  tokenId: string
   registrant: Address | null
   controller: Address | null
   resolver: Address | null
