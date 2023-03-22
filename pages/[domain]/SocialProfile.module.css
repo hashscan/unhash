@@ -1,5 +1,5 @@
 .main {
-  background: wheat;
+  position: relative;
   min-height: 80svh;
 
   display: grid;
@@ -77,4 +77,20 @@
 
 .link {
   width: calc(50% - var(--sm-space) / 2);
+}
+
+.bgDebug {
+  position: absolute;
+  inset: 5px 5px auto auto;
+
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  border: 1px solid var(--color-slate-6);
+  color: var(--color-slate-2);
+
+  padding: 10px;
+
+  gap: 10px;
 }
