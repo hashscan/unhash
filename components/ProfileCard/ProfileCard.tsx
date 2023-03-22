@@ -27,7 +27,7 @@ const Avatar = ({ network, address }: { network: Network; address: Address }) =>
 }
 
 export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
-  const info = useDomainInfo(network, domain)
+  const info = useDomainInfo(domain)
   const labels = useMemo(
     () => ({
       isOwner: info?.registrant?.toLowerCase() === address.toLowerCase(),
