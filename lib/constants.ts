@@ -21,6 +21,11 @@ export const ETH_REVERSE_REGISTRAR_ADDRESS = new Map<Network, Address>([
   ['goerli', '0x4f7A657451358a22dc397d5eE7981FfC526cd856']
 ])
 
+export const ENS_NFT_ADDRESS = new Map<Network, Address>([
+  ['mainnet', '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'],
+  ['goerli', '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85']
+])
+
 export const ETH_REGISTRAR_ABI = [
   'function available(string) view returns (bool)',
   'function makeCommitment(string,address,bytes32) pure returns (bytes32)',
@@ -38,6 +43,8 @@ export const ETH_RESOLVER_ABI = [
 ]
 
 export const ETH_REVERSE_REGISTRAR_ABI = ['function setName(string) returns (bytes32)']
+
+export const ENS_NFT_ABI = ['function safeTransferFrom(address, address, uint256)']
 
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24
 

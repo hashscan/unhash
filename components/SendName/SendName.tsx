@@ -1,21 +1,40 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { ComponentProps, useState } from 'react'
 import styles from './SendName.module.css'
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
+import { useSendName } from 'lib/hooks/useSendName'
+import { Domain } from 'lib/types'
+import { useNotifier } from 'lib/hooks/useNotifier'
+import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 
 export interface SendNameProps extends ComponentProps<'div'> {
-  domain: string
+  domain: Domain
   onClose?: () => void
 }
 
 export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps) => {
-  const [address, setAddress] = useState<string>('')
-  const onSend = () => {
-    console.log('send')
+  const notify = useNotifier()
+  const [address, setAddress] = useState<string>()
+
+  // fetch name's token id
+  const domainInfo = useDomainInfo(domain)
+
+  // transaction to send name
+  const { write: sendTransaction, isLoading: isSending } = useSendName({
+    tokenId: domainInfo?.tokenId,
+    toAddress: address,
+    onError: (error) => notify(error.message, { status: 'error' }),
+    onSuccess: () => {
+      notify(`${domain} has been sent!`, { status: 'info' })
+      onClose?.()
+    }
+  })
+  const sendName = () => {
+    // TODO: show input error if address is not set
+    // TODO: track analytics event
+    sendTransaction?.()
   }
-  const isLoading = false
 
   return (
     <div {...rest} className={clsx(className, styles.modal)}>
@@ -29,7 +48,8 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
           labelClassName={styles.addressLabel}
           label="Send to"
           placeholder="Enter Ethereum address or name ENS..."
-          disabled={isLoading}
+          disabled={isSending}
+          value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
         <div className={styles.hint}>
@@ -38,14 +58,14 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
         </div>
       </div>
       <div className={styles.footer}>
-        <Button size={'regular'} variant={'ghost'} onClick={() => onClose?.()}>
+        <Button size={'regular'} variant={'ghost'} disabled={isSending} onClick={() => onClose?.()}>
           Cancel
         </Button>
         <Button
           className={styles.buttonSend}
-          isLoading={isLoading}
+          isLoading={isSending}
           size={'regular'}
-          onClick={onSend}
+          onClick={sendName}
         >
           Send&nbsp;&nbsp;→
         </Button>
