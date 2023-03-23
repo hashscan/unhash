@@ -4,7 +4,7 @@ import { toNetwork } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
-import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
+import { useCurrentUser } from 'lib/hooks/useCurrentUser'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
@@ -18,7 +18,7 @@ const Profile: PageWithLayout = () => {
 
   const [editingPrimaryName, setEditingPrimaryName] = useState(false)
 
-  const userInfo = useCurrentUserInfo()
+  const { user: userInfo } = useCurrentUser()
   const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
 
   const etherscanLink = useEtherscanURL('address', userInfo?.primaryEns!)
