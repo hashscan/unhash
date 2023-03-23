@@ -12,9 +12,10 @@ import { SendNameSuccess } from './SendNameSuccess'
 export interface SendNameProps extends ComponentProps<'div'> {
   domain: Domain
   onClose?: () => void
+  onSuccess?: () => void
 }
 
-export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps) => {
+export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: SendNameProps) => {
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
 
@@ -30,7 +31,8 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
   } = useSendName({
     tokenId: domainInfo?.tokenId,
     toAddress: address,
-    onError: (error) => notify(error.message, { status: 'error' })
+    onError: (error) => notify(error.message, { status: 'error' }),
+    onSuccess: () => onSuccess?.()
   })
   const sendName = () => {
     // TODO: show input error if address is not set

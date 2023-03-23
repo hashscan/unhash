@@ -2,7 +2,7 @@ import { useAccount } from 'wagmi'
 import styles from './names.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
-import { useCurrentUserInfo } from 'lib/hooks/useUserInfo'
+import { useCurrentUser } from 'lib/hooks/useCurrentUser'
 import { useCallback, useMemo, useState } from 'react'
 import { LoaderSpinner, Menu as MenuIcon, Search } from 'components/icons'
 import clsx from 'clsx'
@@ -26,13 +26,13 @@ const Names: PageWithLayout = () => {
   }
 
   // domain list
-  const userInfo = useCurrentUserInfo()
+  const { user, refreshUser } = useCurrentUser()
   const allDomains = useMemo(
     () =>
-      userInfo?.domains
+      user?.domains
         .filter((d) => d.isValid && (d.controlled || d.owned))
         .sort((a, b) => a.name.localeCompare(b.name)) || [],
-    [userInfo]
+    [user]
   )
 
   const filteredDomains = useMemo(
@@ -89,7 +89,7 @@ const Names: PageWithLayout = () => {
     return <AuthLayout text="Sign in with your wallet to view and manage your ENS domains" />
 
   // loader
-  if (!userInfo) {
+  if (!user) {
     return (
       <div className={styles.loading}>
         <LoaderSpinner className={styles.loader} />
@@ -104,7 +104,15 @@ const Names: PageWithLayout = () => {
         <>
           <div className={styles.backdrop} />
           <div className={styles.overlay}>
-            <SendName domain={sendModal} onClose={() => setSendModal(undefined)} />
+            <SendName
+              domain={sendModal}
+              onClose={() => setSendModal(undefined)}
+              onSuccess={async () => {
+                // it takes for RPC to update the state, repeat few times
+                await new Promise((resolve) => setTimeout(resolve, 3500))
+                refreshUser()
+              }}
+            />
           </div>
         </>
       )}
