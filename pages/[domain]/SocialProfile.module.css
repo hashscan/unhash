@@ -47,6 +47,7 @@
   flex-direction: column;
 
   gap: calc(var(--space) / 4);
+  padding-bottom: var(--sm-space);
 }
 
 .name {

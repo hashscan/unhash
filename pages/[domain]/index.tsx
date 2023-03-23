@@ -7,13 +7,14 @@ import { useEffect, useReducer, useState, type Dispatch } from 'react'
 import { Button } from 'components/ui/Button/Button'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 
-import { Domain, currentNetwork } from 'lib/types'
+import { Domain, toChain, currentNetwork } from 'lib/types'
 import api, { DomainInfo } from 'lib/api'
 import { validateDomain } from 'lib/utils'
 import { formatAddress, notNull } from 'lib/utils'
 
 import styles from './domain.module.css'
 import socialStyles from './SocialProfile.module.css'
+import { type Address, useEnsAvatar } from 'wagmi'
 
 interface DomainPageProps {
   domain: Domain
@@ -87,6 +88,24 @@ function Debug({ settings, update }: { settings: Settings; update: Dispatch<Part
   )
 }
 
+const Avatar = ({ address }: { address: Address }) => {
+  // doesn't work for nft
+  const result = useEnsAvatar({
+    address,
+    chainId: toChain('mainnet').id
+  })
+
+  useEffect(() => {
+    console.log(address, result)
+  }, [address, result])
+
+  if (result.data) {
+    return <img src={result.data} />
+  }
+
+  return null
+}
+
 const SocialProfile = ({ domain, info }: DomainPageProps) => {
   const [debug, setDebug] = useState(false)
 
@@ -129,7 +148,7 @@ const SocialProfile = ({ domain, info }: DomainPageProps) => {
 
       <div className={socialStyles.card}>
         <div className={socialStyles.avatarSlot}>
-          {/* <img src={} alt={`${name}'s avatar`} /> */}
+          {info.textRecords.avatar && <Avatar address={info.registrant as Address} />}
         </div>
 
         <div className={socialStyles.nameSlot}>
@@ -205,7 +224,7 @@ const Domain: PageWithLayout<DomainPageProps> = (props: DomainPageProps) => {
         <title>{domain}</title>
       </Head>
 
-      {Object.keys(info.textRecords).length && <SocialProfile {...props} />}
+      {!!Object.keys(info.textRecords).length && <SocialProfile {...props} />}
 
       <TechInfo {...props} />
     </>
