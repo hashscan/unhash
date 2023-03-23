@@ -1,8 +1,21 @@
 .main {
+  --padding: 16px;
   position: relative;
   min-height: 80svh;
 
   display: grid;
+}
+
+.spNavigation {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  max-width: calc(2 * var(--padding) + var(--container-width));
+  justify-self: center;
+  width: 100%;
+
+  gap: 12px;
+  padding: var(--padding);
 }
 
 .card {
@@ -14,7 +27,7 @@
   width: 450px;
 
   border: 1px solid var(--color-slate-6);
-  border-radius: 8px;
+  border-radius: var(--radii-md);
 
   background-color: var(--color-background);
   color: var(--text-primary);
@@ -33,13 +46,36 @@
 .avatarSlot {
   position: absolute;
   inset: 0 50%;
-  transform: translate(-50%, -60%);
+  transform: translate(-50%, calc(var(--avatar-ratio) * -100%));
 
   width: var(--avatar-size);
   height: var(--avatar-size);
   border-radius: 50%;
 
   background-image: linear-gradient(180deg, var(--color-green), var(--color-green-light));
+}
+
+.avatarSlot img,
+.avatarSlot::after {
+  border-radius: inherit;
+}
+
+.avatarSlot img {
+  display: block;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  user-select: none;
+}
+
+.avatarSlot::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }
 
 .nameSlot {
@@ -78,6 +114,11 @@
 
 .link {
   width: calc(50% - var(--sm-space) / 2);
+}
+
+.link span {
+  display: inline-block;
+  transform: rotate(-45deg);
 }
 
 .bgDebug {

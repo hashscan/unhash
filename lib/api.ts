@@ -24,6 +24,10 @@ export type DomainInfo = {
   addrRecords: AddrRecords
 }
 
+export type DomainAvatar = {
+  avatar: string | null
+}
+
 export type EthPrice = {
   usd: number
   updatedAt: number
@@ -55,6 +59,12 @@ async function domainInfo(domain: Domain, network: Network = 'mainnet'): Promise
     .json<DomainInfo>()
 }
 
+async function domainAvatar(domain: Domain, network: Network = 'mainnet'): Promise<DomainAvatar> {
+  return await ky
+    .get(`${API_URL}/domain/avatar?domain=${domain}&network=${network}`)
+    .json<DomainAvatar>()
+}
+
 async function userInfo(address: Address, network: Network = 'mainnet'): Promise<UserInfo> {
   return await ky.get(`${API_URL}/user?address=${address}&network=${network}`).json<UserInfo>()
 }
@@ -71,6 +81,7 @@ const api = {
   checkDomain,
   getPrice,
   domainInfo,
+  domainAvatar,
   userInfo,
   saveFeedback,
   ethPrice

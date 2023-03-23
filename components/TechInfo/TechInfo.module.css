@@ -3,14 +3,13 @@
   max-width: calc(2 * var(--padding) + var(--container-width));
   min-height: 80svh;
   padding: 0 var(--padding);
-  margin: 0 auto;
+  margin: 20px auto 0;
 }
 
 .title {
   color: var(--color-slate-2);
-  font: var(--type-x-lg);
+  font: var(--type-lg);
   letter-spacing: var(--ls-x-lg);
-  margin-bottom: 8px;
 }
 
 .address {
