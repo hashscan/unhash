@@ -41,20 +41,21 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
       <div className={styles.body}>
         <div className={styles.title}>Send name</div>
         <div className={styles.text}>
-          By sending the <b>{domain}</b> name, you will give the new address full control over it.
+          By sending the <b>{domain}</b> name, you transfer to the recipient a full control over it.
         </div>
 
         <AddressInput
           labelClassName={styles.addressLabel}
           label="Send to"
-          placeholder="Enter Ethereum address or name ENS..."
+          placeholder="Enter address or ENS name..."
           disabled={isSending}
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
         <div className={styles.hint}>
-          This address will be a new owner this name. Controller and profile settings won’t be
-          changed now, but can be changed by a new owner later.
+          {
+            "Sending a name won't change it's public profile or a manager. Name will still be linked to the same address. But a new owner can change that."
+          }
         </div>
       </div>
       <div className={styles.footer}>
