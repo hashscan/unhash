@@ -40,6 +40,7 @@ export const useSendName = ({
 
   return {
     data,
+    txHash: data?.hash,
     isLoading: isWriteLoading || isWaitLoading,
     write,
     gasLimit: config.request?.gasLimit,
