@@ -7,6 +7,7 @@ import { useSendName } from 'lib/hooks/useSendName'
 import { Domain } from 'lib/types'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
+import { SendNameSuccess } from './SendNameSuccess'
 
 export interface SendNameProps extends ComponentProps<'div'> {
   domain: Domain
@@ -21,14 +22,15 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
   const domainInfo = useDomainInfo(domain)
 
   // transaction to send name
-  const { write: sendTransaction, isLoading: isSending } = useSendName({
+  const {
+    write: sendTransaction,
+    isLoading: isSending,
+    txHash,
+    isSuccess
+  } = useSendName({
     tokenId: domainInfo?.tokenId,
     toAddress: address,
-    onError: (error) => notify(error.message, { status: 'error' }),
-    onSuccess: () => {
-      notify(`${domain} has been sent!`, { status: 'info' })
-      onClose?.()
-    }
+    onError: (error) => notify(error.message, { status: 'error' })
   })
   const sendName = () => {
     // TODO: show input error if address is not set
@@ -50,6 +52,7 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
           placeholder="Enter address or ENS name..."
           disabled={isSending}
           value={address}
+          onAddressChange={(a) => setAddress(a || undefined)}
           onChange={(e) => setAddress(e.target.value)}
         />
         <div className={styles.hint}>
@@ -71,6 +74,14 @@ export const SendName = ({ domain, onClose, className, ...rest }: SendNameProps)
           Send&nbsp;&nbsp;→
         </Button>
       </div>
+      {isSuccess && (
+        <SendNameSuccess
+          className={styles.success}
+          domain={domain}
+          txHash={txHash ?? ''}
+          onClose={() => onClose?.()}
+        />
+      )}
     </div>
   )
 }
