@@ -6,7 +6,7 @@ import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 import { SocialProfile } from 'components/SocialProfile/SocialProfile'
 import { TechInfo } from 'components/TechInfo/TechInfo'
 
-import { Domain } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
 import api, { DomainInfo } from 'lib/api'
 import { validateDomain } from 'lib/utils'
 
@@ -33,7 +33,7 @@ const Domain: PageWithLayout<DomainPageProps> = (props: DomainPageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const domain = query.domain as Domain
-  // const network = currentNetwork()
+  const network = currentNetwork()
 
   if (validateDomain(domain)) {
     return {
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   let domainInfo: DomainInfo
   try {
-    domainInfo = await api.domainInfo(domain)
+    domainInfo = await api.domainInfo(domain, network)
   } catch (e) {
     return {
       redirect: {
