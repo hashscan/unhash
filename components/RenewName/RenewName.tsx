@@ -8,6 +8,7 @@ import { UserDomain } from 'lib/types'
 import { formatExpiresOn } from 'lib/format'
 import { RenewYearSelect } from './RenewYearSelect'
 import { YEAR_IN_SECONDS } from 'lib/constants'
+import { useRenewName } from 'lib/hooks/useRenewName'
 
 export interface RenewNameProps extends ComponentProps<'div'> {
   domain: UserDomain
@@ -17,9 +18,8 @@ export interface RenewNameProps extends ComponentProps<'div'> {
 
 export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: RenewNameProps) => {
   const notify = useNotifier()
-  const [address, setAddress] = useState<string>()
 
-  const [years, setYears] = useState(1)
+  const [years, setYears] = useState(10)
 
   const newExpiration = useMemo(() => {
     console.log(`domain.expiresAt: ${domain.expiresAt!}`)
@@ -29,23 +29,17 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   console.log(`newExpiration: ${newExpiration}`)
 
   // transaction to renew name
-  // const {
-  //   write: sendTransaction,
-  //   isLoading: isSending,
-  //   txHash,
-  //   isSuccess
-  // } = useSendName({
-  //   tokenId: domainInfo?.tokenId,
-  //   toAddress: address,
-  //   onError: (error) => notify(error.message, { status: 'error' }),
-  //   onSuccess: () => onSuccess?.()
-  // })
-
-  // mocked data
-  const sendTransaction = () => {}
-  const isLoading = false
-  const txHash = undefined
-  const isSuccess = false
+  const {
+    write: sendTransaction,
+    isLoading: isLoading,
+    txHash,
+    isSuccess
+  } = useRenewName({
+    domain: domain.name,
+    duration: years * YEAR_IN_SECONDS,
+    onError: (error) => notify(error.message, { status: 'error' }),
+    onSuccess: () => onSuccess?.()
+  })
 
   const renewName = () => {
     // TODO: show input error if address is not set
