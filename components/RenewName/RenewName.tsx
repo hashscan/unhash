@@ -2,13 +2,14 @@ import React, { ComponentProps, useState } from 'react'
 import styles from './RenewName.module.css'
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
-import { Domain } from 'lib/types'
 import { useNotifier } from 'lib/hooks/useNotifier'
-import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 import { RenewNameSuccess } from './RenewNameSuccess'
+import { UserDomain } from 'lib/types'
+import { formatExpiresOn } from 'lib/format'
+import { RenewYearSelect } from './RenewYearSelect'
 
 export interface RenewNameProps extends ComponentProps<'div'> {
-  domain: Domain
+  domain: UserDomain
   onClose?: () => void
   onSuccess?: () => void
 }
@@ -17,8 +18,8 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
 
-  // fetch name's token id
-  const domainInfo = useDomainInfo(domain)
+  // // fetch name's token id
+  // const domainInfo = useDomainInfo(domain.name)
 
   // // transaction to send name
   // const {
@@ -50,11 +51,13 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
       <div className={styles.body}>
         <div className={styles.title}>Renew name</div>
         <div className={styles.text}>
-          By renewing the <b>{domain}</b> name, you transfer to the recipient a full control over
-          it.
+          The <b>{domain.name}</b> name expires on <b>{formatExpiresOn(domain.expiresAt!)}</b>.
+          Expired domains are available for a public auction. Learn more.
         </div>
 
-        {/* TODO: add selector */}
+        <div className={styles.yearLabel}>Renew for</div>
+        {/* TODO: add select */}
+        <RenewYearSelect className={styles.yearSelect} />
         <div className={styles.hint}>{'Renewal will cost you ...'}</div>
       </div>
       <div className={styles.footer}>
@@ -73,7 +76,7 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
       {isSuccess && (
         <RenewNameSuccess
           className={styles.success}
-          domain={domain}
+          domain={domain.name}
           txHash={txHash ?? ''}
           onClose={() => onClose?.()}
         />

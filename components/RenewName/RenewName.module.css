@@ -32,7 +32,19 @@
 
 .text>b {
   font-weight: 500;
-  text-decoration: underline;
+}
+
+.yearLabel {
+  color: var(--color-text-primary);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.yearSelect {
+  /* TODO: remove once select implemented */
+  cursor: not-allowed;
 }
 
 .hint {

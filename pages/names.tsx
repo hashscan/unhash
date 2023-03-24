@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { formatExpiresIn } from 'lib/format'
 import Checkbox from 'components/ui/Checkbox/Checkbox'
 import { Menu } from 'components/ui/Menu/Menu'
-import { Domain, UserDomain } from 'lib/types'
+import { UserDomain } from 'lib/types'
 import { useRouter } from 'next/router'
 import { SendName } from 'components/SendName/SendName'
 import { Button } from 'components/ui/Button/Button'
@@ -23,7 +23,7 @@ enum ModalType {
 
 type ModalParams = {
   type: ModalType
-  domain: Domain
+  domain: UserDomain
 }
 
 const Names: PageWithLayout = () => {
@@ -86,13 +86,13 @@ const Names: PageWithLayout = () => {
   const onSendClick = (domain: UserDomain) => {
     setModal({
       type: ModalType.Send,
-      domain: domain.name
+      domain: domain
     })
   }
   const onRenewClick = (domain: UserDomain) => {
     setModal({
       type: ModalType.Renew,
-      domain: domain.name
+      domain: domain
     })
   }
 
@@ -122,7 +122,7 @@ const Names: PageWithLayout = () => {
           <div className={styles.overlay}>
             {modal.type === ModalType.Send && (
               <SendName
-                domain={modal.domain}
+                domain={modal.domain.name}
                 onClose={() => setModal(undefined)}
                 onSuccess={async () => {
                   // it takes for RPC to update the state, repeat few times

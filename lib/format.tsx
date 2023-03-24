@@ -27,3 +27,12 @@ export function formatExpiresIn(expiresAt: number): string {
   if (years > 0) return pluralize('year', years)
   return pluralize('day', days)
 }
+
+export function formatExpiresOn(expiresAt: number): string {
+  const expires = new Date(expiresAt * 1000)
+  return expires.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
+}
