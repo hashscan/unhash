@@ -5,7 +5,7 @@ import { getDomainName } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 
-export const useSendRegister = ({
+export const useRenewName = ({
   domain,
   duration,
   onError,
