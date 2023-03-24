@@ -22,11 +22,8 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   const [years, setYears] = useState(10)
 
   const newExpiration = useMemo(() => {
-    console.log(`domain.expiresAt: ${domain.expiresAt!}`)
-    console.log(`years: ${years}, ${years * YEAR_IN_SECONDS} seconds`)
     return domain.expiresAt! + years * YEAR_IN_SECONDS
   }, [domain.expiresAt, years])
-  console.log(`newExpiration: ${newExpiration}`)
 
   // transaction to renew name
   const {
@@ -42,7 +39,6 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   })
 
   const renewName = () => {
-    // TODO: show input error if address is not set
     // TODO: track analytics event
     sendTransaction?.()
   }
@@ -59,11 +55,12 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
         <div className={styles.yearLabel}>Renew for</div>
         <RenewYearSelect
           className={styles.yearSelect}
+          name={domain.name}
           years={years}
           onYearChange={(years) => setYears(years)}
         />
         <div className={styles.hint}>
-          {'New expiration date is '}
+          {'New expiration date will be '}
           <b>{formatExpiresOn(newExpiration)}</b>
         </div>
       </div>
