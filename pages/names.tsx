@@ -13,6 +13,7 @@ import { Menu } from 'components/ui/Menu/Menu'
 import { Domain, UserDomain } from 'lib/types'
 import { useRouter } from 'next/router'
 import { SendName } from 'components/SendName/SendName'
+import { Button } from 'components/ui/Button/Button'
 
 const Names: PageWithLayout = () => {
   const router = useRouter()
@@ -53,6 +54,7 @@ const Names: PageWithLayout = () => {
     [selectedNames, setSelectedNames]
   )
 
+  const anySelected = selectedNames.length > 0
   const allSelected = selectedNames.length === filteredDomains.length
   const onCheckAllChange = useCallback(
     (checked: boolean) => {
@@ -70,11 +72,11 @@ const Names: PageWithLayout = () => {
   const onViewDetailsClick = (domain: UserDomain) => {
     router.push(`/${domain.name}/`)
   }
-  const onTransferClick = (domain: UserDomain) => {
+  const onSendClick = (domain: UserDomain) => {
     setSendModal(domain.name)
   }
-  const onExtendClick = (domain: UserDomain) => {
-    console.log('extend', domain.name)
+  const onRenewClick = (domain: UserDomain) => {
+    console.log('renew', domain.name)
   }
 
   // TODO: make generalized modal wrapper component
@@ -148,93 +150,109 @@ const Names: PageWithLayout = () => {
 
       {/* domains table */}
       {filteredDomains.length > 0 && (
-        <table className={styles.table}>
-          <thead>
-            <tr className={clsx(styles.row)}>
-              <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>
-                <div className={styles.checkboxContainer}>
-                  <Checkbox
-                    checked={allSelected}
-                    onChange={(e) => onCheckAllChange(e.target.checked)}
-                  />
-                </div>
-              </th>
-              <th className={clsx(styles.cell, styles.headCell, styles.nameCell)}>Domain</th>
-              <th className={clsx(styles.cell, styles.headCell, styles.rightsCell)}>Rights</th>
-              <th className={clsx(styles.cell, styles.headCell, styles.expirationCell)}>
-                Expiration
-              </th>
-              <th className={clsx(styles.cell, styles.headCell, styles.menuCell)} />
-            </tr>
-          </thead>
-          <tbody>
-            {filteredDomains.map((domain) => (
-              <tr key={domain.name} className={styles.row}>
-                <td className={clsx(styles.cell, styles.selectCell)}>
+        <div className={styles.tableWrapper}>
+          {/* Action list hover */}
+          {anySelected && (
+            <div className={styles.listActions}>
+              <Button size="small" disabled={true} title="Release soon">
+                Renew names
+              </Button>
+              <Button size="small" disabled={true} title="Release soon">
+                Send names&nbsp;&nbsp;→
+              </Button>
+            </div>
+          )}
+
+          <table className={styles.table}>
+            <thead>
+              <tr className={clsx(styles.row)}>
+                <th className={clsx(styles.cell, styles.headCell, styles.selectCell)}>
                   <div className={styles.checkboxContainer}>
                     <Checkbox
-                      checked={selectedNames.includes(domain.name)}
-                      onChange={(e) => onCheckChange(domain.name, e.target.checked)}
+                      checked={allSelected}
+                      onChange={(e) => onCheckAllChange(e.target.checked)}
                     />
                   </div>
-                </td>
-                <td className={clsx(styles.cell, styles.nameCell)}>
-                  <Link className={styles.domain} href={`/${domain.name}/`}>
-                    {domain.name}
-                  </Link>
-                </td>
-                <td className={clsx(styles.cell, styles.rightsCell)}>
-                  <div className={styles.rights}>
-                    {domain.owned && <div className={styles.right}>Owner</div>}
-                    {domain.controlled && <div className={styles.right}>Controller</div>}
-                  </div>
-                </td>
-                <td className={clsx(styles.cell, styles.expirationCell)}>
-                  {domain.expiresAt ? formatExpiresIn(domain.expiresAt) : ''}
-                </td>
-                <td className={clsx(styles.cell, styles.menuCell)}>
-                  <div className={styles.menuContainer} onClick={() => setOpenMenu(domain.name)}>
-                    <MenuIcon />
-                  </div>
-                  {openMenu === domain.name && (
-                    <Menu
-                      className={styles.menu}
-                      onClose={() => setOpenMenu(undefined)}
-                      items={
-                        // TODO: omg this is ugly
-                        domain.owned
-                          ? [
-                              {
-                                label: 'View details',
-                                onClick: () => onViewDetailsClick(domain)
-                              },
-                              {
-                                label: 'Transfer',
-                                onClick: () => onTransferClick(domain)
-                              },
-                              {
-                                label: 'Extend',
-                                onClick: () => onExtendClick(domain)
-                              }
-                            ]
-                          : [
-                              {
-                                label: 'View details',
-                                onClick: () => onViewDetailsClick(domain)
-                              },
-                              {
-                                label: 'Extend',
-                                onClick: () => onExtendClick(domain)
-                              }
-                            ]
-                      }
-                    />
-                  )}
-                </td>
+                </th>
+                <th className={clsx(styles.cell, styles.headCell, styles.nameCell)}>Domain</th>
+                <th className={clsx(styles.cell, styles.headCell, styles.rightsCell)}>
+                  {!anySelected && 'Rights'}
+                </th>
+                <th className={clsx(styles.cell, styles.headCell, styles.expirationCell)}>
+                  {!anySelected && 'Expiration'}
+                </th>
+                <th className={clsx(styles.cell, styles.headCell, styles.menuCell)} />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredDomains.map((domain) => (
+                <tr key={domain.name} className={styles.row}>
+                  <td className={clsx(styles.cell, styles.selectCell)}>
+                    <div className={styles.checkboxContainer}>
+                      <Checkbox
+                        checked={selectedNames.includes(domain.name)}
+                        onChange={(e) => onCheckChange(domain.name, e.target.checked)}
+                      />
+                    </div>
+                  </td>
+                  <td className={clsx(styles.cell, styles.nameCell)}>
+                    <Link className={styles.domain} href={`/${domain.name}/`}>
+                      {domain.name}
+                    </Link>
+                  </td>
+                  <td className={clsx(styles.cell, styles.rightsCell)}>
+                    <div className={styles.rights}>
+                      {domain.owned && <div className={styles.right}>Owner</div>}
+                      {domain.controlled && <div className={styles.right}>Controller</div>}
+                    </div>
+                  </td>
+                  <td className={clsx(styles.cell, styles.expirationCell)}>
+                    {domain.expiresAt ? formatExpiresIn(domain.expiresAt) : ''}
+                  </td>
+                  <td className={clsx(styles.cell, styles.menuCell)}>
+                    <div className={styles.menuContainer} onClick={() => setOpenMenu(domain.name)}>
+                      <MenuIcon />
+                    </div>
+                    {openMenu === domain.name && (
+                      <Menu
+                        className={styles.menu}
+                        onClose={() => setOpenMenu(undefined)}
+                        items={
+                          // TODO: omg this is ugly
+                          domain.owned
+                            ? [
+                                {
+                                  label: 'View details',
+                                  onClick: () => onViewDetailsClick(domain)
+                                },
+                                {
+                                  label: 'Send',
+                                  onClick: () => onSendClick(domain)
+                                },
+                                {
+                                  label: 'Renew',
+                                  onClick: () => onRenewClick(domain)
+                                }
+                              ]
+                            : [
+                                {
+                                  label: 'View details',
+                                  onClick: () => onViewDetailsClick(domain)
+                                },
+                                {
+                                  label: 'Renew',
+                                  onClick: () => onRenewClick(domain)
+                                }
+                              ]
+                        }
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </main>
   )

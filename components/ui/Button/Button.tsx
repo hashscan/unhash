@@ -8,7 +8,7 @@ import styles from './Button.module.css'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   as?: 'button' | 'a'
-  size?: 'regular' | 'medium' | 'cta'
+  size?: 'small' | 'regular' | 'medium' | 'cta'
   variant?: 'primary' | 'ghost'
   isLoading?: boolean
 }

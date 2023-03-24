@@ -31,7 +31,7 @@
 
 .button[disabled] {
   background: var(--color-slate-5);
-  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .loader {
@@ -59,6 +59,15 @@
 
 .button.button_loading .content {
   opacity: 0;
+}
+
+.button.button_small {
+  border-radius: var(--radii-sm);
+  padding: 0px 12px;
+  height: 36px;
+
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
 }
 
 .button.button_regular {

@@ -98,6 +98,24 @@
   text-align: center;
 }
 
+.tableWrapper {
+  position: relative;
+}
+
+.listActions {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  height: 52px;
+  padding: 0 8px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
 .table {
   width: 100%;
 
