@@ -4,7 +4,7 @@ import { useEffect, useReducer, useState, type Dispatch } from 'react'
 
 import { Button } from 'components/ui/Button/Button'
 
-import { Globe, Twitter } from 'components/icons'
+import { Globe, Twitter, Github } from 'components/icons'
 
 import type { Domain } from 'lib/types'
 import type { DomainInfo } from 'lib/api'
@@ -40,6 +40,8 @@ type Settings = {
 
 function Icon({ site }: { site?: string }) {
   switch (site) {
+    case 'github.com':
+      return <Github />
     case 'twitter.com':
       return <Twitter />
     default:
@@ -170,7 +172,7 @@ export const SocialProfile = ({ domain, info }: DomainPageProps) => {
 
         <div className={styles.links}>
           {links.map(([type, link, site], index) => (
-            <a className={styles.link} key={index} href={link}>
+            <a className={styles.link} key={index} href={link} target="_blank" rel="noreferrer">
               <Icon site={site} />
               {type}
               <span>→</span>
