@@ -1,5 +1,5 @@
 import React, { ComponentProps, useState } from 'react'
-import styles from './SendName.module.css'
+import styles from './RenewName.module.css'
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
 import { Domain } from 'lib/types'
@@ -13,7 +13,7 @@ export interface RenewNameProps extends ComponentProps<'div'> {
   onSuccess?: () => void
 }
 
-export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: RenewNameProps) => {
+export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: RenewNameProps) => {
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
 
