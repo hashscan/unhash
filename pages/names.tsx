@@ -26,6 +26,34 @@ type ModalParams = {
   domain: UserDomain
 }
 
+function buildMenuItems(
+  domain: UserDomain,
+  onDetailsClick: (domain: UserDomain) => void,
+  onSendClick: (domain: UserDomain) => void,
+  onRenewClick: (domain: UserDomain) => void
+) {
+  const items = [
+    {
+      label: 'View details',
+      onClick: () => onDetailsClick(domain)
+    }
+  ]
+  if (domain.owned) {
+    items.push({
+      label: 'Send',
+      onClick: () => onSendClick(domain)
+    })
+  }
+  // some has no expiration such as subdomains
+  if (domain.expiresAt) {
+    items.push({
+      label: 'Renew',
+      onClick: () => onRenewClick(domain)
+    })
+  }
+  return items
+}
+
 const Names: PageWithLayout = () => {
   const router = useRouter()
   const { isDisconnected } = useAccount()
@@ -244,34 +272,12 @@ const Names: PageWithLayout = () => {
                       <Menu
                         className={styles.menu}
                         onClose={() => setOpenMenu(undefined)}
-                        items={
-                          // TODO: omg this is ugly
-                          domain.owned
-                            ? [
-                                {
-                                  label: 'View details',
-                                  onClick: () => onViewDetailsClick(domain)
-                                },
-                                {
-                                  label: 'Send',
-                                  onClick: () => onSendClick(domain)
-                                },
-                                {
-                                  label: 'Renew',
-                                  onClick: () => onRenewClick(domain)
-                                }
-                              ]
-                            : [
-                                {
-                                  label: 'View details',
-                                  onClick: () => onViewDetailsClick(domain)
-                                },
-                                {
-                                  label: 'Renew',
-                                  onClick: () => onRenewClick(domain)
-                                }
-                              ]
-                        }
+                        items={buildMenuItems(
+                          domain,
+                          onViewDetailsClick,
+                          onSendClick,
+                          onRenewClick
+                        )}
                       />
                     )}
                   </td>
