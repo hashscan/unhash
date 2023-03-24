@@ -5,10 +5,17 @@ import { pluralize } from 'lib/pluralize'
 import { ComponentProps, useState } from 'react'
 import styles from './RenewYearSelect.module.css'
 
-interface RenewYearSelectProps extends ComponentProps<'div'> {}
+interface RenewYearSelectProps extends ComponentProps<'div'> {
+  years: number
+  onYearChange: (years: number) => void
+}
 
-export const RenewYearSelect = ({ className, ...rest }: RenewYearSelectProps) => {
-  const [years, setYears] = useState(2)
+export const RenewYearSelect = ({
+  years,
+  onYearChange,
+  className,
+  ...rest
+}: RenewYearSelectProps) => {
   const [cost, setCost] = useState(20)
 
   // TODO: fetch cost preview
