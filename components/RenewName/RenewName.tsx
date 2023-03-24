@@ -1,4 +1,4 @@
-import React, { ComponentProps, useState } from 'react'
+import React, { ComponentProps, useMemo, useState } from 'react'
 import styles from './RenewName.module.css'
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
@@ -7,6 +7,7 @@ import { RenewNameSuccess } from './RenewNameSuccess'
 import { UserDomain } from 'lib/types'
 import { formatExpiresOn } from 'lib/format'
 import { RenewYearSelect } from './RenewYearSelect'
+import { YEAR_IN_SECONDS } from 'lib/constants'
 
 export interface RenewNameProps extends ComponentProps<'div'> {
   domain: UserDomain
@@ -18,10 +19,16 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
 
-  // // fetch name's token id
-  // const domainInfo = useDomainInfo(domain.name)
+  const [years, setYears] = useState(1)
 
-  // // transaction to send name
+  const newExpiration = useMemo(() => {
+    console.log(`domain.expiresAt: ${domain.expiresAt!}`)
+    console.log(`years: ${years}, ${years * YEAR_IN_SECONDS} seconds`)
+    return domain.expiresAt! + years * YEAR_IN_SECONDS
+  }, [domain.expiresAt, years])
+  console.log(`newExpiration: ${newExpiration}`)
+
+  // transaction to renew name
   // const {
   //   write: sendTransaction,
   //   isLoading: isSending,
@@ -56,9 +63,15 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
         </div>
 
         <div className={styles.yearLabel}>Renew for</div>
-        {/* TODO: add select */}
-        <RenewYearSelect className={styles.yearSelect} />
-        <div className={styles.hint}>{'Renewal will cost you ...'}</div>
+        <RenewYearSelect
+          className={styles.yearSelect}
+          years={years}
+          onYearChange={(years) => setYears(years)}
+        />
+        <div className={styles.hint}>
+          {'New expiration date is '}
+          <b>{formatExpiresOn(newExpiration)}</b>
+        </div>
       </div>
       <div className={styles.footer}>
         <Button size={'regular'} variant={'ghost'} disabled={isLoading} onClick={() => onClose?.()}>
