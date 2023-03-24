@@ -148,7 +148,7 @@ export const SocialProfile = ({ domain, info }: DomainPageProps) => {
 
         {/* @ts-ignore */}
         <Button as={Link} href="/">
-          Get your .eth name →
+          Get your .eth name&nbsp;&nbsp;→
         </Button>
       </div>
 
@@ -172,7 +172,8 @@ export const SocialProfile = ({ domain, info }: DomainPageProps) => {
           {links.map(([type, link, site], index) => (
             <a className={styles.link} key={index} href={link}>
               <Icon site={site} />
-              {type} <span>→</span>
+              {type}
+              <span>→</span>
             </a>
           ))}
         </div>

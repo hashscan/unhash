@@ -6,6 +6,12 @@
   display: grid;
 }
 
+@media (max-width: 768px) {
+  .main {
+    padding: 10px;
+  }
+}
+
 .spNavigation {
   position: absolute;
   display: flex;
@@ -41,6 +47,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--sm-space);
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
 }
 
 .avatarSlot {
@@ -140,6 +152,12 @@
   font-weight: 400;
 
   width: calc(50% - var(--sm-space) / 2);
+}
+
+@media (max-width: 450px) {
+  .link {
+    width: 100%;
+  }
 }
 
 .link span {
