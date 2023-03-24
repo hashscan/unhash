@@ -32,7 +32,8 @@ export const ETH_REGISTRAR_ABI = [
   'function commit(bytes32)',
   'function makeCommitmentWithConfig(string,address,bytes32,address,address) pure returns (bytes32)',
   'function register(string,address,uint256,bytes32) payable',
-  'function registerWithConfig(string,address,uint,bytes32,address,address) payable'
+  'function registerWithConfig(string,address,uint,bytes32,address,address) payable',
+  'function renew(string,uint256) payable',
 ]
 
 export const ETH_RESOLVER_ABI = [
