@@ -1,4 +1,4 @@
-import React, { cloneElement, ComponentPropsWithoutRef, ReactElement } from 'react'
+import { cloneElement, ComponentPropsWithoutRef, ReactElement } from 'react'
 
 export const Logout = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={24}>

@@ -4,7 +4,7 @@ import { useEffect, useReducer, useState, type Dispatch } from 'react'
 
 import { Button } from 'components/ui/Button/Button'
 
-import { Twitter } from 'components/icons'
+import { Globe, Twitter } from 'components/icons'
 
 import type { Domain } from 'lib/types'
 import type { DomainInfo } from 'lib/api'
@@ -36,6 +36,15 @@ type Settings = {
   bgColor: string
   size: number
   dotSize: number
+}
+
+function Icon({ site }: { site?: string }) {
+  switch (site) {
+    case 'twitter.com':
+      return <Twitter />
+    default:
+      return <Globe />
+  }
 }
 
 function Debug({ settings, update }: { settings: Settings; update: Dispatch<Partial<Settings>> }) {
@@ -113,8 +122,8 @@ export const SocialProfile = ({ domain, info }: DomainPageProps) => {
         return [name.replace('https://', '').replace('http://', ''), name] as const
       }
       if (field.includes('.')) {
-        const link = `https://${field.split('.').reverse().join('.')}`
-        return [name, `${link}/${name}`, `${link}/favicon.ico`] as const
+        const site = field.split('.').reverse().join('.')
+        return [name, `https://${site}/${name}`, site] as const
       }
       return null
     })
@@ -160,11 +169,11 @@ export const SocialProfile = ({ domain, info }: DomainPageProps) => {
         )}
 
         <div className={styles.links}>
-          {links.map(([type, link, ico], index) => (
-            <Button as="a" size="regular" className={styles.link} key={index} href={link}>
-              {ico && <Twitter />}
+          {links.map(([type, link, site], index) => (
+            <a className={styles.link} key={index} href={link}>
+              <Icon site={site} />
               {type} <span>→</span>
-            </Button>
+            </a>
           ))}
         </div>
       </div>

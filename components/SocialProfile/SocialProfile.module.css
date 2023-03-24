@@ -113,6 +113,32 @@
 }
 
 .link {
+  all: unset;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  transition: background var(--ease-100);
+
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  appearance: none;
+
+  background: var(--color-slate-3);
+  color: var(--color-slate-8);
+
+  border-radius: var(--radii-sm);
+  padding: 0px 16px;
+  height: 40px;
+
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  font-weight: 400;
+
   width: calc(50% - var(--sm-space) / 2);
 }
 
