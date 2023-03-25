@@ -5,7 +5,8 @@ import { useChainId } from 'wagmi'
 
 export const useDomainPrice = (
   domain: string,
-  duration: number | undefined
+  duration: number | undefined,
+  dropOnChange: boolean = false
 ): DomainPrice | undefined => {
   const chainId = useChainId()
   const [price, setPrice] = useState<DomainPrice>()
@@ -15,6 +16,7 @@ export const useDomainPrice = (
       setPrice(undefined)
       return
     }
+    if (dropOnChange) setPrice(undefined)
 
     const fetchPrice = async () => {
       try {
@@ -26,7 +28,7 @@ export const useDomainPrice = (
       }
     }
     fetchPrice()
-  }, [domain, duration, chainId])
+  }, [domain, duration, dropOnChange, chainId])
 
   return price
 }
