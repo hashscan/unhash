@@ -19,7 +19,7 @@ export interface RenewNameProps extends ComponentProps<'div'> {
 export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: RenewNameProps) => {
   const notify = useNotifier()
 
-  const [years, setYears] = useState(10)
+  const [years, setYears] = useState(1)
 
   const newExpiration = useMemo(() => {
     return domain.expiresAt! + years * YEAR_IN_SECONDS
