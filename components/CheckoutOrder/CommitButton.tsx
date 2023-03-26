@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useReducer } from 'react'
 import { useAccount, useChainId } from 'wagmi'
 import useChange from '@react-hook/change'
 
@@ -13,8 +13,34 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { trackGoal } from 'lib/analytics'
 
+import { TransactionButton } from './TransactionButton'
+
 interface CommitButtonProps {
   order: RegistrationOrder
+}
+
+function Example() {
+  const [status, update] = useReducer((state) => {
+    switch (state) {
+      case 'idle':
+        return 'commit'
+      case 'commit':
+        return 'processing'
+      case 'processing':
+        return 'idle'
+    }
+  }, 'idle')
+
+  return (
+    <>
+      <button onClick={update} style={{ margin: 10 }}>
+        toggle status
+      </button>
+      <TransactionButton size="cta" onClick={update} status={status}>
+        Action
+      </TransactionButton>
+    </>
+  )
 }
 
 export const CommitButton = ({ order }: CommitButtonProps) => {
@@ -23,7 +49,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   const chainId = useChainId()
   const { address } = useAccount()
 
-  const { sendCommit, isLoading, error } = useSendCommit({
+  const { sendCommit, status, error } = useSendCommit({
     domain: order.domain,
     network: toNetwork(chainId),
     duration: order.durationInYears * YEAR_IN_SECONDS,
@@ -65,14 +91,14 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
           }
 
           return (
-            <Button
+            <TransactionButton
               size="cta"
+              status={status}
               className={styles.commitButton}
               onClick={() => onStartClick()}
-              isLoading={isLoading}
             >
               Register {domain}
-            </Button>
+            </TransactionButton>
           )
         }}
       </ConnectButton.Custom>
