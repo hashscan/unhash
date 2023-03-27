@@ -298,15 +298,14 @@ export const Chat = (props: BaseIconProps) => (
 export const Menu = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={24}>
     <svg
-      fill="none"
-      height="18"
-      shape-rendering="geometricPrecision"
-      stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="1"
-      viewBox="0 0 24 24"
       width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      shapeRendering="geometricPrecision"
+      viewBox="0 0 24 24"
     >
       <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
       <circle cx="12" cy="5" r="1" fill="currentColor"></circle>
@@ -319,28 +318,27 @@ export const Search = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={24}>
     <svg
       fill="none"
-      shape-rendering="geometricPrecision"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      shapeRendering="geometricPrecision"
       viewBox="0 0 24 24"
     >
-      <path d="M11 17.25a6.25 6.25 0 110-12.5 6.25 6.25 0 010 12.5z"></path>
-      <path d="M16 16l4.5 4.5"></path>
+      <path d="M11 17.25a6.25 6.25 0 110-12.5 6.25 6.25 0 010 12.5zM16 16l4.5 4.5"></path>
     </svg>
   </BaseIcon>
 )
 
 export const Checkbox = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={16}>
-    <svg fill="none" height="16" viewBox="0 0 20 20" width="16">
+    <svg width="16" height="16" fill="none" viewBox="0 0 20 20">
       <path
-        d="M14 7L8.5 12.5L6 10"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M14 7l-5.5 5.5L6 10"
       ></path>
     </svg>
   </BaseIcon>
@@ -348,19 +346,19 @@ export const Checkbox = (props: BaseIconProps) => (
 
 export const RenewClock = (props: BaseIconProps) => (
   <BaseIcon {...props} baseSize={24}>
-    <svg version="1.1" viewBox="0 0 24 24">
+    <svg viewBox="0 0 24 24">
       <g
-        stroke-linecap="round"
-        stroke-width="1.5"
-        stroke="currentColor"
         fill="none"
-        stroke-linejoin="round"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       >
-        <path d="M3.523 9l1.05172e-08-2.96254e-08c1.66142-4.67999 6.80214-7.12702 11.4821-5.46561 4.67999 1.66142 7.12702 6.80214 5.46561 11.4821 -1.66142 4.67999-6.80214 7.12702-11.4821 5.46561 -1.26124-.447746-2.40663-1.17138-3.35261-2.11813"></path>
-        <polyline points="9,15 12,12 12,7"></polyline>
-        <polyline points="7,9 3,9 3,5"></polyline>
+        <path d="M3.523 9h0a8.992 8.992 0 112.113 9.364"></path>
+        <path d="M9 15L12 12 12 7"></path>
+        <path d="M7 9L3 9 3 5"></path>
       </g>
-      <rect width="24" height="24" fill="none"></rect>
+      <path fill="none" d="M0 0H24V24H0z"></path>
     </svg>
   </BaseIcon>
 )
