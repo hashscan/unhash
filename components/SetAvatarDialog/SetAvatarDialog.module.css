@@ -85,10 +85,10 @@
 }
 
 .buttonSend {
-  width: 160px;
+  width: 172px;
 }
 
-/** WIP */
+/** Grid of NFT items */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -97,15 +97,18 @@
 
 .cell {
   background: var(--color-slate-6);
-  border-radius: 4px;
-  padding-bottom: calc(100%);
-  transition: background 0.6s ease, box-shadow 0.3s ease;
-  background-size: cover;
+  border-radius: var(--radii-sm);
+  transition: background 0.6s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+
+  aspect-ratio: 1 / 1; /* square, see polyfill below */
 }
 
-.cell.cellSelected {
-  box-shadow: inset 0 0 0 4px #54cb20, inset 0 0 0px 6px var(--color-slate-6),
-    0px -1px 12px 0px rgb(var(--color-slate-1-rgb) / 0.1);
+@supports not (aspect-ratio: 1 / 1) {
+  .cell {
+    height: 160px;
+  }
 }
 
 .cell.cellLoading {
@@ -126,4 +129,28 @@
   100% {
     background-position: 300%;
   }
+}
+
+/** NFT Preview */
+.nftPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  background-size: cover;
+  cursor: pointer;
+
+  border: 1px solid var(--color-slate-6); /* so that images with white background don't blend in */
+  border-radius: var(--radii-sm);
+}
+
+.nftPreviewVisible {
+  opacity: 1;
+}
+
+.nftPreviewSelected {
+  box-shadow: inset 0 0 0 3px var(--color-green-dark), inset 0 0 0px 5px var(--color-slate-6),
+    0px -1px 12px 0px rgb(var(--color-slate-1-rgb) / 0.1);
+  border-color: var(--color-green-dark);
 }
