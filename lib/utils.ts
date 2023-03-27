@@ -1,4 +1,4 @@
-import { Domain } from './types'
+import { Domain, TransactionStatus } from './types'
 
 export function formatAddress(address: string, displayLength: number = 4): string {
   const leadingChars = 2 + displayLength
@@ -6,15 +6,17 @@ export function formatAddress(address: string, displayLength: number = 4): strin
 
   return address.length < leadingChars + trailingChars
     ? address
-    : `${address.substring(0, leadingChars)}\u2026${address.substring(address.length - trailingChars)}`
+    : `${address.substring(0, leadingChars)}\u2026${address.substring(
+        address.length - trailingChars
+      )}`
 }
 
 export function isValidAddress(address: string): boolean {
   return /^0x[0-9a-fA-F]{40}$/.test(address)
 }
 
-/** 
- * A function to generate secret for commit transaction. 
+/**
+ * A function to generate secret for commit transaction.
  * It uses Web Crypto API.
  */
 export function generateCommitSecret() {
@@ -58,4 +60,14 @@ export function getDomainName(domain: Domain): string {
 
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
+}
+
+export function loadingToStatus(
+  isWriteLoading: boolean,
+  isWaitLoading: boolean
+): TransactionStatus {
+  if (!isWriteLoading && !isWaitLoading) return 'idle'
+  if (isWriteLoading) return 'commit'
+  if (isWaitLoading) return 'processing'
+  return 'idle'
 }

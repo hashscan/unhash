@@ -1,6 +1,7 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
+import { loadingToStatus } from 'lib/utils'
 import {
   Address,
   useChainId,
@@ -55,7 +56,7 @@ export const useSendSetAddr = ({
   })
 
   return {
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     error: writeError || waitError,
     sendSetAddr: write,
     gasLimit: config.request?.gasLimit

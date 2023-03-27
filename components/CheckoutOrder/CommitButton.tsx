@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react'
+import { useCallback } from 'react'
 import { useAccount, useChainId } from 'wagmi'
 import useChange from '@react-hook/change'
 
@@ -6,6 +6,7 @@ import { RegistrationOrder, toNetwork } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
 import styles from './CommitButton.module.css'
 import { useNotifier } from 'lib/hooks/useNotifier'
@@ -13,7 +14,6 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { trackGoal } from 'lib/analytics'
 
-import { TransactionButton } from './TransactionButton'
 
 interface CommitButtonProps {
   order: RegistrationOrder

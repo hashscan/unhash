@@ -2,7 +2,7 @@ import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransa
 
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Domain, Network } from 'lib/types'
-import { getDomainName } from 'lib/utils'
+import { getDomainName, loadingToStatus } from 'lib/utils'
 
 import { useMakeCommitment } from './useMakeCommitment'
 import { useRegistration } from './useRegistration'
@@ -70,12 +70,7 @@ export const useSendCommit = ({
   return {
     gasLimit: config.request?.gasLimit,
     sendCommit: write,
-    status: (() => {
-      if (!isWriteLoading && !isWaitLoading) return 'idle' as const
-      if (isWriteLoading) return 'commit' as const
-      if (isWaitLoading) return 'processing' as const
-      return 'idle' as const
-    })(),
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     error: commitmentError ?? writeError ?? waitError
   }
 }

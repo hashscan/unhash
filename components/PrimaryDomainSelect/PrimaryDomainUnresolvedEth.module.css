@@ -23,7 +23,3 @@
 .input::placeholder {
   color: var(--color-text-primary);
 }
-
-.linkButton {
-  width: 120px;
-}

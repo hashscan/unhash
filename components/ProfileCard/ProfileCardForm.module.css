@@ -9,10 +9,7 @@
   padding: 12px 24px;
   background-color: var(--color-slate-8);
   border-top: 1px solid var(--color-slate-5);
-}
-
-.saveButton {
-  width: 120px;
-  display: block;
-  margin: 0 0 0 auto;
+  
+  display: flex;
+  justify-content: flex-end;
 }

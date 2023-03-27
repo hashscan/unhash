@@ -6,7 +6,7 @@ import {
   ETH_RESOLVER_ADDRESS
 } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
-import { getDomainName } from 'lib/utils'
+import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 import { useRegistration } from './useRegistration'
@@ -65,7 +65,7 @@ export const useSendRegister = (domain: Domain) => {
   return {
     gasLimit: config?.request?.gasLimit,
     write,
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     error: sendError || waitError
   }
 }

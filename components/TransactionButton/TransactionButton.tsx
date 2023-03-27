@@ -1,12 +1,13 @@
-import clsx from 'clsx'
 import type { PropsWithChildren, ComponentProps } from 'react'
+import clsx from 'clsx'
 
 import { LoaderSpinner } from 'components/icons'
+import { TransactionStatus } from 'lib/types'
 
 import styles from './TransactionButton.module.css'
 
 type TransactionButtonProps = {
-  status?: 'idle' | 'commit' | 'processing'
+  status?: TransactionStatus
   size?: 'regular' | 'medium' | 'cta'
   className?: string
 } & ComponentProps<'button'>

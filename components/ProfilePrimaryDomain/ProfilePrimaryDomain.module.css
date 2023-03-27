@@ -14,8 +14,8 @@
   margin-top: 24px;
 }
 
-.saveButton {
-  width: 120px;
-  display: block;
-  margin: 12px 0 0 auto;
+.saveButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 0 0;
 }

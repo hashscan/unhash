@@ -78,3 +78,5 @@ export type DomainListing = {
   price: number
   currency: Currency
 }
+
+export type TransactionStatus = 'idle' | 'commit' | 'processing'
