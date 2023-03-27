@@ -40,7 +40,7 @@ export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) =>
       await delay(1000) // TODO: remove
 
       try {
-        await Promise.race([loadImages(NFTs.map((n) => n.img)), timeout(LOAD_TIMEOUT)])
+        await Promise.race([loadImages(NFTs.map((n) => n.image)), timeout(LOAD_TIMEOUT)])
 
         // all images loaded
         setIsLoadingNfts(false)
