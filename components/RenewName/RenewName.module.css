@@ -71,10 +71,6 @@
   border-bottom-right-radius: var(--radii-lg);
 }
 
-.buttonRenew {
-  width: 120px;
-}
-
 .success {
   position: absolute;
   width: 100%;
