@@ -19,30 +19,6 @@ interface CommitButtonProps {
   order: RegistrationOrder
 }
 
-function Example() {
-  const [status, update] = useReducer((state) => {
-    switch (state) {
-      case 'idle':
-        return 'commit'
-      case 'commit':
-        return 'processing'
-      case 'processing':
-        return 'idle'
-    }
-  }, 'idle')
-
-  return (
-    <>
-      <button onClick={update} style={{ margin: 10 }}>
-        toggle status
-      </button>
-      <TransactionButton size="cta" onClick={update} status={status}>
-        Action
-      </TransactionButton>
-    </>
-  )
-}
-
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { domain } = order
 
