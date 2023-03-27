@@ -6,12 +6,14 @@ import { RegistrationOrder, toNetwork } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
 import styles from './CommitButton.module.css'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { trackGoal } from 'lib/analytics'
+
 
 interface CommitButtonProps {
   order: RegistrationOrder
@@ -23,7 +25,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   const chainId = useChainId()
   const { address } = useAccount()
 
-  const { sendCommit, isLoading, error } = useSendCommit({
+  const { sendCommit, status, error } = useSendCommit({
     domain: order.domain,
     network: toNetwork(chainId),
     duration: order.durationInYears * YEAR_IN_SECONDS,
@@ -65,14 +67,14 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
           }
 
           return (
-            <Button
+            <TransactionButton
               size="cta"
+              status={status}
               className={styles.commitButton}
               onClick={() => onStartClick()}
-              isLoading={isLoading}
             >
               Register {domain}
-            </Button>
+            </TransactionButton>
           )
         }}
       </ConnectButton.Custom>

@@ -7,7 +7,7 @@ import { useOnClickOutside } from 'usehooks-ts'
 import { useSetPrimaryEns } from 'lib/hooks/useSetPrimaryEns'
 import { Address } from 'wagmi'
 import { PrimaryDomainDropdown } from 'components/PrimaryDomainSelect/PrimaryDomainDropdown'
-import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { PrimaryDomainUnresolvedEth } from 'components/PrimaryDomainSelect/PrimaryDomainUnresolvedEth'
 import { trackGoal } from 'lib/analytics'
 
@@ -54,7 +54,7 @@ export const ProfilePrimaryDomain = ({
   )
 
   // transaction to update primary ENS
-  const { write: sendUpdate, isLoading: isUpdating } = useSetPrimaryEns({
+  const { write: sendUpdate, status } = useSetPrimaryEns({
     domain: newDomain?.name,
     onSuccess: () => {
       // TODO: so smart right? make normal update
@@ -91,15 +91,16 @@ export const ProfilePrimaryDomain = ({
               onResolved={onNewDomainResolved}
             />
           ) : (
-            <Button
-              className={styles.saveButton}
-              disabled={!newDomain.resolved}
-              isLoading={isUpdating}
-              size={'regular'}
-              onClick={savePrimaryEns}
-            >
-              Save
-            </Button>
+            <div className={styles.saveButtonContainer}>
+              <TransactionButton
+                disabled={!newDomain.resolved}
+                status={status}
+                size={'regular'}
+                onClick={savePrimaryEns}
+              >
+                Save
+              </TransactionButton>
+            </div>
           )}
         </>
       )}

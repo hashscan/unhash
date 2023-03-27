@@ -1,5 +1,6 @@
 import { ETH_REVERSE_REGISTRAR_ABI, ETH_REVERSE_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
+import { loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 export const useSetPrimaryEns = ({
@@ -28,7 +29,7 @@ export const useSetPrimaryEns = ({
 
   return {
     data,
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     write,
     gasLimit: config.request?.gasLimit,
     isSuccess

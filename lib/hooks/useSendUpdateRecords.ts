@@ -1,6 +1,7 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { Domain, TextRecords, toNetwork } from 'lib/types'
+import { loadingToStatus } from 'lib/utils'
 import {
   useChainId,
   useContract,
@@ -55,7 +56,7 @@ export const useSendUpdateRecords = ({
   })
 
   return {
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     error: sendError || waitError,
     sendUpdate: write,
     gasLimit: config.request?.gasLimit

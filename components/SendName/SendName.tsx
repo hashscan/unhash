@@ -2,6 +2,7 @@ import React, { ComponentProps, useState } from 'react'
 import styles from './SendName.module.css'
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 import { useSendName } from 'lib/hooks/useSendName'
 import { Domain } from 'lib/types'
@@ -25,7 +26,7 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
   // transaction to send name
   const {
     write: sendTransaction,
-    isLoading: isSending,
+    status,
     txHash,
     isSuccess
   } = useSendName({
@@ -40,6 +41,8 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
     sendTransaction?.()
   }
 
+  const isControlsDisabled = status !== 'idle'
+
   return (
     <div {...rest} className={clsx(className, styles.modal)}>
       <div className={styles.body}>
@@ -52,7 +55,7 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
           labelClassName={styles.addressLabel}
           label="Send to"
           placeholder="Enter address or ENS name..."
-          disabled={isSending}
+          disabled={isControlsDisabled}
           value={address}
           onAddressChange={(a) => setAddress(a || undefined)}
           onChange={(e) => setAddress(e.target.value)}
@@ -64,17 +67,17 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
         </div>
       </div>
       <div className={styles.footer}>
-        <Button size={'regular'} variant={'ghost'} disabled={isSending} onClick={() => onClose?.()}>
+        <Button
+          size={'regular'}
+          variant={'ghost'}
+          disabled={isControlsDisabled}
+          onClick={() => onClose?.()}
+        >
           Cancel
         </Button>
-        <Button
-          className={styles.buttonSend}
-          isLoading={isSending}
-          size={'regular'}
-          onClick={sendName}
-        >
+        <TransactionButton status={status} size={'regular'} onClick={sendName}>
           Send&nbsp;&nbsp;→
-        </Button>
+        </TransactionButton>
       </div>
       {isSuccess && (
         <SendNameSuccess

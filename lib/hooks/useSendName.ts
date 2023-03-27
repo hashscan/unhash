@@ -1,5 +1,6 @@
 import { ENS_NFT_ADDRESS, ENS_NFT_ABI } from 'lib/constants'
 import { toNetwork } from 'lib/types'
+import { loadingToStatus } from 'lib/utils'
 import {
   useAccount,
   useChainId,
@@ -41,7 +42,7 @@ export const useSendName = ({
   return {
     data,
     txHash: data?.hash,
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     write,
     gasLimit: config.request?.gasLimit,
     isSuccess

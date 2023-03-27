@@ -1,0 +1,143 @@
+.button {
+  box-sizing: border-box;
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: none;
+  box-shadow: none;
+  transition: var(--ease-200);
+
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  appearance: none;
+
+  background: var(--color-slate-1);
+  color: var(--color-slate-8);
+  position: relative;
+  overflow: hidden;
+}
+
+.button:hover {
+  background-color: var(--color-slate-2);
+}
+
+.button:active {
+  background-color: var(--color-slate-3);
+}
+
+.button[disabled] {
+  background: var(--color-slate-5);
+  pointer-events: none;
+}
+
+.button.button_regular {
+  --bt-height: 40px;
+  border-radius: var(--radii-sm);
+  padding: 0px 16px;
+  height: var(--bt-height);
+
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  font-weight: 400;
+}
+
+.button.button_medium {
+  --bt-height: 48px;
+  border-radius: var(--radii-md);
+  padding: 0 28px;
+  height: var(--bt-height);
+
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-slate-8);
+  font-weight: 500;
+
+  box-shadow: var(--shadow-lg);
+  transition: var(--ease-200);
+}
+
+.button.button_cta {
+  --bt-height: 56px;
+  border-radius: var(--radii-md);
+  padding: 0 32px;
+  height: var(--bt-height);
+
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-slate-8);
+  font-weight: 500;
+
+  box-shadow: var(--shadow-lg);
+  transition: var(--ease-200);
+}
+
+.button.button_cta:hover {
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-slate-2);
+}
+
+.button.button_cta:active {
+  box-shadow: none;
+  transform: rotate3d(1, 0, 0, 6deg) scale(0.99, 0.99) translateY(1px);
+}
+
+.status {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  transition: transform ease 0.2s, opacity ease 0.2s;
+
+  height: var(--bt-height);
+}
+
+.status_idle {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.status_commit {
+  opacity: 0;
+  transform: translateY(0%);
+}
+
+.status_processing {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.button.bt_idle > .status_idle {
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.button.bt_commit > .status_commit {
+  opacity: 1;
+  transform: translateY(-100%);
+}
+
+.button.bt_processing > .status_processing {
+  opacity: 1;
+  transform: translateY(-200%);
+}
+
+.button.bt_commit,
+.button.bt_processing {
+  pointer-events: none;
+}
+
+.loader {
+  width: 26px;
+  height: 26px;
+
+  margin-right: 12px;
+}
+
+.button.button_cta .loader {
+  width: 34px;
+  height: 34px;
+}

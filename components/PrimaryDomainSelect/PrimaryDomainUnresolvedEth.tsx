@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { EthereumIcon } from 'components/icons'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
-import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { useSendSetAddr } from 'lib/hooks/useSendSetAddr'
 import { Domain } from 'lib/types'
@@ -27,7 +27,7 @@ export const PrimaryDomainUnresolvedEth = ({
   const { address } = useAccount()
 
   // update records transaction
-  const { sendSetAddr, isLoading: isUpdating } = useSendSetAddr({
+  const { sendSetAddr, status } = useSendSetAddr({
     domain,
     address,
     onError: (error) => notify(error.message, { status: 'error' }),
@@ -54,14 +54,9 @@ export const PrimaryDomainUnresolvedEth = ({
             first.
           </div>
         </div>
-        <Button
-          className={styles.linkButton}
-          isLoading={isUpdating}
-          size={'regular'}
-          onClick={setEthRecord}
-        >
+        <TransactionButton status={status} size={'regular'} onClick={setEthRecord}>
           Link
-        </Button>
+        </TransactionButton>
       </div>
     </div>
   )

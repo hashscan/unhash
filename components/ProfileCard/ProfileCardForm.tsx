@@ -13,7 +13,7 @@ import {
 import { useSendUpdateRecords } from 'lib/hooks/useSendUpdateRecords'
 import { DomainInfo } from 'lib/api'
 import { useNotifier } from 'lib/hooks/useNotifier'
-import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { trackGoal } from 'lib/analytics'
 
 interface ProfileCardFormProps {
@@ -63,7 +63,7 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
   const onError = (error: Error) => notify(error.message, { status: 'error' })
   const onSuccess = () => notify('Your profile has been updated!', { status: 'info' })
   // update records transaction
-  const { sendUpdate, isLoading: isUpdating } = useSendUpdateRecords({
+  const { sendUpdate, status } = useSendUpdateRecords({
     domain,
     records: changes,
     onError,
@@ -77,7 +77,7 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
   }
 
   const hasChanges = Object.keys(changes).length > 0
-  const inputsDisabled = !initialized || isUpdating
+  const inputsDisabled = !initialized || status !== 'idle'
 
   return (
     <div className={styles.form}>
@@ -120,15 +120,14 @@ export const ProfileCardForm = ({ domain, info }: ProfileCardFormProps) => {
         />
       </div>
       <div className={styles.footer}>
-        <Button
-          className={styles.saveButton}
+        <TransactionButton
           disabled={inputsDisabled || !hasChanges}
-          isLoading={isUpdating}
+          status={status}
           size={'regular'}
           onClick={save}
         >
           Save
-        </Button>
+        </TransactionButton>
       </div>
     </div>
   )

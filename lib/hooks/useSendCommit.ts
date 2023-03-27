@@ -1,7 +1,9 @@
+import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
 import { Domain, Network } from 'lib/types'
-import { getDomainName } from 'lib/utils'
-import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { getDomainName, loadingToStatus } from 'lib/utils'
+
 import { useMakeCommitment } from './useMakeCommitment'
 import { useRegistration } from './useRegistration'
 
@@ -11,7 +13,7 @@ import { useRegistration } from './useRegistration'
  * and waits for transaction to get confirmed.
  *
  * Creates new Registration in LocalStorage when transaction is sent.
- * Note: Registration status will be updated to `commited` by WatchPendingRegistrations.
+ * Note: Registration status will be updated to `committed` by WatchPendingRegistrations.
  */
 export const useSendCommit = ({
   domain,
@@ -48,7 +50,7 @@ export const useSendCommit = ({
     error: writeError
   } = useContractWrite({
     ...config,
-    // create new Registartion when transaction is sent
+    // create new Registration when transaction is sent
     onSuccess: (data) =>
       setCommitting({
         domain,
@@ -68,7 +70,7 @@ export const useSendCommit = ({
   return {
     gasLimit: config.request?.gasLimit,
     sendCommit: write,
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     error: commitmentError ?? writeError ?? waitError
   }
 }

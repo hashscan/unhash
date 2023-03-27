@@ -8,7 +8,7 @@ import { Registration } from 'lib/types'
 import { formatNetworkFee } from 'lib/format'
 import { REGISTER_AVERAGE_GAS } from 'lib/constants'
 import { Gas } from 'components/icons'
-import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
 import styles from './CheckoutRegisterStep.module.css'
 
@@ -17,7 +17,7 @@ interface CheckoutRegisterStepProps {
 }
 
 export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps) => {
-  const { gasLimit, write, isLoading, error } = useSendRegister(registration.domain)
+  const { gasLimit, write, status, error } = useSendRegister(registration.domain)
   const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
   const onRegisterClick = useCallback(() => {
@@ -43,14 +43,13 @@ export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps
 
       <div className={styles.buttons}>
         <div className={styles.sendTransaction}>
-          <Button
-            className={styles.registerButton}
+          <TransactionButton
             size="cta"
             onClick={onRegisterClick}
-            isLoading={isLoading}
+            status={status}
           >
             Complete Registration →
-          </Button>
+          </TransactionButton>
 
           {networkFee && (
             <div className={styles.transactionStatus}>
