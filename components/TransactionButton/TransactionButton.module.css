@@ -83,7 +83,7 @@
   box-shadow: none;
   transform: rotate3d(1, 0, 0, 6deg) scale(0.99, 0.99) translateY(1px);
 }
-/* pointer-events: none; */
+
 .status {
   display: inline-flex;
   justify-content: center;
@@ -97,32 +97,32 @@
 
 .status_idle {
   opacity: 0;
-  transform: translateY(calc(var(--bt-height) * -1));
+  transform: translateY(-100%);
 }
 
 .status_commit {
   opacity: 0;
-  transform: translateY(calc(var(--bt-height) * 0));
+  transform: translateY(0%);
 }
 
 .status_processing {
   opacity: 0;
-  transform: translateY(calc(var(--bt-height) * 1));
+  transform: translateY(100%);
 }
 
 .button.bt_idle > .status_idle {
   opacity: 1;
-  transform: translateY(calc(var(--bt-height) * 0));
+  transform: translateY(0%);
 }
 
 .button.bt_commit > .status_commit {
   opacity: 1;
-  transform: translateY(calc(var(--bt-height) * -1));
+  transform: translateY(-100%);
 }
 
 .button.bt_processing > .status_processing {
   opacity: 1;
-  transform: translateY(calc(var(--bt-height) * -2));
+  transform: translateY(-200%);
 }
 
 .button.bt_commit,
