@@ -17,13 +17,13 @@ export const Navigation = (props: Props) => {
       <div
         className={clsx(styles.tab, styles.tabWIP, { [styles.tabActive]: props.tab === 'upload' })}
       >
-        Upload Image<span className={styles.tabBadge}>WIP</span>
+        Upload Image<span className={styles.tabBadge}>Soon</span>
       </div>
 
       <div
         className={clsx(styles.tab, styles.tabWIP, { [styles.tabActive]: props.tab === 'artwork' })}
       >
-        NFT Artwork
+        NFT Artwork<span className={styles.tabBadge}>Soon</span>
       </div>
     </div>
   )
