@@ -110,6 +110,8 @@
   --color-text-primary: var(--color-slate-1);
   --color-text-secondary: var(--color-slate-3);
   --color-text-hint: var(--color-slate-4);
+  --color-text-disabled: var(--color-slate-4);
+
   /* placeholders, hints etc. */
   --color-text-muted: var(--color-slate-5);
   /* disabled labels */
