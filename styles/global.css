@@ -61,6 +61,8 @@
   --color-green-light: rgb(var(--color-green-light-rgb) / 100%);
   --color-green-rgb: 116 230 0;
   --color-green: rgb(var(--color-green-rgb) / 100%);
+  --color-green-dark-rgb: 84 203 32;
+  --color-green-dark: rgb(var(--color-green-dark-rgb) / 100%);
 
   /* reds TODO: more variations */
   --color-red-rgb: 237 2 0;
