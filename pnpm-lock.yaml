@@ -14,6 +14,7 @@ specifiers:
   eslint-config-next: 13.2.4
   ethers: ^5.7.2
   framer-motion: ^9.0.3
+  image-promise: ^7.0.1
   ky: ^0.33.2
   nanoid: ^4.0.0
   next: ^13.2.4
@@ -35,6 +36,7 @@ dependencies:
   clsx: 1.2.1
   ethers: 5.7.2
   framer-motion: 9.0.3_biqbaboplfbrettd7655fr4n2y
+  image-promise: 7.0.1
   ky: 0.33.2
   nanoid: 4.0.1
   next: 13.2.4_pjwopsidmaokadturxaafygjp4
@@ -4180,6 +4182,10 @@ packages:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
     dev: true
+
+  /image-promise/7.0.1:
+    resolution: {integrity: sha512-399HJHce1d3aEz4EYXLU4MUgUjX0gO0Bewu8mY4iLYItpNpBWLSQkevbYRPDViyISsL6K2bJiLadhxGCctRIOg==}
+    dev: false
 
   /image-size/0.5.5:
     resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
