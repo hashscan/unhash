@@ -1,4 +1,4 @@
-import React, { ComponentProps, useState } from 'react'
+import React, { ComponentProps, useEffect, useState } from 'react'
 import styles from './SetAvatarDialog.module.css'
 
 import clsx from 'clsx'
@@ -21,7 +21,24 @@ const Header = ({ onClose }: { onClose: () => void }) => {
   )
 }
 
+const NFTs = Array.from({ length: 6 }).map((_, i) => ({
+  id: 'nft' + i,
+  img: `https://loremflickr.com/640/640/graffiti?random=${i}`
+}))
+
 export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) => {
+  const nftsCount = NFTs.length
+  const displayedCells = Math.max(8, 4 * Math.ceil(nftsCount / 4))
+
+  const [isLoadingNfts, setIsLoadingNfts] = useState(true)
+
+  useEffect(() => {
+    setIsLoadingNfts(true)
+    setTimeout(() => {
+      setIsLoadingNfts(false)
+    }, 1000)
+  }, [])
+
   return (
     <>
       <div className={styles.backdrop} />
@@ -35,9 +52,27 @@ export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) =>
             </div>
 
             <div className={styles.grid}>
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div className={styles.item} key={i} />
-              ))}
+              {Array(displayedCells)
+                .fill(0)
+                .map((_, i) => {
+                  if (isLoadingNfts || i >= nftsCount)
+                    return (
+                      <div
+                        key={i}
+                        className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNfts })}
+                      />
+                    )
+
+                  if (i < nftsCount) {
+                    return (
+                      <div
+                        className={clsx(styles.cell, { [styles.cellSelected]: i === 1 })}
+                        key={i}
+                        style={{ backgroundImage: `url(${NFTs[i].img})` }}
+                      ></div>
+                    )
+                  }
+                })}
             </div>
           </div>
 
