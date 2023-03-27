@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
-import { getDomainName } from 'lib/utils'
+import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 
@@ -45,7 +45,7 @@ export const useRenewName = ({
   return {
     data,
     txHash: data?.hash,
-    isLoading: isWriteLoading || isWaitLoading,
+    status: loadingToStatus(isWriteLoading, isWaitLoading),
     write,
     gasLimit: config.request?.gasLimit,
     isSuccess

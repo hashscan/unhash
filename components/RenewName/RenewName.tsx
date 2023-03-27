@@ -2,6 +2,7 @@ import React, { ComponentProps, useMemo, useState } from 'react'
 import styles from './RenewName.module.css'
 import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
+import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { RenewNameSuccess } from './RenewNameSuccess'
 import { UserDomain } from 'lib/types'
@@ -28,7 +29,7 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   // transaction to renew name
   const {
     write: sendTransaction,
-    isLoading: isLoading,
+    status,
     txHash,
     isSuccess
   } = useRenewName({
@@ -65,17 +66,17 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
         </div>
       </div>
       <div className={styles.footer}>
-        <Button size={'regular'} variant={'ghost'} disabled={isLoading} onClick={() => onClose?.()}>
+        <Button
+          size="regular"
+          variant="ghost"
+          disabled={status !== 'idle'}
+          onClick={() => onClose?.()}
+        >
           Cancel
         </Button>
-        <Button
-          className={styles.buttonRenew}
-          isLoading={isLoading}
-          size={'regular'}
-          onClick={renewName}
-        >
+        <TransactionButton status={status} size={'regular'} onClick={renewName}>
           Renew&nbsp;&nbsp;→
-        </Button>
+        </TransactionButton>
       </div>
       {isSuccess && (
         <RenewNameSuccess
