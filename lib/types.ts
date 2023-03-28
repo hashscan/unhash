@@ -80,3 +80,15 @@ export type DomainListing = {
 }
 
 export type TransactionStatus = 'idle' | 'commit' | 'processing'
+
+export type CommitmentParams = {
+  name: Domain
+  owner: string
+  resolver?: string
+  addr?: string
+}
+
+export type RegistrationParams = CommitmentParams & {
+  secret: string
+  commitment: string
+}
