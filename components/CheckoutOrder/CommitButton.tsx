@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount } from 'wagmi'
 import useChange from '@react-hook/change'
 
-import { RegistrationOrder, toNetwork } from 'lib/types'
+import { RegistrationOrder } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { Button } from 'components/ui/Button/Button'
@@ -14,22 +14,20 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { trackGoal } from 'lib/analytics'
 
-
 interface CommitButtonProps {
   order: RegistrationOrder
 }
 
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { domain } = order
-
-  const chainId = useChainId()
   const { address } = useAccount()
 
   const { sendCommit, status, error } = useSendCommit({
     domain: order.domain,
-    network: toNetwork(chainId),
     duration: order.durationInYears * YEAR_IN_SECONDS,
-    owner: order.ownerAddress || address
+    owner: order.ownerAddress ?? address,
+    setDefaultResolver: true,
+    addr: order.ownerAddress ?? address // can be set a different address or no address
   })
 
   const notify = useNotifier()

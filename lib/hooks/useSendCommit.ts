@@ -1,11 +1,16 @@
-import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useAccount,
+  useChainId,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction
+} from 'wagmi'
 
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS } from 'lib/constants'
-import { Domain, Network } from 'lib/types'
-import { getDomainName, loadingToStatus } from 'lib/utils'
-
-import { useMakeCommitment } from './useMakeCommitment'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { Domain, toNetwork } from 'lib/types'
+import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
+import { useMakeCommitment } from './useMakeCommitment'
 
 /**
  * Hook for sending commit transaction.
@@ -17,21 +22,29 @@ import { useRegistration } from './useRegistration'
  */
 export const useSendCommit = ({
   domain,
-  network,
   duration,
-  owner
+  owner,
+  addr,
+  setDefaultResolver = true
 }: {
   domain: Domain
-  network: Network
   duration: number
-  owner: string | undefined
+  owner: string | undefined // required; hooks is disabled unless it's set
+  addr?: string // optional eth address to set in resolver
+  setDefaultResolver?: boolean
 }) => {
+  const chainId = useChainId()
+  const network = toNetwork(chainId)
   const { address: sender } = useAccount()
   const { setCommitting } = useRegistration(domain)
 
   // generate secret and commitment
-  const name = getDomainName(domain)
-  const { secret, commitment, error: commitmentError } = useMakeCommitment(name, network, owner)
+  const { secret, commitment } = useMakeCommitment({
+    name: domain,
+    owner: owner,
+    resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(network) : undefined,
+    addr: setDefaultResolver ? addr : undefined
+  })
 
   // prepare commit transaction
   const { config } = usePrepareContractWrite({
@@ -71,6 +84,6 @@ export const useSendCommit = ({
     gasLimit: config.request?.gasLimit,
     sendCommit: write,
     status: loadingToStatus(isWriteLoading, isWaitLoading),
-    error: commitmentError ?? writeError ?? waitError
+    error: writeError ?? waitError
   }
 }
