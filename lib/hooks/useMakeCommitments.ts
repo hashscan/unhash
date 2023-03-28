@@ -1,44 +1,36 @@
-import { XENS_ABI, XENS_ADDRESS } from 'lib/constants'
-import { toNetwork } from 'lib/network'
-import { generateCommitSecret } from 'lib/utils'
-import { useEffect, useMemo, useState } from 'react'
-import { useChainId, useContractRead } from 'wagmi'
+import { makeCommitment } from 'lib/ensUtils'
+import { Domain } from 'lib/types'
+import { useMemo } from 'react'
 
 /**
- * Generates ENS commitments for a list of names.
- *
- * @param names list of name part of {name}.eth domain
- * @param owners addresses of future domain owner for each name
- * @returns list of commitments and secrets, associated with names
+ * Helper hook to generate a list of secrets and commitments for names with same arguments.
+ * Make sure to use stable reference to 'names'.
  */
-export function useMakeCommitment(names: string[], owners: string[]) {
-  const chainId = useChainId()
+export function useMakeCommitments({
+  names,
+  owner,
+  resolver,
+  addr
+}: {
+  names: Domain[]
+  owner?: string // required to get result; hooks is disabled unless it's set
+  resolver?: string
+  addr?: string
+}) {
+  const results = useMemo(() => {
+    if (!owner) return undefined
 
-  const length = useMemo(() => names.length, [names])
+    console.log(`useMakeCommitments.useMemo triggered: names = ${JSON.stringify(names)}`)
 
-  const [secrets, setSecrets] = useState<string[] | undefined>(undefined)
-  useEffect(() => {
-    const indices = [...Array(length).keys()]
-    setSecrets(indices.map(() => generateCommitSecret()))
-  }, [length])
+    return names.map((name) =>
+      makeCommitment({
+        name,
+        owner,
+        resolver,
+        addr
+      })
+    )
+  }, [names, owner, resolver, addr])
 
-  // do not set resolvers and addr
-  const noArgList: (string | undefined)[] = useMemo(
-    () => [...Array(length).keys()].map(() => undefined),
-    [length]
-  )
-
-  const { data, error } = useContractRead<string[], 'makeCommitments', string[]>({
-    abi: XENS_ABI,
-    address: XENS_ADDRESS.get(toNetwork(chainId)),
-    functionName: 'makeCommitments',
-    enabled: names.length > 0 && names.length === owners.length && names.length === secrets?.length,
-    args: [names, owners, secrets, noArgList, noArgList]
-  })
-
-  return {
-    secrets: secrets,
-    commitments: data,
-    error: error
-  }
+  return results
 }
