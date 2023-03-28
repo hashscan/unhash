@@ -1,12 +1,28 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 8px;
-
+.container {
   max-height: 420px;
   overflow-y: auto;
   padding: 16px 24px;
   background: var(--color-slate-7);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 8px;
+  position: relative;
+}
+
+/**
+* rootMargin option in react-infinite-scroll-hook is currently broken, so here is a workaround
+* to make it possible to trigger loading before reaching the end of scrollable area
+*/
+.sentry {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  pointer-events: none;
 }
 
 .cell {
