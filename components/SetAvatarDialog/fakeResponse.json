@@ -1,1 +1,932 @@
-{"tokens":[{"token":{"contract":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","tokenId":"22156867754635903543439038492775076345370522243410459127172307564119607756346","kind":"erc721","name":"xens.eth","image":"https://openseauserdata.com/files/d4153a66b453c847ed224b6684d737a0.svg","lastBuy":{"value":0.45,"timestamp":1677373895},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","name":"ENS: Ethereum Name Service","imageUrl":"https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":0.45},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2023-02-26T01:11:35.000Z"}},{"token":{"contract":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","tokenId":"73172953931534590499654432196755498711884409302332329948420565903950383108895","kind":"erc721","name":"xenis.eth","image":"https://openseauserdata.com/files/5ca5d42b05bd25657d7c8c6f00925e7c.svg","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","name":"ENS: Ethereum Name Service","imageUrl":"https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2023-02-24T22:33:35.000Z"}},{"token":{"contract":"0xfbf170984ccb1e980acb53023d7502d15f6e14ff","tokenId":"283","kind":"erc721","name":"proof of work 283","image":"https://openseauserdata.com/files/4f46cb4e56fce968116d82425220dbed.svg","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":6,"rarityRank":1,"media":null,"collection":{"id":"0xfbf170984ccb1e980acb53023d7502d15f6e14ff","name":"proof of work OE","imageUrl":"https://i.seadn.io/gcs/files/3e5c717dfdaf00b36c8d1af5a8b0f025.png?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2023-02-03T22:23:35.000Z"}},{"token":{"contract":"0xee2010b07c6e26635db774177a58e9d79d13ed13","tokenId":"1423","kind":"erc721","name":"✖  1423","image":"https://i.seadn.io/gcs/files/f90bce4ca51411de025d84b5628a783e.jpg?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":38.788,"rarityRank":19,"media":null,"collection":{"id":"0xee2010b07c6e26635db774177a58e9d79d13ed13","name":"Status not Found","imageUrl":"https://i.seadn.io/gcs/files/2f5c5adc062fe2704ba5f25aa2d3da05.jpg?w=500&auto=format","floorAskPrice":0.0069},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2023-01-17T14:21:11.000Z"}},{"token":{"contract":"0x50c542b00d5c9919aa42c9e48184a2d795100753","tokenId":"2","kind":"erc1155","name":"Citizen of Bullieverse Island #2","image":"https://i.seadn.io/gae/wHHhC4khzqf2z6GIHyywAoQ8HvxGiwsd0UiMPYCwt0jZT97SOrt07rfg40lkb1lV1Gy2_7vFEJf4GoSmcv6LCjXT2UlAWKdzmQ1FYA?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":147.086,"rarityRank":8,"media":null,"collection":{"id":"0x50c542b00d5c9919aa42c9e48184a2d795100753","name":"The Bulliever Island Genesis","imageUrl":"https://i.seadn.io/gae/_OwDr6nnZ21p84dMpys02GUm20G9BQWY5t0YoB872-4f2lddJy1zV3TVqDEM5OA5Iw84O5NCBWLZW_QUozu9EkUdnHOSnmAno1EJ?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-06-04T08:07:05.000Z"}},{"token":{"contract":"0x594d7ca1f08ba04f826272a1f7e84ce10d2c3011","tokenId":"2","kind":"erc1155","name":"Asuna #2","image":"https://lh3.googleusercontent.com/Mj2OpDLnAocCN4zgvc8QsyMV0i_erGhuB4M3lRK6Ex9heVQ_xeiWswxxqrILnbM093g6TY2tRD5a8-mZE0Oyfu-KEIF33I6S7J4b","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":342.839,"rarityRank":9,"media":null,"collection":{"id":"0x594d7ca1f08ba04f826272a1f7e84ce10d2c3011","name":"The Lives of Asuna Genesis","imageUrl":null,"floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-06-04T07:43:57.000Z"}},{"token":{"contract":"0xcc621dce77b9ce2fc493fe5df3a529aaa5d8592f","tokenId":"2","kind":"erc1155","name":null,"image":null,"lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xcc621dce77b9ce2fc493fe5df3a529aaa5d8592f","name":"Coffee Junkie Collection","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-06-02T07:05:34.000Z"}},{"token":{"contract":"0x872af5dc254878576e3bdf15e055bc241f7081a3","tokenId":"86","kind":"erc1155","name":"KOC #86","image":"https://i.seadn.io/gae/aO43Ej55Cf6SGNC9sEoREdflX17P9adxc6Ec7nEtFCJUAoxKZZbLwslQEVGE0MGg4UkGCTAbzKKcnWUN1tV0vxh9vCJ3KhY_fxZLnj4?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":36.752,"rarityRank":109,"media":null,"collection":{"id":"0x872af5dc254878576e3bdf15e055bc241f7081a3","name":"The Knight of Chain Collection.","imageUrl":"https://i.seadn.io/gae/eRhkkVikIOW_-lDc1moMrZlTcd5DPygPRmTJ69Anb-CfG_RMAxIsichM5kDvfdnXc6gfnKuGZOFCbP_58pUvz57TyUeNbFMKGydHoac?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-05-26T08:08:10.000Z"}},{"token":{"contract":"0xf381b1fc5230ceb5893808f9e7c7d6d05b62fd22","tokenId":"128","kind":"erc1155","name":null,"image":null,"lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xf381b1fc5230ceb5893808f9e7c7d6d05b62fd22","name":"the goblinstown coll","imageUrl":"https://i.seadn.io/gae/BEODq_xX0fTc0BQeUdEJ_S5XpVztRnOqnQ3ruc5ul54d1kGCVYvOorabqVxaGI2FrhD7U7lmtVRPLsN7-1PctCZvHGeVFOa29jLx?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-05-25T08:26:52.000Z"}},{"token":{"contract":"0xb8941f7a5fda54ba02d1533a08c759861c496bfa","tokenId":"864","kind":"erc1155","name":"Top Cat Club #864","image":"https://i.seadn.io/gae/TtZ79ybRuYmjQ8Q16LXDcSIvFQHGSOdxcHGKxSC6stxelwbs049u4rgAOrRhM9NMKkZUjdzixmBNvhp8uQBvFNywohQTxyeneWiY?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xb8941f7a5fda54ba02d1533a08c759861c496bfa","name":"Top Cat Club NFT","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-05-07T03:27:00.000Z"}},{"token":{"contract":"0xf18b7c911664ad1e3b73cfd294a12099fcee4e71","tokenId":"975","kind":"erc721","name":"Localtrotters #975","image":"https://lh3.googleusercontent.com/NGIm1ICLoh9cUCa_1H-oZ01HuqXpccxD8VmOwZyGBNLuxsuVSf0slXQgBmD9zT6-swMTLmTd9jWTx-4C2BncSoDg67MDrDSjP3ed_w=s250","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xf18b7c911664ad1e3b73cfd294a12099fcee4e71","name":"Superlocal Localtrotters","imageUrl":"https://i.seadn.io/gae/hPsm0ZHoaWboGy9BMFwRv85ZHBSFrCBoFCpmRPDKi7SYiIdyRbuWDWDkqku9pnLRodU4-6xJyH38ca--OZGnOmGOocLrGhNDShtwqw?w=500&auto=format","floorAskPrice":0.009},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-03-15T16:56:36.000Z"}},{"token":{"contract":"0x6fdead7adee56d358f949a4492b6d0b9fd5f6705","tokenId":"1","kind":"erc1155","name":"Antipass","image":"https://i.seadn.io/gcs/files/8af4023fdcc8ff12d67a24a6a08cbebe.gif?w=500&auto=format","lastBuy":{"value":0.25,"timestamp":1678254095},"lastSell":{"value":0.47,"timestamp":1677866639},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x6fdead7adee56d358f949a4492b6d0b9fd5f6705","name":"Anti Collective","imageUrl":"https://i.seadn.io/gcs/files/cf002a0b8c2a082efd14c005420df7aa.jpg?w=500&auto=format","floorAskPrice":0.3},"lastAppraisalValue":0.001},"ownership":{"tokenCount":"1","onSaleCount":"1","floorAsk":{"id":"0xea41fcc0e5da98c7a6685132f9e17aae9401e46c5af7780e1232ff65f1f9c126","price":{"currency":{"contract":"0x0000000000000000000000000000000000000000","name":"Ether","symbol":"ETH","decimals":18},"amount":{"raw":"300000000000000000","decimal":0.3,"usd":515.75129,"native":0.3}},"maker":"0xc84c499001ca560a93f175bae6b7bd3ecdcaf047","validFrom":1679635697,"validUntil":1682314097,"dynamicPricing":null,"source":{"id":"0x5b3256965e7c3cf26e11fcaf296dfc8807c01073","domain":"opensea.io","name":"OpenSea","icon":"https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/opensea-logo.svg","url":"https://opensea.io/assets/0x6fdead7adee56d358f949a4492b6d0b9fd5f6705/1"}},"acquiredAt":"2022-01-19T22:15:25.000Z"}},{"token":{"contract":"0x7118f3ff1d44932733c90c87305ab3efee6d7fdf","tokenId":"127","kind":"erc1155","name":"Webb Drinccs #127","image":"https://lh3.googleusercontent.com/kLhYwNPAx_lIXuyi7o2DvUsQGZsSuKdD-5tfFOLpQqNs-uramZkEcSs22TfHUk3_7SwrAukGM3xanCqZO5Ecl3cDXPTBR5uXP4Fq=s250","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":18.776,"rarityRank":51,"media":null,"collection":{"id":"0x7118f3ff1d44932733c90c87305ab3efee6d7fdf","name":"Webb Drinccs","imageUrl":"https://i.seadn.io/gae/eSHd4dKypxz7ckGc-mICN6_28VWgl9p-caUxejB0nr_10s93iHB5Sw0z4SUUjmuPtEu4KD8fxOGU16K0LfPpwUo64PL6Akri_47IjA?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-01-19T15:56:25.000Z"}},{"token":{"contract":"0x495f947276749ce646f68ac8c248420045cb7b5e","tokenId":"16574242104644889595969071624957431077651352917260431279725366020395971379201","kind":"erc1155","name":"New York Streets - Foto Trece","image":"https://i.seadn.io/gae/Zyg6J_5MqFsdHI0yE0meHwFqVo_X7Lu6SkioJuYg56wBL22pGQMXU7bGPFyFsfYR-21VIv1CmCzk0-Tg2LfYYHDNhSq-bctAB-66ew?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x495f947276749ce646f68ac8c248420045cb7b5e:opensea-nyccesar","name":"New York City Street Photos","imageUrl":"https://i.seadn.io/gae/uX81iG-Lx8Sv37n2TqQK18CaMwhTwF8sqmDPyQh4Yb2kXSPz5tXkDzrB4fu2BZqe00jMmCVl0ptRgHmFbhsHveYN5n1W1Q828MQLjE0?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":0.06},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2022-01-15T10:21:25.000Z"}},{"token":{"contract":"0x78ccad4da0a92a94f95405cf151f73e6a3c4c279","tokenId":"388","kind":"erc721","name":"FriendlyGhost #388","image":"https://storage.opensea.io/files/0ff0afc0caa9ca1e961b59d0f474ef22.svg","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":86.435,"rarityRank":422,"media":null,"collection":{"id":"0x78ccad4da0a92a94f95405cf151f73e6a3c4c279","name":"Friendly Ghosts NFT","imageUrl":"https://i.seadn.io/gae/KUpYDYW3BZq76Rlo48GIo15bwx3XUpFmQCAmSnDSQSOxGDBBHLK8TKUSLVTBEE1Y1CyHuij3gr5hpMmTyUwZELCeXmhGteb9zMMVEgw?w=500&auto=format","floorAskPrice":0.01},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-12-12T22:45:28.000Z"}},{"token":{"contract":"0xd1146680ae5a4d71f68accb6610030ced7e7afe1","tokenId":"1073","kind":"erc721","name":"MUTANT PUNKS CITY #1073","image":"https://i.seadn.io/gae/ssqJ228tIo1BhxMFdhvS8GTQi-FfCvFvisEIDNK48v9BTEN9u_eGt43_7XjxW_MSojqQPcLIv7OtWjS6CShIPSDHbLeurtJfEiJook8?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":29.418,"rarityRank":2937,"media":null,"collection":{"id":"0xd1146680ae5a4d71f68accb6610030ced7e7afe1","name":"MUTANT PUNKS CITY","imageUrl":"https://i.seadn.io/gae/tCMJyD3SxWiMvU-AiYsHkMx5sdnWO4apM09wgBsDrtts6R9ARTln5tqSCYobPOpEV6V1phz0sDGAXZsZIJRhk79_9PdD1Srbj3tPvLQ?w=500&auto=format","floorAskPrice":0.01},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-11-11T16:00:13.000Z"}},{"token":{"contract":"0xd1146680ae5a4d71f68accb6610030ced7e7afe1","tokenId":"1072","kind":"erc721","name":"MUTANT PUNKS CITY #1072","image":"https://i.seadn.io/gae/a0ptUcO7w3ge2rKip5R1QPpm4zlKCuUZJQmq69z8CMJ2GiWy_JXMsrok8lZvHGtSpMogveKxTYmPzPIvCBVn4A7mzpZtijsW3Nbj_Q?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":30.267,"rarityRank":2528,"media":null,"collection":{"id":"0xd1146680ae5a4d71f68accb6610030ced7e7afe1","name":"MUTANT PUNKS CITY","imageUrl":"https://i.seadn.io/gae/tCMJyD3SxWiMvU-AiYsHkMx5sdnWO4apM09wgBsDrtts6R9ARTln5tqSCYobPOpEV6V1phz0sDGAXZsZIJRhk79_9PdD1Srbj3tPvLQ?w=500&auto=format","floorAskPrice":0.01},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-11-11T16:00:13.000Z"}},{"token":{"contract":"0xd1146680ae5a4d71f68accb6610030ced7e7afe1","tokenId":"1053","kind":"erc721","name":"MUTANT PUNKS CITY #1053","image":"https://i.seadn.io/gae/Ts32LayttU3mRCPVue0E2cdJ12442la62uQ9emPuOWia-XBXM2vkY-iahITz2l1rDQl1jJwRkVeZCzWYZON98nuQ7dbHA32Akf3vlQ?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":30.445,"rarityRank":2447,"media":null,"collection":{"id":"0xd1146680ae5a4d71f68accb6610030ced7e7afe1","name":"MUTANT PUNKS CITY","imageUrl":"https://i.seadn.io/gae/tCMJyD3SxWiMvU-AiYsHkMx5sdnWO4apM09wgBsDrtts6R9ARTln5tqSCYobPOpEV6V1phz0sDGAXZsZIJRhk79_9PdD1Srbj3tPvLQ?w=500&auto=format","floorAskPrice":0.01},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-11-11T16:00:01.000Z"}},{"token":{"contract":"0x368ad4a7a7f49b8fa8f34476be0fc4d04ce622f5","tokenId":"8523","kind":"erc721","name":"OG:Crystal 8523","image":"https://i.seadn.io/gcs/files/b2e6bc2e5f91371ac1708ca6638ac2ec.jpg?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":71.394,"rarityRank":5224,"media":"https://api.ogcrystals.com/api/v1/crystals/animation/8523","collection":{"id":"0x368ad4a7a7f49b8fa8f34476be0fc4d04ce622f5","name":"OG:Crystals","imageUrl":"https://i.seadn.io/gae/PaM_tFDNK4SBoo73VtX2mjqtb5pG1jbcioMW2CUntcFbY8aA1l1vhAKOn7jYlykkuk7JLCZFvPo7vbiN7xotzQUYab18i4tl1Wk3_A?w=500&auto=format","floorAskPrice":0.04},"lastAppraisalValue":0.1},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-10-31T03:39:19.000Z"}},{"token":{"contract":"0x495f947276749ce646f68ac8c248420045cb7b5e","tokenId":"65459863497419548410595676505264778706876384680249086662677618596429720190977","kind":"erc1155","name":"Bloom #4 - Pastel Apartments","image":"https://i.seadn.io/gae/lhO3njpR44o4AREHyjdzrMr4PbBIePeEowXpwp8e_yvNh7Ck0AKyk57CwIkWLoGk36mzCUs1TMGlPNiZ0lCmd-ppWFd9jYtQLT86_g?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x495f947276749ce646f68ac8c248420045cb7b5e:opensea-mallorca-bloom","name":"Mallorca Bloom","imageUrl":"https://i.seadn.io/gae/UaVEiEHct0RJ_EsDZ1VvfEQRfq9WdleCLCc61FwIOBQ2cV1lOhuSCG9Y3KgxaZVYloz4jvuwk3oQnIHSOOOcBAgOBQK_3onEXuHowQ?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":0.15},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-10-04T09:24:54.000Z"}},{"token":{"contract":"0xd07dc4262bcdbf85190c01c996b4c06a461d2430","tokenId":"740607","kind":"erc1155","name":"Healing","image":"https://i.seadn.io/gae/XCYzJQta_7jui1uCYtTO-y6gv7Fo9n8ToMxn-3ld5iGsxtuAJpIU8_BToOW476fqkHQ0KyuSmhSlNl5b6DmPdw_beVqtAW7BSziVmg?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xd07dc4262bcdbf85190c01c996b4c06a461d2430","name":"Rarible","imageUrl":"https://i.seadn.io/gae/FG0QJ00fN3c_FWuPeUr9-T__iQl63j9hn5d6svW8UqOmia5zp3lKHPkJuHcvhZ0f_Pd6P2COo9tt9zVUvdPxG_9BBw?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":null},"ownership":{"tokenCount":"2","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-09-29T07:22:28.000Z"}},{"token":{"contract":"0x495f947276749ce646f68ac8c248420045cb7b5e","tokenId":"106417394361020955117675115732535551445330228798132491343226919466469985091585","kind":"erc1155","name":"Lonesome Strangers #4 'Chinatown Memory'","image":"https://i.seadn.io/gae/US9u6-oe9AGErxpuf0A2cWZBQIH4-9yy9Kg0Uso9Hwn_BDsx1ExL6n-gfmI8nsmoxF7W5RnuN4IvlMnpIOLT6lZnysn15KWlN1BL?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x495f947276749ce646f68ac8c248420045cb7b5e:opensea-lonesomestrangers","name":"Eli Vicks - Lonesome Strangers","imageUrl":"https://i.seadn.io/gae/yhq398tYyy5C2v3MKLz4K4E3RZptdELUxR-3e5R5hftckULenG8mykbRaHysC9s8_OV1FiJKFM5SK0TETI6qlbecRpG76vzkfrrzTw?w=500&auto=format","floorAskPrice":null},"lastAppraisalValue":0.077},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-09-27T02:26:50.000Z"}},{"token":{"contract":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","tokenId":"86606302712732101944617382090682304364983025116404357298007755879790768704660","kind":"erc721","name":"mlfrg.eth","image":"https://i.seadn.io/gae/96Y5_hV0MxqevCVi52QIMp2Lei9T-MmZpuAo1sSevgIvrVKgJf1Jwe7W2Iq6pUorIkREBhMCs7My8Z9V11pWxK_m5_x0236RsBl-dfc?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","name":"ENS: Ethereum Name Service","imageUrl":"https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":0.025},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-09-08T11:40:05.000Z"}},{"token":{"contract":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","tokenId":"18190307837541489183402159530597002674029168257304270458260047994335188770810","kind":"erc721","name":"molefrog.eth","image":"https://i.seadn.io/gae/EvEI-9p0HJSUHpg3FGM97EV6m5VQWZEPZjkysMQrbwNK0qTRdy0HHBanXM6prU-RkdFl08l2f4o_1dql3ZT0kqP-hzHsfeOC3jz-upM?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85","name":"ENS: Ethereum Name Service","imageUrl":"https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-09-08T11:34:46.000Z"}},{"token":{"contract":"0xd07dc4262bcdbf85190c01c996b4c06a461d2430","tokenId":"511690","kind":"erc1155","name":"Digital heartbeat 02","image":"https://i.seadn.io/gae/LCssJ4vyCqKGclS4-GtRQm5LMardMUMSBOn5MLJKqCXh8WuhVhxjIEFDGTjvuyXPIrtxNoBSwcxSjsZ6xsyg104z4zfvt6YJhV4utLA?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xd07dc4262bcdbf85190c01c996b4c06a461d2430","name":"Rarible","imageUrl":"https://i.seadn.io/gae/FG0QJ00fN3c_FWuPeUr9-T__iQl63j9hn5d6svW8UqOmia5zp3lKHPkJuHcvhZ0f_Pd6P2COo9tt9zVUvdPxG_9BBw?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-06-12T19:24:50.000Z"}},{"token":{"contract":"0xd07dc4262bcdbf85190c01c996b4c06a461d2430","tokenId":"582312","kind":"erc1155","name":"NFTforMeduza","image":"https://i.seadn.io/gae/6ElrOt-3o9MMkAHkeSygRHNl8hvDpqov6R3ST2gdOcRtl1-2Br1vXrCsnNyh9PaRWHm3gyBK1BCxne4R1JPUTaa0JRpdfMbtofY4tQ?w=500&auto=format","lastBuy":{"value":null,"timestamp":null},"lastSell":{"value":null,"timestamp":null},"rarityScore":null,"rarityRank":null,"media":null,"collection":{"id":"0xd07dc4262bcdbf85190c01c996b4c06a461d2430","name":"Rarible","imageUrl":"https://i.seadn.io/gae/FG0QJ00fN3c_FWuPeUr9-T__iQl63j9hn5d6svW8UqOmia5zp3lKHPkJuHcvhZ0f_Pd6P2COo9tt9zVUvdPxG_9BBw?w=500&auto=format","floorAskPrice":0},"lastAppraisalValue":null},"ownership":{"tokenCount":"1","onSaleCount":"0","floorAsk":{"id":null,"price":null,"maker":null,"validFrom":null,"validUntil":null,"dynamicPricing":null,"source":{}},"acquiredAt":"2021-05-27T20:00:23.000Z"}}],"continuation":null}
+{
+  "tokens": [
+    {
+      "token": {
+        "contract": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+        "tokenId": "22156867754635903543439038492775076345370522243410459127172307564119607756346",
+        "kind": "erc721",
+        "name": "xens.eth",
+        "image": "https://openseauserdata.com/files/d4153a66b453c847ed224b6684d737a0.svg",
+        "lastBuy": { "value": 0.45, "timestamp": 1677373895 },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+          "name": "ENS: Ethereum Name Service",
+          "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": 0.45
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2023-02-26T01:11:35.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+        "tokenId": "73172953931534590499654432196755498711884409302332329948420565903950383108895",
+        "kind": "erc721",
+        "name": "xenis.eth",
+        "image": "https://openseauserdata.com/files/5ca5d42b05bd25657d7c8c6f00925e7c.svg",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+          "name": "ENS: Ethereum Name Service",
+          "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2023-02-24T22:33:35.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xfbf170984ccb1e980acb53023d7502d15f6e14ff",
+        "tokenId": "283",
+        "kind": "erc721",
+        "name": "proof of work 283",
+        "image": "https://openseauserdata.com/files/4f46cb4e56fce968116d82425220dbed.svg",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 6,
+        "rarityRank": 1,
+        "media": null,
+        "collection": {
+          "id": "0xfbf170984ccb1e980acb53023d7502d15f6e14ff",
+          "name": "proof of work OE",
+          "imageUrl": "https://i.seadn.io/gcs/files/3e5c717dfdaf00b36c8d1af5a8b0f025.png?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2023-02-03T22:23:35.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xee2010b07c6e26635db774177a58e9d79d13ed13",
+        "tokenId": "1423",
+        "kind": "erc721",
+        "name": "✖  1423",
+        "image": "https://i.seadn.io/gcs/files/f90bce4ca51411de025d84b5628a783e.jpg?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 38.788,
+        "rarityRank": 19,
+        "media": null,
+        "collection": {
+          "id": "0xee2010b07c6e26635db774177a58e9d79d13ed13",
+          "name": "Status not Found",
+          "imageUrl": "https://i.seadn.io/gcs/files/2f5c5adc062fe2704ba5f25aa2d3da05.jpg?w=500&auto=format",
+          "floorAskPrice": 0.0069
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2023-01-17T14:21:11.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x50c542b00d5c9919aa42c9e48184a2d795100753",
+        "tokenId": "2",
+        "kind": "erc1155",
+        "name": "Citizen of Bullieverse Island #2",
+        "image": "https://i.seadn.io/gae/wHHhC4khzqf2z6GIHyywAoQ8HvxGiwsd0UiMPYCwt0jZT97SOrt07rfg40lkb1lV1Gy2_7vFEJf4GoSmcv6LCjXT2UlAWKdzmQ1FYA?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 147.086,
+        "rarityRank": 8,
+        "media": null,
+        "collection": {
+          "id": "0x50c542b00d5c9919aa42c9e48184a2d795100753",
+          "name": "The Bulliever Island Genesis",
+          "imageUrl": "https://i.seadn.io/gae/_OwDr6nnZ21p84dMpys02GUm20G9BQWY5t0YoB872-4f2lddJy1zV3TVqDEM5OA5Iw84O5NCBWLZW_QUozu9EkUdnHOSnmAno1EJ?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-06-04T08:07:05.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x594d7ca1f08ba04f826272a1f7e84ce10d2c3011",
+        "tokenId": "2",
+        "kind": "erc1155",
+        "name": "Asuna #2",
+        "image": "https://lh3.googleusercontent.com/Mj2OpDLnAocCN4zgvc8QsyMV0i_erGhuB4M3lRK6Ex9heVQ_xeiWswxxqrILnbM093g6TY2tRD5a8-mZE0Oyfu-KEIF33I6S7J4b",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 342.839,
+        "rarityRank": 9,
+        "media": null,
+        "collection": {
+          "id": "0x594d7ca1f08ba04f826272a1f7e84ce10d2c3011",
+          "name": "The Lives of Asuna Genesis",
+          "imageUrl": null,
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-06-04T07:43:57.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xcc621dce77b9ce2fc493fe5df3a529aaa5d8592f",
+        "tokenId": "2",
+        "kind": "erc1155",
+        "name": null,
+        "image": null,
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xcc621dce77b9ce2fc493fe5df3a529aaa5d8592f",
+          "name": "Coffee Junkie Collection",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-06-02T07:05:34.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x872af5dc254878576e3bdf15e055bc241f7081a3",
+        "tokenId": "86",
+        "kind": "erc1155",
+        "name": "KOC #86",
+        "image": "https://i.seadn.io/gae/aO43Ej55Cf6SGNC9sEoREdflX17P9adxc6Ec7nEtFCJUAoxKZZbLwslQEVGE0MGg4UkGCTAbzKKcnWUN1tV0vxh9vCJ3KhY_fxZLnj4?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 36.752,
+        "rarityRank": 109,
+        "media": null,
+        "collection": {
+          "id": "0x872af5dc254878576e3bdf15e055bc241f7081a3",
+          "name": "The Knight of Chain Collection.",
+          "imageUrl": "https://i.seadn.io/gae/eRhkkVikIOW_-lDc1moMrZlTcd5DPygPRmTJ69Anb-CfG_RMAxIsichM5kDvfdnXc6gfnKuGZOFCbP_58pUvz57TyUeNbFMKGydHoac?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-05-26T08:08:10.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xf381b1fc5230ceb5893808f9e7c7d6d05b62fd22",
+        "tokenId": "128",
+        "kind": "erc1155",
+        "name": null,
+        "image": null,
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xf381b1fc5230ceb5893808f9e7c7d6d05b62fd22",
+          "name": "the goblinstown coll",
+          "imageUrl": "https://i.seadn.io/gae/BEODq_xX0fTc0BQeUdEJ_S5XpVztRnOqnQ3ruc5ul54d1kGCVYvOorabqVxaGI2FrhD7U7lmtVRPLsN7-1PctCZvHGeVFOa29jLx?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-05-25T08:26:52.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xb8941f7a5fda54ba02d1533a08c759861c496bfa",
+        "tokenId": "864",
+        "kind": "erc1155",
+        "name": "Top Cat Club #864",
+        "image": "https://i.seadn.io/gae/TtZ79ybRuYmjQ8Q16LXDcSIvFQHGSOdxcHGKxSC6stxelwbs049u4rgAOrRhM9NMKkZUjdzixmBNvhp8uQBvFNywohQTxyeneWiY?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xb8941f7a5fda54ba02d1533a08c759861c496bfa",
+          "name": "Top Cat Club NFT",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-05-07T03:27:00.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xf18b7c911664ad1e3b73cfd294a12099fcee4e71",
+        "tokenId": "975",
+        "kind": "erc721",
+        "name": "Localtrotters #975",
+        "image": "https://lh3.googleusercontent.com/NGIm1ICLoh9cUCa_1H-oZ01HuqXpccxD8VmOwZyGBNLuxsuVSf0slXQgBmD9zT6-swMTLmTd9jWTx-4C2BncSoDg67MDrDSjP3ed_w=s250",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xf18b7c911664ad1e3b73cfd294a12099fcee4e71",
+          "name": "Superlocal Localtrotters",
+          "imageUrl": "https://i.seadn.io/gae/hPsm0ZHoaWboGy9BMFwRv85ZHBSFrCBoFCpmRPDKi7SYiIdyRbuWDWDkqku9pnLRodU4-6xJyH38ca--OZGnOmGOocLrGhNDShtwqw?w=500&auto=format",
+          "floorAskPrice": 0.009
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-03-15T16:56:36.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x6fdead7adee56d358f949a4492b6d0b9fd5f6705",
+        "tokenId": "1",
+        "kind": "erc1155",
+        "name": "Antipass",
+        "image": "https://i.seadn.io/gcs/files/8af4023fdcc8ff12d67a24a6a08cbebe.gif?w=500&auto=format",
+        "lastBuy": { "value": 0.25, "timestamp": 1678254095 },
+        "lastSell": { "value": 0.47, "timestamp": 1677866639 },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x6fdead7adee56d358f949a4492b6d0b9fd5f6705",
+          "name": "Anti Collective",
+          "imageUrl": "https://i.seadn.io/gcs/files/cf002a0b8c2a082efd14c005420df7aa.jpg?w=500&auto=format",
+          "floorAskPrice": 0.3
+        },
+        "lastAppraisalValue": 0.001
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "1",
+        "floorAsk": {
+          "id": "0xea41fcc0e5da98c7a6685132f9e17aae9401e46c5af7780e1232ff65f1f9c126",
+          "price": {
+            "currency": {
+              "contract": "0x0000000000000000000000000000000000000000",
+              "name": "Ether",
+              "symbol": "ETH",
+              "decimals": 18
+            },
+            "amount": {
+              "raw": "300000000000000000",
+              "decimal": 0.3,
+              "usd": 515.75129,
+              "native": 0.3
+            }
+          },
+          "maker": "0xc84c499001ca560a93f175bae6b7bd3ecdcaf047",
+          "validFrom": 1679635697,
+          "validUntil": 1682314097,
+          "dynamicPricing": null,
+          "source": {
+            "id": "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073",
+            "domain": "opensea.io",
+            "name": "OpenSea",
+            "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/opensea-logo.svg",
+            "url": "https://opensea.io/assets/0x6fdead7adee56d358f949a4492b6d0b9fd5f6705/1"
+          }
+        },
+        "acquiredAt": "2022-01-19T22:15:25.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x7118f3ff1d44932733c90c87305ab3efee6d7fdf",
+        "tokenId": "127",
+        "kind": "erc1155",
+        "name": "Webb Drinccs #127",
+        "image": "https://lh3.googleusercontent.com/kLhYwNPAx_lIXuyi7o2DvUsQGZsSuKdD-5tfFOLpQqNs-uramZkEcSs22TfHUk3_7SwrAukGM3xanCqZO5Ecl3cDXPTBR5uXP4Fq=s250",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 18.776,
+        "rarityRank": 51,
+        "media": null,
+        "collection": {
+          "id": "0x7118f3ff1d44932733c90c87305ab3efee6d7fdf",
+          "name": "Webb Drinccs",
+          "imageUrl": "https://i.seadn.io/gae/eSHd4dKypxz7ckGc-mICN6_28VWgl9p-caUxejB0nr_10s93iHB5Sw0z4SUUjmuPtEu4KD8fxOGU16K0LfPpwUo64PL6Akri_47IjA?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-01-19T15:56:25.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x495f947276749ce646f68ac8c248420045cb7b5e",
+        "tokenId": "16574242104644889595969071624957431077651352917260431279725366020395971379201",
+        "kind": "erc1155",
+        "name": "New York Streets - Foto Trece",
+        "image": "https://i.seadn.io/gae/Zyg6J_5MqFsdHI0yE0meHwFqVo_X7Lu6SkioJuYg56wBL22pGQMXU7bGPFyFsfYR-21VIv1CmCzk0-Tg2LfYYHDNhSq-bctAB-66ew?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x495f947276749ce646f68ac8c248420045cb7b5e:opensea-nyccesar",
+          "name": "New York City Street Photos",
+          "imageUrl": "https://i.seadn.io/gae/uX81iG-Lx8Sv37n2TqQK18CaMwhTwF8sqmDPyQh4Yb2kXSPz5tXkDzrB4fu2BZqe00jMmCVl0ptRgHmFbhsHveYN5n1W1Q828MQLjE0?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": 0.06
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2022-01-15T10:21:25.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x78ccad4da0a92a94f95405cf151f73e6a3c4c279",
+        "tokenId": "388",
+        "kind": "erc721",
+        "name": "FriendlyGhost #388",
+        "image": "https://storage.opensea.io/files/0ff0afc0caa9ca1e961b59d0f474ef22.svg",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 86.435,
+        "rarityRank": 422,
+        "media": null,
+        "collection": {
+          "id": "0x78ccad4da0a92a94f95405cf151f73e6a3c4c279",
+          "name": "Friendly Ghosts NFT",
+          "imageUrl": "https://i.seadn.io/gae/KUpYDYW3BZq76Rlo48GIo15bwx3XUpFmQCAmSnDSQSOxGDBBHLK8TKUSLVTBEE1Y1CyHuij3gr5hpMmTyUwZELCeXmhGteb9zMMVEgw?w=500&auto=format",
+          "floorAskPrice": 0.01
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-12-12T22:45:28.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xd1146680ae5a4d71f68accb6610030ced7e7afe1",
+        "tokenId": "1073",
+        "kind": "erc721",
+        "name": "MUTANT PUNKS CITY #1073",
+        "image": "https://i.seadn.io/gae/ssqJ228tIo1BhxMFdhvS8GTQi-FfCvFvisEIDNK48v9BTEN9u_eGt43_7XjxW_MSojqQPcLIv7OtWjS6CShIPSDHbLeurtJfEiJook8?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 29.418,
+        "rarityRank": 2937,
+        "media": null,
+        "collection": {
+          "id": "0xd1146680ae5a4d71f68accb6610030ced7e7afe1",
+          "name": "MUTANT PUNKS CITY",
+          "imageUrl": "https://i.seadn.io/gae/tCMJyD3SxWiMvU-AiYsHkMx5sdnWO4apM09wgBsDrtts6R9ARTln5tqSCYobPOpEV6V1phz0sDGAXZsZIJRhk79_9PdD1Srbj3tPvLQ?w=500&auto=format",
+          "floorAskPrice": 0.01
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-11-11T16:00:13.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xd1146680ae5a4d71f68accb6610030ced7e7afe1",
+        "tokenId": "1072",
+        "kind": "erc721",
+        "name": "MUTANT PUNKS CITY #1072",
+        "image": "https://i.seadn.io/gae/a0ptUcO7w3ge2rKip5R1QPpm4zlKCuUZJQmq69z8CMJ2GiWy_JXMsrok8lZvHGtSpMogveKxTYmPzPIvCBVn4A7mzpZtijsW3Nbj_Q?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 30.267,
+        "rarityRank": 2528,
+        "media": null,
+        "collection": {
+          "id": "0xd1146680ae5a4d71f68accb6610030ced7e7afe1",
+          "name": "MUTANT PUNKS CITY",
+          "imageUrl": "https://i.seadn.io/gae/tCMJyD3SxWiMvU-AiYsHkMx5sdnWO4apM09wgBsDrtts6R9ARTln5tqSCYobPOpEV6V1phz0sDGAXZsZIJRhk79_9PdD1Srbj3tPvLQ?w=500&auto=format",
+          "floorAskPrice": 0.01
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-11-11T16:00:13.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xd1146680ae5a4d71f68accb6610030ced7e7afe1",
+        "tokenId": "1053",
+        "kind": "erc721",
+        "name": "MUTANT PUNKS CITY #1053",
+        "image": "https://i.seadn.io/gae/Ts32LayttU3mRCPVue0E2cdJ12442la62uQ9emPuOWia-XBXM2vkY-iahITz2l1rDQl1jJwRkVeZCzWYZON98nuQ7dbHA32Akf3vlQ?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 30.445,
+        "rarityRank": 2447,
+        "media": null,
+        "collection": {
+          "id": "0xd1146680ae5a4d71f68accb6610030ced7e7afe1",
+          "name": "MUTANT PUNKS CITY",
+          "imageUrl": "https://i.seadn.io/gae/tCMJyD3SxWiMvU-AiYsHkMx5sdnWO4apM09wgBsDrtts6R9ARTln5tqSCYobPOpEV6V1phz0sDGAXZsZIJRhk79_9PdD1Srbj3tPvLQ?w=500&auto=format",
+          "floorAskPrice": 0.01
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-11-11T16:00:01.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x368ad4a7a7f49b8fa8f34476be0fc4d04ce622f5",
+        "tokenId": "8523",
+        "kind": "erc721",
+        "name": "OG:Crystal 8523",
+        "image": "https://i.seadn.io/gcs/files/b2e6bc2e5f91371ac1708ca6638ac2ec.jpg?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": 71.394,
+        "rarityRank": 5224,
+        "media": "https://api.ogcrystals.com/api/v1/crystals/animation/8523",
+        "collection": {
+          "id": "0x368ad4a7a7f49b8fa8f34476be0fc4d04ce622f5",
+          "name": "OG:Crystals",
+          "imageUrl": "https://i.seadn.io/gae/PaM_tFDNK4SBoo73VtX2mjqtb5pG1jbcioMW2CUntcFbY8aA1l1vhAKOn7jYlykkuk7JLCZFvPo7vbiN7xotzQUYab18i4tl1Wk3_A?w=500&auto=format",
+          "floorAskPrice": 0.04
+        },
+        "lastAppraisalValue": 0.1
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-10-31T03:39:19.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x495f947276749ce646f68ac8c248420045cb7b5e",
+        "tokenId": "65459863497419548410595676505264778706876384680249086662677618596429720190977",
+        "kind": "erc1155",
+        "name": "Bloom #4 - Pastel Apartments",
+        "image": "https://i.seadn.io/gae/lhO3njpR44o4AREHyjdzrMr4PbBIePeEowXpwp8e_yvNh7Ck0AKyk57CwIkWLoGk36mzCUs1TMGlPNiZ0lCmd-ppWFd9jYtQLT86_g?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x495f947276749ce646f68ac8c248420045cb7b5e:opensea-mallorca-bloom",
+          "name": "Mallorca Bloom",
+          "imageUrl": "https://i.seadn.io/gae/UaVEiEHct0RJ_EsDZ1VvfEQRfq9WdleCLCc61FwIOBQ2cV1lOhuSCG9Y3KgxaZVYloz4jvuwk3oQnIHSOOOcBAgOBQK_3onEXuHowQ?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": 0.15
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-10-04T09:24:54.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
+        "tokenId": "740607",
+        "kind": "erc1155",
+        "name": "Healing",
+        "image": "https://i.seadn.io/gae/XCYzJQta_7jui1uCYtTO-y6gv7Fo9n8ToMxn-3ld5iGsxtuAJpIU8_BToOW476fqkHQ0KyuSmhSlNl5b6DmPdw_beVqtAW7BSziVmg?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
+          "name": "Rarible",
+          "imageUrl": "https://i.seadn.io/gae/FG0QJ00fN3c_FWuPeUr9-T__iQl63j9hn5d6svW8UqOmia5zp3lKHPkJuHcvhZ0f_Pd6P2COo9tt9zVUvdPxG_9BBw?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "2",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-09-29T07:22:28.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x495f947276749ce646f68ac8c248420045cb7b5e",
+        "tokenId": "106417394361020955117675115732535551445330228798132491343226919466469985091585",
+        "kind": "erc1155",
+        "name": "Lonesome Strangers #4 'Chinatown Memory'",
+        "image": "https://i.seadn.io/gae/US9u6-oe9AGErxpuf0A2cWZBQIH4-9yy9Kg0Uso9Hwn_BDsx1ExL6n-gfmI8nsmoxF7W5RnuN4IvlMnpIOLT6lZnysn15KWlN1BL?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x495f947276749ce646f68ac8c248420045cb7b5e:opensea-lonesomestrangers",
+          "name": "Eli Vicks - Lonesome Strangers",
+          "imageUrl": "https://i.seadn.io/gae/yhq398tYyy5C2v3MKLz4K4E3RZptdELUxR-3e5R5hftckULenG8mykbRaHysC9s8_OV1FiJKFM5SK0TETI6qlbecRpG76vzkfrrzTw?w=500&auto=format",
+          "floorAskPrice": null
+        },
+        "lastAppraisalValue": 0.077
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-09-27T02:26:50.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+        "tokenId": "86606302712732101944617382090682304364983025116404357298007755879790768704660",
+        "kind": "erc721",
+        "name": "mlfrg.eth",
+        "image": "https://i.seadn.io/gae/96Y5_hV0MxqevCVi52QIMp2Lei9T-MmZpuAo1sSevgIvrVKgJf1Jwe7W2Iq6pUorIkREBhMCs7My8Z9V11pWxK_m5_x0236RsBl-dfc?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+          "name": "ENS: Ethereum Name Service",
+          "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": 0.025
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-09-08T11:40:05.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+        "tokenId": "18190307837541489183402159530597002674029168257304270458260047994335188770810",
+        "kind": "erc721",
+        "name": "molefrog.eth",
+        "image": "https://i.seadn.io/gae/EvEI-9p0HJSUHpg3FGM97EV6m5VQWZEPZjkysMQrbwNK0qTRdy0HHBanXM6prU-RkdFl08l2f4o_1dql3ZT0kqP-hzHsfeOC3jz-upM?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+          "name": "ENS: Ethereum Name Service",
+          "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-09-08T11:34:46.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
+        "tokenId": "511690",
+        "kind": "erc1155",
+        "name": "Digital heartbeat 02",
+        "image": "https://i.seadn.io/gae/LCssJ4vyCqKGclS4-GtRQm5LMardMUMSBOn5MLJKqCXh8WuhVhxjIEFDGTjvuyXPIrtxNoBSwcxSjsZ6xsyg104z4zfvt6YJhV4utLA?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
+          "name": "Rarible",
+          "imageUrl": "https://i.seadn.io/gae/FG0QJ00fN3c_FWuPeUr9-T__iQl63j9hn5d6svW8UqOmia5zp3lKHPkJuHcvhZ0f_Pd6P2COo9tt9zVUvdPxG_9BBw?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-06-12T19:24:50.000Z"
+      }
+    },
+    {
+      "token": {
+        "contract": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
+        "tokenId": "582312",
+        "kind": "erc1155",
+        "name": "NFTforMeduza",
+        "image": "https://i.seadn.io/gae/6ElrOt-3o9MMkAHkeSygRHNl8hvDpqov6R3ST2gdOcRtl1-2Br1vXrCsnNyh9PaRWHm3gyBK1BCxne4R1JPUTaa0JRpdfMbtofY4tQ?w=500&auto=format",
+        "lastBuy": { "value": null, "timestamp": null },
+        "lastSell": { "value": null, "timestamp": null },
+        "rarityScore": null,
+        "rarityRank": null,
+        "media": null,
+        "collection": {
+          "id": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430",
+          "name": "Rarible",
+          "imageUrl": "https://i.seadn.io/gae/FG0QJ00fN3c_FWuPeUr9-T__iQl63j9hn5d6svW8UqOmia5zp3lKHPkJuHcvhZ0f_Pd6P2COo9tt9zVUvdPxG_9BBw?w=500&auto=format",
+          "floorAskPrice": 0
+        },
+        "lastAppraisalValue": null
+      },
+      "ownership": {
+        "tokenCount": "1",
+        "onSaleCount": "0",
+        "floorAsk": {
+          "id": null,
+          "price": null,
+          "maker": null,
+          "validFrom": null,
+          "validUntil": null,
+          "dynamicPricing": null,
+          "source": {}
+        },
+        "acquiredAt": "2021-05-27T20:00:23.000Z"
+      }
+    }
+  ],
+  "continuation": null
+}

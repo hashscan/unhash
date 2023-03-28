@@ -1,46 +1,38 @@
 import React, { ComponentProps, useEffect, useState } from 'react'
-import styles from './SetAvatarDialog.module.css'
-
 import loadImages from 'image-promise'
-
 import clsx from 'clsx'
 
 import { Button } from 'components/ui/Button/Button'
 import { Navigation } from './Navigation'
+import { fetchAvatarTokens, NFTAvatarOption } from './data'
+
+import styles from './SetAvatarDialog.module.css'
 
 export interface SetAvatarDialogProps extends ComponentProps<'div'> {}
 
-interface NFT {
-  id: string
-  image: string
-  name: string
-  collectionName: string
-}
-
-const NFTs: NFT[] = Array.from({ length: 6 }).map((_, i) => ({
-  id: 'nft' + i,
-  image: `https://loremflickr.com/640/640/graffiti?random=${i}`,
-  name: 'The Heretical Dictum #389',
-  collectionName: 'The Heretical Dictum'
-}))
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout!'), ms))
 
 export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) => {
-  const nftsCount = NFTs.length
-  const displayedCells = Math.max(8, 4 * Math.ceil(nftsCount / 4))
-
   const [selectedNftId, setSelectedNftId] = useState<string>()
   const [isLoadingNfts, setIsLoadingNfts] = useState(true)
+
+  const [NFTs, setNFTs] = useState<NFTAvatarOption[]>([])
 
   useEffect(() => {
     ;(async () => {
       const LOAD_TIMEOUT = 5000
-      await delay(1000) // TODO: remove
+
+      const { nfts } = await fetchAvatarTokens({
+        address: 'TODO',
+        limit: 8,
+        excludeSpamTokens: true
+      })
+      setNFTs(nfts)
 
       try {
-        await Promise.race([loadImages(NFTs.map((n) => n.image)), timeout(LOAD_TIMEOUT)])
+        // preload images to avoid flickering
+        const images = nfts.map((n) => n.image)
+        await Promise.race([loadImages(images), timeout(LOAD_TIMEOUT)])
 
         // all images loaded
         setIsLoadingNfts(false)
@@ -50,6 +42,9 @@ export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) =>
       }
     })()
   }, [])
+
+  const nftsCount = NFTs.length
+  const displayedCells = Math.max(8, 4 * Math.ceil(nftsCount / 4))
 
   return (
     <>
@@ -120,7 +115,7 @@ const NFTPreview = ({
   onClick,
   isSelected
 }: {
-  nft: NFT
+  nft: NFTAvatarOption
   index: number
   onClick: () => void
   isSelected: boolean
