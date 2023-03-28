@@ -20,18 +20,23 @@ interface Props extends ComponentProps<'div'> {
 }
 
 export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => {
-  const [selectedNftId, setSelectedNftId] = useState<string>()
-  const [isLoadingNfts, setIsLoadingNfts] = useState(true)
+  const [selectedNFTId, setSelectedNFTId] = useState<string>()
+  const [isLoadingNFTs, setIsLoadingNFTs] = useState(true)
 
   const [NFTs, setNFTs] = useState<NFTAvatarOption[]>([])
+  const [currentNFTAvatar, setCurrentNFTAvatar] = useState<NFTAvatarOption | null>(null)
   const [continuationToken, setContinuationToken] = useState<ContinuationToken>()
 
   const canLoadMore = Boolean(continuationToken)
 
   const loadMore = async () => {
-    setIsLoadingNfts(true)
+    setIsLoadingNFTs(true)
 
-    const { nfts: batch, continuation } = await fetchAvatarTokens({
+    const {
+      nfts: batch,
+      avatar,
+      continuation
+    } = await fetchAvatarTokens({
       address,
       limit: ITEMS_PER_PAGE,
       continuation: continuationToken
@@ -49,11 +54,12 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
 
     setNFTs((nfts) => [...nfts, ...batch])
     setContinuationToken(continuation)
-    setIsLoadingNfts(false)
+    setCurrentNFTAvatar(avatar)
+    setIsLoadingNFTs(false)
   }
 
   const [sentryRef] = useInfiniteScroll({
-    loading: isLoadingNfts,
+    loading: isLoadingNFTs,
     hasNextPage: canLoadMore,
     onLoadMore: loadMore
   })
@@ -67,7 +73,10 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
   const columns = 4
 
   const rowsWithItems = Math.ceil(nftsCount / columns) // how many rows does all items occupy
-  const rowsToDisplay = Math.max(2, isLoadingNfts ? rowsWithItems + 1 : rowsWithItems)
+  const rowsToDisplay = Math.max(2, isLoadingNFTs ? rowsWithItems + 1 : rowsWithItems)
+
+  // what item should be highlighted?
+  const highlightedNFTId = selectedNFTId || currentNFTAvatar?.id
 
   return (
     <div className={clsx(styles.container, className)} {...rest}>
@@ -85,9 +94,9 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
                     indexWithinBatch={i % ITEMS_PER_PAGE}
                     onClick={() => {
                       onSelectNFT(nft)
-                      setSelectedNftId(nft.id)
+                      setSelectedNFTId(nft.id)
                     }}
-                    isSelected={nft.id === selectedNftId}
+                    isSelected={nft.id === highlightedNFTId}
                   />
                 </div>
               )
@@ -97,7 +106,7 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
               return (
                 <div
                   key={i}
-                  className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNfts })}
+                  className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNFTs })}
                 />
               )
             }
