@@ -21,33 +21,21 @@ import { useMakeCommitments } from './useMakeCommitments'
 export const useSendCommits = ({
   names, // make sure to use stable reference to 'names' to avoid extra renders
   duration,
-  owner,
-  addr,
-  setDefaultResolver = true
+  owner
 }: {
   names: Domain[]
   duration: number
   owner: string | undefined // required; hooks is disabled unless it's set
-  addr?: string // optional eth address to set in resolver
-  setDefaultResolver?: boolean
 }) => {
   const chainId = useChainId()
   const network = toNetwork(chainId)
   const { address: sender } = useAccount()
 
   // generate secrets and commitments for each name
-  const commitmentItems = useMakeCommitments({
+  const { secret, commitments } = useMakeCommitments({
     names: names,
-    owner: owner,
-    resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(network) : undefined,
-    addr: setDefaultResolver ? addr : undefined
+    owner: owner
   })
-
-  // prepare commit transaction
-  const commitments = useMemo(
-    () => commitmentItems?.map((item) => item.commitment),
-    [commitmentItems]
-  )
 
   const { config } = usePrepareContractWrite({
     address: XENS_ADDRESS.get(network),
@@ -68,7 +56,13 @@ export const useSendCommits = ({
     // create new Registration when transaction is sent
     onSuccess: (data) => {
       // TODO: save as in useSendCommit once local storage supports list of names
-      console.log(`onSuccess: tx = ${data.hash}, items = ${JSON.stringify(commitmentItems)}`)
+      console.log(
+        `onSuccess (${data.hash}): names = ${JSON.stringify(
+          names
+        )}, owner = ${owner}, ${duration}, secret = ${secret}, commitments = ${JSON.stringify(
+          commitments
+        )}`
+      )
     }
   })
 

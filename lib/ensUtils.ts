@@ -1,5 +1,5 @@
 import { solidityKeccak256 } from 'ethers/lib/utils.js'
-import { CommitmentParams, RegistrationParams } from './types'
+import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 
 /**
@@ -55,4 +55,23 @@ export function makeCommitment(params: CommitmentParams): RegistrationParams {
     addr ?? ZERO_ADDRESS
   )
   return { ...params, secret, commitment }
+}
+
+/**
+ * Generate list of commitments for ENS commit transaction with a single secret.
+ */
+export function makeCommitments(names: Domain[], owner: string): BulkRegistrationParams {
+  const secret = generateCommitSecret()
+
+  const commitments = names.map((name) => {
+    const _name = getDomainName(name)
+    return _makeCommitment(_name, owner, secret, ZERO_ADDRESS, ZERO_ADDRESS)
+  })
+
+  return {
+    names,
+    owner,
+    secret,
+    commitments
+  }
 }
