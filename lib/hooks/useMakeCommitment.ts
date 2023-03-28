@@ -1,31 +1,30 @@
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Network } from 'lib/types'
-import { generateCommitSecret } from 'lib/utils'
-import { useEffect, useState } from 'react'
-import { useContractRead } from 'wagmi'
+import { makeCommitment } from 'lib/ensUtils'
+import { CommitmentParams } from 'lib/types'
+import { useMemo } from 'react'
 
 /**
- * Generates a commitment hash for ENS commit transaction.
- * @see https://github.com/ensdomains/ens-contracts/blob/934fd3ee5575de11958e40f9862a43ebb21bc22c/contracts/ethregistrar/ETHRegistrarController.sol#L70
- *
- * @param name name part of {name}.eth domain
- * @param owner address of future domain owner
- * @returns commitment hash and secret to be used in commit transaction
+ * Helper hook to generate a secret and commitment with nullable owner and result.
  */
-export function useMakeCommitment(name: string, network: Network, owner: string | undefined) {
-  const [secret, setSecret] = useState<string | undefined>(undefined)
-  useEffect(() => setSecret(generateCommitSecret()), [])
+export function useMakeCommitment({
+  name,
+  owner,
+  resolver,
+  addr
+}: Omit<CommitmentParams, 'owner'> & {
+  owner?: string // required to get result; hooks is disabled unless it's set
+}) {
+  const result = useMemo(() => {
+    if (!owner) return undefined
 
-  const { data, error } = useContractRead<string[], 'makeCommitmentWithConfig', string>({
-    abi: ETH_REGISTRAR_ABI,
-    address: ETH_REGISTRAR_ADDRESS.get(network),
-    functionName: 'makeCommitmentWithConfig',
-    enabled: Boolean(owner) && Boolean(secret),
-    args: [name, owner, secret, ETH_RESOLVER_ADDRESS.get(network), owner]
-  })
+    return makeCommitment({
+      name,
+      owner,
+      resolver,
+      addr
+    })
+  }, [name, owner, resolver, addr])
+
   return {
-    secret: secret,
-    commitment: data,
-    error: error
+    ...result
   }
 }
