@@ -1,5 +1,7 @@
 import { Domain, TransactionStatus } from './types'
 
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
 export function formatAddress(address: string, displayLength: number = 4): string {
   const leadingChars = 2 + displayLength
   const trailingChars = displayLength
@@ -13,18 +15,6 @@ export function formatAddress(address: string, displayLength: number = 4): strin
 
 export function isValidAddress(address: string): boolean {
   return /^0x[0-9a-fA-F]{40}$/.test(address)
-}
-
-/**
- * A function to generate secret for commit transaction.
- * It uses Web Crypto API.
- */
-export function generateCommitSecret() {
-  const bytes = new Uint8Array(32)
-  crypto.getRandomValues(bytes)
-  return `0x${Array.from(bytes)
-    .map((p) => p.toString(16).padStart(2, '0'))
-    .join('')}`
 }
 
 /** Returns error message or null if domain valid. */
