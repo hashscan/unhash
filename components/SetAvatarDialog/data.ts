@@ -2,6 +2,8 @@
 // https://api.reservoir.tools/users/0xB4b18818E9262584921b371c891b62219DaefeA3/tokens/v6
 import fakeResponse from './fakeResponse.json' assert { type: 'json' }
 
+import { isSpamContract } from './spamContracts'
+
 // Tokens that are allowed to be used as avatars
 export interface NFTAvatarOption {
   id: string
@@ -24,9 +26,15 @@ interface Query {
   limit?: number
   continuation?: string
   address: string
+  excludeSpamTokens?: boolean
 }
 
-export const fetchAvatarTokens = async ({ address, continuation, limit = 8 }: Query) => {
+export const fetchAvatarTokens = async ({
+  address,
+  continuation,
+  limit = 8,
+  excludeSpamTokens = false
+}: Query) => {
   await delay(1000)
 
   const json = fakeResponse
@@ -57,7 +65,8 @@ export const fetchAvatarTokens = async ({ address, continuation, limit = 8 }: Qu
 
   const nfts = allNFTs
     .filter((nft) => {
-      return ['erc721', 'erc1155'].includes(nft.kind) && nft.image
+      const isSpam = excludeSpamTokens && isSpamContract(nft.contract)
+      return ['erc721', 'erc1155'].includes(nft.kind) && nft.image && !isSpam
     })
     .slice(startFrom, limit)
 
