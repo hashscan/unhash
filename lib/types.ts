@@ -33,7 +33,7 @@ export type UserDomain = {
 export type Registration = {
   domain: Domain
   sender: string // who is registering the domain
-  owner?: string // who will own the domain
+  owner?: string // who will own the domain; TODO: can't be nullable, fix
   duration: number // seconds
   secret: string
   status: RegistrationStatus
@@ -91,4 +91,12 @@ export type CommitmentParams = {
 export type RegistrationParams = CommitmentParams & {
   secret: string
   commitment: string
+}
+
+// Skip resolver and addr; use single owner and secret
+export type BulkRegistrationParams = {
+  names: Domain[]
+  owner: string
+  secret: string
+  commitments: string[]
 }

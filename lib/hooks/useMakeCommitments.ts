@@ -1,4 +1,4 @@
-import { makeCommitment } from 'lib/ensUtils'
+import { makeCommitments } from 'lib/ensUtils'
 import { Domain } from 'lib/types'
 import { useMemo } from 'react'
 
@@ -8,29 +8,16 @@ import { useMemo } from 'react'
  */
 export function useMakeCommitments({
   names,
-  owner,
-  resolver,
-  addr
+  owner
 }: {
   names: Domain[]
   owner?: string // required to get result; hooks is disabled unless it's set
-  resolver?: string
-  addr?: string
 }) {
   const results = useMemo(() => {
     if (!owner) return undefined
 
-    console.log(`useMakeCommitments.useMemo triggered: names = ${JSON.stringify(names)}`)
+    return makeCommitments(names, owner)
+  }, [names, owner])
 
-    return names.map((name) =>
-      makeCommitment({
-        name,
-        owner,
-        resolver,
-        addr
-      })
-    )
-  }, [names, owner, resolver, addr])
-
-  return results
+  return { ...results }
 }
