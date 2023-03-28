@@ -4,9 +4,11 @@ import clsx from 'clsx'
 
 import { Button } from 'components/ui/Button/Button'
 import { Navigation } from './Navigation'
-import { fetchAvatarTokens, NFTAvatarOption } from './data'
+import { LoaderSpinner } from 'components/icons'
+import { ContinuationToken, fetchAvatarTokens, NFTAvatarOption } from './data'
 
 import styles from './SetAvatarDialog.module.css'
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 
 export interface SetAvatarDialogProps extends ComponentProps<'div'> {}
 
@@ -17,30 +19,44 @@ export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) =>
   const [isLoadingNfts, setIsLoadingNfts] = useState(true)
 
   const [NFTs, setNFTs] = useState<NFTAvatarOption[]>([])
+  const [continuationToken, setContinuationToken] = useState<ContinuationToken>()
+
+  const canLoadMore = Boolean(continuationToken) || NFTs.length === 0
+
+  const loadMore = async () => {
+    // if (isLoadingNfts) return
+    const LOAD_TIMEOUT = 5000
+    setIsLoadingNfts(true)
+
+    const { nfts: batch, continuation } = await fetchAvatarTokens({
+      address: 'TODO',
+      limit: 12,
+      continuation: continuationToken
+    })
+
+    try {
+      // preload images to avoid flickering
+      const images = batch.map((n) => n.image)
+      await Promise.race([loadImages(images), timeout(LOAD_TIMEOUT)])
+
+      // all images loaded
+    } catch (e) {
+      // wait time is too long or some images failed to load, just show it anyway
+    }
+
+    setNFTs((nfts) => [...nfts, ...batch])
+    setContinuationToken(continuation)
+    setIsLoadingNfts(false)
+  }
+
+  const [sentryRef] = useInfiniteScroll({
+    loading: isLoadingNfts,
+    hasNextPage: canLoadMore,
+    onLoadMore: loadMore
+  })
 
   useEffect(() => {
-    ;(async () => {
-      const LOAD_TIMEOUT = 5000
-
-      const { nfts } = await fetchAvatarTokens({
-        address: 'TODO',
-        limit: 8,
-        excludeSpamTokens: true
-      })
-      setNFTs(nfts)
-
-      try {
-        // preload images to avoid flickering
-        const images = nfts.map((n) => n.image)
-        await Promise.race([loadImages(images), timeout(LOAD_TIMEOUT)])
-
-        // all images loaded
-        setIsLoadingNfts(false)
-      } catch (e) {
-        // wait time is too long or some images failed to load, just show it anyway
-        setIsLoadingNfts(false)
-      }
-    })()
+    loadMore()
   }, [])
 
   const nftsCount = NFTs.length
@@ -85,6 +101,8 @@ export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) =>
                     )
                   }
                 })}
+
+              <div className={styles.loadMore} ref={sentryRef}></div>
             </div>
           </div>
 
