@@ -1,7 +1,6 @@
-import { ETH_RESOLVER_ADDRESS, XENS_ABI, XENS_ADDRESS } from 'lib/constants'
+import { XENS_ABI, XENS_ADDRESS } from 'lib/constants'
 import { Domain, toNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
-import { useMemo } from 'react'
 import {
   useAccount,
   useChainId,
