@@ -29,12 +29,19 @@ interface Query {
   address: string
 }
 
+// cycle three times
+const allTokens = [
+  ...fakeResponse.tokens.filter((t) => t.token.image),
+  ...fakeResponse.tokens.filter((t) => t.token.image),
+  ...fakeResponse.tokens.filter((t) => t.token.image)
+]
+
 export const fetchAvatarTokens = async ({ address, continuation, limit = 8 }: Query) => {
   await delay(1000)
 
   const json = fakeResponse
   const { /* continuation, */ tokens }: { tokens: Array<any> } = {
-    tokens: json.tokens.filter((t) => t.token.image)
+    tokens: allTokens
   }
 
   const startFrom = continuation ? Number(continuation) : 0

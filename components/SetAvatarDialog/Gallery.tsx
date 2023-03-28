@@ -4,11 +4,14 @@ import clsx from 'clsx'
 
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 
-import { ContinuationToken, fetchAvatarTokens, NFTAvatarOption } from './data'
+import { ContinuationToken, fetchAvatarTokens, NFTAvatarOption } from './api'
 
 import styles from './Gallery.module.css'
 
 const IMAGE_LOAD_TIMEOUT = 5000
+
+const ITEMS_PER_PAGE = 16
+
 const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout!'), ms))
 
 interface Props extends ComponentProps<'div'> {
@@ -23,14 +26,14 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
   const [NFTs, setNFTs] = useState<NFTAvatarOption[]>([])
   const [continuationToken, setContinuationToken] = useState<ContinuationToken>()
 
-  const canLoadMore = Boolean(continuationToken) || NFTs.length === 0
+  const canLoadMore = Boolean(continuationToken)
 
   const loadMore = async () => {
     setIsLoadingNfts(true)
 
     const { nfts: batch, continuation } = await fetchAvatarTokens({
       address,
-      limit: 16,
+      limit: ITEMS_PER_PAGE,
       continuation: continuationToken
     })
 
@@ -60,22 +63,18 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
   }, [])
 
   const nftsCount = NFTs.length
-  const displayedCells = Math.max(8, 4 * Math.ceil(nftsCount / 4))
+
+  const columns = 4
+
+  const rowsWithItems = Math.ceil(nftsCount / columns) // how many rows does all items occupy
+  const rowsToDisplay = Math.max(2, isLoadingNfts ? rowsWithItems + 1 : rowsWithItems)
 
   return (
     <div className={clsx(styles.container, className)} {...rest}>
       <div className={styles.grid}>
-        {Array(displayedCells)
+        {Array(rowsToDisplay * columns)
           .fill(0)
           .map((_, i) => {
-            if (isLoadingNfts || i >= nftsCount)
-              return (
-                <div
-                  key={i}
-                  className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNfts })}
-                />
-              )
-
             if (i < nftsCount) {
               const nft = NFTs[i]
 
@@ -83,7 +82,7 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
                 <div className={clsx(styles.cell)} key={i}>
                   <NFTPreview
                     nft={nft}
-                    index={i}
+                    indexWithinBatch={i % ITEMS_PER_PAGE}
                     onClick={() => {
                       onSelectNFT(nft)
                       setSelectedNftId(nft.id)
@@ -91,6 +90,15 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
                     isSelected={nft.id === selectedNftId}
                   />
                 </div>
+              )
+            } else {
+              // That is a placeholder cell
+
+              return (
+                <div
+                  key={i}
+                  className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNfts })}
+                />
               )
             }
           })}
@@ -103,14 +111,14 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
 
 const NFTPreview = ({
   nft,
-  index,
   onClick,
-  isSelected
+  isSelected,
+  indexWithinBatch = 0
 }: {
   nft: NFTAvatarOption
-  index: number
   onClick: () => void
   isSelected: boolean
+  indexWithinBatch: number
 }) => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -119,7 +127,7 @@ const NFTPreview = ({
   }, [])
 
   // staggered animation
-  const transitionDelay = `${Math.min(index * 0.07, 1)}s`
+  const transitionDelay = `${Math.min(indexWithinBatch * 0.07, 1)}s`
 
   return (
     <div

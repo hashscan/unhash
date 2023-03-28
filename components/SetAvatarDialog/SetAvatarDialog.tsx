@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
 import { Navigation } from './Navigation'
 import { Gallery } from './Gallery'
-import { NFTAvatarOption } from './data'
+import { NFTAvatarOption } from './api'
 
 import styles from './SetAvatarDialog.module.css'
 
