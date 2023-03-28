@@ -30,7 +30,7 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
 
     const { nfts: batch, continuation } = await fetchAvatarTokens({
       address,
-      limit: 12,
+      limit: 16,
       continuation: continuationToken
     })
 
@@ -63,35 +63,40 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
   const displayedCells = Math.max(8, 4 * Math.ceil(nftsCount / 4))
 
   return (
-    <div className={clsx(styles.grid, className)} {...rest}>
-      {Array(displayedCells)
-        .fill(0)
-        .map((_, i) => {
-          if (isLoadingNfts || i >= nftsCount)
-            return (
-              <div key={i} className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNfts })} />
-            )
-
-          if (i < nftsCount) {
-            const nft = NFTs[i]
-
-            return (
-              <div className={clsx(styles.cell)} key={i}>
-                <NFTPreview
-                  nft={nft}
-                  index={i}
-                  onClick={() => {
-                    onSelectNFT(nft)
-                    setSelectedNftId(nft.id)
-                  }}
-                  isSelected={nft.id === selectedNftId}
+    <div className={clsx(styles.container, className)} {...rest}>
+      <div className={styles.grid}>
+        {Array(displayedCells)
+          .fill(0)
+          .map((_, i) => {
+            if (isLoadingNfts || i >= nftsCount)
+              return (
+                <div
+                  key={i}
+                  className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNfts })}
                 />
-              </div>
-            )
-          }
-        })}
+              )
 
-      <div className={styles.loadMore} ref={sentryRef}></div>
+            if (i < nftsCount) {
+              const nft = NFTs[i]
+
+              return (
+                <div className={clsx(styles.cell)} key={i}>
+                  <NFTPreview
+                    nft={nft}
+                    index={i}
+                    onClick={() => {
+                      onSelectNFT(nft)
+                      setSelectedNftId(nft.id)
+                    }}
+                    isSelected={nft.id === selectedNftId}
+                  />
+                </div>
+              )
+            }
+          })}
+
+        <div className={styles.sentry} ref={sentryRef}></div>
+      </div>
     </div>
   )
 }

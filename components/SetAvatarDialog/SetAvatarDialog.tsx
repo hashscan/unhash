@@ -1,19 +1,14 @@
 import React, { ComponentProps, useEffect, useState } from 'react'
-import loadImages from 'image-promise'
 import clsx from 'clsx'
 
 import { Button } from 'components/ui/Button/Button'
 import { Navigation } from './Navigation'
 import { Gallery } from './Gallery'
-import { LoaderSpinner } from 'components/icons'
-import { ContinuationToken, fetchAvatarTokens, NFTAvatarOption } from './data'
+import { NFTAvatarOption } from './data'
 
 import styles from './SetAvatarDialog.module.css'
-import useInfiniteScroll from 'react-infinite-scroll-hook'
 
 export interface SetAvatarDialogProps extends ComponentProps<'div'> {}
-
-const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout!'), ms))
 
 export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) => {
   return (
