@@ -2,7 +2,7 @@
 // https://api.reservoir.tools/users/0xB4b18818E9262584921b371c891b62219DaefeA3/tokens/v6
 import fakeResponse from './fakeResponse.json' assert { type: 'json' }
 
-import { isSpamContract } from './spamContracts'
+export type ContinuationToken = string | null
 
 // Tokens that are allowed to be used as avatars
 export interface NFTAvatarOption {
@@ -16,6 +16,7 @@ export interface NFTAvatarOption {
     id: string
     name: string
   }
+  isSpamContract: boolean
   acquiredAt?: Date
 }
 
@@ -23,26 +24,22 @@ export interface NFTAvatarOption {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 interface Query {
+  continuation?: ContinuationToken
   limit?: number
-  continuation?: string
   address: string
-  excludeSpamTokens?: boolean
 }
 
-export const fetchAvatarTokens = async ({
-  address,
-  continuation,
-  limit = 8,
-  excludeSpamTokens = false
-}: Query) => {
+export const fetchAvatarTokens = async ({ address, continuation, limit = 8 }: Query) => {
   await delay(1000)
 
   const json = fakeResponse
-  const { /* continuation, */ tokens }: { continuation: string | null; tokens: Array<any> } = json
+  const { /* continuation, */ tokens }: { tokens: Array<any> } = {
+    tokens: json.tokens.filter((t) => t.token.image)
+  }
 
   const startFrom = continuation ? Number(continuation) : 0
 
-  const allNFTs = tokens.map((token) => {
+  const fetchedNFTs = tokens.slice(startFrom, startFrom + limit).map((token) => {
     const {
       token: { contract, image, kind, name, tokenId, collection },
       ownership: { acquiredAt }
@@ -59,17 +56,14 @@ export const fetchAvatarTokens = async ({
       name,
       tokenId,
       collection,
+      isSpamContract: false,
       acquiredAt
     } as NFTAvatarOption
   })
 
-  const nfts = allNFTs
-    .filter((nft) => {
-      const isSpam = excludeSpamTokens && isSpamContract(nft.contract)
-      return ['erc721', 'erc1155'].includes(nft.kind) && nft.image && !isSpam
-    })
-    .slice(startFrom, limit)
+  const alreadyFetched = startFrom + fetchedNFTs.length
+  const nextContinuation: ContinuationToken =
+    alreadyFetched >= tokens.length ? null : String(alreadyFetched)
 
-  const nextContinuation = startFrom + limit
-  return { nfts, continuation: nextContinuation >= tokens.length ? null : nextContinuation }
+  return { nfts: fetchedNFTs, continuation: nextContinuation }
 }
