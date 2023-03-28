@@ -20,14 +20,20 @@ export interface NFTAvatarOption {
   acquiredAt?: Date
 }
 
-// fake delay
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
 interface Query {
   continuation?: ContinuationToken
   limit?: number
   address: string
 }
+
+interface Response {
+  nfts: Array<NFTAvatarOption>
+  avatar: NFTAvatarOption | null // currently set avatar
+  continuation: ContinuationToken
+}
+
+// fake delay
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 // cycle three times
 const allTokens = [
@@ -36,7 +42,11 @@ const allTokens = [
   ...fakeResponse.tokens.filter((t) => t.token.image)
 ]
 
-export const fetchAvatarTokens = async ({ address, continuation, limit = 8 }: Query) => {
+export const fetchAvatarTokens = async ({
+  address,
+  continuation,
+  limit = 8
+}: Query): Promise<Response> => {
   await delay(1000)
 
   const json = fakeResponse
@@ -72,5 +82,5 @@ export const fetchAvatarTokens = async ({ address, continuation, limit = 8 }: Qu
   const nextContinuation: ContinuationToken =
     alreadyFetched >= tokens.length ? null : String(alreadyFetched)
 
-  return { nfts: fetchedNFTs, continuation: nextContinuation }
+  return { nfts: fetchedNFTs, avatar: fetchedNFTs[2], continuation: nextContinuation }
 }
