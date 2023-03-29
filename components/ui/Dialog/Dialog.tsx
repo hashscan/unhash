@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { Dialog as HeadlessDialog } from '@headlessui/react'
 import { type DialogProps as HeadlessDialogProps } from '@headlessui/react'
 import clsx from 'clsx'
@@ -14,6 +14,7 @@ export type DialogProps = {
   footer?: ReactNode
   open?: HeadlDialogProps['open']
   onClose: HeadlDialogProps['onClose']
+  canCloseDialog?: boolean
 }
 
 export type DialogExternalProps = Pick<HeadlDialogProps, 'open' | 'onClose'>
@@ -24,10 +25,16 @@ export const Dialog = ({
   children,
   footer,
   open,
-  onClose
+  onClose,
+  canCloseDialog = true
 }: DialogProps) => {
+  // prevent dialog from closing
+  const handleClose: typeof onClose = (...args) => {
+    if (canCloseDialog) onClose?.(...args)
+  }
+
   return (
-    <HeadlessDialog className={styles.container} open={open} onClose={onClose}>
+    <HeadlessDialog className={styles.container} open={open} onClose={handleClose}>
       {/* Full-screen container to center the panel */}
       <div className={styles.backdrop}>
         <HeadlessDialog.Panel className={clsx(styles.panel, styles[`panel_${size}`], className)}>
