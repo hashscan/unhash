@@ -15,7 +15,11 @@ export type TextRecords = {
 }
 
 export type UserInfo = {
-  primaryEns: Domain | null
+  primaryName?: {
+    name: Domain
+    avatar?: string // raw avatar record value: eip155:1/erc1155:0xd07dc4262bcdbf85190c01c996b4c06a461d2430/511690
+  }
+  reverseName?: Domain
   domains: UserDomain[]
 }
 

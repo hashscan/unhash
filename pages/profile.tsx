@@ -19,9 +19,10 @@ const Profile: PageWithLayout = () => {
   const [editingPrimaryName, setEditingPrimaryName] = useState(false)
 
   const { user: userInfo } = useCurrentUser()
+  const primaryName = userInfo?.primaryName?.name
   const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
 
-  const etherscanLink = useEtherscanURL('address', userInfo?.primaryEns!)
+  const etherscanLink = useEtherscanURL('address', primaryName!)
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected)
@@ -44,11 +45,11 @@ const Profile: PageWithLayout = () => {
       {/* Primary ENS header */}
       <div className={styles.header}>Primary ENS</div>
       <div className={styles.subheader}>
-        {userInfo?.primaryEns ? (
+        {primaryName ? (
           <span>
             Your address is linked to{' '}
             <Link className={styles.link} href={etherscanLink} target="_blank">
-              <b>{userInfo.primaryEns}</b>
+              <b>{primaryName}</b>
             </Link>{' '}
             ENS domain. You can share your <b>.eth username</b> with people instead of wallet
             address.
@@ -71,14 +72,14 @@ const Profile: PageWithLayout = () => {
         <ProfilePrimaryDomain
           chainId={chainId}
           address={address}
-          primaryName={userInfo.primaryEns || undefined}
+          primaryName={primaryName || undefined}
           userDomains={userDomains}
           onEditingChange={setEditingPrimaryName}
         />
       )}
 
       {/* ENS profile layout */}
-      {address && userInfo?.primaryEns && !editingPrimaryName && (
+      {address && primaryName && !editingPrimaryName && (
         <>
           <div className={styles.divider}></div>
           <div className={styles.header}>ENS profile</div>
@@ -86,11 +87,7 @@ const Profile: PageWithLayout = () => {
             This is your {"wallet's"} public profile on Ethereum ecosystem. People can find it by
             your address and <b>.eth username</b>.{" You can't share it yet."}
           </div>
-          <ProfileCard
-            network={toNetwork(chainId)}
-            address={address}
-            domain={userInfo.primaryEns}
-          />
+          <ProfileCard network={toNetwork(chainId)} address={address} domain={primaryName} />
         </>
       )}
     </main>
