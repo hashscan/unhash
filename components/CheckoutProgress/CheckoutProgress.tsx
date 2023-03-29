@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import WrapBalancer from 'react-wrap-balancer'
 import { Domain } from 'lib/types'
 import { RegisterStep } from 'pages/[domain]/register'
 import { ComponentProps } from 'react'
@@ -7,7 +8,7 @@ import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
 
 interface CheckoutProgressProps extends ComponentProps<'div'> {
   step: RegisterStep
-  domain: Domain
+  names: Domain[]
 }
 
 const STEPS_IN_ORDER = ['commit', 'wait', 'register', 'success']
@@ -20,13 +21,27 @@ const STEP_NAMES: Record<RegisterStep, string> = {
   success: "You've bought the Domain!"
 }
 
+function namesToLabel(names: string[]) {
+  switch (names.length) {
+    case 1:
+      return `${names[0]}`
+    case 2:
+      return names.join(' and ')
+
+    default:
+      return `${names[0]} and ${names.length - 1} other`
+  }
+}
+
 export const CheckoutProgress = (props: CheckoutProgressProps) => {
   const stepIndex = STEPS_IN_ORDER.indexOf(props.step) + 1
 
   return (
     <div className={clsx(styles.container, props.className)}>
       <div className={styles.content}>
-        <h1 className={styles.title}>{String(props.domain)}</h1>
+        <h1 className={styles.title}>
+          <WrapBalancer>{namesToLabel(props.names)}</WrapBalancer>
+        </h1>
 
         <SlideFlap
           flipKey={String(stepIndex)}
