@@ -104,3 +104,18 @@ export type BulkRegistrationParams = {
   secret: string
   commitments: string[]
 }
+
+export interface NFTToken {
+  id: string
+  tokenId: string
+  kind: 'erc721' | 'erc1155'
+  name: string
+  image: string
+  acquiredAt?: string
+  collection: NFTCollection
+}
+
+export interface NFTCollection {
+  id: string
+  name: string
+}

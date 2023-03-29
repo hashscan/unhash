@@ -1,7 +1,15 @@
 import ky from 'ky'
 import { Address } from 'wagmi'
 import { API_URL } from './constants'
-import type { Network, Domain, UserInfo, AddrRecords, TextRecords, DomainListing } from './types'
+import type {
+  Network,
+  Domain,
+  UserInfo,
+  AddrRecords,
+  TextRecords,
+  DomainListing,
+  NFTToken
+} from './types'
 
 export type DomainStatus = {
   isValid: boolean
@@ -28,6 +36,11 @@ export type DomainInfo = {
 export type EthPrice = {
   usd: number
   updatedAt: number
+}
+
+export type NFTsResponse = {
+  tokens: NFTToken[]
+  continuation?: string
 }
 
 async function checkDomain(
@@ -68,13 +81,27 @@ async function ethPrice(): Promise<EthPrice> {
   return await ky.get(`${API_URL}/ethPrice`).json<EthPrice>()
 }
 
+async function userNFTs(
+  network: Network,
+  address: string,
+  limit?: number,
+  continuation?: string
+): Promise<NFTsResponse> {
+  const url =
+    `${API_URL}/user/nfts?network=${network}&address=${address}` +
+    (limit ? `&limit=${limit}` : '') +
+    +(continuation ? `&continuation=${continuation}` : '')
+  return await ky.get(url).json<NFTsResponse>()
+}
+
 const api = {
   checkDomain,
   getPrice,
   domainInfo,
   userInfo,
   saveFeedback,
-  ethPrice
+  ethPrice,
+  userNFTs
 }
 
 export default api
