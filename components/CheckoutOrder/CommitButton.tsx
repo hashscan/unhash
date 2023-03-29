@@ -19,11 +19,11 @@ interface CommitButtonProps {
 }
 
 export const CommitButton = ({ order }: CommitButtonProps) => {
-  const { names: domain } = order
+  const { names } = order
   const { address } = useAccount()
 
   const { sendCommit, status, error } = useSendCommit({
-    domain: domain[0],
+    domain: names[0],
     duration: order.durationInYears * YEAR_IN_SECONDS,
     owner: order.ownerAddress ?? address,
     setDefaultResolver: true,
@@ -39,7 +39,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   })
 
   const onStartClick = useCallback(() => {
-    trackGoal('CommitClick', { props: { names: domain.join(',') } })
+    trackGoal('CommitClick', { props: { names: names.join(',') } })
 
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
     try {
@@ -48,13 +48,15 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
       const msg = error instanceof Error ? error.toString() : 'Commit error'
       notify(msg, { status: 'error' })
     }
-  }, [sendCommit, notify, domain])
+  }, [sendCommit, notify, names])
 
   return (
     <div>
       <ConnectButton.Custom>
         {({ account, chain, mounted, openConnectModal }) => {
           const walletConnected = account && chain && mounted
+          const buttonLabel =
+            names.length === 1 ? `Register ${names[0]}` : `Register ${names.length} names`
 
           if (!walletConnected) {
             return (
@@ -71,7 +73,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
               className={styles.commitButton}
               onClick={() => onStartClick()}
             >
-              Register {domain[0]}
+              {buttonLabel}
             </TransactionButton>
           )
         }}
