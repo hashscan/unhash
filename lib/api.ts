@@ -53,20 +53,6 @@ async function checkDomain(
     .json<DomainStatus>()
 }
 
-function checkNames(
-  names: string[],
-  network: Network = 'mainnet',
-  withListing: boolean = false
-): Promise<DomainStatus[]> {
-  return Promise.all(
-    names.map((name) =>
-      ky
-        .get(`${API_URL}/domain/check?domain=${name}&network=${network}&withListing=${withListing}`)
-        .json<DomainStatus>()
-    )
-  )
-}
-
 async function getPrice(
   domain: string,
   network: Network = 'mainnet',
@@ -110,7 +96,6 @@ async function userNFTs(
 
 const api = {
   checkDomain,
-  checkNames,
   getPrice,
   domainInfo,
   userInfo,

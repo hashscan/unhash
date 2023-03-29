@@ -1,4 +1,4 @@
-import { Domain, Registration, RegistrationOrder } from 'lib/types'
+import { Domain, Registration } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
 import { useCallback } from 'react'
 import { useAccount } from 'wagmi'
@@ -141,7 +141,7 @@ export function useRegistration() {
   return {
     registration,
     setCommitting,
-    setCommited: setCommitted,
+    setCommitted,
     setCommitFailed,
     setRegistering,
     setRegistered,
