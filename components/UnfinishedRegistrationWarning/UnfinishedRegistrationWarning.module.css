@@ -79,6 +79,19 @@
   margin-bottom: 24px;
 }
 
+/* make selector more specific to override default background style */
+.footer > .cancelButton,
+.footer > .cancelButton:hover,
+.footer > .cancelButton:active {
+  background-color: var(--color-error-light);
+  color: var(--color-slate-8);
+}
+
+.footer > .cancelButton:hover,
+.footer > .cancelButton:active {
+  filter: brightness(1.05);
+}
+
 .footer {
   position: sticky;
   bottom: 0;

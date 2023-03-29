@@ -30,8 +30,13 @@ export const UnfinishedRegistrationWarning = ({
           </div>
 
           <div className={styles.footer}>
-            <Button onClick={onCancel} size={'regular'} variant={'ghost'}>
-              Cancel
+            <Button
+              className={styles.cancelButton}
+              onClick={onCancel}
+              size={'regular'}
+              variant={'ghost'}
+            >
+              Cancel Registration
             </Button>
 
             <Button size={'regular'} disabled={false} onClick={onContinue}>
