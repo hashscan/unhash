@@ -1,6 +1,4 @@
-import { useRegistrations } from 'lib/hooks/useRegistrations'
-import { PropsWithChildren, useMemo } from 'react'
-import { Domain } from 'lib/types'
+import { PropsWithChildren } from 'react'
 import { useProvider, useWaitForTransaction } from 'wagmi'
 import { useRegistration } from 'lib/hooks/useRegistration'
 
@@ -8,20 +6,17 @@ import { useRegistration } from 'lib/hooks/useRegistration'
  * A component that waits for register tx to get confirmed
  * and updates domain's Registration status to 'registered'.
  */
-export const WaitForRegisterTx = ({
-  domain,
-  registerTxHash
-}: {
-  domain: Domain
-  registerTxHash: `0x${string}`
-}) => {
-  const { setRegistered, setRegisterFailed } = useRegistration(domain)
+export const WaitForRegisterTx = () => {
+  const { registration, setRegistered, setRegisterFailed } = useRegistration()
+
+  const hash = registration?.registerTxHash as `0x${string}`
 
   useWaitForTransaction({
-    hash: registerTxHash,
+    enabled: Boolean(registration) && Boolean(hash),
+    hash,
     // update registration status when transaction is confirmed or failed
     onSuccess: () => setRegistered(),
-    onError: (e) => setRegisterFailed(registerTxHash, e.message)
+    onError: (e) => setRegisterFailed(hash, e.message)
   })
 
   return null
@@ -31,18 +26,15 @@ export const WaitForRegisterTx = ({
  * A component that waits for commit tx to get confirmed
  * and updates domain's Registration status to 'commited'.
  */
-export const WaitForCommitTx = ({
-  domain,
-  commitTxHash
-}: {
-  domain: Domain
-  commitTxHash: `0x${string}`
-}) => {
+export const WaitForCommitTx = () => {
   const provider = useProvider()
-  const { setCommited, setCommitFailed } = useRegistration(domain)
+  const { registration, setCommited, setCommitFailed } = useRegistration()
+
+  const hash = registration?.commitTxHash as `0x${string}`
 
   useWaitForTransaction({
-    hash: commitTxHash,
+    hash: hash,
+    enabled: Boolean(registration) && Boolean(hash),
     onSuccess: async (data) => {
       // get timestamp from block
       const commitBlock = await provider.getBlock(data.blockNumber)
@@ -50,7 +42,7 @@ export const WaitForCommitTx = ({
       // update registration status
       setCommited(data.blockNumber, commitTimestamp)
     },
-    onError: (e) => setCommitFailed(commitTxHash, e.message)
+    onError: (e) => setCommitFailed(hash, e.message) 
   })
 
   return null
@@ -64,32 +56,12 @@ export const WaitForCommitTx = ({
  * Registration status to 'commited' or 'registered' respectively.
  */
 export const RegistrationsProvider = (props: PropsWithChildren<{}>) => {
-  const regs = useRegistrations()
-  const commitPendingRegs = useMemo(
-    () => regs.filter((reg) => reg.status === 'commitPending'),
-    [regs]
-  )
-  const registerPendingRegs = useMemo(
-    () => regs.filter((reg) => reg.status === 'registerPending'),
-    [regs]
-  )
-
   return (
     <>
-      {commitPendingRegs.map((reg) => (
-        <WaitForCommitTx
-          key={reg.domain}
-          domain={reg.domain}
-          commitTxHash={reg.commitTxHash! as `0x${string}`}
-        />
-      ))}
-      {registerPendingRegs.map((reg) => (
-        <WaitForRegisterTx
-          key={reg.domain}
-          domain={reg.domain}
-          registerTxHash={reg.registerTxHash! as `0x${string}`}
-        />
-      ))}
+      <WaitForCommitTx />
+
+      <WaitForRegisterTx />
+
       {props.children}
     </>
   )

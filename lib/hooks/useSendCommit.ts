@@ -36,7 +36,7 @@ export const useSendCommit = ({
   const chainId = useChainId()
   const network = toNetwork(chainId)
   const { address: sender } = useAccount()
-  const { setCommitting } = useRegistration(domain)
+  const { setCommitting } = useRegistration()
 
   // generate secret and commitment
   const { secret, commitment } = useMakeCommitment({
@@ -66,7 +66,7 @@ export const useSendCommit = ({
     // create new Registration when transaction is sent
     onSuccess: (data) =>
       setCommitting({
-        domain,
+        names: [domain],
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner,
         duration,

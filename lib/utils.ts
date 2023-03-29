@@ -61,3 +61,7 @@ export function loadingToStatus(
   if (isWaitLoading) return 'processing'
   return 'idle'
 }
+
+export function notNull<T>(val: T): val is NonNullable<T> {
+  return !!val
+}

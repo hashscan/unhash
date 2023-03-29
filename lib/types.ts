@@ -35,7 +35,7 @@ export type UserDomain = {
 }
 
 export type Registration = {
-  domain: Domain
+  names: Domain[]
   sender: string // who is registering the domain
   owner?: string // who will own the domain; TODO: can't be nullable, fix
   duration: number // seconds
@@ -58,7 +58,7 @@ export type RegistrationStatus =
 
 // holds current registration settings prior to the checkout (aka shopping cart)
 export type RegistrationOrder = {
-  domain: Domain
+  names: Domain[]
   durationInYears: number
   ownerAddress: string | undefined
 }
