@@ -13,16 +13,13 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRe
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
-import { Domain, Registration, RegistrationOrder } from 'lib/types'
+import { Domain, Registration, RegistrationOrder, RegisterStep } from 'lib/types'
 
 import styles from './register.module.css'
 
 interface RegisterProps {
   names: Domain[]
 }
-
-// exported to be used by CheckoutProgress
-export type RegisterStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'
 
 // this is actually a reducer
 function calculateStep(_: RegisterStep, reg: Registration | undefined): RegisterStep {

@@ -119,3 +119,5 @@ export interface NFTCollection {
   id: string
   name: string
 }
+
+export type RegisterStep = 'initializing' | 'commit' | 'wait' | 'register' | 'success'

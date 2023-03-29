@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import WrapBalancer from 'react-wrap-balancer'
-import { Domain } from 'lib/types'
-import { RegisterStep } from 'pages/[domain]/register'
+import { Domain, RegisterStep } from 'lib/types'
 import { ComponentProps } from 'react'
 import styles from './CheckoutProgress.module.css'
 import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
