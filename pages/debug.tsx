@@ -78,11 +78,11 @@ const Debug: PageWithLayout = () => {
         </thead>
         <tbody>
           {registrations.map((reg, i) => (
-            <tr key={reg.domain} className={styles.registration}>
+            <tr key={reg.names} className={styles.registration}>
               <td className={styles.number}>{i + 1}</td>
               <td>
-                <Link className={styles.domain} href={`/${reg.domain}/register`} target="_blank">
-                  {reg.domain}
+                <Link className={styles.domain} href={`/${reg.names}/register`} target="_blank">
+                  {reg.names}
                 </Link>
               </td>
               <td className={styles.status}>{reg.status}</td>

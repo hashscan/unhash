@@ -19,11 +19,11 @@ interface CommitButtonProps {
 }
 
 export const CommitButton = ({ order }: CommitButtonProps) => {
-  const { domain } = order
+  const { names: domain } = order
   const { address } = useAccount()
 
   const { sendCommit, status, error } = useSendCommit({
-    domain: order.domain,
+    domain: domain[0],
     duration: order.durationInYears * YEAR_IN_SECONDS,
     owner: order.ownerAddress ?? address,
     setDefaultResolver: true,
@@ -39,7 +39,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   })
 
   const onStartClick = useCallback(() => {
-    trackGoal('CommitClick', { props: { domain } })
+    trackGoal('CommitClick', { props: { names: domain.join(',') } })
 
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
     try {
@@ -71,7 +71,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
               className={styles.commitButton}
               onClick={() => onStartClick()}
             >
-              Register {domain}
+              Register {domain[0]}
             </TransactionButton>
           )
         }}

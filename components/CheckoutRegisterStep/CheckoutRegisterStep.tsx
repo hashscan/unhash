@@ -4,7 +4,6 @@ import useChange from '@react-hook/change'
 import { useSendRegister } from 'lib/hooks/useSendRegister'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useNotifier } from 'lib/hooks/useNotifier'
-import { Registration } from 'lib/types'
 import { formatNetworkFee } from 'lib/format'
 import { REGISTER_AVERAGE_GAS } from 'lib/constants'
 import { Gas } from 'components/icons'
@@ -12,12 +11,9 @@ import { TransactionButton } from 'components/TransactionButton/TransactionButto
 
 import styles from './CheckoutRegisterStep.module.css'
 
-interface CheckoutRegisterStepProps {
-  registration: Registration
-}
 
-export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps) => {
-  const { gasLimit, write, status, error } = useSendRegister(registration.domain)
+export const CheckoutRegisterStep = () => {
+  const { gasLimit, write, status, error } = useSendRegister()
   const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
   const onRegisterClick = useCallback(() => {

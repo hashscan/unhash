@@ -1,13 +1,13 @@
-import { Domain, Registration } from 'lib/types'
+import { Domain, Registration, RegistrationOrder } from 'lib/types'
 import { useLocalStorage } from 'usehooks-ts'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useAccount } from 'wagmi'
 
 import { trackGoal } from 'lib/analytics'
 
 // helper type to avoid long type declaration
 type CreateRegistrationParams = {
-  domain: Domain
+  names: Domain[]
   sender: string
   owner?: string
   duration: number
@@ -21,158 +21,131 @@ type CreateRegistrationParams = {
  * Requires user to be connected to the wallet.
  * @returns active Registration for the current user and undefined for non-authorized user.
  */
-export function useRegistration(domain: Domain) {
+export function useRegistration() {
   const { address: sender } = useAccount()
-  const [registrations, setRegistrations] = useLocalStorage<Registration[]>('ens.registrations', [])
-
-  // filter registration by domain and sender
-  const registration = useMemo(() => {
-    if (!sender) return undefined
-    return registrations.find(
-      (reg) => reg.domain === domain && reg.sender.toLowerCase() === sender?.toLowerCase()
-    )
-  }, [domain, sender, registrations])
+  const [registration, setRegistration] = useLocalStorage<Registration | undefined>(
+    `ens.registration.${sender?.toLowerCase() ?? 'non-authorized'}`,
+    undefined
+  )
 
   // Create new registration with the 'commitPending' status
   const setCommitting = useCallback(
     (r: CreateRegistrationParams) => {
-      setRegistrations((_registrations) => {
-        // just replace current if already exists,
-        // it can be the case when user repeat commit transaction after error
-        return [
-          ..._registrations.filter((r) => r.domain !== domain),
-          {
-            ...r,
-            status: 'commitPending'
-          }
-        ]
+      setRegistration({
+        ...r,
+        status: 'commitPending'
       })
     },
-    [domain, setRegistrations]
+    [setRegistration]
   )
 
   // Update the registration status to 'committed'
-  const setCommited = useCallback(
+  const setCommitted = useCallback(
     (commitBlock: number, commitTimestamp: number) => {
-      trackGoal('Commit', { props: { domain } })
-
-      setRegistrations((_registrations) => {
-        const _registration = _registrations.find((r) => r.domain === domain)
+      setRegistration((_registration) => {
         if (!_registration) throw new Error('Registration not found')
+        trackGoal('Commit', { props: { names: _registration.names.join(',') } })
 
-        return [
-          ..._registrations.filter((r) => r.domain !== domain),
-          {
-            ..._registration,
-            status: 'committed',
-            commitBlock,
-            commitTimestamp,
-            errorTxHash: undefined,
-            errorTxMessage: undefined
-          }
-        ]
+        return {
+          ..._registration,
+          status: 'committed',
+          commitBlock,
+          commitTimestamp,
+          errorTxHash: undefined,
+          errorTxMessage: undefined
+        }
       })
     },
-    [domain, setRegistrations]
+    [setRegistration]
   )
 
   // Update status back to 'created'
   const setCommitFailed = useCallback(
     (errorTxHash: string, errorTxMessage: string) => {
-      trackGoal('CommitFail', { props: { domain, hsh: errorTxHash } })
-
-      setRegistrations((_registrations) => {
-        const _registration = _registrations.find((r) => r.domain === domain)
+      setRegistration((_registration) => {
         if (!_registration) throw new Error('Registration not found')
+        trackGoal('CommitFail', {
+          props: { names: _registration.names.join(','), hsh: errorTxHash }
+        })
 
-        return [
-          ..._registrations.filter((r) => r.domain !== domain),
-          {
-            ..._registration,
-            status: 'created',
-            commitTxHash: undefined,
-            errorTxHash,
-            errorTxMessage
-          }
-        ]
+        return {
+          ..._registration,
+          status: 'created',
+          commitTxHash: undefined,
+          errorTxHash,
+          errorTxMessage
+        }
       })
     },
-    [domain, setRegistrations]
+    [setRegistration]
   )
 
   // Update the registration status to 'registerPending'
   const setRegistering = useCallback(
     (registerTxHash: string) => {
-      setRegistrations((_registrations) => {
-        const _registration = _registrations.find((r) => r.domain === domain)
+      setRegistration((_registration) => {
         if (!_registration) throw new Error('Registration not found')
 
-        return [
-          ..._registrations.filter((r) => r.domain !== domain),
-          {
-            ..._registration,
-            status: 'registerPending',
-            registerTxHash,
-            errorTxHash: undefined,
-            errorTxMessage: undefined
-          }
-        ]
+        return {
+          ..._registration,
+          status: 'registerPending',
+          registerTxHash,
+          errorTxHash: undefined,
+          errorTxMessage: undefined
+        }
       })
     },
-    [domain, setRegistrations]
+    [setRegistration]
   )
 
   // Update the registration status to 'registered'
   const setRegistered = useCallback(() => {
-    trackGoal('Register', { props: { domain } })
-
-    setRegistrations((_registrations) => {
-      const _registration = _registrations.find((r) => r.domain === domain)
+    setRegistration((_registration) => {
       if (!_registration) throw new Error('Registration not found')
+      trackGoal('Register', { props: { names: _registration.names.join(',') } })
 
-      return [
-        ..._registrations.filter((r) => r.domain !== domain),
-        {
-          ..._registration,
-          status: 'registered',
-          errorTxHash: undefined,
-          errorTxMessage: undefined
-        }
-      ]
+      return {
+        ..._registration,
+        status: 'registered',
+        errorTxHash: undefined,
+        errorTxMessage: undefined
+      }
     })
-  }, [domain, setRegistrations])
+  }, [setRegistration])
 
   // Update the registration status back to 'committed'
   const setRegisterFailed = useCallback(
     (errorTxHash: string, errorTxMessage: string) => {
-      trackGoal('RegisterFail', { props: { domain, hsh: errorTxHash } })
-
-      setRegistrations((_registrations) => {
-        const _registration = _registrations.find((r) => r.domain === domain)
+      setRegistration((_registration) => {
         if (!_registration) throw new Error('Registration not found')
+        trackGoal('RegisterFail', {
+          props: { names: _registration.names.join(','), hsh: errorTxHash }
+        })
 
-        return [
-          ..._registrations.filter((r) => r.domain !== domain),
-          {
-            ..._registration,
-            status: 'committed',
-            registerTxHash: undefined,
-            errorTxHash,
-            errorTxMessage
-          }
-        ]
+        return {
+          ..._registration,
+          status: 'committed',
+          registerTxHash: undefined,
+          errorTxHash,
+          errorTxMessage
+        }
       })
     },
-    [domain, setRegistrations]
+    [setRegistration]
   )
+
+  const cancel = useCallback(() => {
+    setRegistration(undefined)
+  }, [setRegistration])
 
   return {
     registration,
     setCommitting,
-    setCommited,
+    setCommited: setCommitted,
     setCommitFailed,
     setRegistering,
     setRegistered,
-    setRegisterFailed
+    setRegisterFailed,
+    cancel
   }
 }
