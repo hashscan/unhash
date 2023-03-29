@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import WrapBalancer from 'react-wrap-balancer'
 
 import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar/DomainSearchBar'
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
 import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggestions'
 import { Footer } from 'components/Footer/Footer'
-import { Button } from 'components/ui/Button/Button'
+import { UnfinishedRegistrationWarning } from 'components/UnfinishedRegistrationWarning/UnfinishedRegistrationWarning'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
+import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 
 import styles from './index.module.css'
 import { Suggestion } from 'components/LandingSuggestions/types'
@@ -38,6 +38,7 @@ const Search: PageWithLayout = () => {
   }, [cancel, reg])
 
   const searchBarRef = useRef<SearchBarHandle>(null)
+  const navigate = useRouterNavigate()
 
   const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {
     trackGoal('SuggestionClick', { props: { domain: suggestion.domain } })
@@ -46,21 +47,17 @@ const Search: PageWithLayout = () => {
 
   return (
     <>
-      {/* TODO: real modal modal modal */}
       {isModalOpen && (
-        <>
-          <Button
-            variant="ghost"
-            onClick={() => {
-              cancel()
-              show(false)
-            }}
-          >
-            start new registration
-          </Button>
-
-          <Link href={`/${reg?.names[0]}/register`}>continue registration</Link>
-        </>
+        <UnfinishedRegistrationWarning
+          registration={reg!}
+          onCancel={() => {
+            cancel()
+            show(false)
+          }}
+          onContinue={() => {
+            navigate(`/${reg?.names[0]}/register`)
+          }}
+        />
       )}
       <div className={styles.searchPage}>
         <div className={styles.heroSection}>
