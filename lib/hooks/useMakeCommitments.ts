@@ -4,7 +4,6 @@ import { useMemo } from 'react'
 
 /**
  * Helper hook to generate a list of secrets and commitments for names with same arguments.
- * Make sure to use stable reference to 'names'.
  */
 export function useMakeCommitments({
   names,
@@ -13,11 +12,14 @@ export function useMakeCommitments({
   names: Domain[]
   owner?: string // required to get result; hooks is disabled unless it's set
 }) {
+  const namesHash = names.join(',')
+
   const results = useMemo(() => {
     if (!owner) return undefined
 
+    const names = namesHash.split(',') as Domain[]
     return makeCommitments(names, owner)
-  }, [names, owner])
+  }, [namesHash, owner])
 
   return { ...results }
 }
