@@ -12,6 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@headlessui/react": "^1.7.13",
     "@radix-ui/react-toast": "^1.1.2",
     "@rainbow-me/rainbowkit": "^0.10.0",
     "@react-hook/change": "^1.0.0",
