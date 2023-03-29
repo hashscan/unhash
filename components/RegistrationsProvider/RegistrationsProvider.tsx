@@ -24,11 +24,11 @@ export const WaitForRegisterTx = () => {
 
 /*
  * A component that waits for commit tx to get confirmed
- * and updates domain's Registration status to 'commited'.
+ * and updates domain's Registration status to 'committed'.
  */
 export const WaitForCommitTx = () => {
   const provider = useProvider()
-  const { registration, setCommited, setCommitFailed } = useRegistration()
+  const { registration, setCommitted: setCommitted, setCommitFailed } = useRegistration()
 
   const hash = registration?.commitTxHash as `0x${string}`
 
@@ -40,9 +40,9 @@ export const WaitForCommitTx = () => {
       const commitBlock = await provider.getBlock(data.blockNumber)
       const commitTimestamp = commitBlock.timestamp * 1000
       // update registration status
-      setCommited(data.blockNumber, commitTimestamp)
+      setCommitted(data.blockNumber, commitTimestamp)
     },
-    onError: (e) => setCommitFailed(hash, e.message) 
+    onError: (e) => setCommitFailed(hash, e.message)
   })
 
   return null
@@ -53,7 +53,7 @@ export const WaitForCommitTx = () => {
  *
  * It tracks all Registration with status 'commitPending' and 'registerPending',
  * and waits for their transactions to get confirmed. Once confirmed, it updates
- * Registration status to 'commited' or 'registered' respectively.
+ * Registration status to 'committed' or 'registered' respectively.
  */
 export const RegistrationsProvider = (props: PropsWithChildren<{}>) => {
   return (
