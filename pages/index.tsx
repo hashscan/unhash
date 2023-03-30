@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
 
@@ -6,9 +6,8 @@ import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar/Dom
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
 import { LandingSuggestions } from 'components/LandingSuggestions/LandingSuggestions'
 import { Footer } from 'components/Footer/Footer'
-import { UnfinishedRegistrationWarning } from 'components/UnfinishedRegistrationWarning/UnfinishedRegistrationWarning'
+import { UnfinishedRegistration } from 'components/UnfinishedRegistration/UnfinishedRegistration'
 import { FullWidthLayout, PageWithLayout } from 'components/layouts'
-import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 
 import styles from './index.module.css'
 import { Suggestion } from 'components/LandingSuggestions/types'
@@ -23,22 +22,16 @@ import profileCardImg from '../styles/assets/explainer-profile.png'
 
 const Search: PageWithLayout = () => {
   const { registration: reg, clearRegistration } = useRegistration()
-  const [isModalOpen, show] = useState(false)
 
+  // TODO: better place for this action
   useEffect(() => {
-    if (reg) {
-      if (reg.status === 'registered') {
-        // remove previous registration if it finished
-        clearRegistration()
-      } else {
-        // show warning otherwise
-        show(true)
-      }
+    if (reg && reg.status === 'registered') {
+      // remove previous registration if it finished
+      clearRegistration()
     }
   }, [clearRegistration, reg])
 
   const searchBarRef = useRef<SearchBarHandle>(null)
-  const navigate = useRouterNavigate()
 
   const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {
     trackGoal('SuggestionClick', { props: { domain: suggestion.domain } })
@@ -47,18 +40,8 @@ const Search: PageWithLayout = () => {
 
   return (
     <>
-      {isModalOpen && (
-        <UnfinishedRegistrationWarning
-          registration={reg!}
-          onCancel={() => {
-            clearRegistration()
-            show(false)
-          }}
-          onContinue={() => {
-            navigate(`/${reg?.names[0]}/register`)
-          }}
-        />
-      )}
+      <UnfinishedRegistration />
+
       <div className={styles.searchPage}>
         <div className={styles.heroSection}>
           <div className={styles.heroLayout}>
