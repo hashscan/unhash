@@ -22,20 +22,20 @@ import walletCardImg from '../styles/assets/explainer-wallet.png'
 import profileCardImg from '../styles/assets/explainer-profile.png'
 
 const Search: PageWithLayout = () => {
-  const { registration: reg, cancel } = useRegistration()
+  const { registration: reg, clearRegistration } = useRegistration()
   const [isModalOpen, show] = useState(false)
 
   useEffect(() => {
     if (reg) {
       if (reg.status === 'registered') {
         // remove previous registration if it finished
-        cancel()
+        clearRegistration()
       } else {
         // show warning otherwise
         show(true)
       }
     }
-  }, [cancel, reg])
+  }, [clearRegistration, reg])
 
   const searchBarRef = useRef<SearchBarHandle>(null)
   const navigate = useRouterNavigate()
@@ -51,7 +51,7 @@ const Search: PageWithLayout = () => {
         <UnfinishedRegistrationWarning
           registration={reg!}
           onCancel={() => {
-            cancel()
+            clearRegistration()
             show(false)
           }}
           onContinue={() => {

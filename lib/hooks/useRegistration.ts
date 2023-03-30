@@ -134,7 +134,7 @@ export function useRegistration() {
     [setRegistration]
   )
 
-  const cancel = useCallback(() => {
+  const clearRegistration = useCallback(() => {
     setRegistration(undefined)
   }, [setRegistration])
 
@@ -146,6 +146,6 @@ export function useRegistration() {
     setRegistering,
     setRegistered,
     setRegisterFailed,
-    cancel
+    clearRegistration
   }
 }
