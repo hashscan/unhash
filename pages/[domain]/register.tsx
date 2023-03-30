@@ -31,8 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     }
   }
 
-  console.log('WTF')
-
+  // redirect to the new register page
   return {
     redirect: {
       destination: `/register?names=${domain}`,
