@@ -28,7 +28,7 @@ export const ENS_NFT_ADDRESS = new Map<Network, Address>([
 
 export const XENS_ADDRESS = new Map<Network, Address>([
   ['mainnet', '0x0000000000000000000000000000000000000000'],
-  ['goerli', '0x07f8d872ee92d9f690d8de820a15bb02c757c49b']
+  ['goerli', '0x032221efb1e08743b0ea1af2eeb103b0e7491f11']
 ])
 
 export const ETH_REGISTRAR_ABI = [
@@ -54,8 +54,9 @@ export const ENS_NFT_ABI = ['function safeTransferFrom(address, address, uint256
 
 export const XENS_ABI = [
   'function makeCommitments(string[],address[],bytes32[],address[],address[]) pure returns (bytes32[])',
-  'function bulkCommit(bytes32[])',
-  'function bulkRegister(string[],address[],uint256[],bytes32[]) payable'
+  'function commit(bytes32[] _commitments)',
+  'function register(string[] _names,address[] _owners,uint256[] _durations,bytes32[] _secrets,uint256[] _prices) external payable',
+  'function renew(string[] _names, uint256[] _durations, uint256[] _prices)'
 ]
 
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24

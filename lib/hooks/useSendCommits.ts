@@ -39,7 +39,7 @@ export const useSendCommits = ({
   const { config } = usePrepareContractWrite({
     address: XENS_ADDRESS.get(network),
     abi: XENS_ABI,
-    functionName: 'bulkCommit',
+    functionName: 'commit',
     enabled: Boolean(sender) && Boolean(owner) && Boolean(commitments),
     args: [commitments]
   })
