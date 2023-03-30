@@ -24,6 +24,10 @@ export type DomainPrice = {
   usd: number
 }
 
+export type DomainPrices = {
+  [domain: string]: DomainPrice
+}
+
 export type DomainInfo = {
   tokenId: string
   registrant: Address | null
@@ -53,14 +57,16 @@ async function checkDomain(
     .json<DomainStatus>()
 }
 
-async function getPrice(
-  domain: string,
+async function getPrices(
+  domains: string[],
   network: Network = 'mainnet',
   duration: number
-): Promise<DomainPrice> {
+): Promise<DomainPrices> {
   return await ky
-    .get(`${API_URL}/domain/price?domain=${domain}&network=${network}&duration=${duration}`)
-    .json<DomainPrice>()
+    .get(
+      `${API_URL}/domain/price?domains=${domains.join(',')}&network=${network}&duration=${duration}`
+    )
+    .json<DomainPrices>()
 }
 
 async function domainInfo(domain: Domain, network: Network = 'mainnet'): Promise<DomainInfo> {
@@ -96,7 +102,7 @@ async function userNFTs(
 
 const api = {
   checkDomain,
-  getPrice,
+  getPrices,
   domainInfo,
   userInfo,
   saveFeedback,

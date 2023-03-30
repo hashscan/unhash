@@ -20,8 +20,8 @@ export const useDomainPrice = (
 
     const fetchPrice = async () => {
       try {
-        const result = await api.getPrice(domain, toNetwork(chainId), duration)
-        setPrice(result)
+        const result = await api.getPrices([domain], toNetwork(chainId), duration)
+        setPrice(result[domain])
       } catch (err) {
         console.log(`failed to fetch domain price: ${err}`)
         setPrice(undefined)
