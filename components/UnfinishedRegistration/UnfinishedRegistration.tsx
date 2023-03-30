@@ -1,20 +1,24 @@
+import { useState, useEffect } from 'react'
 import { Button } from 'components/ui/Button/Button'
-import { Registration } from 'lib/types'
+import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
+import { useRegistration } from 'lib/hooks/useRegistration'
 
-import styles from './UnfinishedRegistrationWarning.module.css'
+import styles from './UnfinishedRegistration.module.css'
 
-type UnfinishedRegistrationWarningProps = {
-  registration: Registration
-  onCancel: () => void
-  onContinue: () => void
-}
+type UnfinishedRegistrationProps = {}
 
-export const UnfinishedRegistrationWarning = ({
-  registration,
-  onCancel,
-  onContinue
-}: UnfinishedRegistrationWarningProps) => {
-  return (
+export const UnfinishedRegistration = ({}: UnfinishedRegistrationProps) => {
+  const { registration, clearRegistration } = useRegistration()
+  const [isModalOpen, show] = useState(false)
+  const navigate = useRouterNavigate()
+
+  useEffect(() => {
+    if (registration && registration.status !== 'registered') {
+      show(true)
+    }
+  }, [clearRegistration, registration])
+
+  return isModalOpen && registration ? (
     <>
       <div className={styles.backdrop} />
       <div className={styles.overlay}>
@@ -32,19 +36,28 @@ export const UnfinishedRegistrationWarning = ({
           <div className={styles.footer}>
             <Button
               className={styles.cancelButton}
-              onClick={onCancel}
+              onClick={() => {
+                clearRegistration()
+                show(false)
+              }}
               size={'regular'}
               variant={'ghost'}
             >
               Cancel Registration
             </Button>
 
-            <Button size={'regular'} disabled={false} onClick={onContinue}>
+            <Button
+              size={'regular'}
+              disabled={false}
+              onClick={() => {
+                navigate(`/${registration.names[0]}/register`)
+              }}
+            >
               Continue
             </Button>
           </div>
         </div>
       </div>
     </>
-  )
+  ) : null
 }
