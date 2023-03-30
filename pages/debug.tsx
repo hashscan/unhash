@@ -1,9 +1,9 @@
 import styles from './debug.module.css'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
-import { useRegistrations } from 'lib/hooks/useRegistrations'
+import { useRegistration } from 'lib/hooks/useRegistration'
 import { useAccount } from 'wagmi'
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { formatAddress } from 'lib/utils'
 import clsx from 'clsx'
 import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
@@ -27,25 +27,9 @@ const Debug: PageWithLayout = () => {
   useEffect(() => setInitialized(true), []) // fixes react hydration issue
 
   const { address } = useAccount()
-  const allRegistrations = useRegistrations()
+  const { registration } = useRegistration()
 
-  const registrations = useMemo(
-    () =>
-      [...allRegistrations].sort((r1, r2) => {
-        // sort in the following order of status: 'commitPending', 'committed', 'registerPending', 'registered'
-        if (r1.status === r2.status) return 0
-        if (r1.status === 'created') return -1
-        if (r2.status === 'created') return 1
-        if (r1.status === 'commitPending') return -1
-        if (r2.status === 'commitPending') return 1
-        if (r1.status === 'committed') return -1
-        if (r2.status === 'committed') return 1
-        if (r1.status === 'registerPending') return -1
-        if (r2.status === 'registerPending') return 1
-        return 0
-      }),
-    [allRegistrations]
-  )
+  const registrations = registration ? [registration] : []
 
   const addressLink = useEtherscanURL('address', address!)
 
@@ -78,11 +62,11 @@ const Debug: PageWithLayout = () => {
         </thead>
         <tbody>
           {registrations.map((reg, i) => (
-            <tr key={reg.domain} className={styles.registration}>
+            <tr key={reg.names.join(',')} className={styles.registration}>
               <td className={styles.number}>{i + 1}</td>
               <td>
-                <Link className={styles.domain} href={`/${reg.domain}/register`} target="_blank">
-                  {reg.domain}
+                <Link className={styles.domain} href={`/${reg.names}/register`} target="_blank">
+                  {reg.names}
                 </Link>
               </td>
               <td className={styles.status}>{reg.status}</td>

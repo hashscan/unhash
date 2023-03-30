@@ -17,12 +17,12 @@ interface CheckoutOrderProps {
 }
 
 export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
-  const { domain, durationInYears } = order
+  const { names: domain, durationInYears } = order
 
   const durationInSeconds = durationInYears * YEAR_IN_SECONDS
 
   // get domain price from api
-  const domainPrice = useDomainPrice(domain, durationInSeconds)?.usd
+  const domainPrice = useDomainPrice(domain[0], durationInSeconds)?.usd
 
   // fixed network fees for estimation
   const networkFeesGas = COMMIT_GAS_LIMIT + REGISTER_AVERAGE_GAS

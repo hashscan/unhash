@@ -1,0 +1,109 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2001;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+
+  background-color: #000;
+  opacity: 0.25;
+  z-index: 2000;
+
+  pointer-events: all;
+}
+
+.modal {
+  width: 460px;
+  max-height: min(80vh, 720px);
+
+  background: var(--color-background);
+  border: 0;
+  border-radius: var(--radii-lg);
+  box-shadow: var(--shadow-lg);
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.body {
+  padding: 32px 24px;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.text {
+  margin-bottom: 32px;
+}
+
+.text > strong {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.addressLabel {
+  color: var(--color-text-primary);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+}
+
+.hint {
+  color: var(--color-text-hint);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+/* make selector more specific to override default background style */
+.footer > .cancelButton,
+.footer > .cancelButton:hover,
+.footer > .cancelButton:active {
+  background-color: var(--color-error-light);
+  color: var(--color-slate-8);
+}
+
+.footer > .cancelButton:hover,
+.footer > .cancelButton:active {
+  filter: brightness(1.05);
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 24px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--color-slate-8);
+  border-top: 1px solid var(--color-slate-5);
+  border-bottom-left-radius: var(--radii-lg);
+  border-bottom-right-radius: var(--radii-lg);
+}

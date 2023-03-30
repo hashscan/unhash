@@ -43,14 +43,14 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
 
 const Register: PageWithLayout<RegisterProps> = ({ domain }: RegisterProps) => {
   // get registration and calculate step
-  const { registration: reg } = useRegistration(domain)
+  const { registration: reg } = useRegistration()
 
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
 
   const [order, updateOrder] = useState<RegistrationOrder>(() => {
-    return { domain, durationInYears: 1, ownerAddress: undefined }
+    return { names: [domain], durationInYears: 1, ownerAddress: undefined }
   })
 
   // set timeout to trigger step update
@@ -80,7 +80,7 @@ const Register: PageWithLayout<RegisterProps> = ({ domain }: RegisterProps) => {
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
-          {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
+          {step === 'register' && reg && <CheckoutRegisterStep />}
           {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
