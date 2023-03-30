@@ -93,10 +93,13 @@ async function userNFTs(
   limit?: number,
   continuation?: string
 ): Promise<NFTsResponse> {
-  const url =
-    `${API_URL}/user/nfts?network=${network}&address=${address}` +
-    (limit ? `&limit=${limit}` : '') +
-    +(continuation ? `&continuation=${continuation}` : '')
+  const query = new URLSearchParams({ network, address })
+
+  if (limit) query.set('limit', limit.toString())
+  if (continuation) query.set('continuation', continuation)
+
+  const url = `${API_URL}/user/nfts?${query}`
+
   return await ky.get(url).json<NFTsResponse>()
 }
 

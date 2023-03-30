@@ -1,3 +1,5 @@
+import { useAccount } from 'wagmi'
+
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { Navigation } from './Navigation'
 import { Button } from 'components/ui/Button/Button'
@@ -9,22 +11,17 @@ import { useSendSetAvatar } from 'lib/hooks/useSendSetAvatar'
 import { useNotifier } from 'lib/hooks/useNotifier'
 
 import styles from './SetAvatarDialog.module.css'
+import { NFTToken } from 'lib/types'
+import { useState } from 'react'
 
 export interface SetAvatarDialogProps extends DialogExternalProps {}
 
 export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
   const notify = useNotifier()
+  const { address } = useAccount()
 
-  /* TODO */
-  const selectedAvatar = {
-    contract: '0xf4910C763eD4e47A585E2D34baA9A4b611aE448C',
-    name: '59857614512082825327428480450306278281310723451016971068357972524612578182120',
-    kind: 'erc1155'
-  } as const
-
-  const address = '0xd6959D3940BfcfA451726F897c0DB5864F6F8fc9'
-  const domain = 'capitalgang.eth'
-  /* /TODO */
+  const [selectedAvatar, setSelectedAvatar] = useState<NFTToken | null>(null)
+  const domain = 'capitalgang.eth' /* TODO */
 
   const { sendSetAvatar, status: transactionStatus } = useSendSetAvatar({
     domain,
@@ -71,7 +68,7 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
         <Navigation tab="nft" />
       </div>
 
-      <Gallery address={address} onSelectNFT={() => {}} />
+      <Gallery currentNFTAvatar={null} onSelectNFT={(nft) => setSelectedAvatar(nft)} />
     </Dialog>
   )
 }

@@ -1,6 +1,6 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, toNetwork } from 'lib/types'
+import { Domain, NFTToken, toNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
@@ -8,19 +8,14 @@ const TEXT_AVATAR_FIELD = 'avatar'
 
 const ALLOWED_ERCs = ['erc721', 'erc1155'] as const
 
-interface Avatar {
-  contract: string
-  name: string
-  kind: typeof ALLOWED_ERCs[number]
-}
-
-const avatarToRecord = (avatar: Avatar) => {
+const avatarToRecord = (avatar: NFTToken) => {
   console.assert(
     ALLOWED_ERCs.includes(avatar.kind),
     `ENS only supports ${ALLOWED_ERCs.join(', ')} avatars at the moment`
   )
 
-  return `eip155:1/${avatar.kind}:${avatar.contract}/${avatar.name}`
+  console.log(`eip155:1/${avatar.kind}:${avatar.collection.id}/${avatar.tokenId}`)
+  return `eip155:1/${avatar.kind}:${avatar.collection.id}/${avatar.tokenId}`
 }
 
 /**
@@ -33,7 +28,7 @@ export const useSendSetAvatar = ({
   onSuccess
 }: {
   domain: Domain
-  avatar: Avatar | null
+  avatar: NFTToken | null
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {

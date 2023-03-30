@@ -1,11 +1,10 @@
 import { ComponentProps, useEffect, useState } from 'react'
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 import loadImages from 'image-promise'
 import clsx from 'clsx'
 
-import useInfiniteScroll from 'react-infinite-scroll-hook'
-
-import { ContinuationToken, fetchAvatarTokens, NFTAvatarOption } from './api'
-
+import { NFTToken } from 'lib/types'
+import { useFetchNFTs } from './useFetchNFTs'
 import styles from './Gallery.module.css'
 
 const IMAGE_LOAD_TIMEOUT = 5000
@@ -15,32 +14,23 @@ const ITEMS_PER_PAGE = 16
 const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout!'), ms))
 
 interface Props extends ComponentProps<'div'> {
-  onSelectNFT: (nft: NFTAvatarOption) => void
-  address: string
+  onSelectNFT: (nft: NFTToken) => void
+  currentNFTAvatar: NFTToken | null
 }
 
-export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => {
+export const Gallery = ({ className, onSelectNFT, currentNFTAvatar, ...rest }: Props) => {
   const [selectedNFTId, setSelectedNFTId] = useState<string>()
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(true)
 
-  const [NFTs, setNFTs] = useState<NFTAvatarOption[]>([])
-  const [currentNFTAvatar, setCurrentNFTAvatar] = useState<NFTAvatarOption | null>(null)
-  const [continuationToken, setContinuationToken] = useState<ContinuationToken>()
+  const [NFTs, setNFTs] = useState<NFTToken[]>([])
+  const [continuationToken, setContinuationToken] = useState<string>()
 
+  const fetchNFts = useFetchNFTs(ITEMS_PER_PAGE, continuationToken)
   const canLoadMore = Boolean(continuationToken)
 
   const loadMore = async () => {
     setIsLoadingNFTs(true)
-
-    const {
-      nfts: batch,
-      avatar,
-      continuation
-    } = await fetchAvatarTokens({
-      address,
-      limit: ITEMS_PER_PAGE,
-      continuation: continuationToken
-    })
+    const { tokens: batch, continuation } = await fetchNFts()
 
     try {
       // preload images to avoid flickering
@@ -54,7 +44,6 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
 
     setNFTs((nfts) => [...nfts, ...batch])
     setContinuationToken(continuation)
-    setCurrentNFTAvatar(avatar)
     setIsLoadingNFTs(false)
   }
 
@@ -125,7 +114,7 @@ const NFTPreview = ({
   isSelected,
   indexWithinBatch = 0
 }: {
-  nft: NFTAvatarOption
+  nft: NFTToken
   onClick: () => void
   isSelected: boolean
   indexWithinBatch: number
