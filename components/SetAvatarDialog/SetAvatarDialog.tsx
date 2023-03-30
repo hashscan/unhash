@@ -1,81 +1,58 @@
-import React, { ComponentProps, useEffect, useState } from 'react'
-import clsx from 'clsx'
+import { useState } from 'react'
 
 import { Button } from 'components/ui/Button/Button'
 import { Navigation } from './Navigation'
 import { Gallery } from './Gallery'
-import { NFTAvatarOption } from './api'
+import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
+
+import { closeDialog } from 'lib/dialogs'
 
 import styles from './SetAvatarDialog.module.css'
+export interface SetAvatarDialogProps extends DialogExternalProps {}
 
-export interface SetAvatarDialogProps extends ComponentProps<'div'> {}
+export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
+  const [isLoading, setIsLoading] = useState(false)
 
-export const SetAvatarDialog = ({ className, ...rest }: SetAvatarDialogProps) => {
+  const handleClick = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }
+
   return (
-    <>
-      <div className={styles.backdrop} />
-      <div className={styles.overlay}>
-        <div {...rest} className={clsx(className, styles.modal)}>
-          <Header />
-
-          <div className={styles.body}>
-            <div className={styles.nav}>
-              <Navigation tab="nft" />
-            </div>
-
-            <Gallery address="TODO" onSelectNFT={() => {}} />
-          </div>
-
+    <Dialog
+      {...rest}
+      size={'lg'}
+      canCloseDialog={!isLoading} // can't close when there is a pending transaction
+      footer={
+        <>
           <div className={styles.footer}>
-            <Button size={'regular'} variant={'ghost'}>
+            <Button size={'regular'} variant={'ghost'} onClick={() => closeDialog()}>
               Cancel
             </Button>
 
             <Button
               className={styles.buttonSend}
-              isLoading={false}
+              isLoading={isLoading}
               size={'regular'}
               disabled={false}
-              onClick={() => {}}
+              onClick={handleClick}
             >
               Set Avatar →
             </Button>
           </div>
-        </div>
+        </>
+      }
+    >
+      <Header />
+
+      <div className={styles.nav}>
+        <Navigation tab="nft" />
       </div>
-    </>
-  )
-}
 
-const NFTPreview = ({
-  nft,
-  index,
-  onClick,
-  isSelected
-}: {
-  nft: NFTAvatarOption
-  index: number
-  onClick: () => void
-  isSelected: boolean
-}) => {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100) // toggle appear animation
-  }, [])
-
-  // staggered animation
-  const transitionDelay = `${Math.min(index * 0.07, 1)}s`
-
-  return (
-    <div
-      style={{ transitionDelay, backgroundImage: `url(${nft.image})` }}
-      onClick={onClick}
-      className={clsx(styles.nftPreview, {
-        [styles.nftPreviewVisible]: isVisible,
-        [styles.nftPreviewSelected]: isSelected
-      })}
-    />
+      <Gallery address="TODO" onSelectNFT={() => {}} />
+    </Dialog>
   )
 }
 
@@ -92,4 +69,3 @@ const Header = () => {
     </div>
   )
 }
-//

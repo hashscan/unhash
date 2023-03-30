@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect, useState } from 'react'
+import { ComponentProps, useEffect, useState } from 'react'
 import loadImages from 'image-promise'
 import clsx from 'clsx'
 

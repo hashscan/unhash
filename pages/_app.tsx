@@ -17,6 +17,7 @@ import { AnalyticsScript } from 'lib/analytics'
 
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
 import { currentNetwork } from 'lib/network'
+import { Dialogs } from 'lib/dialogs'
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -87,6 +88,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               <WrapBalancerProvider>
                 {wrapInLayout(Component, <Component {...pageProps} />)}
                 <Feedback />
+                <Dialogs />
               </WrapBalancerProvider>
             </RainbowKitProvider>
           </RegistrationsProvider>

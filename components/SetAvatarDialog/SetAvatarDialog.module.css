@@ -1,40 +1,3 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 2001;
-}
-
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh;
-
-  background-color: #000;
-  opacity: 0.25;
-  z-index: 2000;
-
-  pointer-events: all;
-}
-
-.modal {
-  width: 768px;
-  background: var(--color-background);
-  border: 0;
-  border-radius: var(--radii-lg);
-  box-shadow: var(--shadow-lg);
-}
-
 .titleAndText {
   flex: 1 1;
 }
@@ -43,21 +6,11 @@
   padding: 32px 24px 24px 24px;
 }
 
-.body {
-  padding: 0;
-  flex-grow: 1;
-  overflow: auto;
-}
-
 .title {
   color: var(--color-text-primary);
   font: var(--type-md);
   letter-spacing: var(--ls-md);
   font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.nav {
 }
 
 .text > b {
@@ -66,18 +19,12 @@
 }
 
 .footer {
-  bottom: 0;
   padding: 12px 24px;
 
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
-  background: var(--color-slate-8);
-  border-top: 1px solid var(--color-slate-5);
-  border-bottom-left-radius: var(--radii-lg);
-  border-bottom-right-radius: var(--radii-lg);
 }
 
 .buttonSend {

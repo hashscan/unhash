@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
 

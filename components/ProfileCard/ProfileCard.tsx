@@ -5,6 +5,7 @@ import { Domain, Network, toChain } from 'lib/types'
 import { Address, useEnsAvatar } from 'wagmi'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 import { ProfileCardForm } from './ProfileCardForm'
+import { openDialog } from 'lib/dialogs'
 
 interface ProfileCardProps {
   network: Network
@@ -18,7 +19,7 @@ const Avatar = ({ network, address }: { network: Network; address: Address }) =>
   const { data: avatar } = useEnsAvatar({ chainId: toChain(network).id, address })
 
   return (
-    <div className={styles.avatarWrapper}>
+    <div className={styles.avatarWrapper} onClick={() => openDialog('setAvatar')}>
       {address && avatar && (
         <img className={styles.avatar} width={56} height={56} src={avatar} alt="" />
       )}
