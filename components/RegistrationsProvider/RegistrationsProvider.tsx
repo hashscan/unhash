@@ -38,5 +38,5 @@ export const RegistrationsProvider = (props: PropsWithChildren<{}>) => {
     onError: (e) => setRegisterFailed(registerHash, e.message)
   })
 
-  return props.children
+  return <>{props.children}</>
 }
