@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import useChange from '@react-hook/change'
 
-import { useSendRegister } from 'lib/hooks/useSendRegister'
+import { useSendRegisters } from 'lib/hooks/useSendRegisters'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { formatNetworkFee } from 'lib/format'
@@ -11,9 +11,8 @@ import { TransactionButton } from 'components/TransactionButton/TransactionButto
 
 import styles from './CheckoutRegisterStep.module.css'
 
-
 export const CheckoutRegisterStep = () => {
-  const { gasLimit, write, status, error } = useSendRegister()
+  const { gasLimit, write, status, error } = useSendRegisters()
   const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
   const onRegisterClick = useCallback(() => {
@@ -39,11 +38,7 @@ export const CheckoutRegisterStep = () => {
 
       <div className={styles.buttons}>
         <div className={styles.sendTransaction}>
-          <TransactionButton
-            size="cta"
-            onClick={onRegisterClick}
-            status={status}
-          >
+          <TransactionButton size="cta" onClick={onRegisterClick} status={status}>
             Complete Registration →
           </TransactionButton>
 

@@ -4,7 +4,7 @@ import useChange from '@react-hook/change'
 
 import { RegistrationOrder } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
-import { useSendCommit } from 'lib/hooks/useSendCommit'
+import { useSendCommits } from 'lib/hooks/useSendCommits'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
@@ -20,14 +20,22 @@ interface CommitButtonProps {
 
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { names } = order
-  const { address } = useAccount()
+  const { address: sender } = useAccount()
 
-  const { sendCommit, status, error } = useSendCommit({
-    domain: names[0],
+  // leaving this here to use in the future for 1 name registration with params
+  // const { sendCommit, status, error } = useSendCommit({
+  //   domain: names[0],
+  //   duration: order.durationInYears * YEAR_IN_SECONDS,
+  //   owner: order.ownerAddress ?? sender,
+  //   setDefaultResolver: true,
+  //   addr: order.ownerAddress ?? sender // can be set a different address or no address
+  // })
+
+  // later should only be used for multiple names
+  const { sendCommit, status, error } = useSendCommits({
+    names: names,
     duration: order.durationInYears * YEAR_IN_SECONDS,
-    owner: order.ownerAddress ?? address,
-    setDefaultResolver: true,
-    addr: order.ownerAddress ?? address // can be set a different address or no address
+    owner: order.ownerAddress ?? sender
   })
 
   const notify = useNotifier()

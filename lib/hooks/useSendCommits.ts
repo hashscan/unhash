@@ -9,6 +9,7 @@ import {
   useWaitForTransaction
 } from 'wagmi'
 import { useMakeCommitments } from './useMakeCommitments'
+import { useRegistration } from './useRegistration'
 
 // TODO: support saving Registration with multiple names to LocalStorage
 
@@ -24,11 +25,12 @@ export const useSendCommits = ({
 }: {
   names: Domain[]
   duration: number
-  owner: string | undefined // required; hooks is disabled unless it's set
+  owner: string | undefined // required; hook is disabled unless it's set
 }) => {
   const chainId = useChainId()
   const network = toNetwork(chainId)
   const { address: sender } = useAccount()
+  const { setCommitting } = useRegistration()
 
   // generate secrets and commitments for each name
   const { secret, commitments } = useMakeCommitments({
@@ -54,14 +56,14 @@ export const useSendCommits = ({
     ...config,
     // create new Registration when transaction is sent
     onSuccess: (data) => {
-      // TODO: save as in useSendCommit once local storage supports list of names
-      console.log(
-        `onSuccess (${data.hash}): names = ${JSON.stringify(
-          names
-        )}, owner = ${owner}, ${duration}, secret = ${secret}, commitments = ${JSON.stringify(
-          commitments
-        )}`
-      )
+      setCommitting({
+        names: names,
+        sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
+        owner: owner,
+        duration: duration,
+        secret: secret!,
+        commitTxHash: data.hash
+      })
     }
   })
 
