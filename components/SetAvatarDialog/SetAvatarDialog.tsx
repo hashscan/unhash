@@ -1,4 +1,5 @@
-import { useAccount } from 'wagmi'
+import { useEffect, useState } from 'react'
+import { useAccount, useChainId } from 'wagmi'
 
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { Navigation } from './Navigation'
@@ -9,19 +10,22 @@ import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 import { closeDialog } from 'lib/dialogs'
 import { useSendSetAvatar } from 'lib/hooks/useSendSetAvatar'
 import { useNotifier } from 'lib/hooks/useNotifier'
+import { NFTToken, toNetwork, UserInfo } from 'lib/types'
+import api from 'lib/api'
+import { Domain } from 'lib/types'
 
 import styles from './SetAvatarDialog.module.css'
-import { NFTToken } from 'lib/types'
-import { useState } from 'react'
 
 export interface SetAvatarDialogProps extends DialogExternalProps {}
 
 export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
   const notify = useNotifier()
   const { address } = useAccount()
+  const network = toNetwork(useChainId())
 
+  const [user, setUser] = useState<UserInfo>()
+  const domain: Domain = user?.primaryName?.name!
   const [selectedAvatar, setSelectedAvatar] = useState<NFTToken | null>(null)
-  const domain = 'capitalgang.eth' /* TODO */
 
   const { sendSetAvatar, status: transactionStatus } = useSendSetAvatar({
     domain,
@@ -34,8 +38,16 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
     }
   })
 
+  useEffect(() => {
+    ;(async () => {
+      const user = await api.userInfo(address!, network)
+      setUser(user)
+    })()
+  }, [])
+
   // can't close when there is a pending transaction
   const canCloseDialog = transactionStatus === 'idle'
+  const buttonEnabled = Boolean(selectedAvatar && user)
 
   return (
     <Dialog
@@ -53,7 +65,7 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
               className={styles.buttonSend}
               status={transactionStatus}
               size={'medium'}
-              disabled={!Boolean(selectedAvatar)}
+              disabled={!buttonEnabled}
               onClick={() => sendSetAvatar?.()}
             >
               Set Avatar
