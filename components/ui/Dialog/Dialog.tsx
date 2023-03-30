@@ -35,39 +35,35 @@ export const Dialog = ({
   }
 
   return (
-    <AnimatePresence>
-      {open && (
-        <HeadlessDialog
+    <HeadlessDialog
+      as={motion.div}
+      static
+      className={styles.container}
+      open={open}
+      onClose={handleClose}
+      variants={containerAnimationVariants}
+    >
+      {/* Full-screen container to center the panel */}
+      <motion.div
+        variants={backdropAnimationVariants}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        className={styles.backdrop}
+      >
+        <HeadlessDialog.Panel
+          className={clsx(styles.panel, styles[`panel_${size}`], className)}
           as={motion.div}
-          static
-          className={styles.container}
-          open={open}
-          onClose={handleClose}
-          variants={containerAnimationVariants}
+          variants={panelAnimationVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
         >
-          {/* Full-screen container to center the panel */}
-          <motion.div
-            variants={backdropAnimationVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className={styles.backdrop}
-          >
-            <HeadlessDialog.Panel
-              className={clsx(styles.panel, styles[`panel_${size}`], className)}
-              as={motion.div}
-              variants={panelAnimationVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {children}
-              {footer && <div className={styles.footer}>{footer}</div>}
-            </HeadlessDialog.Panel>
-          </motion.div>
-        </HeadlessDialog>
-      )}
-    </AnimatePresence>
+          {children}
+          {footer && <div className={styles.footer}>{footer}</div>}
+        </HeadlessDialog.Panel>
+      </motion.div>
+    </HeadlessDialog>
   )
 }
 

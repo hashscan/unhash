@@ -1,4 +1,5 @@
 import { SetAvatarDialog } from 'components/SetAvatarDialog/SetAvatarDialog'
+import { AnimatePresence } from 'framer-motion'
 import { createNanoEvents } from 'nanoevents'
 import { useEffect, useState } from 'react'
 
@@ -37,9 +38,15 @@ export const Dialogs = () => {
 
   return (
     <>
-      {Object.entries(DialogComponents).map(([name, Dialog]) => (
-        <Dialog key={name} open={currentDialog === name} onClose={() => setCurrentDialog(null)} />
-      ))}
+      {Object.entries(DialogComponents).map(([name, Dialog]) => {
+        const open = currentDialog === name
+
+        return (
+          <AnimatePresence key={name}>
+            {open && <Dialog open={open} onClose={() => setCurrentDialog(null)} />}
+          </AnimatePresence>
+        )
+      })}
     </>
   )
 }
