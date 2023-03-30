@@ -5,6 +5,8 @@ import { Navigation } from './Navigation'
 import { Gallery } from './Gallery'
 import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
+import { closeDialog } from 'lib/dialogs'
+
 import styles from './SetAvatarDialog.module.css'
 export interface SetAvatarDialogProps extends DialogExternalProps {}
 
@@ -16,7 +18,7 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
       footer={
         <>
           <div className={styles.footer}>
-            <Button size={'regular'} variant={'ghost'}>
+            <Button size={'regular'} variant={'ghost'} onClick={() => closeDialog()}>
               Cancel
             </Button>
 
