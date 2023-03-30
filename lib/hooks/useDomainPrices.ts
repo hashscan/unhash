@@ -1,4 +1,4 @@
-import api, { DomainPrice } from 'lib/api'
+import api, { DomainPrices } from 'lib/api'
 import { toNetwork } from 'lib/types'
 import { useEffect, useState } from 'react'
 import { useChainId } from 'wagmi'
@@ -7,15 +7,13 @@ function zip<T>(names: string[], values?: T[]) {
   return Object.fromEntries(names.map((name, index) => [name, values ? values[index] : undefined]))
 }
 
-type Prices = { [key: string]: DomainPrice | undefined }
-
 export const useDomainPrices = (
   names: string[],
   duration: number | undefined,
   dropOnChange: boolean = false
-): Prices => {
+): Partial<DomainPrices> => {
   const chainId = useChainId()
-  const [prices, setPrice] = useState<{ [key: string]: DomainPrice | undefined }>(() => zip(names))
+  const [prices, setPrice] = useState<Partial<DomainPrices>>(() => zip(names))
 
   useEffect(() => {
     if (!duration) {
@@ -27,7 +25,7 @@ export const useDomainPrices = (
     const fetchPrice = async () => {
       try {
         const results = await api.getPrices(names, toNetwork(chainId), duration)
-        setPrice(zip(names, results))
+        setPrice(results)
       } catch (err) {
         console.log(`failed to fetch domain price: ${err}`)
         setPrice(zip(names))
