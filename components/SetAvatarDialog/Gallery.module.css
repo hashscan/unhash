@@ -12,6 +12,16 @@
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .container {
+    padding: 8px;
+  }
+}
+
 /**
 * rootMargin option in react-infinite-scroll-hook is currently broken, so here is a workaround
 * to make it possible to trigger loading before reaching the end of scrollable area
@@ -33,6 +43,7 @@
   overflow: hidden;
 
   aspect-ratio: 1 / 1; /* square, see polyfill below */
+  border: 1px solid var(--color-slate-6); /* so that images with white background don't blend in */
 }
 
 @supports not (aspect-ratio: 1 / 1) {
@@ -41,7 +52,7 @@
   }
 }
 
-.cell.cellLoading {
+.cell.cell_loading {
   background: linear-gradient(
     115deg,
     var(--color-slate-6) 25%,
@@ -64,22 +75,28 @@
 .nftPreview {
   width: 100%;
   height: 100%;
+  transition: transform 0.15s linear;
+}
+
+.nftPreviewImage {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transition: opacity 0.5s ease;
   opacity: 0;
   background-size: cover;
   cursor: pointer;
-
-  border: 1px solid var(--color-slate-6); /* so that images with white background don't blend in */
   border-radius: var(--radii-sm);
 }
 
-.nftPreviewVisible {
+.nftPreviewImage_visible {
   opacity: 1;
 }
 
-.nftPreviewSelected {
-  box-shadow: inset 0 0 0 3px var(--color-green-dark), inset 0 0 0px 5px var(--color-slate-6),
-    0px -1px 12px 0px rgb(var(--color-slate-1-rgb) / 0.1);
-  border-color: var(--color-green-dark);
+.cell_selected {
+  box-shadow: 0 0 0 4px var(--color-green-dark);
+}
+
+.nftPreview_selected {
+  transform: scale(1.025);
 }

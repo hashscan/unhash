@@ -86,9 +86,10 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
           .map((_, i) => {
             if (i < nftsCount) {
               const nft = NFTs[i]
+              const isSelected = nft.id === highlightedNFTId
 
               return (
-                <div className={clsx(styles.cell)} key={i}>
+                <div className={clsx(styles.cell, { [styles.cell_selected]: isSelected })} key={i}>
                   <NFTPreview
                     nft={nft}
                     indexWithinBatch={i % ITEMS_PER_PAGE}
@@ -96,7 +97,7 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
                       onSelectNFT(nft)
                       setSelectedNFTId(nft.id)
                     }}
-                    isSelected={nft.id === highlightedNFTId}
+                    isSelected={isSelected}
                   />
                 </div>
               )
@@ -106,7 +107,7 @@ export const Gallery = ({ className, onSelectNFT, address, ...rest }: Props) => 
               return (
                 <div
                   key={i}
-                  className={clsx(styles.cell, { [styles.cellLoading]: isLoadingNFTs })}
+                  className={clsx(styles.cell, { [styles.cell_loading]: isLoadingNFTs })}
                 />
               )
             }
@@ -140,12 +141,17 @@ const NFTPreview = ({
 
   return (
     <div
-      style={{ transitionDelay, backgroundImage: `url(${nft.image})` }}
-      onClick={onClick}
       className={clsx(styles.nftPreview, {
-        [styles.nftPreviewVisible]: isVisible,
-        [styles.nftPreviewSelected]: isSelected
+        [styles.nftPreview_selected]: isSelected
       })}
-    />
+    >
+      <div
+        style={{ transitionDelay, backgroundImage: `url(${nft.image})` }}
+        onClick={onClick}
+        className={clsx(styles.nftPreviewImage, {
+          [styles.nftPreviewImage_visible]: isVisible
+        })}
+      />
+    </div>
   )
 }
