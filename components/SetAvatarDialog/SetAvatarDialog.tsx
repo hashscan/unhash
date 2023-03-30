@@ -35,11 +35,11 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
             <Button
               className={styles.buttonSend}
               isLoading={isLoading}
-              size={'regular'}
+              size={'medium'}
               disabled={false}
               onClick={handleClick}
             >
-              Set Avatar →
+              Set Avatar
             </Button>
           </div>
         </>
