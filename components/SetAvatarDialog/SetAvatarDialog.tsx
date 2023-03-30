@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button } from 'components/ui/Button/Button'
 import { Navigation } from './Navigation'
@@ -11,10 +11,20 @@ import styles from './SetAvatarDialog.module.css'
 export interface SetAvatarDialogProps extends DialogExternalProps {}
 
 export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleClick = () => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+  }
+
   return (
     <Dialog
       {...rest}
       size={'lg'}
+      canCloseDialog={!isLoading} // can't close when there is a pending transaction
       footer={
         <>
           <div className={styles.footer}>
@@ -24,10 +34,10 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
 
             <Button
               className={styles.buttonSend}
-              isLoading={false}
+              isLoading={isLoading}
               size={'regular'}
               disabled={false}
-              onClick={() => {}}
+              onClick={handleClick}
             >
               Set Avatar →
             </Button>

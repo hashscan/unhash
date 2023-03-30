@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
  */
 const DialogComponents = {
   setAvatar: SetAvatarDialog,
-  sendDomain: () => <>todo!</>
+  sendDomain: () => <>{/* todo: add your implementation here */}</>
 } as const
 
 export type DialogName = keyof typeof DialogComponents
