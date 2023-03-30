@@ -117,7 +117,7 @@ const panelAnimationVariants = {
   exit: {
     opacity: 0,
     scale: 1.05,
-    translateY: 20,
+    translateY: -20,
     filter: 'blur(8px)',
     transition: {
       duration: 0.2
