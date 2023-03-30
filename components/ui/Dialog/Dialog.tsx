@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Dialog as HeadlessDialog } from '@headlessui/react'
 import { type DialogProps as HeadlessDialogProps } from '@headlessui/react'
 import { AnimatePresence, motion } from 'framer-motion'
