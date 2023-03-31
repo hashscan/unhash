@@ -1,12 +1,18 @@
 import { ReactNode } from 'react'
 import { Dialog as HeadlessDialog } from '@headlessui/react'
 import { type DialogProps as HeadlessDialogProps } from '@headlessui/react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import clsx from 'clsx'
 
 import styles from './Dialog.module.css'
 
 type HeadlDialogProps = HeadlessDialogProps<React.ElementType<'div'>>
+
+// The props that the component built on top of Dialog should accept
+export type DialogExternalProps = Pick<HeadlDialogProps, 'open' | 'onClose'> & {
+  closeDialog: (success?: boolean) => void
+  closeDialogWithSuccess: () => void
+}
 
 export type DialogProps = {
   size: 'sm' | 'md' | 'lg' | 'xl'
@@ -17,8 +23,6 @@ export type DialogProps = {
   onClose: HeadlDialogProps['onClose']
   canCloseDialog?: boolean
 }
-
-export type DialogExternalProps = Pick<HeadlDialogProps, 'open' | 'onClose'>
 
 export const Dialog = ({
   size = 'md',

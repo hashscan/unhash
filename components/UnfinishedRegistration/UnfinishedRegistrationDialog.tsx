@@ -7,7 +7,11 @@ import styles from './UnfinishedRegistrationDialog.module.css'
 
 type UnfinishedRegistrationDialogProps = DialogExternalProps & {}
 
-export const UnfinishedRegistrationDialog = ({ ...rest }: UnfinishedRegistrationDialogProps) => {
+export const UnfinishedRegistrationDialog = ({
+  closeDialog,
+  closeDialogWithSuccess,
+  ...rest
+}: UnfinishedRegistrationDialogProps) => {
   const { registration, clearRegistration } = useRegistration()
   const navigate = useRouterNavigate()
 
@@ -25,7 +29,7 @@ export const UnfinishedRegistrationDialog = ({ ...rest }: UnfinishedRegistration
             onClick={() => {
               if (confirm('Are you sure you want to cancel the registration process?')) {
                 clearRegistration()
-                // show(false)
+                closeDialog()
               }
             }}
             size={'regular'}
@@ -40,6 +44,7 @@ export const UnfinishedRegistrationDialog = ({ ...rest }: UnfinishedRegistration
             disabled={false}
             onClick={() => {
               navigate(`/${registration.names[0]}/register`)
+              closeDialogWithSuccess()
             }}
           >
             Continue
