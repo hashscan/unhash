@@ -363,6 +363,27 @@ export const RenewClock = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const CameraReplace = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24">
+      <g
+        strokeLinecap="round"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        fill="none"
+        strokeLinejoin="round"
+      >
+        <path d="M17,13l-1,1l-1,-1"></path>
+        <path d="M15.892,13.892c0.066,-0.288 0.108,-0.584 0.108,-0.892c0,-2.209 -1.791,-4 -4,-4c-0.849,0 -1.633,0.268 -2.281,0.719"></path>
+        <path d="M21,9v9c0,1.105 -0.895,2 -2,2h-14c-1.105,0 -2,-0.895 -2,-2v-9c0,-1.105 0.895,-2 2,-2h2l1.462,-2.504c0.179,-0.307 0.508,-0.496 0.864,-0.496h5.304c0.351,0 0.676,0.184 0.857,0.484l1.513,2.516h2c1.105,0 2,0.895 2,2Z"></path>
+        <path d="M7,13l1,-1l1,1"></path>
+        <path d="M8.108,12.108c-0.066,0.288 -0.108,0.584 -0.108,0.892c0,2.209 1.791,4 4,4c0.849,0 1.633,-0.268 2.281,-0.719"></path>
+      </g>
+      <path fill="none" d="M0,0h24v24h-24Z"></path>
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */
