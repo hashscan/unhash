@@ -15,7 +15,9 @@ import { Domain } from 'lib/types'
 
 import styles from './SetAvatarDialog.module.css'
 
-export interface SetAvatarDialogProps extends DialogExternalProps {}
+export interface SetAvatarDialogProps extends DialogExternalProps {
+  params: {}
+}
 
 export const SetAvatarDialog = ({
   closeDialog,
