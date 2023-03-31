@@ -1,14 +1,16 @@
-import { SetAvatarDialog } from 'components/SetAvatarDialog/SetAvatarDialog'
 import { AnimatePresence } from 'framer-motion'
 import { createNanoEvents } from 'nanoevents'
 import { useEffect, useState } from 'react'
+
+import { SetAvatarDialog } from 'components/SetAvatarDialog/SetAvatarDialog'
+import { UnfinishedRegistrationDialog } from 'components/UnfinishedRegistration/UnfinishedRegistrationDialog'
 
 /**
  * When adding new dialogs to the app, register their components here!
  */
 const DialogComponents = {
   setAvatar: SetAvatarDialog,
-  sendDomain: () => <>{/* todo: add your implementation here */}</>
+  unfinishedRegistration: UnfinishedRegistrationDialog
 } as const
 
 export type DialogName = keyof typeof DialogComponents
