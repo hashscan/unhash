@@ -1,6 +1,5 @@
-import React, { ComponentProps, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './SendName.module.css'
-import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
@@ -9,14 +8,19 @@ import { Domain } from 'lib/types'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 import { SendNameSuccess } from './SendNameSuccess'
+import { DialogExternalProps } from 'components/ui/Dialog/Dialog'
+import { Dialog } from 'components/ui/Dialog/Dialog'
 
-export interface SendNameProps extends ComponentProps<'div'> {
-  domain: Domain
-  onClose?: () => void
-  onSuccess?: () => void
-}
+export interface SendNameProps extends DialogExternalProps {}
 
-export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: SendNameProps) => {
+export const SendName = ({
+  params,
+  closeDialog,
+  closeDialogWithSuccess,
+  ...rest
+}: SendNameProps) => {
+  const domain = params?.domain as Domain
+
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
 
@@ -32,8 +36,7 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
   } = useSendName({
     tokenId: domainInfo?.tokenId,
     toAddress: address,
-    onError: (error) => notify(error.message, { status: 'error' }),
-    onSuccess: () => onSuccess?.()
+    onError: (error) => notify(error.message, { status: 'error' })
   })
   const sendName = () => {
     // TODO: show input error if address is not set
@@ -44,7 +47,27 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
   const isControlsDisabled = status !== 'idle'
 
   return (
-    <div {...rest} className={clsx(className, styles.modal)}>
+    <Dialog
+      {...rest}
+      size={'md'}
+      footer={
+        !isSuccess && (
+          <div className={styles.footer}>
+            <Button
+              size={'regular'}
+              variant={'ghost'}
+              disabled={isControlsDisabled}
+              onClick={() => closeDialog()}
+            >
+              Cancel
+            </Button>
+            <TransactionButton status={status} size={'regular'} onClick={sendName}>
+              Send&nbsp;&nbsp;→
+            </TransactionButton>
+          </div>
+        )
+      }
+    >
       <div className={styles.body}>
         <div className={styles.title}>Send name</div>
         <div className={styles.text}>
@@ -65,28 +88,16 @@ export const SendName = ({ domain, onClose, onSuccess, className, ...rest }: Sen
             "Sending a name won't change it's public profile or a manager. Name will still be linked to the same address. But a new owner can change that."
           }
         </div>
+
+        {isSuccess && (
+          <SendNameSuccess
+            className={styles.success}
+            domain={domain}
+            txHash={txHash ?? ''}
+            onClose={() => closeDialogWithSuccess()}
+          />
+        )}
       </div>
-      <div className={styles.footer}>
-        <Button
-          size={'regular'}
-          variant={'ghost'}
-          disabled={isControlsDisabled}
-          onClick={() => onClose?.()}
-        >
-          Cancel
-        </Button>
-        <TransactionButton status={status} size={'regular'} onClick={sendName}>
-          Send&nbsp;&nbsp;→
-        </TransactionButton>
-      </div>
-      {isSuccess && (
-        <SendNameSuccess
-          className={styles.success}
-          domain={domain}
-          txHash={txHash ?? ''}
-          onClose={() => onClose?.()}
-        />
-      )}
-    </div>
+    </Dialog>
   )
 }
