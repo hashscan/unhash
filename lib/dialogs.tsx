@@ -48,7 +48,6 @@ export const Dialogs = () => {
 
   useEffect(() => {
     mediator.on('openDialog', (type, options) => setCurrentDialog({ type, options }))
-    mediator.on('closeDialog', () => setCurrentDialog(null))
 
     return () => {
       mediator.events = {}
