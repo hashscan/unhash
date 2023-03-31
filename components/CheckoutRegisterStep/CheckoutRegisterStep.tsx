@@ -10,8 +10,14 @@ import { Gas } from 'components/icons'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
 import styles from './CheckoutRegisterStep.module.css'
+import { pluralize } from 'lib/pluralize'
+import { Registration } from 'lib/types'
 
-export const CheckoutRegisterStep = () => {
+interface CheckoutRegisterStepProps {
+  registration: Registration
+}
+
+export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps) => {
   const { gasLimit, write, status, error } = useSendRegisters()
   const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
 
@@ -32,8 +38,8 @@ export const CheckoutRegisterStep = () => {
       <h1 className={styles.title}>Complete Registration</h1>
 
       <p className={styles.description}>
-        Your domain is ready to be registered. Confirm the last transaction to finish the
-        registration.
+        Your {pluralize('name', registration.names.length, true)} is ready to be registered. Confirm
+        the last transaction to finish the registration.
       </p>
 
       <div className={styles.buttons}>
