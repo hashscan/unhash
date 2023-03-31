@@ -7,7 +7,6 @@ import { Button } from 'components/ui/Button/Button'
 import { Gallery } from './Gallery'
 import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
-import { closeDialog } from 'lib/dialogs'
 import { useSendSetAvatar } from 'lib/hooks/useSendSetAvatar'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { NFTToken, toNetwork, UserInfo } from 'lib/types'
@@ -18,7 +17,11 @@ import styles from './SetAvatarDialog.module.css'
 
 export interface SetAvatarDialogProps extends DialogExternalProps {}
 
-export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
+export const SetAvatarDialog = ({
+  closeDialog,
+  closeDialogWithSuccess,
+  ...rest
+}: SetAvatarDialogProps) => {
   const notify = useNotifier()
   const { address } = useAccount()
   const network = toNetwork(useChainId())
@@ -31,7 +34,7 @@ export const SetAvatarDialog = ({ ...rest }: SetAvatarDialogProps) => {
     domain,
     avatar: selectedAvatar,
     onSuccess: () => {
-      closeDialog()
+      closeDialogWithSuccess()
     },
     onError: (error) => {
       notify(error.message, { status: 'error' })
