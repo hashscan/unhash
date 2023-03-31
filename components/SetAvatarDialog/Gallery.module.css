@@ -75,7 +75,7 @@
 .nftPreview {
   width: 100%;
   height: 100%;
-  transition: transform 0.15s linear;
+  transition: transform 0.15s ease;
 }
 
 .nftPreviewImage {
@@ -97,6 +97,10 @@
   box-shadow: 0 0 0 4px var(--color-green-dark);
 }
 
+.nftPreview:hover:not(.nftPreview_selected) {
+  transform: scale(1.03);
+}
+
 .nftPreview_selected {
-  transform: scale(1.025);
+  transform: scale(1.05);
 }

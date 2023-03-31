@@ -90,7 +90,7 @@ const backdropAnimationVariants = {
     backdropFilter: 'blur(0px)',
     transition: {
       duration: 0.2,
-      delay: 0.25
+      delay: 0.2
     }
   }
 }
@@ -101,8 +101,8 @@ const panelAnimationVariants = {
     opacity: 1,
     transition: {
       type: 'spring',
-      duration: 0.5,
-      bounce: 0.5
+      duration: 0.4,
+      bounce: 0.4
     }
   },
 
@@ -116,7 +116,7 @@ const panelAnimationVariants = {
     translateY: -20,
     filter: 'blur(8px)',
     transition: {
-      duration: 0.2
+      duration: 0.15
     }
   }
 }
