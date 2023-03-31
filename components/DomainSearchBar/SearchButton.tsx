@@ -10,7 +10,8 @@ import { Button } from 'components/ui/Button/Button'
 export interface SearchButtonProps extends ComponentProps<'div'> {
   status: SearchStatus
   isNavigating: boolean
-  isBulk?: boolean
+  isBulkEnabled?: boolean
+  isBucketEmpty?: boolean
   onBulk: () => void
 }
 
@@ -38,16 +39,17 @@ const Bulk = ({ onBulk, status, isNavigating }: SearchButtonProps) => {
 }
 
 export const SearchButton = (props: SearchButtonProps) => {
-  const { status, isNavigating, onClick, isBulk, ...restProps } = props
+  const { status, isNavigating, onClick, isBulkEnabled, isBucketEmpty, ...restProps } = props
 
   // TODO: better condition
   const isButtonDisabled =
-    (!isBulk || status !== SearchStatus.Idle) && (isNavigating || status !== SearchStatus.Available)
+    (isBucketEmpty || status !== SearchStatus.Idle) &&
+    (isNavigating || status !== SearchStatus.Available)
 
   return (
     <div {...restProps} className={clsx(styles.container)}>
       <Loader {...props} />
-      <Bulk {...props} />
+      {isBulkEnabled && <Bulk {...props} />}
 
       <button
         onClick={onClick as MouseEventHandler<HTMLButtonElement> | undefined}
