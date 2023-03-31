@@ -78,7 +78,7 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
-          {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
+          {step === 'register' && reg && <CheckoutRegisterStep />}
           {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
