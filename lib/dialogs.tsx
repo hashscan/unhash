@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react'
 
 import { SetAvatarDialog } from 'components/SetAvatarDialog/SetAvatarDialog'
 import { UnfinishedRegistrationDialog } from 'components/UnfinishedRegistration/UnfinishedRegistrationDialog'
+import { SendName } from 'components/SendName/SendName'
 
 /**
  * When adding new dialogs to the app, register their components here!
  */
 const DialogComponents = {
   setAvatar: SetAvatarDialog,
-  unfinishedRegistration: UnfinishedRegistrationDialog
+  unfinishedRegistration: UnfinishedRegistrationDialog,
+  sendName: SendName
 } as const
 
 export type DialogName = keyof typeof DialogComponents
@@ -21,7 +23,7 @@ export type DialogParams = {
 interface OpenDialogEventOptions {
   resolve: (value: unknown) => void
   reject: () => void
-  params?: DialogParams
+  params: DialogParams
 }
 
 interface Events {
@@ -31,7 +33,7 @@ interface Events {
 const mediator = createNanoEvents<Events>()
 
 // imperative API for controlling dialogs
-export const openDialog = (type: DialogName, params?: DialogParams) => {
+export const openDialog = (type: DialogName, params: DialogParams = {}) => {
   return new Promise((resolve, reject) => {
     mediator.emit('openDialog', type, { resolve, reject, params })
   })
@@ -73,6 +75,7 @@ export const Dialogs = () => {
                 return (
                   <Dialog
                     open={open}
+                    params={currentDialog.options.params}
                     onClose={() => closeDialog(false)}
                     // imperative methods for closing the dialog
                     closeDialog={closeDialog}
