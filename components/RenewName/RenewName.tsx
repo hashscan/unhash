@@ -1,6 +1,5 @@
-import React, { ComponentProps, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import styles from './RenewName.module.css'
-import clsx from 'clsx'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { useNotifier } from 'lib/hooks/useNotifier'
@@ -10,14 +9,17 @@ import { formatExpiresOn } from 'lib/format'
 import { RenewYearSelect } from './RenewYearSelect'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useRenewName } from 'lib/hooks/useRenewName'
+import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
-export interface RenewNameProps extends ComponentProps<'div'> {
-  domain: UserDomain
-  onClose?: () => void
-  onSuccess?: () => void
-}
+export interface RenewNameProps extends DialogExternalProps {}
 
-export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: RenewNameProps) => {
+export const RenewName = ({
+  params,
+  closeDialog,
+  closeDialogWithSuccess,
+  ...rest
+}: RenewNameProps) => {
+  const domain = params?.domain as UserDomain
   const notify = useNotifier()
 
   const [years, setYears] = useState(1)
@@ -35,8 +37,7 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   } = useRenewName({
     domain: domain.name,
     duration: years * YEAR_IN_SECONDS,
-    onError: (error) => notify(error.message, { status: 'error' }),
-    onSuccess: () => onSuccess?.()
+    onError: (error) => notify(error.message, { status: 'error' })
   })
 
   const renewName = () => {
@@ -45,7 +46,27 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
   }
 
   return (
-    <div {...rest} className={clsx(className, styles.modal)}>
+    <Dialog
+      {...rest}
+      size={'md'}
+      footer={
+        !isSuccess && (
+          <div className={styles.footer}>
+            <Button
+              size="regular"
+              variant="ghost"
+              disabled={status !== 'idle'}
+              onClick={() => closeDialog()}
+            >
+              Cancel
+            </Button>
+            <TransactionButton status={status} size={'regular'} onClick={renewName}>
+              Renew&nbsp;&nbsp;→
+            </TransactionButton>
+          </div>
+        )
+      }
+    >
       <div className={styles.body}>
         <div className={styles.title}>Renew name</div>
         <div className={styles.text}>
@@ -64,28 +85,16 @@ export const RenewName = ({ domain, onClose, onSuccess, className, ...rest }: Re
           {'New expiration date will be '}
           <b>{formatExpiresOn(newExpiration)}</b>
         </div>
+
+        {isSuccess && (
+          <RenewNameSuccess
+            className={styles.success}
+            domain={domain.name}
+            txHash={txHash ?? ''}
+            onClose={() => closeDialogWithSuccess()}
+          />
+        )}
       </div>
-      <div className={styles.footer}>
-        <Button
-          size="regular"
-          variant="ghost"
-          disabled={status !== 'idle'}
-          onClick={() => onClose?.()}
-        >
-          Cancel
-        </Button>
-        <TransactionButton status={status} size={'regular'} onClick={renewName}>
-          Renew&nbsp;&nbsp;→
-        </TransactionButton>
-      </div>
-      {isSuccess && (
-        <RenewNameSuccess
-          className={styles.success}
-          domain={domain.name}
-          txHash={txHash ?? ''}
-          onClose={() => onClose?.()}
-        />
-      )}
-    </div>
+    </Dialog>
   )
 }

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { SetAvatarDialog } from 'components/SetAvatarDialog/SetAvatarDialog'
 import { UnfinishedRegistrationDialog } from 'components/UnfinishedRegistration/UnfinishedRegistrationDialog'
-import { SendName } from 'components/SendName/SendName'
+import { SendName as SendNameDialog } from 'components/SendName/SendName'
+import { RenewName as RenewNameDialog } from 'components/RenewName/RenewName'
 
 /**
  * When adding new dialogs to the app, register their components here!
@@ -12,7 +13,8 @@ import { SendName } from 'components/SendName/SendName'
 const DialogComponents = {
   setAvatar: SetAvatarDialog,
   unfinishedRegistration: UnfinishedRegistrationDialog,
-  sendName: SendName
+  sendName: SendNameDialog,
+  renewName: RenewNameDialog
 } as const
 
 export type DialogName = keyof typeof DialogComponents
