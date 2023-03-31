@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
  * by automatically cancelling all previous promises
  *
  * @returns run - call this method whenever you fire a new promise
- * @returns cancel - cancelles the last run promise
+ * @returns cancel - cancels the last run promise
  */
 export const useLatestPromise = <T extends any = void>() => {
   // here is the idea: for each promise provided we generate a unique id

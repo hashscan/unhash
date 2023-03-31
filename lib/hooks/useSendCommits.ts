@@ -57,11 +57,11 @@ export const useSendCommits = ({
     // create new Registration when transaction is sent
     onSuccess: (data) => {
       setCommitting({
-        names: names,
+        names,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner,
-        duration: duration,
-        secret: secret!,
+        duration,
+        secret: secret!, // TODO: fix?
         commitTxHash: data.hash
       })
     }

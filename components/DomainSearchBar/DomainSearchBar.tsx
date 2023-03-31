@@ -1,9 +1,10 @@
-import React, {
+import {
   forwardRef,
   useState,
   useImperativeHandle,
   useCallback,
-  FormEventHandler
+  FormEventHandler,
+  useEffect
 } from 'react'
 import clsx from 'clsx'
 
@@ -17,6 +18,7 @@ import { trackGoal } from 'lib/analytics'
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
 import { BuyBadge } from 'components/ui/BuyBadge/BuyBadge'
+import { notNull } from 'lib/utils'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -28,6 +30,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   ref
 ) {
   const [searchQuery, setSearchQueryRaw] = useState('')
+  const [names, setNames] = useState<string[]>([])
   const [, setIsFocused] = useState(false)
   const [isNavigating, setIsNavigating] = useState(false)
 
@@ -38,20 +41,26 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const suffix = findSuffix(searchQuery)
   const normalized = searchQuery.length ? normalizeDotETH(searchQuery + suffix) : ''
 
-  const { status, validationMessage, errorMessage } = useSearch(normalized)
+  const { status, validationMessage, errorMessage } = useSearch(normalized, false, names)
   const { listing } = useSearch(normalized, true) // run parallel search for listing
   const navigate = useRouterNavigate()
 
   const registerDomain = useCallback(() => {
-    if (isNavigating || status !== SearchStatus.Available) return
+    if (!names.length && (isNavigating || status !== SearchStatus.Available)) return
 
-    trackGoal('SearchRegisterClick', { props: { domain: normalized } })
+    const finalNamesForRegistration = names.concat(normalized).filter(notNull)
+
+    trackGoal('SearchRegisterClick', { props: { names: finalNamesForRegistration.join(',') } })
     setIsNavigating(true)
 
-    navigate(`${normalized}/register`).finally(() => {
+    const params = new URLSearchParams(
+      finalNamesForRegistration.map((name) => ['names', name])
+    ).toString()
+
+    navigate(`/register?${params}`).finally(() => {
       setIsNavigating(false)
     })
-  }, [isNavigating, navigate, normalized, status])
+  }, [isNavigating, names, navigate, normalized, status])
 
   const handleSubmit: FormEventHandler = useCallback(
     (e) => {
@@ -93,7 +102,16 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         </div>
 
         <div className={styles.action}>
-          <SearchButton status={status} isNavigating={isNavigating} onClick={registerDomain} />
+          <SearchButton
+            status={status}
+            isBulk={!!names.length}
+            onBulk={() => {
+              setNames((names) => [...names, normalized])
+              setSearchQuery('')
+            }}
+            isNavigating={isNavigating}
+            onClick={registerDomain}
+          />
         </div>
       </div>
 
@@ -115,6 +133,11 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
               <b>{normalized}</b> is not available
             </>
           )}
+          {status === SearchStatus.Duplicate && (
+            <>
+              <b>{normalized}</b> already in order
+            </>
+          )}
           {status === SearchStatus.Invalid && <>{validationMessage}</>}
           {status === SearchStatus.Error && <>{errorMessage}</>}
           {status === SearchStatus.Loading && <>Please wait...</>}
@@ -122,6 +145,12 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         </StatusBadge>
         {listing && <BuyBadge listing={listing} />}
       </div>
+
+      {!!names.length && (
+        <div>
+          selected for registration <strong>{names.join(', ')}</strong>
+        </div>
+      )}
     </>
   )
 })

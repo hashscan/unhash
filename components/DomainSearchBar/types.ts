@@ -3,6 +3,7 @@ export enum SearchStatus {
   Loading,
   Invalid, // search query has invalid format
   Error, // fetch error
+  Duplicate, // already in order
   Available,
   NotAvailable
 }
