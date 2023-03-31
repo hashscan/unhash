@@ -34,7 +34,7 @@
   letter-spacing: var(--ls-lg);
   padding: 14px 16px;
   border-style: solid;
-  border-width: var(--border-md);
+  border-width: var(--border-md); /* not defined */
   border-color: transparent;
   white-space: nowrap;
 }
@@ -60,7 +60,7 @@
 }
 
 /* the actual suffix */
-.suffix>span {
+.suffix > span {
   color: var(--color-slate-5);
 }
 

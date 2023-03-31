@@ -8,7 +8,7 @@
 
 .button {
   background: var(--color-slate-1);
-  border-radius: var(--radii-lg);
+  border-radius: var(--radii-md);
   box-shadow: none;
   border: none;
   padding: 12px 32px;
@@ -65,11 +65,26 @@
   .button {
     width: 100%;
     height: 64px;
+    border-radius: var(--radii-lg);
   }
 
   .loader {
     position: absolute;
     left: 16px;
     color: var(--color-slate-f);
+  }
+}
+
+.container > .bulk {
+  margin-right: 8px;
+
+  border: 1.5px solid var(--color-slate-2);
+  padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .container > .bulk {
+    border-radius: var(--radii-lg);
+    height: 64px;
   }
 }

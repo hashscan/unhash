@@ -1,6 +1,6 @@
 import api, { DomainStatus } from 'lib/api'
 import { DomainListing, toNetwork } from 'lib/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDebounce } from 'usehooks-ts'
 import { useChainId } from 'wagmi'
 
@@ -14,12 +14,23 @@ export interface SearchResult {
   validationMessage?: string
 }
 
-export const useSearch = (query: string, withListing: boolean = false) => {
+const EMPTY_ARRAY = [] as string[]
+export const useSearch = (
+  query: string,
+  withListing: boolean = false,
+  names: string[] = EMPTY_ARRAY
+) => {
   const chainId = useChainId()
 
   const [result, setResult] = useState<SearchResult>({ status: SearchStatus.Idle })
   const { run, cancel } = useLatestPromise<DomainStatus>()
   const debouncedQuery = useDebounce(query, 300)
+
+  const namesRef = useRef<string[]>([])
+
+  useEffect(() => {
+    namesRef.current = names
+  }, [names])
 
   // query changes -> cancel everything and start loading
   useEffect(() => {
@@ -51,6 +62,11 @@ export const useSearch = (query: string, withListing: boolean = false) => {
           setResult({
             status: SearchStatus.Invalid,
             validationMessage
+          })
+        } else if (namesRef.current.includes(debouncedQuery)) {
+          setResult({
+            status: SearchStatus.Duplicate,
+            listing: listing
           })
         } else {
           setResult({
