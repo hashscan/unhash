@@ -26,7 +26,6 @@ interface OpenDialogEventOptions {
 
 interface Events {
   openDialog: (type: DialogName, options: OpenDialogEventOptions) => void
-  closeDialog: () => void
 }
 
 const mediator = createNanoEvents<Events>()
@@ -37,8 +36,6 @@ export const openDialog = (type: DialogName, params?: DialogParams) => {
     mediator.emit('openDialog', type, { resolve, reject, params })
   })
 }
-
-export const closeDialog = () => mediator.emit('closeDialog')
 
 // holds the  state of the currently open dialog and its params
 interface CurrentDialog {
