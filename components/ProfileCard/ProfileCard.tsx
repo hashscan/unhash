@@ -1,30 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { useMemo } from 'react'
 import styles from './ProfileCard.module.css'
-import { Domain, Network, toChain } from 'lib/types'
-import { Address, useEnsAvatar } from 'wagmi'
+import { Domain, Network } from 'lib/types'
+import { Address } from 'wagmi'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 import { ProfileCardForm } from './ProfileCardForm'
-import { openDialog } from 'lib/dialogs'
+
+import { Avatar } from './Avatar'
 
 interface ProfileCardProps {
   network: Network
   address: Address
   domain: Domain
-}
-
-// Later avatar should be resolved on API side
-const Avatar = ({ network, address }: { network: Network; address: Address }) => {
-  // TODO: handle loading and empty state
-  const { data: avatar } = useEnsAvatar({ chainId: toChain(network).id, address })
-
-  return (
-    <div className={styles.avatarWrapper} onClick={() => openDialog('setAvatar')}>
-      {address && avatar && (
-        <img className={styles.avatar} width={56} height={56} src={avatar} alt="" />
-      )}
-    </div>
-  )
 }
 
 export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {

@@ -1,0 +1,78 @@
+.avatar {
+  align-self: flex-start;
+  border-radius: var(--radii-round);
+  height: 56px;
+  width: 56px;
+  background-color: var(--color-slate-7);
+  border: 1px solid var(--color-slate-6);
+  user-select: none;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.avatarImg {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease-out;
+
+  /* avatar is present */
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--color-gray-8);
+}
+
+.overlay:hover {
+  opacity: 1;
+}
+
+/*
+ * Avatar is loading
+ */
+.avatar_loading {
+  background: linear-gradient(
+    115deg,
+    var(--color-slate-6) 25%,
+    var(--color-slate-7),
+    var(--color-slate-6) 75%
+  );
+  background-size: 300% 100%;
+  animation: gradient 1.5s ease-in-out reverse infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 300%;
+  }
+}
+
+/*
+* No avatar present, empty state
+*/
+.avatar_unset .overlay {
+  opacity: 1;
+  background: none;
+  color: var(--color-text-hint);
+}
+
+.avatar_unset .overlay:hover {
+  background: none;
+  color: var(--color-text-primary);
+}
