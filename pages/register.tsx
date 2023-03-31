@@ -16,6 +16,7 @@ import { useRegistration } from 'lib/hooks/useRegistration'
 import { Domain, Registration, RegistrationOrder, RegisterStep } from 'lib/types'
 
 import styles from './register.module.css'
+import { notNull } from 'lib/utils'
 
 interface RegisterProps {
   names: Domain[]
@@ -77,7 +78,7 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
-          {step === 'register' && reg && <CheckoutRegisterStep />}
+          {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
           {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
@@ -92,36 +93,21 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const names = Array.isArray(query.names) ? query.names : [query.names]
-  const domain = query.domain as string
+  const names = Array.isArray(query.names) ? query.names : [query.names].filter(notNull)
 
   // TODO: return validation here or move it to client
-  // const network = currentNetwork()
 
-  // const { isValid, isAvailable } = await api.checkDomain(domain, network)
-
-  // if (!isValid) {
-  //   return {
-  //     redirect: {
-  //       destination: '/',
-  //       permanent: false
-  //     }
-  //   }
-  // }
-
-  // if (!isAvailable) {
-  //   return {
-  //     redirect: {
-  //       destination: `/${domain}`,
-  //       permanent: false
-  //     }
-  //   }
-  // }
+  if (!names.length) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
 
   return {
-    props: {
-      names: names ?? [domain]
-    }
+    props: { names }
   }
 }
 
