@@ -1,0 +1,62 @@
+.body {
+  padding: 32px 24px;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font: var(--type-md);
+  letter-spacing: var(--ls-md);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.text {
+  margin-bottom: 16px;
+}
+
+.text > strong {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.addressLabel {
+  color: var(--color-text-primary);
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  font-weight: 400;
+}
+
+.hint {
+  color: var(--color-text-hint);
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+/* make selector more specific to override default background style */
+.footer > .cancelButton,
+.footer > .cancelButton:hover,
+.footer > .cancelButton:active {
+  background-color: var(--color-error-light);
+  color: var(--color-slate-8);
+}
+
+.footer > .cancelButton:hover,
+.footer > .cancelButton:active {
+  filter: brightness(1.05);
+}
+
+.continueButton {
+  width: 100%;
+}
+
+.footer {
+  padding: 12px 24px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
