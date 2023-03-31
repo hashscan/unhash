@@ -29,6 +29,13 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   _props,
   ref
 ) {
+  const [isBulkEnabled, set] = useState(false)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    set(params.has('bulk') || params.has('bulk_registration') || params.has('batch'))
+  }, [])
+
   const [searchQuery, setSearchQueryRaw] = useState('')
   const [names, setNames] = useState<string[]>([])
   const [, setIsFocused] = useState(false)
@@ -104,7 +111,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         <div className={styles.action}>
           <SearchButton
             status={status}
-            isBulk={!!names.length}
+            isBulkEnabled={isBulkEnabled}
+            isBucketEmpty={!names.length}
             onBulk={() => {
               setNames((names) => [...names, normalized])
               setSearchQuery('')
