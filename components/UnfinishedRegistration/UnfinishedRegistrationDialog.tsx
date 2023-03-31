@@ -5,7 +5,9 @@ import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
 import styles from './UnfinishedRegistrationDialog.module.css'
 
-type UnfinishedRegistrationDialogProps = DialogExternalProps & {}
+type UnfinishedRegistrationDialogProps = DialogExternalProps & {
+  params: {}
+}
 
 export const UnfinishedRegistrationDialog = ({
   closeDialog,

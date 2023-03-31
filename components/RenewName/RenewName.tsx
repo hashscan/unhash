@@ -11,15 +11,16 @@ import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useRenewName } from 'lib/hooks/useRenewName'
 import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
-export interface RenewNameProps extends DialogExternalProps {}
+export interface RenewNameProps extends DialogExternalProps {
+  params: { domain: UserDomain }
+}
 
 export const RenewName = ({
-  params,
+  params: { domain },
   closeDialog,
   closeDialogWithSuccess,
   ...rest
 }: RenewNameProps) => {
-  const domain = params?.domain as UserDomain
   const notify = useNotifier()
 
   const [years, setYears] = useState(1)

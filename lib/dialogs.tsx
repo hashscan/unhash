@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion'
 import { createNanoEvents } from 'nanoevents'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, ComponentProps } from 'react'
 
 import { SetAvatarDialog } from 'components/SetAvatarDialog/SetAvatarDialog'
 import { UnfinishedRegistrationDialog } from 'components/UnfinishedRegistration/UnfinishedRegistrationDialog'
@@ -12,20 +12,21 @@ import { RenewName as RenewNameDialog } from 'components/RenewName/RenewName'
  */
 const DialogComponents = {
   setAvatar: SetAvatarDialog,
-  unfinishedRegistration: UnfinishedRegistrationDialog,
   sendName: SendNameDialog,
-  renewName: RenewNameDialog
+  renewName: RenewNameDialog,
+  unfinishedRegistration: UnfinishedRegistrationDialog
 } as const
 
 export type DialogName = keyof typeof DialogComponents
-export type DialogParams = {
-  [k in string]: any
-} /* TODO: use generics to customize params for each dialog */
+
+type ParamsForDialog = {
+  [k in DialogName]: ComponentProps<typeof DialogComponents[k]>['params']
+}
 
 interface OpenDialogEventOptions {
   resolve: (value: unknown) => void
   reject: () => void
-  params: DialogParams
+  params: ParamsForDialog[keyof ParamsForDialog]
 }
 
 interface Events {
@@ -35,9 +36,9 @@ interface Events {
 const mediator = createNanoEvents<Events>()
 
 // imperative API for controlling dialogs
-export const openDialog = (type: DialogName, params: DialogParams = {}) => {
+export const openDialog = <T extends DialogName>(type: T, params?: ParamsForDialog[T]) => {
   return new Promise((resolve, reject) => {
-    mediator.emit('openDialog', type, { resolve, reject, params })
+    mediator.emit('openDialog', type, { resolve, reject, params: params || {} })
   })
 }
 
@@ -74,8 +75,12 @@ export const Dialogs = () => {
                   setCurrentDialog(null)
                 }
 
+                // cast to a component that accepts any props so that we don't have
+                // to worry about the type of `params`
+                const DialogCast = Dialog as React.ComponentType<{ [k in string]: any }>
+
                 return (
-                  <Dialog
+                  <DialogCast
                     open={open}
                     params={currentDialog.options.params}
                     onClose={() => closeDialog(false)}

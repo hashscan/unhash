@@ -11,16 +11,16 @@ import { SendNameSuccess } from './SendNameSuccess'
 import { DialogExternalProps } from 'components/ui/Dialog/Dialog'
 import { Dialog } from 'components/ui/Dialog/Dialog'
 
-export interface SendNameProps extends DialogExternalProps {}
+export interface SendNameProps extends DialogExternalProps {
+  params: { domain: Domain }
+}
 
 export const SendName = ({
-  params,
+  params: { domain },
   closeDialog,
   closeDialogWithSuccess,
   ...rest
 }: SendNameProps) => {
-  const domain = params?.domain as Domain
-
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
 
