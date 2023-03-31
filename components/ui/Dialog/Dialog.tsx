@@ -12,6 +12,7 @@ type HeadlDialogProps = HeadlessDialogProps<React.ElementType<'div'>>
 export type DialogExternalProps = Pick<HeadlDialogProps, 'open' | 'onClose'> & {
   closeDialog: (success?: boolean) => void
   closeDialogWithSuccess: () => void
+  params: { [key: string]: any }
 }
 
 export type DialogProps = {
