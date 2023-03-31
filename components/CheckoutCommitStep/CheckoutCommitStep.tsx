@@ -17,14 +17,17 @@ interface CheckoutCommitStepProps {
 }
 
 export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepProps) => {
+  const nameLabel = pluralize('name', order.names.length, true)
+
   // TODO: show connect wallet button if not connected
   return (
     <div className={styles.container}>
       <div className={styles.formGroup}>
         <div className={styles.header}>Registration period</div>
         <div className={styles.subheader}>
-          {"You'll"} get the domain for a selected period of time and can always renew it later. By
-          choosing a longer period, you will save on renewal network fees.
+          {"You'll"} get {order.names.length === 1 ? 'the name' : 'names'} for a selected period of
+          time and can always renew it later. By choosing a longer period, you will save on renewal
+          network fees.
         </div>
         <div className={styles.years}>
           {YEAR_BUTTONS.map((year) => (
@@ -45,8 +48,8 @@ export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepPro
 
       <AdditionalInfo header="Advanced Settings" icon={<ToolIcon />}>
         <div className={styles.subheader}>
-          Set <b>domain owner</b> address if {"you're"} buying this domain for another wallet. By
-          default it will be owned by your current wallet.
+          Set <b>{nameLabel} owner</b> address if {"you're"} buying this {nameLabel} for another
+          wallet. By default it will be owned by your current wallet.
         </div>
 
         <AddressInput

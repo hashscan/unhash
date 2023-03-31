@@ -1,4 +1,5 @@
 const DICT = {
+  name: { singular: 'name', plural: 'names' },
   domain: {
     singular: 'domain',
     plural: 'domains'
