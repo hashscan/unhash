@@ -12,19 +12,9 @@ import Checkbox from 'components/ui/Checkbox/Checkbox'
 import { Menu } from 'components/ui/Menu/Menu'
 import { UserDomain } from 'lib/types'
 import { useRouter } from 'next/router'
-import { SendName } from 'components/SendName/SendName'
 import { Button } from 'components/ui/Button/Button'
-import { RenewName } from 'components/RenewName/RenewName'
 
-enum ModalType {
-  Send = 'Send',
-  Renew = 'Renew'
-}
-
-type ModalParams = {
-  type: ModalType
-  domain: UserDomain
-}
+import { openDialog } from 'lib/dialogs'
 
 function buildMenuItems(
   domain: UserDomain,
@@ -111,22 +101,22 @@ const Names: PageWithLayout = () => {
   const onViewDetailsClick = (domain: UserDomain) => {
     router.push(`/${domain.name}/`)
   }
-  const onSendClick = (domain: UserDomain) => {
-    setModal({
-      type: ModalType.Send,
-      domain: domain
-    })
+  const onSendClick = async (domain: UserDomain) => {
+    try {
+      await openDialog('sendName', { domain: domain.name })
+      // it takes for RPC to update the state, repeat few times
+      await new Promise((resolve) => setTimeout(resolve, 3500))
+      refreshUser()
+    } catch (e) {}
   }
-  const onRenewClick = (domain: UserDomain) => {
-    setModal({
-      type: ModalType.Renew,
-      domain: domain
-    })
+  const onRenewClick = async (domain: UserDomain) => {
+    try {
+      await openDialog('renewName', { domain })
+      // it takes for RPC to update the state, repeat few times
+      await new Promise((resolve) => setTimeout(resolve, 3500))
+      refreshUser()
+    } catch (e) {}
   }
-
-  // TODO: make generalized modal wrapper component
-  // send modal
-  const [modal, setModal] = useState<ModalParams | undefined>()
 
   // TODO: handle isConnecting state when metamask asked to log in
   if (isDisconnected)
@@ -143,36 +133,6 @@ const Names: PageWithLayout = () => {
 
   return (
     <main className={styles.main}>
-      {/* TODO: make generalized modal wrapper component */}
-      {modal && (
-        <>
-          <div className={styles.backdrop} />
-          <div className={styles.overlay}>
-            {modal.type === ModalType.Send && (
-              <SendName
-                domain={modal.domain.name}
-                onClose={() => setModal(undefined)}
-                onSuccess={async () => {
-                  // it takes for RPC to update the state, repeat few times
-                  await new Promise((resolve) => setTimeout(resolve, 3500))
-                  refreshUser()
-                }}
-              />
-            )}
-            {modal.type === ModalType.Renew && (
-              <RenewName
-                domain={modal.domain}
-                onClose={() => setModal(undefined)}
-                onSuccess={async () => {
-                  // it takes for RPC to update the state, repeat few times
-                  await new Promise((resolve) => setTimeout(resolve, 3500))
-                  refreshUser()
-                }}
-              />
-            )}
-          </div>
-        </>
-      )}
       <div className={styles.title}>My names</div>
 
       <div className={styles.searchContainer}>
