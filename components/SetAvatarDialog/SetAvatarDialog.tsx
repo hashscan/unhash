@@ -15,6 +15,7 @@ import { Domain } from 'lib/types'
 import { Gallery } from './Gallery'
 import { Preview } from './Preview'
 import styles from './SetAvatarDialog.module.css'
+import useEvent from 'react-use-event-hook'
 
 export interface SetAvatarDialogProps extends DialogExternalProps {
   params: {}
@@ -44,12 +45,14 @@ export const SetAvatarDialog = ({
     }
   })
 
+  const loadUser = useEvent(async () => {
+    const user = await api.userInfo(address!, network)
+    setUser(user)
+  })
+
   useEffect(() => {
-    ;(async () => {
-      const user = await api.userInfo(address!, network)
-      setUser(user)
-    })()
-  }, [])
+    loadUser()
+  }, [loadUser])
 
   // can't close when there is a pending transaction
   const canCloseDialog = transactionStatus === 'idle'
@@ -91,6 +94,7 @@ export const SetAvatarDialog = ({
         <Gallery
           currentAvatarRecord={user?.primaryName?.avatar}
           onSelectNFT={(nft) => setSelectedAvatar(nft)}
+          hideFailedToLoadItems
         />
 
         <Preview

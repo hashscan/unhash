@@ -2,24 +2,33 @@ import { ComponentProps, useEffect, useState } from 'react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import loadImages from 'image-promise'
 import clsx from 'clsx'
+import useEvent from 'react-use-event-hook'
 
 import { NFTToken } from 'lib/types'
 import { nftToAvatarRecord } from 'lib/utils'
 import { useFetchNFTs } from './useFetchNFTs'
 import styles from './Gallery.module.css'
 
-const IMAGE_LOAD_TIMEOUT = 5000
+const IMAGE_LOAD_TIMEOUT = 10_000
 
 const ITEMS_PER_PAGE = 16
 
-const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reject('Timeout!'), ms))
+const timeout = (ms: number) =>
+  new Promise((_, reject) => setTimeout(() => reject({ timeout: true }), ms))
 
 interface Props extends ComponentProps<'div'> {
   onSelectNFT: (nft: NFTToken) => void
   currentAvatarRecord: string | undefined
+  hideFailedToLoadItems?: boolean
 }
 
-export const Gallery = ({ className, onSelectNFT, currentAvatarRecord, ...rest }: Props) => {
+export const Gallery = ({
+  className,
+  onSelectNFT,
+  currentAvatarRecord,
+  hideFailedToLoadItems = false,
+  ...rest
+}: Props) => {
   const [selectedNFTId, setSelectedNFTId] = useState<string>()
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(true)
 
@@ -29,24 +38,35 @@ export const Gallery = ({ className, onSelectNFT, currentAvatarRecord, ...rest }
   const fetchNFts = useFetchNFTs(ITEMS_PER_PAGE, continuationToken)
   const canLoadMore = Boolean(continuationToken)
 
-  const loadMore = async () => {
+  const loadMore = useEvent(async () => {
     setIsLoadingNFTs(true)
     const { tokens: batch, continuation } = await fetchNFts()
 
+    const itemsToLoad = batch.filter((n) => Boolean(n.image))
+    let loadedBatch: NFTToken[] = [] // items to be added to the list
+
     try {
       // preload images to avoid flickering
-      const images = batch.map((n) => n.image)
+      const images = itemsToLoad.map((n) => n.image)
       await Promise.race([loadImages(images), timeout(IMAGE_LOAD_TIMEOUT)])
 
       // all images loaded
-    } catch (e) {
-      // wait time is too long or some images failed to load, just show it anyway
+      loadedBatch = itemsToLoad
+    } catch (e: any) {
+      if (hideFailedToLoadItems && Array.isArray(e?.errored)) {
+        // only show items that loaded successfully
+        const failedToLoad = (e.errored as HTMLImageElement[]).map((i) => i.src)
+        loadedBatch = itemsToLoad.filter((n) => !failedToLoad.includes(n.image))
+      } else {
+        // wait time is too long, just show it anyway
+        loadedBatch = itemsToLoad
+      }
     }
 
-    setNFTs((nfts) => [...nfts, ...batch])
+    setNFTs((nfts) => [...nfts, ...loadedBatch])
     setContinuationToken(continuation)
     setIsLoadingNFTs(false)
-  }
+  })
 
   const [sentryRef] = useInfiniteScroll({
     loading: isLoadingNFTs,
@@ -56,7 +76,7 @@ export const Gallery = ({ className, onSelectNFT, currentAvatarRecord, ...rest }
 
   useEffect(() => {
     loadMore()
-  }, [])
+  }, [loadMore])
 
   const nftsCount = NFTs.length
 
