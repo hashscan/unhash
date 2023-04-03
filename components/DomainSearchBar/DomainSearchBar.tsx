@@ -64,7 +64,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
       finalNamesForRegistration.map((name) => ['names', name])
     ).toString()
 
-    navigate(`/register?${params}`).finally(() => {
+    // hide params from browser url
+    navigate(`/register?${params}`, '/register').finally(() => {
       setIsNavigating(false)
     })
   }, [isNavigating, names, navigate, normalized, status])
