@@ -67,7 +67,11 @@ export const SetAvatarDialog = ({
       footer={
         <>
           <div className={styles.footer}>
-            <Button size={'regular'} variant={'ghost'} onClick={() => closeDialog()}>
+            <Button
+              size={'regular'}
+              variant={'ghost'}
+              onClick={() => canCloseDialog && closeDialog()}
+            >
               Cancel
             </Button>
 

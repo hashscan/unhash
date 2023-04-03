@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 
 import styles from './Preview.module.css'
 import clsx from 'clsx'
