@@ -1,4 +1,4 @@
-import { Domain, TransactionStatus } from './types'
+import { Domain, NFTToken, TransactionStatus } from './types'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -46,6 +46,20 @@ export function parseDomainName(domain: string): string {
  */
 export function getDomainName(domain: Domain): string {
   return domain.replace(/\.eth$/i, '')
+}
+
+/**
+ * Formats an ENS record avatar string
+ */
+const ALLOWED_ERCs = ['erc721', 'erc1155'] as const
+
+export const nftToAvatarRecord = (avatar: NFTToken) => {
+  console.assert(
+    ALLOWED_ERCs.includes(avatar.kind),
+    `ENS only supports ${ALLOWED_ERCs.join(', ')} avatars at the moment`
+  )
+
+  return `eip155:1/${avatar.kind}:${avatar.collection.id}/${avatar.tokenId}`
 }
 
 export function clamp(value: number, min: number, max: number): number {
