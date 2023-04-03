@@ -85,7 +85,10 @@ export const SetAvatarDialog = ({
         <Navigation tab="nft" />
       </div>
 
-      <Gallery currentNFTAvatar={null} onSelectNFT={(nft) => setSelectedAvatar(nft)} />
+      <Gallery
+        currentAvatarRecord={user?.primaryName?.avatar}
+        onSelectNFT={(nft) => setSelectedAvatar(nft)}
+      />
     </Dialog>
   )
 }

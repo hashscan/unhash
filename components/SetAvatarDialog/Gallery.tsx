@@ -4,6 +4,7 @@ import loadImages from 'image-promise'
 import clsx from 'clsx'
 
 import { NFTToken } from 'lib/types'
+import { nftToAvatarRecord } from 'lib/utils'
 import { useFetchNFTs } from './useFetchNFTs'
 import styles from './Gallery.module.css'
 
@@ -15,10 +16,10 @@ const timeout = (ms: number) => new Promise((_, reject) => setTimeout(() => reje
 
 interface Props extends ComponentProps<'div'> {
   onSelectNFT: (nft: NFTToken) => void
-  currentNFTAvatar: NFTToken | null
+  currentAvatarRecord: string | undefined
 }
 
-export const Gallery = ({ className, onSelectNFT, currentNFTAvatar, ...rest }: Props) => {
+export const Gallery = ({ className, onSelectNFT, currentAvatarRecord, ...rest }: Props) => {
   const [selectedNFTId, setSelectedNFTId] = useState<string>()
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(true)
 
@@ -64,9 +65,6 @@ export const Gallery = ({ className, onSelectNFT, currentNFTAvatar, ...rest }: P
   const rowsWithItems = Math.ceil(nftsCount / columns) // how many rows does all items occupy
   const rowsToDisplay = Math.max(2, isLoadingNFTs ? rowsWithItems + 1 : rowsWithItems)
 
-  // what item should be highlighted?
-  const highlightedNFTId = selectedNFTId || currentNFTAvatar?.id
-
   return (
     <div className={clsx(styles.container, className)} {...rest}>
       <div className={styles.grid}>
@@ -75,7 +73,11 @@ export const Gallery = ({ className, onSelectNFT, currentNFTAvatar, ...rest }: P
           .map((_, i) => {
             if (i < nftsCount) {
               const nft = NFTs[i]
-              const isSelected = nft.id === highlightedNFTId
+
+              // When nothing is selected we fall back to the currently used avatar
+              const isSelected = selectedNFTId
+                ? nft.id === selectedNFTId
+                : nftToAvatarRecord(nft) === currentAvatarRecord
 
               return (
                 <div className={clsx(styles.cell, { [styles.cell_selected]: isSelected })} key={i}>

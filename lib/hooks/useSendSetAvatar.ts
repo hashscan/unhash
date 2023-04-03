@@ -4,18 +4,9 @@ import { Domain, NFTToken, toNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
+import { nftToAvatarRecord } from 'lib/utils'
+
 const TEXT_AVATAR_FIELD = 'avatar'
-
-const ALLOWED_ERCs = ['erc721', 'erc1155'] as const
-
-const avatarToRecord = (avatar: NFTToken) => {
-  console.assert(
-    ALLOWED_ERCs.includes(avatar.kind),
-    `ENS only supports ${ALLOWED_ERCs.join(', ')} avatars at the moment`
-  )
-
-  return `eip155:1/${avatar.kind}:${avatar.collection.id}/${avatar.tokenId}`
-}
 
 /**
  * Updates `avatar` text record for a given domain
@@ -39,7 +30,7 @@ export const useSendSetAvatar = ({
     abi: ETH_RESOLVER_ABI,
     functionName: 'setText',
     enabled: Boolean(node) && Boolean(avatar),
-    args: [node, TEXT_AVATAR_FIELD, avatar ? avatarToRecord(avatar) : null]
+    args: [node, TEXT_AVATAR_FIELD, avatar ? nftToAvatarRecord(avatar) : null]
   })
 
   // hook for sending setAddr transaction
