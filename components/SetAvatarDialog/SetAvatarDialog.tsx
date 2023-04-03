@@ -4,7 +4,6 @@ import { useAccount, useChainId } from 'wagmi'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { Navigation } from './Navigation'
 import { Button } from 'components/ui/Button/Button'
-import { Gallery } from './Gallery'
 import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
 import { useSendSetAvatar } from 'lib/hooks/useSendSetAvatar'
@@ -13,6 +12,8 @@ import { NFTToken, toNetwork, UserInfo } from 'lib/types'
 import api from 'lib/api'
 import { Domain } from 'lib/types'
 
+import { Gallery } from './Gallery'
+import { Preview } from './Preview'
 import styles from './SetAvatarDialog.module.css'
 
 export interface SetAvatarDialogProps extends DialogExternalProps {}
@@ -50,6 +51,7 @@ export const SetAvatarDialog = ({
 
   // can't close when there is a pending transaction
   const canCloseDialog = transactionStatus === 'idle'
+  const isPreviewVisible = transactionStatus !== 'idle'
   const buttonEnabled = Boolean(selectedAvatar && user)
 
   return (
@@ -83,10 +85,19 @@ export const SetAvatarDialog = ({
         <Navigation tab="nft" />
       </div>
 
-      <Gallery
-        currentAvatarRecord={user?.primaryName?.avatar}
-        onSelectNFT={(nft) => setSelectedAvatar(nft)}
-      />
+      <div className={styles.galleryWithPreview}>
+        <Gallery
+          currentAvatarRecord={user?.primaryName?.avatar}
+          onSelectNFT={(nft) => setSelectedAvatar(nft)}
+        />
+
+        <Preview
+          visible={isPreviewVisible}
+          address={address}
+          name={user?.primaryName?.name}
+          avatarImg={selectedAvatar?.image}
+        />
+      </div>
     </Dialog>
   )
 }
