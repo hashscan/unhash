@@ -3,6 +3,7 @@ import { Domain, toNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import {
   useAccount,
+  useProvider,
   useChainId,
   useContractWrite,
   usePrepareContractWrite,
@@ -29,8 +30,9 @@ export const useSendCommits = ({
 }) => {
   const chainId = useChainId()
   const network = toNetwork(chainId)
+  const provider = useProvider()
   const { address: sender } = useAccount()
-  const { setCommitting } = useRegistration()
+  const { registration, setCommitting, setCommitted, setCommitFailed } = useRegistration()
 
   // generate secrets and commitments for each name
   const { secret, commitments } = useMakeCommitments({
@@ -68,8 +70,20 @@ export const useSendCommits = ({
   })
 
   // wait for transaction success
+  const commitHash = data?.hash || (registration?.commitTxHash as `0x${string}`)
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
-    hash: data?.hash
+    hash: commitHash,
+    onSuccess: async (data) => {
+      // get timestamp from block
+      const commitBlock = await provider.getBlock(data.blockNumber)
+      const commitTimestamp = commitBlock.timestamp * 1000
+      // update registration status
+      setCommitted(data.blockNumber, commitTimestamp)
+    },
+    onError: (e) => {
+      // TODO: this error is never shown to the user
+      setCommitFailed(commitHash, e.message)
+    }
   })
 
   return {

@@ -12,7 +12,7 @@ import { useRegistration } from './useRegistration'
 // TODO: support fees
 export const useSendRegisters = () => {
   const chainId = useChainId()
-  const { registration, setRegistering } = useRegistration()
+  const { registration, setRegistering, setRegistered, setRegisterFailed } = useRegistration()
   if (!registration) throw new Error('registration should exist')
 
   // fetch prices
@@ -62,9 +62,14 @@ export const useSendRegisters = () => {
     onSuccess: (data) => setRegistering(data.hash)
   })
 
+  const registerHash = data?.hash || (registration?.registerTxHash as `0x${string}`)
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
-    hash: data?.hash
-    // sucess state will get updated in RegistrationProvider
+    hash: registerHash,
+    onSuccess: () => setRegistered(),
+    onError: (e) => {
+      // TODO: this error is never shown to the user
+      setRegisterFailed(registerHash, e.message)
+    }
   })
 
   return {

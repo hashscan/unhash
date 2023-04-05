@@ -5,7 +5,6 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import { wrapInLayout } from 'components/layouts'
-import { RegistrationsProvider } from 'components/RegistrationsProvider/RegistrationsProvider'
 import { NotifierProvider } from 'components/ui/Notifier/NotifierProvider'
 import { Feedback } from 'components/Feedback/Feedback'
 
@@ -83,15 +82,13 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <WagmiConfig client={wagmiClient}>
         <NotifierProvider>
-          <RegistrationsProvider>
-            <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
-              <WrapBalancerProvider>
-                {wrapInLayout(Component, <Component {...pageProps} />)}
-                <Feedback />
-                <Dialogs />
-              </WrapBalancerProvider>
-            </RainbowKitProvider>
-          </RegistrationsProvider>
+          <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
+            <WrapBalancerProvider>
+              {wrapInLayout(Component, <Component {...pageProps} />)}
+              <Feedback />
+              <Dialogs />
+            </WrapBalancerProvider>
+          </RainbowKitProvider>
         </NotifierProvider>
       </WagmiConfig>
     </>
