@@ -39,7 +39,8 @@ const Bulk = ({ onBulk, status, isNavigating }: SearchButtonProps) => {
 }
 
 export const SearchButton = (props: SearchButtonProps) => {
-  const { status, isNavigating, onClick, isBulkEnabled, isBucketEmpty, ...restProps } = props
+  const { status, isNavigating, onClick, isBulkEnabled, isBucketEmpty, onBulk, ...restProps } =
+    props
 
   // TODO: better condition
   const isButtonDisabled =
