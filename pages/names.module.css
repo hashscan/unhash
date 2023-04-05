@@ -129,6 +129,9 @@
 }
 
 .cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   padding: 12px 0;
   text-align: left;
   color: var(--color-text-primary);

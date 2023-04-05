@@ -5,6 +5,7 @@
   color: var(--color-text-primary);
   user-select: none;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .itemSelected {

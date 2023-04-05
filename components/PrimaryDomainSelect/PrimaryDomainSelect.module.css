@@ -24,6 +24,8 @@
   color: var(--color-text-primary);
   flex-grow: 1;
   padding-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .textHint {
