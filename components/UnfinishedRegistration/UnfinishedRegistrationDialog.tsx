@@ -45,8 +45,13 @@ export const UnfinishedRegistrationDialog = ({
             size={'regular'}
             disabled={false}
             onClick={() => {
-              navigate(`/${registration.names[0]}/register`)
-              closeDialogWithSuccess()
+              const params = new URLSearchParams(
+                registration.names.map((name) => ['names', name])
+              ).toString()
+
+              navigate(`/register?${params}`, '/register').finally(() => {
+                closeDialogWithSuccess()
+              })
             }}
           >
             Continue
