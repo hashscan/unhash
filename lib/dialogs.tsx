@@ -39,7 +39,10 @@ const mediator = createNanoEvents<Events>()
 export const openDialog = <T extends DialogName>(type: T, params?: ParamsForDialog[T]) => {
   return new Promise((resolve, reject) => {
     mediator.emit('openDialog', type, { resolve, reject, params: params || {} })
-  })
+  }).then(
+    () => {}, 
+    () => {} // ignore unhandled promise rejection
+  )
 }
 
 // holds the  state of the currently open dialog and its params
