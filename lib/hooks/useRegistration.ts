@@ -98,42 +98,6 @@ export function useRegistration() {
     [setRegistration]
   )
 
-  // Update the registration status to 'registered'
-  const setRegistered = useCallback(() => {
-    setRegistration((_registration) => {
-      if (!_registration) throw new Error('Registration not found')
-      trackGoal('Register', { props: { names: _registration.names.join(',') } })
-
-      return {
-        ..._registration,
-        status: 'registered',
-        errorTxHash: undefined,
-        errorTxMessage: undefined
-      }
-    })
-  }, [setRegistration])
-
-  // Update the registration status back to 'committed'
-  const setRegisterFailed = useCallback(
-    (errorTxHash: string, errorTxMessage: string) => {
-      setRegistration((_registration) => {
-        if (!_registration) throw new Error('Registration not found')
-        trackGoal('RegisterFail', {
-          props: { names: _registration.names.join(','), hsh: errorTxHash }
-        })
-
-        return {
-          ..._registration,
-          status: 'committed',
-          registerTxHash: undefined,
-          errorTxHash,
-          errorTxMessage
-        }
-      })
-    },
-    [setRegistration]
-  )
-
   const clearRegistration = useCallback(() => {
     setRegistration(undefined)
   }, [setRegistration])
@@ -144,8 +108,6 @@ export function useRegistration() {
     setCommitted,
     setCommitFailed,
     setRegistering,
-    setRegistered,
-    setRegisterFailed,
     clearRegistration
   }
 }

@@ -5,6 +5,7 @@ import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useOrderPrice } from './useOrderPrice'
 import { useRegistration } from './useRegistration'
+import { useRouterNavigate } from './useRouterNavigate'
 
 // TODO: rename
 // TODO: use useState and useMemo
@@ -12,7 +13,8 @@ import { useRegistration } from './useRegistration'
 // TODO: support fees
 export const useSendRegisters = () => {
   const chainId = useChainId()
-  const { registration, setRegistering } = useRegistration()
+  const navigate = useRouterNavigate()
+  const { registration, setRegistering, clearRegistration } = useRegistration()
   if (!registration) throw new Error('registration should exist')
 
   // fetch prices
@@ -31,13 +33,6 @@ export const useSendRegisters = () => {
   const prices = orderPrice
     ? registration.names.map((name) => orderPrice.names[name]?.wei ?? 0)
     : undefined
-
-  console.log('--------')
-  console.log('names', names)
-  console.log('owners', owners)
-  console.log('durations', durations)
-  console.log('secrets', secrets)
-  console.log('prices', prices)
 
   const { config } = usePrepareContractWrite({
     address: XENS_ADDRESS.get(toNetwork(chainId)),
@@ -63,8 +58,15 @@ export const useSendRegisters = () => {
   })
 
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
-    hash: data?.hash
-    // sucess state will get updated in RegistrationProvider
+    hash: data?.hash,
+    onSuccess: () => {
+      const params = new URLSearchParams(registration.names.map((name) => ['names', name]))
+      if (registration.registerTxHash) params.append('txHash', registration.registerTxHash)
+
+      navigate(`/success?${params.toString()}`, '/success').finally(() => {
+        clearRegistration()
+      })
+    }
   })
 
   return {

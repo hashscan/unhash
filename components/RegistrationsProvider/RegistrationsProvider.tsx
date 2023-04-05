@@ -10,7 +10,7 @@ import { useRegistration } from 'lib/hooks/useRegistration'
  * Registration status to 'committed' or 'registered' respectively.
  */
 export const RegistrationsProvider = (props: PropsWithChildren<{}>) => {
-  const { registration, setRegistered, setRegisterFailed, setCommitted, setCommitFailed } =
+  const { registration, setCommitted, setCommitFailed } =
     useRegistration()
   const provider = useProvider()
   const commitHash = registration?.commitTxHash as `0x${string}`
@@ -26,16 +26,6 @@ export const RegistrationsProvider = (props: PropsWithChildren<{}>) => {
       setCommitted(data.blockNumber, commitTimestamp)
     },
     onError: (e) => setCommitFailed(commitHash, e.message)
-  })
-
-  const registerHash = registration?.registerTxHash as `0x${string}`
-
-  useWaitForTransaction({
-    enabled: !!registration && registration.status === 'registerPending' && Boolean(registerHash),
-    hash: registerHash,
-    // update registration status when transaction is confirmed or failed
-    onSuccess: () => setRegistered(),
-    onError: (e) => setRegisterFailed(registerHash, e.message)
   })
 
   return <>{props.children}</>

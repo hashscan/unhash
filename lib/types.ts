@@ -49,12 +49,7 @@ export type Registration = {
   errorTxMessage?: string
 }
 
-export type RegistrationStatus =
-  | 'created'
-  | 'commitPending'
-  | 'committed'
-  | 'registerPending'
-  | 'registered'
+export type RegistrationStatus = 'created' | 'commitPending' | 'committed' | 'registerPending'
 
 // holds current registration settings prior to the checkout (aka shopping cart)
 export type RegistrationOrder = {

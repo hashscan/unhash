@@ -7,7 +7,6 @@ import { useBeforeUnload } from 'react-use'
 import { CheckoutCommitStep } from 'components/CheckoutCommitStep/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
-import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep/CheckoutSuccessStep'
 import { CheckoutWaitStep } from 'components/CheckoutWaitStep/CheckoutWaitStep'
 import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRegisterStep'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
@@ -32,14 +31,11 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
     return commitTimestamp + COMMIT_WAIT_MS > Date.now() ? 'wait' : 'register'
   }
   if (status === 'registerPending') return 'register'
-  if (status === 'registered') return 'success'
 
   return 'initializing' // eslint asks to add this
 }
 
 const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
-  const domain = names[0]
-
   // get registration and calculate step
   const { registration: reg } = useRegistration()
 
@@ -59,7 +55,7 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
   useTimeout(() => dispatchStep(reg), waitTimeout)
 
   // Display warning when user tries to close tab
-  const displayWarningOnClose = Boolean(reg && reg.status !== 'registered')
+  const displayWarningOnClose = Boolean(reg && reg.status !== 'registerPending')
   useBeforeUnload(
     displayWarningOnClose,
     'If you close the browser tab, you may interrupt the registration process.'
@@ -80,7 +76,6 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
           {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
-          {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
         {step === 'commit' && (

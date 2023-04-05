@@ -9,7 +9,7 @@ export const UnfinishedRegistration = ({}: UnfinishedRegistrationProps) => {
   const { registration } = useRegistration()
 
   useEffect(() => {
-    if (registration && registration.status !== 'registered') {
+    if (registration) {
       openDialog('unfinishedRegistration')
     }
   }, [registration])

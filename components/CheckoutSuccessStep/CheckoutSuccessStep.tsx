@@ -5,13 +5,12 @@ import { Button } from 'components/ui/Button/Button'
 import styles from './CheckoutSuccessStep.module.css'
 
 import { NextSteps } from './NextSteps'
-import { Registration } from 'lib/types'
 import Link from 'next/link'
 import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
 
 interface CheckoutSuccessStepProps {
-  domain: string
-  registration: Registration | undefined
+  names: string[]
+  registerTxHash: string
 }
 
 const EtherscanLink = ({ txn }: { txn: string }) => {
@@ -23,7 +22,7 @@ const EtherscanLink = ({ txn }: { txn: string }) => {
 }
 
 export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
-  const txnHash = props.registration?.registerTxHash
+  const txnHash = props.registerTxHash
 
   return (
     <div className={styles.container}>
@@ -36,7 +35,7 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
             <WrapBalancer>
               You can now{' '}
               <Link href="/profile" className={styles.inlineLink}>
-                set <b>{props.domain}</b> as a username
+                set <b>{props.names[0]}</b> as a username
               </Link>{' '}
               for your wallet and create a public profile with NFT avatar.
             </WrapBalancer>
@@ -54,7 +53,7 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
         </div>
       </div>
 
-      <NextSteps domain={props.domain} />
+      <NextSteps domain={props.names[0]} />
     </div>
   )
 }
