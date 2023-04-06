@@ -26,6 +26,9 @@ export const useSendCommits = ({
   names: Domain[]
   duration: number
   owner: string | undefined // required; hook is disabled unless it's set
+  // unify interface with useSendCommit
+  setDefaultResolver?: boolean
+  addr?: string
 }) => {
   const chainId = useChainId()
   const network = toNetwork(chainId)

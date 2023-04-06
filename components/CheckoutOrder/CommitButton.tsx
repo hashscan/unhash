@@ -2,8 +2,9 @@ import { useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import useChange from '@react-hook/change'
 
-import { RegistrationOrder } from 'lib/types'
+import { RegistrationOrder, currentNetwork } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
+import { useSendCommit } from 'lib/hooks/useSendCommit'
 import { useSendCommits } from 'lib/hooks/useSendCommits'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
@@ -17,6 +18,12 @@ import { trackGoal } from 'lib/analytics'
 interface CommitButtonProps {
   order: RegistrationOrder
 }
+
+const useUnifiedSendCommit = (args: Parameters<typeof useSendCommits>[number]) => {
+  return useSendCommit({ ...args, domain: args.names[0] })
+}
+
+const useCommitHook = currentNetwork() === 'mainnet' ? useUnifiedSendCommit : useSendCommits
 
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { names } = order
@@ -32,10 +39,12 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   // })
 
   // later should only be used for multiple names
-  const { sendCommit, status, error } = useSendCommits({
-    names: names,
+  const { sendCommit, status, error } = useCommitHook({
+    names,
     duration: order.durationInYears * YEAR_IN_SECONDS,
-    owner: order.ownerAddress ?? sender
+    owner: order.ownerAddress ?? sender,
+    setDefaultResolver: true,
+    addr: order.ownerAddress ?? sender // can be set a different address or no address
   })
 
   const notify = useNotifier()
