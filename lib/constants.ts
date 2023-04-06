@@ -27,8 +27,8 @@ export const ENS_NFT_ADDRESS = new Map<Network, Address>([
 ])
 
 export const XENS_ADDRESS = new Map<Network, Address>([
-  ['mainnet', '0x0000000000000000000000000000000000000000'],
-  ['goerli', '0x032221efb1e08743b0ea1af2eeb103b0e7491f11']
+  ['mainnet', '0x9001a8B74536AA6df3ee675057F6F4355C03f949'],
+  ['goerli', '0x3e0c4c5ed99e97b0ed051910a53834f218f1e144']
 ])
 
 export const ETH_REGISTRAR_ABI = [
@@ -53,7 +53,6 @@ export const ETH_REVERSE_REGISTRAR_ABI = ['function setName(string) returns (byt
 export const ENS_NFT_ABI = ['function safeTransferFrom(address, address, uint256)']
 
 export const XENS_ABI = [
-  'function makeCommitments(string[],address[],bytes32[],address[],address[]) pure returns (bytes32[])',
   'function commit(bytes32[] _commitments)',
   'function register(string[] _names,address[] _owners,uint256[] _durations,bytes32[] _secrets,uint256[] _prices) external payable',
   'function renew(string[] _names, uint256[] _durations, uint256[] _prices)'
