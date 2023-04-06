@@ -15,23 +15,30 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const Avatar = ({ domain }: { domain: Domain }) => {
   const [revalidating, setRevalidating] = useState(false)
 
-  const { data: avatar, isLoading: isQueryLoading, isError, refetch } = useEnsAvatar(domain)
+  const {
+    data: avatar,
+    isLoading: isQueryLoading,
+    isRefetching,
+    isError,
+    refetch
+  } = useEnsAvatar(domain)
 
-  const isLoading = isQueryLoading || revalidating
+  const isLoading = isQueryLoading || revalidating || isRefetching
   const isUnset = !isLoading && (!avatar || isError)
 
   const changeAvatar = async () => {
     try {
       await openDialog('setAvatar')
+
       setRevalidating(true)
 
       await delay(5000) // wait for the transaction to be mined
-      refetch()
+      await refetch()
     } catch (e) {
       /* ignore */
+    } finally {
+      setRevalidating(false)
     }
-
-    setRevalidating(false)
   }
 
   return (
