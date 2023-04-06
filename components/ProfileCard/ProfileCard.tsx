@@ -14,7 +14,7 @@ interface ProfileCardProps {
   domain: Domain
 }
 
-export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
+export const ProfileCard = ({ address, domain }: ProfileCardProps) => {
   const info = useDomainInfo(domain)
   const labels = useMemo(
     () => ({
@@ -28,7 +28,7 @@ export const ProfileCard = ({ network, address, domain }: ProfileCardProps) => {
     <div className={styles.card}>
       {info && labels && <></>}
       <div className={styles.info}>
-        <Avatar network={network} address={address} />
+        <Avatar domain={domain} />
         <div>
           <div className={styles.domain}>{domain}</div>
           <div className={styles.labels}>
