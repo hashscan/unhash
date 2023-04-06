@@ -12,10 +12,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@ensdomains/ens-avatar": "^0.2.2",
     "@headlessui/react": "^1.7.13",
     "@radix-ui/react-toast": "^1.1.2",
     "@rainbow-me/rainbowkit": "^0.10.0",
     "@react-hook/change": "^1.0.0",
+    "@tanstack/react-query": "^4.28.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",
     "framer-motion": "^9.0.3",

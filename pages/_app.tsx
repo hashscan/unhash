@@ -19,6 +19,10 @@ import { Lausanne, JetBrainsMono } from 'styles/fonts'
 import { currentNetwork } from 'lib/network'
 import { Dialogs } from 'lib/dialogs'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
@@ -81,19 +85,21 @@ const App = ({ Component, pageProps }: AppProps) => {
         `}
       </style>
 
-      <WagmiConfig client={wagmiClient}>
-        <NotifierProvider>
-          <RegistrationsProvider>
-            <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
-              <WrapBalancerProvider>
-                {wrapInLayout(Component, <Component {...pageProps} />)}
-                <Feedback />
-                <Dialogs />
-              </WrapBalancerProvider>
-            </RainbowKitProvider>
-          </RegistrationsProvider>
-        </NotifierProvider>
-      </WagmiConfig>
+      <QueryClientProvider client={queryClient}>
+        <WagmiConfig client={wagmiClient}>
+          <NotifierProvider>
+            <RegistrationsProvider>
+              <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
+                <WrapBalancerProvider>
+                  {wrapInLayout(Component, <Component {...pageProps} />)}
+                  <Feedback />
+                  <Dialogs />
+                </WrapBalancerProvider>
+              </RainbowKitProvider>
+            </RegistrationsProvider>
+          </NotifierProvider>
+        </WagmiConfig>
+      </QueryClientProvider>
     </>
   )
 }
