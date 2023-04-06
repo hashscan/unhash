@@ -1,30 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
-import { Network, toChain } from 'lib/types'
-import { Address, useEnsAvatar } from 'wagmi'
+import { Domain } from 'lib/types'
 import { openDialog } from 'lib/dialogs'
 import { CameraReplace } from 'components/icons'
 
 import styles from './Avatar.module.css'
 import clsx from 'clsx'
 
-// Later avatar should be resolved on API side
-export const Avatar = ({ network, address }: { network: Network; address: Address }) => {
-  const {
-    data: avatar,
-    isLoading,
-    isError,
-    refetch
-  } = useEnsAvatar({ staleTime: 0, chainId: toChain(network).id, address })
+import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
+import { useState } from 'react'
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Later avatar should be resolved on API side
+export const Avatar = ({ domain }: { domain: Domain }) => {
+  const [revalidating, setRevalidating] = useState(false)
+
+  const { data: avatar, isLoading: isQueryLoading, isError, refetch } = useEnsAvatar(domain)
+
+  const isLoading = isQueryLoading || revalidating
   const isUnset = !isLoading && (!avatar || isError)
 
   const changeAvatar = async () => {
     try {
       await openDialog('setAvatar')
+      setRevalidating(true)
+
+      await delay(5000) // wait for the transaction to be mined
       refetch()
     } catch (e) {
       /* ignore */
     }
+
+    setRevalidating(false)
   }
 
   return (
@@ -40,8 +47,8 @@ export const Avatar = ({ network, address }: { network: Network; address: Addres
         <CameraReplace />
       </div>
 
-      {address && avatar && (
-        <img className={styles.avatarImg} src={avatar} alt={`ENS Avatar for ${address}`} />
+      {!isLoading && avatar && (
+        <img className={styles.avatarImg} src={avatar} alt={`ENS Avatar for ${domain}`} />
       )}
     </div>
   )
