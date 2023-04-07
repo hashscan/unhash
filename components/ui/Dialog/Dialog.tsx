@@ -94,7 +94,7 @@ const backdropAnimationVariants = {
     backdropFilter: 'blur(0px)',
     transition: {
       duration: 0.2,
-      delay: 0.2
+      delay: 0.1
     }
   }
 }
@@ -116,8 +116,7 @@ const panelAnimationVariants = {
 
   exit: {
     opacity: 0,
-    scale: 1.05,
-    translateY: -20,
+    scale: 0.95,
     filter: 'blur(8px)',
     transition: {
       duration: 0.15
