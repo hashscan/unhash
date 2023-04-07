@@ -10,8 +10,9 @@ import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 import { useRegistration } from './useRegistration'
+import type { useSendRegistersType } from './useSendRegisters'
 
-export const useSendRegister = () => {
+export const useSendRegister: useSendRegistersType = () => {
   const chainId = useChainId()
   const { registration, setRegistering } = useRegistration()
 

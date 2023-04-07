@@ -7,10 +7,12 @@ import {
 } from 'wagmi'
 
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, toNetwork } from 'lib/types'
+import { toNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
+
+import type { useSendCommitsType } from './useSendCommits'
 
 /**
  * Hook for sending commit transaction.
@@ -20,18 +22,12 @@ import { useMakeCommitment } from './useMakeCommitment'
  * Creates new Registration in LocalStorage when transaction is sent.
  * Note: Registration status will be updated to `committed` by WatchPendingRegistrations.
  */
-export const useSendCommit = ({
-  domain,
+export const useSendCommit: useSendCommitsType = ({
+  names,
   duration,
   owner,
   addr,
   setDefaultResolver = true
-}: {
-  domain: Domain
-  duration: number
-  owner: string | undefined // required; hooks is disabled unless it's set
-  addr?: string // optional eth address to set in resolver
-  setDefaultResolver?: boolean
 }) => {
   const chainId = useChainId()
   const network = toNetwork(chainId)
@@ -40,7 +36,7 @@ export const useSendCommit = ({
 
   // generate secret and commitment
   const { secret, commitment } = useMakeCommitment({
-    name: domain,
+    name: names[0],
     owner: owner,
     resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(network) : undefined,
     addr: setDefaultResolver ? addr : undefined
@@ -66,7 +62,7 @@ export const useSendCommit = ({
     // create new Registration when transaction is sent
     onSuccess: (data) =>
       setCommitting({
-        names: [domain],
+        names: names,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner,
         duration,
