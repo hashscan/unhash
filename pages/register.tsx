@@ -17,10 +17,6 @@ import { Domain, Registration, RegistrationOrder, RegisterStep } from 'lib/types
 
 import styles from './register.module.css'
 import { notNull } from 'lib/utils'
-import { useSendCommit } from 'lib/hooks/useSendCommit'
-import { useSendCommits } from 'lib/hooks/useSendCommits'
-import { useSendRegister } from 'lib/hooks/useSendRegister'
-import { useSendRegisters } from 'lib/hooks/useSendRegisters'
 
 interface RegisterProps {
   names: Domain[]
@@ -43,8 +39,6 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
 
 const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
   const domain = names[0]
-  const useCommitHook = names.length === 1 ? useSendCommit : useSendCommits
-  const useSendRegisterHook = names.length === 1 ? useSendRegister : useSendRegisters
 
   // get registration and calculate step
   const { registration: reg } = useRegistration()
@@ -85,15 +79,13 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
-          {step === 'register' && reg && (
-            <CheckoutRegisterStep useSendRegisterHook={useSendRegisterHook} registration={reg} />
-          )}
+          {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
           {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
         </main>
 
         {step === 'commit' && (
           <div className={styles.order}>
-            <CheckoutOrder order={order} useCommitHook={useCommitHook} />
+            <CheckoutOrder order={order} />
           </div>
         )}
       </div>

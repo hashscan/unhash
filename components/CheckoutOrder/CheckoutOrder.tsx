@@ -12,14 +12,12 @@ import clsx from 'clsx'
 
 import { CommitButton } from './CommitButton'
 import { notNull } from 'lib/utils'
-import { useSendCommitsType } from 'lib/hooks/useSendCommits'
 
 interface CheckoutOrderProps {
   order: RegistrationOrder
-  useCommitHook: useSendCommitsType
 }
 
-export const CheckoutOrder = ({ order, useCommitHook }: CheckoutOrderProps) => {
+export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
   const { names, durationInYears } = order
 
   const durationInSeconds = durationInYears * YEAR_IN_SECONDS
@@ -70,7 +68,7 @@ export const CheckoutOrder = ({ order, useCommitHook }: CheckoutOrderProps) => {
         </div>
       </div>
 
-      <CommitButton order={order} useCommitHook={useCommitHook} />
+      <CommitButton order={order} />
 
       {/* only on mobiles */}
       <div className={styles.mobileTotal}>Estimated total {formatUSDPrice(totalPrice)}</div>
