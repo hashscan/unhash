@@ -59,7 +59,7 @@ export const nftToAvatarRecord = (avatar: NFTToken) => {
     `ENS only supports ${ALLOWED_ERCs.join(', ')} avatars at the moment`
   )
 
-  return `eip155:1/${avatar.kind}:${avatar.collection.id}/${avatar.tokenId}`
+  return `eip155:1/${avatar.kind}:${avatar.contract}/${avatar.tokenId}`
 }
 
 export function clamp(value: number, min: number, max: number): number {
