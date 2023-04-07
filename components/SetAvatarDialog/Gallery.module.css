@@ -1,5 +1,5 @@
 .container {
-  max-height: 420px;
+  height: 480px;
   overflow-y: auto;
   padding: 16px 24px;
   background: var(--color-slate-7);
@@ -10,6 +10,12 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 8px;
   position: relative;
+}
+
+@media (max-height: 820px) {
+  .container {
+    height: 376px;
+  }
 }
 
 @media (max-width: 768px) {
