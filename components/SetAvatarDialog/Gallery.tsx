@@ -79,16 +79,12 @@ export const Gallery = ({
   }, [loadMore])
 
   const nftsCount = NFTs.length
-
-  const columns = 4
-
-  const rowsWithItems = Math.ceil(nftsCount / columns) // how many rows does all items occupy
-  const rowsToDisplay = Math.max(2, isLoadingNFTs ? rowsWithItems + 1 : rowsWithItems)
+  const cellsToDisplay = Math.max(4 * 3, nftsCount)
 
   return (
     <div className={clsx(styles.container, className)} {...rest}>
       <div className={styles.grid}>
-        {Array(rowsToDisplay * columns)
+        {Array(cellsToDisplay)
           .fill(0)
           .map((_, i) => {
             if (i < nftsCount) {
