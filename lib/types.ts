@@ -109,7 +109,6 @@ export interface NFTToken {
   id: string
   contract: string
   tokenId: string
-  contract: string
   kind: 'erc721' | 'erc1155'
   name: string
   image: string
