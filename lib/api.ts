@@ -24,8 +24,10 @@ export type DomainPrice = {
   usd: number
 }
 
-export type DomainPrices = {
-  [domain: string]: DomainPrice
+export type OrderPrice = {
+  names: { [domain: string]: DomainPrice }
+  fee: DomainPrice
+  total: DomainPrice
 }
 
 export type DomainInfo = {
@@ -61,12 +63,12 @@ async function getPrices(
   domains: string[],
   network: Network = 'mainnet',
   duration: number
-): Promise<DomainPrices> {
+): Promise<OrderPrice> {
   return await ky
     .get(
       `${API_URL}/domain/price?domains=${domains.join(',')}&network=${network}&duration=${duration}`
     )
-    .json<DomainPrices>()
+    .json<OrderPrice>()
 }
 
 async function domainInfo(domain: Domain, network: Network = 'mainnet'): Promise<DomainInfo> {

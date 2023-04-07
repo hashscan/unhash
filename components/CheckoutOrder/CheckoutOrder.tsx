@@ -2,16 +2,14 @@ import { BigNumber } from 'ethers'
 import { formatNetworkFee, formatUSDPrice } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
 import { COMMIT_GAS_LIMIT, REGISTER_AVERAGE_GAS, YEAR_IN_SECONDS } from 'lib/constants'
-import { useDomainPrices } from 'lib/hooks/useDomainPrices'
+import { useOrderPrice } from 'lib/hooks/useOrderPrice'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { RegistrationOrder } from 'lib/types'
 import { useMemo } from 'react'
 import styles from './CheckoutOrder.module.css'
 import { OrderItem } from './OrderItem'
 import clsx from 'clsx'
-
 import { CommitButton } from './CommitButton'
-import { notNull } from 'lib/utils'
 
 interface CheckoutOrderProps {
   order: RegistrationOrder
@@ -23,24 +21,16 @@ export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
   const durationInSeconds = durationInYears * YEAR_IN_SECONDS
 
   // get domain price from api
-  const domainPrices = useDomainPrices(names, durationInSeconds)
+  const orderPrice = useOrderPrice(names, durationInSeconds)
 
   // fixed network fees for estimation
   const networkFeesGas = COMMIT_GAS_LIMIT + REGISTER_AVERAGE_GAS
   const networkFees = useTxPrice(BigNumber.from(networkFeesGas))
 
   const totalPrice = useMemo(() => {
-    const sum = Object.values(domainPrices)
-      .filter(notNull)
-      .map(({ usd }) => usd)
-      .reduce((sum, next) => sum + next, 0)
-
-    if (sum > 0 && networkFees) {
-      return sum + networkFees
-    } else {
-      return undefined
-    }
-  }, [domainPrices, networkFees])
+    const total = orderPrice?.total?.usd ?? 0
+    return total > 0 && networkFees ? total + networkFees : undefined
+  }, [orderPrice, networkFees])
 
   return (
     <div className={styles.container}>
@@ -53,7 +43,7 @@ export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
             className={styles.line}
             title={`${name}`}
             hint={pluralize('year', durationInYears)}
-            price={domainPrices[name]?.usd}
+            price={orderPrice?.names[name]?.usd}
           />
         ))}
 

@@ -1,15 +1,15 @@
-import api, { DomainPrice } from 'lib/api'
+import api, { OrderPrice } from 'lib/api'
 import { toNetwork } from 'lib/types'
 import { useEffect, useState } from 'react'
 import { useChainId } from 'wagmi'
 
-export const useDomainPrice = (
-  domain: string,
+export const useOrderPrice = (
+  names: string[],
   duration: number | undefined,
   dropOnChange: boolean = false
-): DomainPrice | undefined => {
+): OrderPrice | undefined => {
   const chainId = useChainId()
-  const [price, setPrice] = useState<DomainPrice>()
+  const [prices, setPrice] = useState<OrderPrice | undefined>(undefined)
 
   useEffect(() => {
     if (!duration) {
@@ -20,15 +20,15 @@ export const useDomainPrice = (
 
     const fetchPrice = async () => {
       try {
-        const result = await api.getPrices([domain], toNetwork(chainId), duration)
-        setPrice(result.names[domain])
+        const orderPrice = await api.getPrices(names, toNetwork(chainId), duration)
+        setPrice(orderPrice)
       } catch (err) {
-        console.log(`failed to fetch domain price: ${err}`)
+        console.log(`failed to fetch order price: ${err}`)
         setPrice(undefined)
       }
     }
     fetchPrice()
-  }, [domain, duration, dropOnChange, chainId])
+  }, [names, duration, dropOnChange, chainId])
 
-  return price
+  return prices
 }
