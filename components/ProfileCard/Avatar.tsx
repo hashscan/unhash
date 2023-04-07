@@ -27,18 +27,15 @@ export const Avatar = ({ domain }: { domain: Domain }) => {
   const isUnset = !isLoading && (!avatar || isError)
 
   const changeAvatar = async () => {
-    try {
-      await openDialog('setAvatar')
+    const success = await openDialog('setAvatar')
+    if (!success) return
 
-      setRevalidating(true)
+    setRevalidating(true)
 
-      await delay(5000) // wait for the transaction to be mined
-      await refetch()
-    } catch (e) {
-      /* ignore */
-    } finally {
-      setRevalidating(false)
-    }
+    await delay(5000) // wait for the transaction to be mined
+    await refetch()
+
+    setRevalidating(false)
   }
 
   return (

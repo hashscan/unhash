@@ -24,7 +24,7 @@ type ParamsForDialog = {
 }
 
 interface OpenDialogEventOptions {
-  resolve: (value: unknown) => void
+  resolve: (value: boolean) => void
   reject: () => void
   params: ParamsForDialog[keyof ParamsForDialog]
 }
@@ -36,13 +36,13 @@ interface Events {
 const mediator = createNanoEvents<Events>()
 
 // imperative API for controlling dialogs
-export const openDialog = <T extends DialogName>(type: T, params?: ParamsForDialog[T]) => {
+export const openDialog = <T extends DialogName>(
+  type: T,
+  params?: ParamsForDialog[T]
+): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     mediator.emit('openDialog', type, { resolve, reject, params: params || {} })
-  }).then(
-    () => {}, 
-    () => {} // ignore unhandled promise rejection
-  )
+  })
 }
 
 // holds the  state of the currently open dialog and its params
@@ -72,9 +72,7 @@ export const Dialogs = () => {
             {open &&
               (() => {
                 const closeDialog = (success: boolean = false) => {
-                  if (success) currentDialog.options.resolve(success)
-                  else currentDialog.options.reject()
-
+                  currentDialog.options.resolve(success)
                   setCurrentDialog(null)
                 }
 

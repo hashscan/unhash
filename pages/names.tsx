@@ -102,20 +102,22 @@ const Names: PageWithLayout = () => {
     router.push(`/${domain.name}/`)
   }
   const onSendClick = async (domain: UserDomain) => {
-    try {
-      await openDialog('sendName', { domain: domain.name })
+    const success = await openDialog('sendName', { domain: domain.name })
+
+    if (success) {
       // it takes for RPC to update the state, repeat few times
       await new Promise((resolve) => setTimeout(resolve, 3500))
       refreshUser()
-    } catch (e) {}
+    }
   }
   const onRenewClick = async (domain: UserDomain) => {
-    try {
-      await openDialog('renewName', { domain })
+    const success = await openDialog('renewName', { domain })
+
+    if (success) {
       // it takes for RPC to update the state, repeat few times
       await new Promise((resolve) => setTimeout(resolve, 3500))
       refreshUser()
-    } catch (e) {}
+    }
   }
 
   // TODO: handle isConnecting state when metamask asked to log in
