@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { BigNumber } from 'ethers'
 import { YEAR_IN_SECONDS, XENS_ADDRESS, XENS_ABI } from 'lib/constants'
 import { toNetwork } from 'lib/types'
@@ -7,7 +8,6 @@ import { useOrderPrice } from './useOrderPrice'
 import { useRegistration } from './useRegistration'
 
 // TODO: rename
-// TODO: use useState and useMemo
 // TODO: calculate gas
 // TODO: support fees
 export const useSendRegisters = () => {
@@ -23,28 +23,25 @@ export const useSendRegisters = () => {
   const gasLimit = 1_000_000
 
   // args
-  const count = registration.names.length
-  const names = registration.names.map(getDomainName)
-  const owners: string[] = new Array(count).fill(registration?.owner!)
-  const durations: number[] = new Array(count).fill(registration?.duration || YEAR_IN_SECONDS)
-  const secrets: string[] = new Array(count).fill(registration?.secret!)
-  const prices = orderPrice
-    ? registration.names.map((name) => orderPrice.names[name]?.wei ?? 0)
-    : undefined
+  const args = useMemo(() => {
+    const count = registration.names.length
+    const names = registration.names.map(getDomainName)
+    const owners: string[] = new Array(count).fill(registration?.owner!)
+    const durations: number[] = new Array(count).fill(registration?.duration || YEAR_IN_SECONDS)
+    const secrets: string[] = new Array(count).fill(registration?.secret!)
+    const prices = orderPrice
+      ? registration.names.map((name) => orderPrice.names[name]?.wei ?? 0)
+      : undefined
 
-  console.log('--------')
-  console.log('names', names)
-  console.log('owners', owners)
-  console.log('durations', durations)
-  console.log('secrets', secrets)
-  console.log('prices', prices)
+    return [names, owners, durations, secrets, prices] as const
+  }, [orderPrice, registration?.duration, registration.names, registration?.owner, registration?.secret])
 
   const { config } = usePrepareContractWrite({
     address: XENS_ADDRESS.get(toNetwork(chainId)),
     abi: XENS_ABI,
     functionName: 'register',
-    args: [names, owners, durations, secrets, prices],
-    enabled: Boolean(totalPrice) && Boolean(registration?.owner) && Boolean(prices),
+    args,
+    enabled: Boolean(totalPrice) && Boolean(registration?.owner),
     overrides: {
       gasLimit: BigNumber.from(gasLimit),
       value: BigNumber.from(totalPrice ?? 0)
@@ -64,7 +61,7 @@ export const useSendRegisters = () => {
 
   const { isLoading: isWaitLoading, error: waitError } = useWaitForTransaction({
     hash: data?.hash
-    // sucess state will get updated in RegistrationProvider
+    // success state will get updated in RegistrationProvider
   })
 
   return {
