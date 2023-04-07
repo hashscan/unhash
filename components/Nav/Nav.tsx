@@ -9,9 +9,10 @@ import { InfoCircle, Logout, Profile } from 'components/icons'
 import { Links } from './Links'
 import clsx from 'clsx'
 import styles from './Nav.module.css'
-import { toNetwork, currentNetwork, type Network } from 'lib/types'
+import { toNetwork, currentNetwork, type Network, Domain } from 'lib/types'
 import { Button } from 'components/ui/Button/Button'
 import Link from 'next/link'
+import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
 
 interface ChainProps {
   chain?: { id: number; unsupported?: boolean }
@@ -106,23 +107,8 @@ export const Nav = () => {
 
                 {account && (
                   <button className={styles.account} onClick={() => setOpen(!isOpen)}>
-                    <div
-                      className={clsx(styles.accountAvatar, {
-                        [styles.acccountAvatarPlaceholder]: !account.ensAvatar
-                      })}
-                    >
-                      {account.ensAvatar ? (
-                        <img
-                          className={styles.accountAvatarImg}
-                          alt={account.address}
-                          src={account.ensAvatar.replace(
-                            'gateway.ipfs.io',
-                            'ipfs.eth.aragon.network'
-                          )}
-                        />
-                      ) : (
-                        <Profile color="var(--color-slate-5)" />
-                      )}
+                    <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
+                      {account.ensName && <Avatar ensName={account.ensName as Domain} />}
                     </div>
                     <div
                       className={clsx(styles.accountName, {
@@ -156,5 +142,21 @@ export const Nav = () => {
         </div>
       </div>
     </nav>
+  )
+}
+
+const Avatar = ({ ensName }: { ensName: Domain }) => {
+  const {
+    data: avatar,
+    isLoading: isQueryLoading,
+    isRefetching,
+    isError,
+    refetch
+  } = useEnsAvatar(ensName)
+
+  return avatar ? (
+    <img className={styles.accountAvatarImg} alt={`ENS Avatar for ${ensName}`} src={avatar} />
+  ) : (
+    <Profile color="var(--color-slate-5)" />
   )
 }
