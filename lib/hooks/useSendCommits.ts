@@ -82,3 +82,5 @@ export const useSendCommits = ({
     error: writeError ?? waitError
   }
 }
+
+export type useSendCommitsType = typeof useSendCommits

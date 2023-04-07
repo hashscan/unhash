@@ -74,3 +74,5 @@ export const useSendRegisters = () => {
     error: sendError || waitError
   }
 }
+
+export type useSendRegistersType = typeof useSendRegisters

@@ -2,10 +2,9 @@ import { useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import useChange from '@react-hook/change'
 
-import { RegistrationOrder, currentNetwork } from 'lib/types'
+import { RegistrationOrder } from 'lib/types'
 import { YEAR_IN_SECONDS } from 'lib/constants'
-import { useSendCommit } from 'lib/hooks/useSendCommit'
-import { useSendCommits } from 'lib/hooks/useSendCommits'
+import { useSendCommitsType } from 'lib/hooks/useSendCommits'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
@@ -17,15 +16,10 @@ import { trackGoal } from 'lib/analytics'
 
 interface CommitButtonProps {
   order: RegistrationOrder
+  useCommitHook: useSendCommitsType
 }
 
-const useUnifiedSendCommit = (args: Parameters<typeof useSendCommits>[number]) => {
-  return useSendCommit({ ...args, domain: args.names[0] })
-}
-
-const useCommitHook = currentNetwork() === 'mainnet' ? useUnifiedSendCommit : useSendCommits
-
-export const CommitButton = ({ order }: CommitButtonProps) => {
+export const CommitButton = ({ order, useCommitHook }: CommitButtonProps) => {
   const { names } = order
   const { address: sender } = useAccount()
 
