@@ -9,28 +9,20 @@ import { InfoCircle, Logout, Profile } from 'components/icons'
 import { Links } from './Links'
 import clsx from 'clsx'
 import styles from './Nav.module.css'
-import { toNetwork, currentNetwork, type Network, Domain } from 'lib/types'
+import { toNetwork, currentNetwork, Domain } from 'lib/types'
 import { Button } from 'components/ui/Button/Button'
 import Link from 'next/link'
 import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
 
 interface ChainProps {
-  chain?: { id: number; unsupported?: boolean }
+  chainId?: number
   onClick?: () => void
 }
 
-const getNetwork = (chainId?: number): Network => {
-  if (chainId) return toNetwork(chainId)
-  return currentNetwork()
-}
-
-const Chain = ({ chain, onClick }: ChainProps) => {
-  const isTestnet = getNetwork(chain?.id) === 'goerli'
-  const isUnsupported = Boolean(chain?.unsupported)
-
-  const shouldDisplayWarn = isTestnet || isUnsupported
-
-  if (!shouldDisplayWarn) return null
+const Chain = ({ chainId, onClick }: ChainProps) => {
+  const isTestnet = currentNetwork() === 'goerli'
+  const isUnsupported = chainId && toNetwork(chainId) !== currentNetwork()
+  if (!isTestnet && !isUnsupported) return null
 
   return (
     <>
@@ -38,7 +30,7 @@ const Chain = ({ chain, onClick }: ChainProps) => {
         <InfoCircle className={styles.chainIcon} />
 
         <span>
-          {isUnsupported && 'Unsupported Network'}
+          {isUnsupported && 'Switch Network'}
           {!isUnsupported && isTestnet && 'Testnet'}
         </span>
       </button>
@@ -103,7 +95,7 @@ export const Nav = () => {
                 className={clsx(styles.buttons, { [styles.buttonsLoading]: !ready })}
                 aria-hidden={!ready}
               >
-                <Chain chain={chain} onClick={openChainModal} />
+                <Chain chainId={chain?.id} onClick={openChainModal} />
 
                 {account && (
                   <button className={styles.account} onClick={() => setOpen(!isOpen)}>

@@ -13,6 +13,7 @@ export function toChain(network: Network): Chain {
 }
 
 // Maps wagmi.Chain.id to Network
+// Should only be called for supported chains
 export function toNetwork(chainId: number): Network {
   switch (chainId) {
     case mainnet.id:
