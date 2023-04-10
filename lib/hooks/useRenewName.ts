@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI } from 'lib/constants'
-import { Domain, currentNetwork, toNetwork } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
 import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
