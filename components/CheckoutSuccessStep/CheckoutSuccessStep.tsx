@@ -10,7 +10,6 @@ import Link from 'next/link'
 import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
 
 interface CheckoutSuccessStepProps {
-  domain: string
   registration: Registration | undefined
 }
 
@@ -23,6 +22,7 @@ const EtherscanLink = ({ txn }: { txn: string }) => {
 }
 
 export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
+  const domain = props.registration?.names[0]
   const txnHash = props.registration?.registerTxHash
 
   return (
@@ -36,7 +36,7 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
             <WrapBalancer>
               You can now{' '}
               <Link href="/profile" className={styles.inlineLink}>
-                set <b>{props.domain}</b> as a username
+                set <b>{domain}</b> as a username
               </Link>{' '}
               for your wallet and create a public profile with NFT avatar.
             </WrapBalancer>
@@ -54,7 +54,7 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
         </div>
       </div>
 
-      <NextSteps domain={props.domain} />
+      <NextSteps domain={domain!} />
     </div>
   )
 }

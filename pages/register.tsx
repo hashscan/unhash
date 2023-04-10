@@ -38,17 +38,17 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
 }
 
 const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
-  const domain = names[0]
-
   // get registration and calculate step
   const { registration: reg } = useRegistration()
+  // use names from local storage first
+  const namesForRegistration = reg?.names ?? names
 
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
   useEffect(() => dispatchStep(reg), [reg])
 
   const [order, updateOrder] = useState<RegistrationOrder>(() => {
-    return { names, durationInYears: 1, ownerAddress: undefined }
+    return { names: namesForRegistration, durationInYears: 1, ownerAddress: undefined }
   })
 
   // set timeout to trigger step update
@@ -69,18 +69,18 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
     <>
       <Head>
         {/* TODO: better title */}
-        <title>{`${names.join(', ')} / ENS Domain Registration`}</title>
+        <title>{`${namesForRegistration.join(', ')} / ENS Domain Registration`}</title>
       </Head>
 
       <div className={styles.register}>
         <main className={styles.main}>
-          <CheckoutProgress className={styles.progress} step={step} names={names} />
+          <CheckoutProgress className={styles.progress} step={step} names={namesForRegistration} />
 
           {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
           {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
-          {step === 'success' && reg && <CheckoutSuccessStep domain={domain} registration={reg} />}
+          {step === 'success' && reg && <CheckoutSuccessStep registration={reg} />}
         </main>
 
         {step === 'commit' && (
@@ -97,7 +97,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const names = Array.isArray(query.names) ? query.names : [query.names].filter(notNull)
 
   // TODO: return validation here or move it to client
-
   if (!names.length) {
     return {
       redirect: {
