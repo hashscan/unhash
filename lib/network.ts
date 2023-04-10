@@ -25,11 +25,8 @@ export function toNetwork(chainId: number): Network {
 }
 
 /**
- * @returns The name of the network that this application supports
+ * @returns Returns Network for current deployment
  */
 export const currentNetwork = (): Network => {
-  if (process.env.NEXT_PUBLIC_CHAIN) return process.env.NEXT_PUBLIC_CHAIN as Network
-
-  const goerliSubdomain = /^goerli\./.test(String(process.env.NEXT_PUBLIC_VERCEL_URL))
-  return goerliSubdomain ? 'goerli' : 'mainnet'
+  return process.env.NEXT_PUBLIC_CHAIN as Network
 }
