@@ -2,11 +2,7 @@ import React, { useCallback } from 'react'
 import useChange from '@react-hook/change'
 
 import { useSendRegisters } from 'lib/hooks/useSendRegisters'
-import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { useNotifier } from 'lib/hooks/useNotifier'
-import { formatNetworkFee } from 'lib/format'
-import { REGISTER_AVERAGE_GAS } from 'lib/constants'
-import { Gas } from 'components/icons'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
 import styles from './CheckoutRegisterStep.module.css'
@@ -20,8 +16,7 @@ interface CheckoutRegisterStepProps {
 
 export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps) => {
   const useSendRegisterHook = registration.names.length === 1 ? useSendRegister : useSendRegisters
-  const { gasLimit, write, status, error } = useSendRegisterHook()
-  const networkFee = useTxPrice(REGISTER_AVERAGE_GAS) // show average not gas limit
+  const { write, status, error } = useSendRegisterHook()
 
   const onRegisterClick = useCallback(() => {
     write?.()
@@ -49,18 +44,6 @@ export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps
           <TransactionButton size="cta" onClick={onRegisterClick} status={status}>
             Complete Registration →
           </TransactionButton>
-
-          {networkFee && (
-            <div className={styles.transactionStatus}>
-              <div className={styles.txFeeLabel}>
-                <Gas />
-                Network fee
-              </div>
-              <div className={styles.txFeeValue} title={gasLimit && `${gasLimit} gas`}>
-                {formatNetworkFee(networkFee)}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
