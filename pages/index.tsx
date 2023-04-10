@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
 
@@ -12,8 +12,6 @@ import { FullWidthLayout, PageWithLayout } from 'components/layouts'
 import styles from './index.module.css'
 import { Suggestion } from 'components/LandingSuggestions/types'
 
-import { useRegistration } from 'lib/hooks/useRegistration'
-
 import { trackGoal } from 'lib/analytics'
 
 import domainCardImg from '../styles/assets/explainer-domains.png'
@@ -21,16 +19,6 @@ import walletCardImg from '../styles/assets/explainer-wallet.png'
 import profileCardImg from '../styles/assets/explainer-profile.png'
 
 const Search: PageWithLayout = () => {
-  const { registration: reg, clearRegistration } = useRegistration()
-
-  // TODO: better place for this action
-  useEffect(() => {
-    if (reg && reg.status === 'registered') {
-      // remove previous registration if it finished
-      clearRegistration()
-    }
-  }, [clearRegistration, reg])
-
   const searchBarRef = useRef<SearchBarHandle>(null)
 
   const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {

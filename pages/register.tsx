@@ -37,9 +37,27 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
   return 'initializing' // eslint asks to add this
 }
 
+// use local registration object from local state on final state
+const usePatchedRegistration = () => {
+  const result = useRegistration()
+  const [localState, updateLocalState] = useState<
+    Pick<ReturnType<typeof useRegistration>, 'registration'> | undefined
+  >(undefined)
+
+  useEffect(() => {
+    if (result.registration?.status === 'registered') {
+      updateLocalState({ registration: result.registration })
+      result.clearRegistration()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.registration])
+
+  return localState ?? result
+}
+
 const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
   // get registration and calculate step
-  const { registration: reg } = useRegistration()
+  const { registration: reg } = usePatchedRegistration()
   // use names from local storage first
   const namesForRegistration = reg?.names ?? names
 
