@@ -1,5 +1,4 @@
-import { useAccount, useChainId } from 'wagmi'
-import { toNetwork } from 'lib/network'
+import { useAccount } from 'wagmi'
 
 import api from 'lib/api'
 
@@ -8,10 +7,9 @@ import api from 'lib/api'
  */
 export const useFetchNFTs = (limit: number, continuation?: string) => {
   const { address } = useAccount()
-  const network = toNetwork(useChainId())
 
   return async () => {
     if (!address) throw new Error('No address provided')
-    return await api.userNFTs(network, address, limit, continuation)
+    return await api.userNFTs(address, limit, continuation)
   }
 }

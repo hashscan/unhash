@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next'
-import { currentNetwork } from 'lib/types'
 import api from 'lib/api'
 
 // legacy page checkout ./pages/register
@@ -9,9 +8,8 @@ const Register = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const domain = query.domain as string
-  const network = currentNetwork()
 
-  const { isValid, isAvailable } = await api.checkDomain(domain, network)
+  const { isValid, isAvailable } = await api.checkDomain(domain)
 
   if (!isValid) {
     return {

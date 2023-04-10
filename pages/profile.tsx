@@ -1,6 +1,5 @@
 import { useAccount, useChainId } from 'wagmi'
 import styles from './profile.module.css'
-import { toNetwork } from 'lib/types'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
@@ -13,7 +12,6 @@ import { LoaderSpinner } from 'components/icons'
 import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
 
 const Profile: PageWithLayout = () => {
-  const chainId = useChainId()
   const { address, isDisconnected } = useAccount()
 
   const [editingPrimaryName, setEditingPrimaryName] = useState(false)
@@ -70,7 +68,6 @@ const Profile: PageWithLayout = () => {
       {/* Primary ENS select */}
       {userInfo && userDomains.length > 0 && (
         <ProfilePrimaryDomain
-          chainId={chainId}
           address={address}
           primaryName={primaryName || undefined}
           userDomains={userDomains}
@@ -87,7 +84,7 @@ const Profile: PageWithLayout = () => {
             This is your {"wallet's"} public profile on Ethereum ecosystem. People can find it by
             your address and <b>.eth username</b>.{" You can't share it yet."}
           </div>
-          <ProfileCard network={toNetwork(chainId)} address={address} domain={primaryName} />
+          <ProfileCard address={address} domain={primaryName} />
         </>
       )}
     </main>
