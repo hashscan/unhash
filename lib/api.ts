@@ -1,14 +1,15 @@
 import ky from 'ky'
 import { Address } from 'wagmi'
 import { API_URL } from './constants'
-import type {
+import {
   Network,
   Domain,
   UserInfo,
   AddrRecords,
   TextRecords,
   DomainListing,
-  NFTToken
+  NFTToken,
+  currentNetwork
 } from './types'
 
 export type DomainStatus = {
@@ -51,8 +52,8 @@ export type NFTsResponse = {
 
 async function checkDomain(
   domain: string,
-  network: Network = 'mainnet',
-  withListing: boolean = false
+  withListing: boolean = false,
+  network: Network = currentNetwork()
 ): Promise<DomainStatus> {
   return await ky
     .get(`${API_URL}/domain/check?domain=${domain}&network=${network}&withListing=${withListing}`)
@@ -61,8 +62,8 @@ async function checkDomain(
 
 async function getPrices(
   domains: string[],
-  network: Network = 'mainnet',
-  duration: number
+  duration: number,
+  network: Network = currentNetwork()
 ): Promise<OrderPrice> {
   return await ky
     .get(
@@ -71,13 +72,16 @@ async function getPrices(
     .json<OrderPrice>()
 }
 
-async function domainInfo(domain: Domain, network: Network = 'mainnet'): Promise<DomainInfo> {
+async function domainInfo(
+  domain: Domain,
+  network: Network = currentNetwork()
+): Promise<DomainInfo> {
   return await ky
     .get(`${API_URL}/domain/info?domain=${domain}&network=${network}`)
     .json<DomainInfo>()
 }
 
-async function userInfo(address: Address, network: Network = 'mainnet'): Promise<UserInfo> {
+async function userInfo(address: Address, network: Network = currentNetwork()): Promise<UserInfo> {
   return await ky.get(`${API_URL}/user?address=${address}&network=${network}`).json<UserInfo>()
 }
 
@@ -90,10 +94,10 @@ async function ethPrice(): Promise<EthPrice> {
 }
 
 async function userNFTs(
-  network: Network,
   address: string,
   limit?: number,
-  continuation?: string
+  continuation?: string,
+  network: Network = currentNetwork()
 ): Promise<NFTsResponse> {
   const query = new URLSearchParams({ network, address })
 

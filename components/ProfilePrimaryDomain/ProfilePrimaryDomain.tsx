@@ -12,7 +12,6 @@ import { PrimaryDomainUnresolvedEth } from 'components/PrimaryDomainSelect/Prima
 import { trackGoal } from 'lib/analytics'
 
 interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
-  chainId: number
   address?: Address
   primaryName?: Domain // undefined if no primary ENS set
   userDomains: UserDomain[] // domains that can be set as primary ENS by current user
@@ -20,7 +19,6 @@ interface ProfilePrimaryDomainProps extends ComponentProps<'div'> {
 }
 
 export const ProfilePrimaryDomain = ({
-  chainId,
   address,
   primaryName,
   userDomains,
@@ -37,8 +35,8 @@ export const ProfilePrimaryDomain = ({
     setShowDropdown(false)
     setNewDomain(domain?.name === primaryName ? undefined : domain)
   }
-  // reset selection if chain and address switched
-  useEffect(() => setNewDomain(undefined), [chainId, address])
+  // reset selection if address switched
+  useEffect(() => setNewDomain(undefined), [address])
 
   const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, () => setShowDropdown(false))

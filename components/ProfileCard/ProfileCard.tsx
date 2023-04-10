@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useMemo } from 'react'
 import styles from './ProfileCard.module.css'
-import { Domain, Network } from 'lib/types'
+import { Domain } from 'lib/types'
 import { Address } from 'wagmi'
 import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 import { ProfileCardForm } from './ProfileCardForm'
@@ -9,7 +9,6 @@ import { ProfileCardForm } from './ProfileCardForm'
 import { Avatar } from './Avatar'
 
 interface ProfileCardProps {
-  network: Network
   address: Address
   domain: Domain
 }

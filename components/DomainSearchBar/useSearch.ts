@@ -1,9 +1,7 @@
 import api, { DomainStatus } from 'lib/api'
-import { DomainListing, toNetwork } from 'lib/types'
+import { DomainListing } from 'lib/types'
 import { useEffect, useState, useRef } from 'react'
 import { useDebounce } from 'usehooks-ts'
-import { useChainId } from 'wagmi'
-
 import { SearchStatus } from './types'
 import { useLatestPromise } from './useLatestPromise'
 
@@ -20,8 +18,6 @@ export const useSearch = (
   withListing: boolean = false,
   names: string[] = EMPTY_ARRAY
 ) => {
-  const chainId = useChainId()
-
   const [result, setResult] = useState<SearchResult>({ status: SearchStatus.Idle })
   const { run, cancel } = useLatestPromise<DomainStatus>()
   const debouncedQuery = useDebounce(query, 300)
@@ -55,7 +51,7 @@ export const useSearch = (
 
       try {
         const { isValid, isAvailable, validationMessage, listing } = await run(
-          api.checkDomain(debouncedQuery, toNetwork(chainId), withListing)
+          api.checkDomain(debouncedQuery, withListing)
         )
 
         if (!isValid) {
@@ -80,7 +76,7 @@ export const useSearch = (
     }
 
     fetchAvailability()
-  }, [debouncedQuery, chainId, withListing, run])
+  }, [debouncedQuery, withListing, run])
 
   return result
 }
