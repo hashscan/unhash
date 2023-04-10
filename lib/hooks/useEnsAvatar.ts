@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import useEvent from 'react-use-event-hook'
-
-import { Domain } from 'lib/types'
-import { useChainId, useProvider } from 'wagmi'
+import { toChain } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
+import { useProvider } from 'wagmi'
+import { useMemo } from 'react'
 
 // split ens-avatar into a separate chunk
 type EnsAvatarImportType = typeof import('@ensdomains/ens-avatar')
@@ -14,7 +15,8 @@ const loadEnsAvatarModule = (): Promise<EnsAvatarImportType> => import('@ensdoma
  * @returns
  */
 export const useEnsAvatar = (domain: Domain) => {
-  const chainId = useChainId()
+  // use deployment network and ignore wallet network
+  const chainId = useMemo(() => toChain(currentNetwork()).id, [])
   const provider = useProvider({ chainId })
 
   const queryFn = useEvent(async (opts) => {

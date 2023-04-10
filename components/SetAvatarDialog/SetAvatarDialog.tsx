@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 import { Navigation } from './Navigation'
@@ -8,7 +8,7 @@ import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
 
 import { useSendSetAvatar } from 'lib/hooks/useSendSetAvatar'
 import { useNotifier } from 'lib/hooks/useNotifier'
-import { NFTToken, toNetwork, UserInfo } from 'lib/types'
+import { NFTToken, UserInfo } from 'lib/types'
 import api from 'lib/api'
 import { Domain } from 'lib/types'
 
@@ -28,7 +28,6 @@ export const SetAvatarDialog = ({
 }: SetAvatarDialogProps) => {
   const notify = useNotifier()
   const { address } = useAccount()
-  const network = toNetwork(useChainId())
 
   const [user, setUser] = useState<UserInfo>()
   const domain: Domain = user?.primaryName?.name!
@@ -46,7 +45,7 @@ export const SetAvatarDialog = ({
   })
 
   const loadUser = useEvent(async () => {
-    const user = await api.userInfo(address!, network)
+    const user = await api.userInfo(address!)
     setUser(user)
   })
 

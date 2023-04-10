@@ -1,7 +1,7 @@
 import { ETH_REVERSE_REGISTRAR_ABI, ETH_REVERSE_REGISTRAR_ADDRESS } from 'lib/constants'
-import { Domain, toNetwork } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
-import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 export const useSetPrimaryEns = ({
   domain,
@@ -10,10 +10,8 @@ export const useSetPrimaryEns = ({
   domain?: Domain
   onSuccess?: () => void
 }) => {
-  const chainId = useChainId()
-
   const { config } = usePrepareContractWrite({
-    address: ETH_REVERSE_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
+    address: ETH_REVERSE_REGISTRAR_ADDRESS.get(currentNetwork()),
     abi: ETH_REVERSE_REGISTRAR_ABI,
     functionName: 'setName',
     args: [domain],

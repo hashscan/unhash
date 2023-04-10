@@ -1,9 +1,8 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, TextRecords, toNetwork } from 'lib/types'
+import { Domain, TextRecords, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import {
-  useChainId,
   useContract,
   useContractWrite,
   usePrepareContractWrite,
@@ -21,9 +20,7 @@ export const useSendUpdateRecords = ({
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const chainId = useChainId()
-
-  const resolverAddress = ETH_RESOLVER_ADDRESS.get(toNetwork(chainId))
+  const resolverAddress = ETH_RESOLVER_ADDRESS.get(currentNetwork())
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })! // must always be defined
 
   const node = domain ? namehash(domain) : undefined

@@ -5,15 +5,14 @@ import {
   YEAR_IN_SECONDS,
   ETH_RESOLVER_ADDRESS
 } from 'lib/constants'
-import { toNetwork } from 'lib/types'
+import { currentNetwork } from 'lib/types'
 import { getDomainName, loadingToStatus } from 'lib/utils'
-import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 import { useRegistration } from './useRegistration'
 import type { useSendRegistersType } from './useSendRegisters'
 
 export const useSendRegister: useSendRegistersType = () => {
-  const chainId = useChainId()
   const { registration, setRegistering } = useRegistration()
 
   if (!registration) throw new Error('registration should exist')
@@ -30,7 +29,7 @@ export const useSendRegister: useSendRegistersType = () => {
   const gasLimit = 500_000
 
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS.get(toNetwork(chainId)),
+    address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
     abi: ETH_REGISTRAR_ABI,
     functionName: 'registerWithConfig',
     args: [
@@ -38,7 +37,7 @@ export const useSendRegister: useSendRegistersType = () => {
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
-      ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)),
+      ETH_RESOLVER_ADDRESS.get(currentNetwork()),
       registration?.owner
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner) && Boolean(value),

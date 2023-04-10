@@ -1,8 +1,8 @@
 import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, NFTToken, toNetwork } from 'lib/types'
+import { Domain, NFTToken, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
-import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 import { nftToAvatarRecord } from 'lib/utils'
 
@@ -22,11 +22,10 @@ export const useSendSetAvatar = ({
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const chainId = useChainId()
   const node = domain ? namehash(domain) : undefined
 
   const { config } = usePrepareContractWrite({
-    address: ETH_RESOLVER_ADDRESS.get(toNetwork(chainId)),
+    address: ETH_RESOLVER_ADDRESS.get(currentNetwork()),
     abi: ETH_RESOLVER_ABI,
     functionName: 'setText',
     enabled: Boolean(node) && Boolean(avatar),

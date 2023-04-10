@@ -1,18 +1,12 @@
-import {
-  useAccount,
-  useChainId,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction
-} from 'wagmi'
+import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { toNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
 
 import type { useSendCommitsType } from './useSendCommits'
+import { currentNetwork } from 'lib/network'
 
 /**
  * Hook for sending commit transaction.
@@ -29,8 +23,6 @@ export const useSendCommit: useSendCommitsType = ({
   addr,
   setDefaultResolver = true
 }) => {
-  const chainId = useChainId()
-  const network = toNetwork(chainId)
   const { address: sender } = useAccount()
   const { setCommitting } = useRegistration()
 
@@ -38,13 +30,13 @@ export const useSendCommit: useSendCommitsType = ({
   const { secret, commitment } = useMakeCommitment({
     name: names[0],
     owner: owner,
-    resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(network) : undefined,
+    resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(currentNetwork()) : undefined,
     addr: setDefaultResolver ? addr : undefined
   })
 
   // prepare commit transaction
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS.get(network),
+    address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
     abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
     enabled: Boolean(sender) && Boolean(owner) && Boolean(commitment),

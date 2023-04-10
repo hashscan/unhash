@@ -1,4 +1,4 @@
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount } from 'wagmi'
 import styles from './profile.module.css'
 import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'

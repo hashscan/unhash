@@ -1,7 +1,6 @@
 import api, { DomainInfo } from 'lib/api'
-import { Domain, toNetwork } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
 import { useEffect, useState } from 'react'
-import { useChainId } from 'wagmi'
 
 /**
  * Fetches domain info from the API.
@@ -9,8 +8,6 @@ import { useChainId } from 'wagmi'
  * @returns domain info, updated if pararm change
  */
 export const useDomainInfo = (domain: Domain): DomainInfo | undefined => {
-  const chainId = useChainId()
-
   const [info, setInfo] = useState<DomainInfo>()
 
   useEffect(() => {
@@ -18,7 +15,7 @@ export const useDomainInfo = (domain: Domain): DomainInfo | undefined => {
 
     const fetchInfo = async () => {
       try {
-        const res = await api.domainInfo(domain, toNetwork(chainId))
+        const res = await api.domainInfo(domain, currentNetwork())
         setInfo(res)
       } catch (err) {
         console.log(`failed to fetch domain info: ${err}`)
@@ -26,7 +23,7 @@ export const useDomainInfo = (domain: Domain): DomainInfo | undefined => {
     }
 
     fetchInfo()
-  }, [domain, chainId])
+  }, [domain])
 
   return info
 }
