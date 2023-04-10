@@ -1,7 +1,7 @@
 import api from 'lib/api'
-import { toNetwork, UserInfo } from 'lib/types'
+import { UserInfo, currentNetwork } from 'lib/types'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useAccount, useChainId } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 /**
  * Fetches user domains info for currently connected wallet.
@@ -10,7 +10,6 @@ import { useAccount, useChainId } from 'wagmi'
  * @returns user info if wallet connected
  */
 export const useCurrentUser = (): { user: UserInfo | undefined; refreshUser: () => void } => {
-  const chainId = useChainId()
   const { address } = useAccount()
   const [user, setUser] = useState<UserInfo>()
 
@@ -31,7 +30,7 @@ export const useCurrentUser = (): { user: UserInfo | undefined; refreshUser: () 
 
     const fetchUser = async () => {
       try {
-        const res = await api.userInfo(address, toNetwork(chainId))
+        const res = await api.userInfo(address, currentNetwork())
         setUser(res)
       } catch (err) {
         console.log(`failed to fetch user info: ${err}`)
@@ -39,7 +38,7 @@ export const useCurrentUser = (): { user: UserInfo | undefined; refreshUser: () 
     }
 
     fetchUser()
-  }, [chainId, address, refresh])
+  }, [address, refresh])
 
   return { user, refreshUser }
 }

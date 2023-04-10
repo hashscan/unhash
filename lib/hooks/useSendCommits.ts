@@ -1,13 +1,7 @@
 import { XENS_ABI, XENS_ADDRESS } from 'lib/constants'
-import { Domain, toNetwork } from 'lib/types'
+import { Domain, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
-import {
-  useAccount,
-  useChainId,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction
-} from 'wagmi'
+import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useMakeCommitments } from './useMakeCommitments'
 import { useRegistration } from './useRegistration'
 
@@ -30,8 +24,6 @@ export const useSendCommits = ({
   setDefaultResolver?: boolean
   addr?: string
 }) => {
-  const chainId = useChainId()
-  const network = toNetwork(chainId)
   const { address: sender } = useAccount()
   const { setCommitting } = useRegistration()
 
@@ -42,7 +34,7 @@ export const useSendCommits = ({
   })
 
   const { config } = usePrepareContractWrite({
-    address: XENS_ADDRESS.get(network),
+    address: XENS_ADDRESS.get(currentNetwork()),
     abi: XENS_ABI,
     functionName: 'commit',
     enabled: Boolean(sender) && Boolean(owner) && Boolean(commitments),

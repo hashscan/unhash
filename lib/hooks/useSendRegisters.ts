@@ -1,17 +1,16 @@
 import { useMemo } from 'react'
 import { BigNumber } from 'ethers'
 import { YEAR_IN_SECONDS, XENS_ADDRESS, XENS_ABI } from 'lib/constants'
-import { toNetwork } from 'lib/types'
 import { getDomainName, loadingToStatus } from 'lib/utils'
-import { useChainId, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useOrderPrice } from './useOrderPrice'
 import { useRegistration } from './useRegistration'
+import { currentNetwork } from 'lib/network'
 
 // TODO: rename
 // TODO: calculate gas
 // TODO: support fees
 export const useSendRegisters = () => {
-  const chainId = useChainId()
   const { registration, setRegistering } = useRegistration()
   if (!registration) throw new Error('registration should exist')
 
@@ -34,10 +33,16 @@ export const useSendRegisters = () => {
       : undefined
 
     return [names, owners, durations, secrets, prices] as const
-  }, [orderPrice, registration?.duration, registration.names, registration?.owner, registration?.secret])
+  }, [
+    orderPrice,
+    registration?.duration,
+    registration.names,
+    registration?.owner,
+    registration?.secret
+  ])
 
   const { config } = usePrepareContractWrite({
-    address: XENS_ADDRESS.get(toNetwork(chainId)),
+    address: XENS_ADDRESS.get(currentNetwork()),
     abi: XENS_ABI,
     functionName: 'register',
     args,
