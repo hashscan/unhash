@@ -403,6 +403,30 @@ export const UnhashLogo = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const Basket = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24">
+      <g fill="none">
+        <path d="M0 0h24v24H0V0z"></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M8 3L5.89 6.777M15 3l2.3 3.777M16 21a5 5 0 11.001-10.001A5 5 0 0116 21M16 14.25v3.5M17.75 16h-3.5"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M19.441 12.375l.703-3.246a1.94 1.94 0 00-1.896-2.352H4.94a1.942 1.942 0 00-1.896 2.352l1.471 6.792a1.937 1.937 0 001.896 1.529h4.804"
+        ></path>
+      </g>
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */
