@@ -16,6 +16,14 @@ export type GoalType =
   | 'LinkUnresolvedClick'
   | 'SetPrimaryENSClick'
   | 'UpdateProfileClick'
+  | 'OpenSetAvatarDialog'
+  | 'SaveAvatarClick'
+  | 'OpenSendNameDialog'
+  | 'SendNameClick'
+  | 'OpenRenewNameDialog'
+  | 'RenewNameClick'
+  | 'BuyBadgeView'
+  | 'BuyNameClick'
 
 /**
  * A proxy tracking method that abstracts the analytics provider

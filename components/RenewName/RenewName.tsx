@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styles from './RenewName.module.css'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
@@ -10,6 +10,7 @@ import { RenewYearSelect } from './RenewYearSelect'
 import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useRenewName } from 'lib/hooks/useRenewName'
 import { Dialog, DialogExternalProps } from 'components/ui/Dialog/Dialog'
+import { trackGoal } from 'lib/analytics'
 
 export interface RenewNameProps extends DialogExternalProps {
   params: { domain: UserDomain }
@@ -22,6 +23,7 @@ export const RenewName = ({
   ...rest
 }: RenewNameProps) => {
   const notify = useNotifier()
+  useEffect(() => trackGoal('OpenRenewNameDialog'), [])
 
   const [years, setYears] = useState(1)
 
@@ -42,7 +44,9 @@ export const RenewName = ({
   })
 
   const renewName = () => {
-    // TODO: track analytics event
+    if (sendTransaction) {
+      trackGoal('RenewNameClick')
+    }
     sendTransaction?.()
   }
 

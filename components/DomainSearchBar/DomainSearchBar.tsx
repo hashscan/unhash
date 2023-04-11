@@ -152,7 +152,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
           {status === SearchStatus.Loading && <>Please wait...</>}
           {status === SearchStatus.Idle && <>Please wait...</>}
         </StatusBadge>
-        {listing && <BuyBadge listing={listing} />}
+        {listing && <BuyBadge name={normalized} listing={listing} />}
       </div>
 
       {!!names.length && (

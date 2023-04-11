@@ -16,6 +16,7 @@ import { Gallery } from './Gallery'
 import { Preview } from './Preview'
 import styles from './SetAvatarDialog.module.css'
 import useEvent from 'react-use-event-hook'
+import { trackGoal } from 'lib/analytics'
 
 export interface SetAvatarDialogProps extends DialogExternalProps {
   params: {}
@@ -28,6 +29,7 @@ export const SetAvatarDialog = ({
 }: SetAvatarDialogProps) => {
   const notify = useNotifier()
   const { address } = useAccount()
+  useEffect(() => trackGoal('OpenSetAvatarDialog'), [])
 
   const [user, setUser] = useState<UserInfo>()
   const domain: Domain = user?.primaryName?.name!
@@ -79,7 +81,12 @@ export const SetAvatarDialog = ({
               status={transactionStatus}
               size={'medium'}
               disabled={!buttonEnabled}
-              onClick={() => sendSetAvatar?.()}
+              onClick={() => {
+                if (sendSetAvatar) {
+                  trackGoal('SaveAvatarClick')
+                }
+                sendSetAvatar?.()
+              }}
             >
               Set Avatar
             </TransactionButton>

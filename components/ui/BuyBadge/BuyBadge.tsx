@@ -1,15 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ComponentProps } from 'react'
+import React, { ComponentProps, useCallback, useEffect } from 'react'
 import styles from './BuyBadge.module.css'
 import clsx from 'clsx'
 import { DomainListing } from 'lib/types'
 import { formatUSDPrice } from 'lib/format'
+import { trackGoal } from 'lib/analytics'
 
 export interface BuyBadgeProps extends ComponentProps<'a'> {
+  name: string
   listing: DomainListing
 }
 
-export const BuyBadge = ({ listing, className, ...rest }: BuyBadgeProps) => {
+export const BuyBadge = ({ name, listing, className, ...rest }: BuyBadgeProps) => {
+  useEffect(() => {
+    trackGoal('BuyBadgeView', { props: { name: name, source: listing.source.name } })
+  }, [name, listing])
+
+  const onClick = useCallback(() => {
+    trackGoal('BuyNameClick', { props: { name: name, source: listing.source.name } })
+  }, [name, listing])
+
   return (
     <a
       {...rest}
@@ -17,6 +27,7 @@ export const BuyBadge = ({ listing, className, ...rest }: BuyBadgeProps) => {
       href={listing.source.url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={onClick}
     >
       <img
         className={styles.logo}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './SendName.module.css'
 import { Button } from 'components/ui/Button/Button'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
@@ -10,6 +10,7 @@ import { useDomainInfo } from 'lib/hooks/useDomainInfo'
 import { SendNameSuccess } from './SendNameSuccess'
 import { DialogExternalProps } from 'components/ui/Dialog/Dialog'
 import { Dialog } from 'components/ui/Dialog/Dialog'
+import { trackGoal } from 'lib/analytics'
 
 export interface SendNameProps extends DialogExternalProps {
   params: { domain: Domain }
@@ -23,6 +24,7 @@ export const SendName = ({
 }: SendNameProps) => {
   const notify = useNotifier()
   const [address, setAddress] = useState<string>()
+  useEffect(() => trackGoal('OpenSendNameDialog'), [])
 
   // fetch name's token id
   const domainInfo = useDomainInfo(domain)
@@ -40,7 +42,9 @@ export const SendName = ({
   })
   const sendName = () => {
     // TODO: show input error if address is not set
-    // TODO: track analytics event
+    if (sendTransaction) {
+      trackGoal('SendNameClick')
+    }
     sendTransaction?.()
   }
 
