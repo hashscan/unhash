@@ -71,7 +71,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="twitter:site" content="@hashscanxyz" />
         <meta name="twitter:title" content={metaTitle} />
         <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:image" content="/og-preview.png" />
+        <meta name="twitter:image" content="/og-preview.jpg" />
 
         <AnalyticsScript key="analytics" />
       </Head>
