@@ -13,8 +13,8 @@ import { currentNetwork, toChain } from './network'
 const { chains, provider } = configureChains(
   [toChain(currentNetwork())],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!, priority: 0 }),
-    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! })
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY!, priority: 0 }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
   ]
 )
 
