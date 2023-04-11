@@ -123,3 +123,59 @@
     max-width: unset;
   }
 }
+
+/**
+  * Move to separate BulkStatus.module.css component
+  */
+.bulkStatus {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 32px;
+  user-select: none;
+}
+
+.statusWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 400;
+}
+
+.enableBulk {
+  background: var(--color-slate-8);
+
+  border: 1px solid var(--color-slate-1);
+  color: var(--color-slate-1);
+
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  padding: 5px;
+  transition: all 0.2s ease;
+}
+
+.enableBulk > svg {
+  transition: all 0.2s ease;
+}
+
+.bulkStatus_enabled .enableBulk {
+  border-color: var(--color-slate-4);
+}
+
+.bulkStatus_enabled .statusWithIcon {
+  font-weight: 300;
+}
+
+.bulkStatus_enabled .enableBulk > svg {
+  transform: rotate(45deg) scale(1.1);
+  color: var(--color-slate-4);
+}
+
+.label {
+  color: var(--color-slate-3);
+}

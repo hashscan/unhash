@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
 
@@ -17,6 +17,68 @@ import { trackGoal } from 'lib/analytics'
 import domainCardImg from '../styles/assets/explainer-domains.png'
 import walletCardImg from '../styles/assets/explainer-wallet.png'
 import profileCardImg from '../styles/assets/explainer-profile.png'
+
+import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
+
+import clsx from 'clsx'
+import { PlusSign } from 'components/icons'
+
+/**
+ * Extract separate component
+ */
+const BulkStatus = () => {
+  const [bulkEnabled, setBulkEnabled] = useState(false)
+  const [domainsSelected, setDomainsSelected] = useState<number>(0)
+
+  const domains = ['mlfrg.eth', 'lucian.eth', 'smaragda.eth', 'unstoppable.eth']
+
+  const domainsToDisplay = domains.slice(0, domainsSelected).reverse().slice(0, 3)
+  const remaining = Math.max(0, domainsSelected - domainsToDisplay.length)
+
+  const handleClick = () => {
+    if (!bulkEnabled) {
+      setBulkEnabled(true)
+    } else {
+      if (domainsSelected >= 4) {
+        setBulkEnabled(false)
+        setDomainsSelected(0)
+      } else {
+        setDomainsSelected(domainsSelected + 1)
+      }
+    }
+  }
+
+  return (
+    <div className={clsx(styles.bulkStatus, { [styles.bulkStatus_enabled]: bulkEnabled })}>
+      <div className={styles.statusWithIcon} onClick={handleClick}>
+        <div className={styles.enableBulk}>
+          <PlusSign />
+        </div>
+
+        <SlideFlap flipKey={`${bulkEnabled}-${domainsSelected}`} slotClassName={styles.second}>
+          {/* Bulk mode disabled */}
+          {!bulkEnabled && <>Bulk Register</>}
+
+          {/* Cart is empty */}
+          {bulkEnabled && domainsSelected === 0 && (
+            <span className={styles.label}>Use search to add names to your order</span>
+          )}
+
+          {/* Cart has names */}
+          {bulkEnabled && domainsSelected > 0 && (
+            <>
+              <span className={styles.label}>Selected </span>
+              {domainsToDisplay.join(', ')}
+              {remaining > 0 && <span className={styles.label}> and {remaining} more</span>}
+            </>
+          )}
+        </SlideFlap>
+      </div>
+
+      {/* <div className={styles.register}>Register</div> */}
+    </div>
+  )
+}
 
 const Search: PageWithLayout = () => {
   const searchBarRef = useRef<SearchBarHandle>(null)
@@ -49,6 +111,7 @@ const Search: PageWithLayout = () => {
 
               <div className={styles.searchBar}>
                 <DomainSearchBar ref={searchBarRef} />
+                <BulkStatus />
               </div>
             </div>
 

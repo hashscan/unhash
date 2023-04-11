@@ -384,6 +384,19 @@ export const CameraReplace = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const PlusSign = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={13}>
+    <svg viewBox="0 0 13 13" fill="none">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8 0.928571C8 0.415736 7.58426 0 7.07143 0H5.92857C5.41574 0 5 0.415735 5 0.928571V4.07143C5 4.58426 4.58426 5 4.07143 5H0.928571C0.415736 5 0 5.41574 0 5.92857V7.07143C0 7.58426 0.415735 8 0.928571 8H4.07143C4.58426 8 5 8.41574 5 8.92857V12.0714C5 12.5843 5.41574 13 5.92857 13H7.07143C7.58426 13 8 12.5843 8 12.0714V8.92857C8 8.41574 8.41574 8 8.92857 8H12.0714C12.5843 8 13 7.58426 13 7.07143V5.92857C13 5.41574 12.5843 5 12.0714 5H8.92857C8.41574 5 8 4.58426 8 4.07143V0.928571Z"
+        fill="currentColor"
+      />
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */
