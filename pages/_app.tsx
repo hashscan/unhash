@@ -62,7 +62,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />
-        <meta property="og:image" content="/og-preview.png" />
+        <meta property="og:image" content="/og-preview.jpg" />
 
         {/* `summary_large_image` is an extended card preview, if this isn't set
             twitter will display it in as a regular small link preview
