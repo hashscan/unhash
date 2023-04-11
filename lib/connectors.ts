@@ -1,10 +1,10 @@
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import {
-  argentWallet,
   metaMaskWallet,
+  zerionWallet,
   rainbowWallet,
-  walletConnectWallet,
-  zerionWallet
+  trustWallet,
+  walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { configureChains } from 'wagmi'
@@ -23,9 +23,9 @@ const connectors = connectorsForWallets([
     groupName: 'Recommended',
     wallets: [
       metaMaskWallet({ chains, shimDisconnect: true }),
-      argentWallet({ chains }),
-      rainbowWallet({ chains }),
       zerionWallet({ chains }),
+      rainbowWallet({ chains }),
+      trustWallet({ chains }),
       walletConnectWallet({ chains })
     ]
   }
