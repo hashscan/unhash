@@ -107,3 +107,45 @@
 
   transition: opacity var(--ease-200) 0.05s, transform var(--ease-250);
 }
+
+.badges > .startBulk {
+  height: 32px;
+  padding: 0 4px;
+  border-radius: var(--radii-md);
+}
+
+button.startBulk > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badges > .bulkRegistration {
+  height: 32px;
+  border-radius: var(--radii-md);
+  margin: 0 10px;
+  min-width: 154px;
+}
+
+.space {
+  flex-grow: 1;
+}
+
+.namesCount {
+  display: inline-block;
+  font-size: 12.47px;
+  font-family: var(--font-mono);
+  min-width: 18px;
+
+  padding: 0 4px;
+  margin-right: 4px;
+
+  border-radius: 99px;
+
+  background-color: var(--color-slate-8);
+  color: var(--color-slate-1);
+}
+
+.badges > .bulkRegistration:disabled .namesCount {
+  color: var(--color-slate-5);
+}

@@ -1,11 +1,4 @@
-import {
-  forwardRef,
-  useState,
-  useImperativeHandle,
-  useCallback,
-  FormEventHandler,
-  useEffect
-} from 'react'
+import { forwardRef, useState, useImperativeHandle, useCallback, FormEventHandler } from 'react'
 import clsx from 'clsx'
 
 import styles from './DomainSearchBar.module.css'
@@ -18,6 +11,8 @@ import { trackGoal } from 'lib/analytics'
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
 import { BuyBadge } from 'components/ui/BuyBadge/BuyBadge'
+import { Button } from 'components/ui/Button/Button'
+import { Basket } from 'components/icons'
 import { notNull } from 'lib/utils'
 
 // allow parent components to imperatively update search string using ref
@@ -30,12 +25,6 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   ref
 ) {
   const [isBulkEnabled, set] = useState(false)
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    set(params.has('bulk') || params.has('bulk_registration') || params.has('batch'))
-  }, [])
-
   const [searchQuery, setSearchQueryRaw] = useState('')
   const [names, setNames] = useState<string[]>([])
   const [, setIsFocused] = useState(false)
@@ -53,7 +42,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const navigate = useRouterNavigate()
 
   const registerDomain = useCallback(() => {
-    if (!names.length && (isNavigating || status !== SearchStatus.Available)) return
+    if (isNavigating || (!names.length && status !== SearchStatus.Available)) return
 
     const finalNamesForRegistration = names.concat(normalized).filter(notNull)
 
@@ -70,12 +59,23 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
     })
   }, [isNavigating, names, navigate, normalized, status])
 
+  const addCurrentValueToCart = useCallback(() => {
+    if (isNavigating || status !== SearchStatus.Available) return
+
+    setNames((names) => [...names, normalized])
+    setSearchQuery('')
+  }, [isNavigating, normalized, setSearchQuery, status])
+
   const handleSubmit: FormEventHandler = useCallback(
     (e) => {
       e.preventDefault()
-      registerDomain()
+      if (isBulkEnabled) {
+        addCurrentValueToCart()
+      } else {
+        registerDomain()
+      }
     },
-    [registerDomain]
+    [addCurrentValueToCart, isBulkEnabled, registerDomain]
   )
 
   useImperativeHandle(ref, () => ({
@@ -113,13 +113,14 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
           <SearchButton
             status={status}
             isBulkEnabled={isBulkEnabled}
-            isBucketEmpty={!names.length}
-            onBulk={() => {
-              setNames((names) => [...names, normalized])
-              setSearchQuery('')
-            }}
             isNavigating={isNavigating}
-            onClick={registerDomain}
+            onClick={() => {
+              if (isBulkEnabled) {
+                addCurrentValueToCart()
+              } else {
+                registerDomain()
+              }
+            }}
           />
         </div>
       </div>
@@ -152,14 +153,42 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
           {status === SearchStatus.Loading && <>Please wait...</>}
           {status === SearchStatus.Idle && <>Please wait...</>}
         </StatusBadge>
-        {listing && <BuyBadge name={normalized} listing={listing} />}
+
+        {!isBulkEnabled && status === SearchStatus.Available && (
+          <Button
+            className={styles.startBulk}
+            size={'small'}
+            title="enable bulk registration"
+            onClick={() => {
+              set(true)
+              addCurrentValueToCart()
+            }}
+          >
+            <Basket />
+          </Button>
+        )}
+
+        {isBulkEnabled && (
+          <>
+            <div className={styles.space}></div>
+            <Button
+              className={styles.bulkRegistration}
+              disabled={status !== SearchStatus.Available && status !== SearchStatus.Idle}
+              size={'small'}
+              onClick={() => {
+                registerDomain()
+              }}
+            >
+              <span className={styles.namesCount}>
+                {names.length + (status === SearchStatus.Available && normalized !== '' ? 1 : 0)}
+              </span>{' '}
+              Register all&nbsp;&nbsp;→
+            </Button>
+          </>
+        )}
       </div>
 
-      {!!names.length && (
-        <div>
-          selected for registration <strong>{names.join(', ')}</strong>
-        </div>
-      )}
+      <div>{listing && <BuyBadge name={normalized} listing={listing} />}</div>
     </>
   )
 })
