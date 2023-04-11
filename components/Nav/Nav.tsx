@@ -140,15 +140,9 @@ export const Nav = () => {
 }
 
 const Avatar = ({ ensName }: { ensName: Domain }) => {
-  const {
-    data: avatar,
-    isLoading: isQueryLoading,
-    isRefetching,
-    isError,
-    refetch
-  } = useEnsAvatar(ensName)
+  const { data: avatar, isError } = useEnsAvatar(ensName)
 
-  return avatar ? (
+  return avatar && !isError ? (
     <img className={styles.accountAvatarImg} alt={`ENS Avatar for ${ensName}`} src={avatar} />
   ) : (
     <Profile color="var(--color-slate-5)" />
