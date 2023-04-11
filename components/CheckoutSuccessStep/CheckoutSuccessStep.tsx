@@ -4,7 +4,6 @@ import { Button } from 'components/ui/Button/Button'
 
 import styles from './CheckoutSuccessStep.module.css'
 
-import { NextSteps } from './NextSteps'
 import { Registration } from 'lib/types'
 import Link from 'next/link'
 import { useEtherscanURL } from 'lib/hooks/useEtherscanURL'
