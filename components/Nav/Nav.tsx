@@ -14,6 +14,8 @@ import { Button } from 'components/ui/Button/Button'
 import Link from 'next/link'
 import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
 
+import { UnhashLogo } from 'components/icons'
+
 interface ChainProps {
   chainId?: number
   onClick?: () => void
@@ -56,8 +58,8 @@ export const Nav = () => {
     <nav className={styles.nav} ref={ref}>
       <div className={styles.sub}>
         <Link href="/" className={styles.brand}>
-          <div className={styles.logo} />
-          <div className={styles.name}>xens.app</div>
+          <UnhashLogo className={styles.logo} />
+          <div className={styles.name}>unhash</div>
         </Link>
 
         <Links className={styles.links} />
