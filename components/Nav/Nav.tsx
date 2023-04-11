@@ -59,7 +59,7 @@ export const Nav = () => {
       <div className={styles.sub}>
         <Link href="/" className={styles.brand}>
           <UnhashLogo className={styles.logo} />
-          <div className={styles.name}>unhash</div>
+          <div className={styles.name}>Unhash</div>
         </Link>
 
         <Links className={styles.links} />

@@ -3,7 +3,7 @@ import styles from './Footer.module.css'
 export const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <div className={styles.appName}>xens.app</div>
+      <div className={styles.appName}>unhash.com</div>
 
       {/*
         What really this part of the footer should contain? Links!
@@ -16,7 +16,7 @@ export const Footer = () => {
         (they appear in Google Trends as well)
       */}
       <div className={styles.links}>
-        we run on top of <a href="https://docs.ens.domains/">Ethereum Name Service↗</a>
+        Built on <a href="https://docs.ens.domains/">Ethereum Name Service ↗</a>
       </div>
 
       {/* Other ideas: gas price, current block, number of .ETH registered in 24h... */}

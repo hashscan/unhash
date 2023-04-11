@@ -17,13 +17,15 @@ import { trackGoal } from 'lib/analytics'
 import domainCardImg from '../styles/assets/explainer-domains.png'
 import walletCardImg from '../styles/assets/explainer-wallet.png'
 import profileCardImg from '../styles/assets/explainer-profile.png'
+import { getDomainName } from 'lib/utils'
 
 const Search: PageWithLayout = () => {
   const searchBarRef = useRef<SearchBarHandle>(null)
 
   const handleSuggestionSelected = useCallback((suggestion: Suggestion) => {
     trackGoal('SuggestionClick', { props: { domain: suggestion.domain } })
-    searchBarRef.current?.setSearch(suggestion.domain)
+    const name = getDomainName(suggestion.domain)
+    searchBarRef.current?.setSearch(name)
   }, [])
 
   return (
@@ -34,15 +36,15 @@ const Search: PageWithLayout = () => {
         <div className={styles.heroSection}>
           <div className={styles.heroLayout}>
             <div className={styles.hero}>
-              <span className={styles.versionLabel}>Pre-Beta</span>
+              <span className={styles.versionLabel}>Public beta</span>
 
               <h1 className={styles.heroTitle}>
-                <WrapBalancer>Register and configure .eth domains</WrapBalancer>
+                <WrapBalancer>Buy and manage .eth names</WrapBalancer>
               </h1>
 
               <h2 className={styles.heroSubtitle}>
                 <WrapBalancer>
-                  A no-pain way of buying an ENS domain, linking it to your wallet and setting up a
+                  A no-pain way to register an ENS name, link it to your wallet and set up a
                   public profile.
                 </WrapBalancer>
               </h2>
