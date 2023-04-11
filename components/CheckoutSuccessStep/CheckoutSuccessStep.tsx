@@ -53,8 +53,6 @@ export const CheckoutSuccessStep = (props: CheckoutSuccessStepProps) => {
           </div>
         </div>
       </div>
-
-      <NextSteps domain={domain!} />
     </div>
   )
 }
