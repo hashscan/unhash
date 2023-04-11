@@ -34,9 +34,9 @@ const rainbowkitTheme: Theme = {
   fonts: { body: 'var(--font-ui)' }
 }
 
-const publicURL = 'https://xens.app'
+const publicURL = 'https://xens.app' // TODO: replace with unhash.com
 
-const metaTitle = 'Get .ETH Domain For Your Ethereum Address'
+const metaTitle = 'Unhash: register and manage ENS names'
 
 const metaDescription =
   'Simple tool for buying Ethereum Name Service domains. ' +
