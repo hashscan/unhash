@@ -61,8 +61,3 @@ export const UNHASH_ABI = [
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24
 
 export const COMMIT_WAIT_MS = 60 * 1000
-
-// Estimated gas limit for transactions. Should only
-// be used for UI purposes, not for actual gas limit calculations.
-export const COMMIT_GAS_LIMIT = 46_267
-export const REGISTER_AVERAGE_GAS = 259_000 // on average based on quick look at Etherscan

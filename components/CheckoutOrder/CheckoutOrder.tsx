@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { formatNetworkFee, formatUSDPrice } from 'lib/format'
 import { pluralize } from 'lib/pluralize'
-import { COMMIT_GAS_LIMIT, REGISTER_AVERAGE_GAS, YEAR_IN_SECONDS } from 'lib/constants'
+import { YEAR_IN_SECONDS } from 'lib/constants'
 import { useOrderPrice } from 'lib/hooks/useOrderPrice'
 import { useTxPrice } from 'lib/hooks/useTxPrice'
 import { RegistrationOrder } from 'lib/types'
@@ -10,6 +10,7 @@ import styles from './CheckoutOrder.module.css'
 import { OrderItem } from './OrderItem'
 import clsx from 'clsx'
 import { CommitButton } from './CommitButton'
+import { COMMIT_GAS_AVERAGE, registerGasAverage } from 'lib/ensUtils'
 
 interface CheckoutOrderProps {
   order: RegistrationOrder
@@ -24,7 +25,7 @@ export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
   const orderPrice = useOrderPrice(names, durationInSeconds)
 
   // fixed network fees for estimation
-  const networkFeesGas = COMMIT_GAS_LIMIT + REGISTER_AVERAGE_GAS
+  const networkFeesGas = COMMIT_GAS_AVERAGE + registerGasAverage(names.length)
   const networkFees = useTxPrice(BigNumber.from(networkFeesGas))
 
   const totalPrice = useMemo(() => {
