@@ -38,7 +38,13 @@ export const BuyBadge = ({ name, listing, className, ...rest }: BuyBadgeProps) =
         <div className={styles.subtitle}>{formatUSDPrice(listing.priceUsd, false)}</div>
       </div>
 
-      <Button as={'button'} size="regular" variant="primary" onClick={onClick}>
+      <Button
+        className={styles.button}
+        as={'button'}
+        size="regular"
+        variant="ghost"
+        onClick={onClick}
+      >
         Buy now&nbsp;&nbsp;→
       </Button>
     </div>

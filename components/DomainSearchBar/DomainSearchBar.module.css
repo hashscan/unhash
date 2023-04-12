@@ -151,5 +151,6 @@ button.startBulk > div {
 }
 
 .badgeContainer {
-  margin-top: 16px;
+  min-height: 72px;
+  margin-top: 32px;
 }
