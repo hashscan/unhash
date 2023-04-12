@@ -32,10 +32,10 @@ export const SearchButton = (props: SearchButtonProps) => {
 
       <button
         onClick={onClick as MouseEventHandler<HTMLButtonElement> | undefined}
-        className={clsx(styles.button)}
+        className={clsx(styles.button, isBulkEnabled && styles.shrinkSize)}
         disabled={isButtonDisabled}
       >
-        {isBulkEnabled ? <>Add to cart</> : <>Register&nbsp;&nbsp;→</>}
+        {isBulkEnabled ? <>+&nbsp;&nbsp;Add to Cart</> : <>Register&nbsp;&nbsp;→</>}
       </button>
     </div>
   )

@@ -124,7 +124,7 @@ button.startBulk > div {
   height: 32px;
   border-radius: var(--radii-md);
   margin: 0 10px;
-  min-width: 154px;
+  min-width: 160px;
 }
 
 .space {
