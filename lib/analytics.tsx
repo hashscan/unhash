@@ -22,7 +22,7 @@ export type GoalType =
   | 'SendNameClick'
   | 'OpenRenewNameDialog'
   | 'RenewNameClick'
-  | 'BuyBadgeView'
+  | 'BuyCardView'
   | 'BuyNameClick'
   | 'BulkRegistrationClick'
 

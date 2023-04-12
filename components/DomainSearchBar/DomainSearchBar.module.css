@@ -162,7 +162,7 @@ button.startBulk > div {
   color: var(--color-slate-5);
 }
 
-.badgeContainer {
+.buyCardContainer {
   min-height: 72px;
   margin-top: 32px;
 }

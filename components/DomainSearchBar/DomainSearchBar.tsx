@@ -17,7 +17,7 @@ import { trackGoal } from 'lib/analytics'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
-import { BuyBadge } from 'components/ui/BuyBadge/BuyBadge'
+import { BuyCard } from 'components/ui/BuyCard/BuyCard'
 import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
 
@@ -192,8 +192,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         )}
       </div>
 
-      <div className={styles.badgeContainer}>
-        {listing && <BuyBadge name={normalized} listing={listing} />}
+      <div className={styles.buyCardContainer}>
+        {listing && <BuyCard name={normalized} listing={listing} />}
       </div>
     </>
   )
