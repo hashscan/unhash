@@ -94,6 +94,12 @@
   margin-top: 10px;
 }
 
+@media (max-width: 768px) {
+  .badges {
+    max-width: 640px;
+  }
+}
+
 .availability {
   will-change: transform;
   transform: translateY(-16px);
@@ -125,6 +131,12 @@ button.startBulk > div {
   border-radius: var(--radii-md);
   margin: 0 10px;
   min-width: 160px;
+}
+
+@media (max-width: 768px) {
+  .badges > .bulkRegistration {
+    margin: 0;
+  }
 }
 
 .space {
