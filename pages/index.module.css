@@ -18,7 +18,7 @@
 
 .hero {
   max-width: 640px;
-  padding: 96px 0 0 0;
+  padding-top: 72px;
   flex: 1 1;
 }
 
@@ -102,7 +102,7 @@
   background: linear-gradient(to bottom, #ffffff00 70%, var(--color-slate-7) 100%);
 }
 
-.explainerImgFade > img {
+.explainerImgFade>img {
   width: 100%;
   height: auto;
 }
