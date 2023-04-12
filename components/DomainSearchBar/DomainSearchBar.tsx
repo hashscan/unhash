@@ -1,4 +1,11 @@
-import { forwardRef, useState, useImperativeHandle, useCallback, FormEventHandler } from 'react'
+import {
+  forwardRef,
+  useState,
+  useImperativeHandle,
+  useCallback,
+  FormEventHandler,
+  useRef
+} from 'react'
 import clsx from 'clsx'
 
 import styles from './DomainSearchBar.module.css'
@@ -13,7 +20,6 @@ import { SearchButton } from './SearchButton'
 import { BuyBadge } from 'components/ui/BuyBadge/BuyBadge'
 import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
-import { notNull } from 'lib/utils'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -27,8 +33,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const [isBulkEnabled, set] = useState(false)
   const [searchQuery, setSearchQueryRaw] = useState('')
   const [names, setNames] = useState<string[]>([])
-  const [, setIsFocused] = useState(false)
   const [isNavigating, setIsNavigating] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const setSearchQuery = useCallback((val: string) => {
     setSearchQueryRaw(normalizeDotETH(val))
@@ -44,26 +50,27 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const registerDomain = useCallback(() => {
     if (isNavigating || (!names.length && status !== SearchStatus.Available)) return
 
-    const finalNamesForRegistration = names.concat(normalized).filter(notNull)
+    const namesForRegistration = isBulkEnabled ? names : [normalized]
 
-    trackGoal('SearchRegisterClick', { props: { names: finalNamesForRegistration.join(',') } })
+    trackGoal('SearchRegisterClick', { props: { names: namesForRegistration.join(',') } })
     setIsNavigating(true)
 
     const params = new URLSearchParams(
-      finalNamesForRegistration.map((name) => ['names', name])
+      namesForRegistration.map((name) => ['names', name])
     ).toString()
 
     // hide params from browser url
     navigate(`/register?${params}`, '/register').finally(() => {
       setIsNavigating(false)
     })
-  }, [isNavigating, names, navigate, normalized, status])
+  }, [isBulkEnabled, isNavigating, names, navigate, normalized, status])
 
   const addCurrentValueToCart = useCallback(() => {
     if (isNavigating || status !== SearchStatus.Available) return
 
     setNames((names) => [...names, normalized])
     setSearchQuery('')
+    inputRef.current?.focus()
   }, [isNavigating, normalized, setSearchQuery, status])
 
   const handleSubmit: FormEventHandler = useCallback(
@@ -81,6 +88,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   useImperativeHandle(ref, () => ({
     setSearch(value: string) {
       setSearchQuery(value)
+      inputRef.current?.focus()
     }
   }))
 
@@ -91,13 +99,12 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
           <form onSubmit={handleSubmit}>
             <input
               autoFocus
+              ref={inputRef}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={styles.input}
               spellCheck="false"
               placeholder="Search for .eth domain..."
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
             ></input>
           </form>
 
@@ -158,7 +165,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
           <Button
             className={styles.startBulk}
             size={'small'}
-            title="enable bulk registration"
+            title="Add to cart to register multiple names at once"
             onClick={() => {
               set(true)
               addCurrentValueToCart()
@@ -173,16 +180,12 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
             <div className={styles.space}></div>
             <Button
               className={styles.bulkRegistration}
-              disabled={status !== SearchStatus.Available && status !== SearchStatus.Idle}
               size={'small'}
               onClick={() => {
                 registerDomain()
               }}
             >
-              <span className={styles.namesCount}>
-                {names.length + (status === SearchStatus.Available && normalized !== '' ? 1 : 0)}
-              </span>{' '}
-              Register all&nbsp;&nbsp;→
+              <span className={styles.namesCount}>{names.length}</span> Register all&nbsp;&nbsp;→
             </Button>
           </>
         )}
