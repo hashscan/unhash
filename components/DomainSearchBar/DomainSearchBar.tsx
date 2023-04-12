@@ -191,7 +191,9 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         )}
       </div>
 
-      <div>{listing && <BuyBadge name={normalized} listing={listing} />}</div>
+      <div className={styles.badgeContainer}>
+        {listing && <BuyBadge name={normalized} listing={listing} />}
+      </div>
     </>
   )
 })
