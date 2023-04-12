@@ -36,6 +36,18 @@
   pointer-events: none;
 }
 
+.button:hover {
+  background-color: var(--color-slate-2);
+}
+
+.button:active {
+  background-color: var(--color-slate-3);
+}
+
+.button:focus-visible {
+  outline: var(--color-highlight-green) auto 1px;
+}
+
 .buttonStatus {
   color: var(--color-slate-5);
   font: var(--type-sm);

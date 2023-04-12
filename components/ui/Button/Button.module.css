@@ -34,6 +34,10 @@
   cursor: not-allowed;
 }
 
+.button:focus-visible {
+  outline: var(--color-highlight-green) auto 1px;
+}
+
 .loader {
   color: var(--color-slate-7);
   position: absolute;
