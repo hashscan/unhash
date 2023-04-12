@@ -5,14 +5,12 @@ import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransa
 import { useMakeCommitments } from './useMakeCommitments'
 import { useRegistration } from './useRegistration'
 
-// TODO: support saving Registration with multiple names to LocalStorage
-
 /**
  * Hook for sending multiple commits in a single transaction.
  * Works same as useSendCommit.
  * Note: make sure to use stable reference to 'names' to avoid extra renders
  */
-export const useSendCommits = ({
+export const useSendCommitBulk = ({
   names, // make sure to use stable reference to 'names' to avoid extra renders
   duration,
   owner
@@ -75,4 +73,4 @@ export const useSendCommits = ({
   }
 }
 
-export type useSendCommitsType = typeof useSendCommits
+export type useSendCommitBulkType = typeof useSendCommitBulk

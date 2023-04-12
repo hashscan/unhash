@@ -5,7 +5,7 @@ import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
 
-import type { useSendCommitsType } from './useSendCommits'
+import type { useSendCommitBulkType } from './useSendCommitBulk'
 import { currentNetwork } from 'lib/network'
 
 /**
@@ -16,7 +16,7 @@ import { currentNetwork } from 'lib/network'
  * Creates new Registration in LocalStorage when transaction is sent.
  * Note: Registration status will be updated to `committed` by WatchPendingRegistrations.
  */
-export const useSendCommit: useSendCommitsType = ({
+export const useSendCommit: useSendCommitBulkType = ({
   names,
   duration,
   owner,

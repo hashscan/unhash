@@ -8,8 +8,7 @@ import { useRegistration } from './useRegistration'
 import { currentNetwork } from 'lib/network'
 import { registerGasLimit } from 'lib/ensUtils'
 
-// TODO: rename
-export const useSendRegisters = () => {
+export const useSendRegisterBulk = () => {
   const { registration, setRegistering } = useRegistration()
   if (!registration) throw new Error('registration should exist')
 
@@ -75,4 +74,4 @@ export const useSendRegisters = () => {
   }
 }
 
-export type useSendRegistersType = typeof useSendRegisters
+export type useSendRegisterBulkType = typeof useSendRegisterBulk
