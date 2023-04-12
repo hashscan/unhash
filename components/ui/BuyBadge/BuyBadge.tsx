@@ -5,8 +5,9 @@ import clsx from 'clsx'
 import { DomainListing } from 'lib/types'
 import { formatUSDPrice } from 'lib/format'
 import { trackGoal } from 'lib/analytics'
+import { Button } from '../Button/Button'
 
-export interface BuyBadgeProps extends ComponentProps<'a'> {
+export interface BuyBadgeProps extends ComponentProps<'div'> {
   name: string
   listing: DomainListing
 }
@@ -18,17 +19,11 @@ export const BuyBadge = ({ name, listing, className, ...rest }: BuyBadgeProps) =
 
   const onClick = useCallback(() => {
     trackGoal('BuyNameClick', { props: { name: name, source: listing.source.name } })
+    window.open(listing.source.url, '_blank')
   }, [name, listing])
 
   return (
-    <a
-      {...rest}
-      className={clsx(className, styles.badge)}
-      href={listing.source.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={onClick}
-    >
+    <div {...rest} className={clsx(className, styles.badge)}>
       <img
         className={styles.logo}
         width={18}
@@ -36,10 +31,16 @@ export const BuyBadge = ({ name, listing, className, ...rest }: BuyBadgeProps) =
         src={`https://api.reservoir.tools/redirect/sources/${listing.source.name}/logo/v2`}
         alt=""
       />
-      <span>
-        Buy now on <b>{listing.source.name}</b> for <b>{formatUSDPrice(listing.priceUsd, false)}</b>{' '}
-        ↗
-      </span>
-    </a>
+      <div className={styles.content}>
+        <div className={styles.title}>
+          <b>{name}</b> is for sale!
+        </div>
+        <div className={styles.subtitle}>{formatUSDPrice(listing.priceUsd, false)}</div>
+      </div>
+
+      <Button as={'button'} size="regular" variant="primary" onClick={onClick}>
+        Buy now&nbsp;&nbsp;→
+      </Button>
+    </div>
   )
 }
