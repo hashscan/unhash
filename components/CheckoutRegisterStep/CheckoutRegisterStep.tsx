@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import useChange from '@react-hook/change'
 
-import { useSendRegisters } from 'lib/hooks/useSendRegisters'
+import { useSendRegisterBulk } from 'lib/hooks/useSendRegisterBulk'
 import { useNotifier } from 'lib/hooks/useNotifier'
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
 
@@ -15,7 +15,7 @@ interface CheckoutRegisterStepProps {
 }
 
 export const CheckoutRegisterStep = ({ registration }: CheckoutRegisterStepProps) => {
-  const useSendRegisterHook = registration.names.length === 1 ? useSendRegister : useSendRegisters
+  const useSendRegisterHook = registration.names.length === 1 ? useSendRegister : useSendRegisterBulk
   const { write, status, error } = useSendRegisterHook()
 
   const onRegisterClick = useCallback(() => {

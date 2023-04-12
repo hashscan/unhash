@@ -12,7 +12,7 @@ import { useNotifier } from 'lib/hooks/useNotifier'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { trackGoal } from 'lib/analytics'
-import { useSendCommits } from 'lib/hooks/useSendCommits'
+import { useSendCommitBulk } from 'lib/hooks/useSendCommitBulk'
 import { useSendCommit } from 'lib/hooks/useSendCommit'
 
 interface CommitButtonProps {
@@ -22,7 +22,7 @@ interface CommitButtonProps {
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { names } = order
   const { address: sender } = useAccount()
-  const useCommitHook = names.length === 1 ? useSendCommit : useSendCommits
+  const useCommitHook = names.length === 1 ? useSendCommit : useSendCommitBulk
 
   // later should only be used for multiple names
   const { sendCommit, status, error } = useCommitHook({

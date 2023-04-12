@@ -10,10 +10,10 @@ import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useDomainPrice } from './useDomainPrice'
 import { useRegistration } from './useRegistration'
-import type { useSendRegistersType } from './useSendRegisters'
+import type { useSendRegisterBulkType } from './useSendRegisterBulk'
 import { registerGasLimit } from 'lib/ensUtils'
 
-export const useSendRegister: useSendRegistersType = () => {
+export const useSendRegister: useSendRegisterBulkType = () => {
   const { registration, setRegistering } = useRegistration()
 
   if (!registration) throw new Error('registration should exist')
