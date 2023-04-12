@@ -11,6 +11,7 @@ import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from
 import { useDomainPrice } from './useDomainPrice'
 import { useRegistration } from './useRegistration'
 import type { useSendRegistersType } from './useSendRegisters'
+import { registerGasLimit } from 'lib/ensUtils'
 
 export const useSendRegister: useSendRegistersType = () => {
   const { registration, setRegistering } = useRegistration()
@@ -22,11 +23,7 @@ export const useSendRegister: useSendRegistersType = () => {
   // https://docs.ens.domains/contract-api-reference/.eth-permanent-registrar/controller#register-name
   const price = useDomainPrice(registration.names[0], registration?.duration)?.wei
   const value = price ? BigNumber.from(price) : undefined
-
-  // Note 1: 280K gas is not enough to refund extra ETH sent to registerWithConfig
-  // Note 2: 280K gas may not be enough if registering for another account
-  // TODO: make sure fixed gas limit always works
-  const gasLimit = 500_000
+  const gasLimit = registerGasLimit(1)
 
   const { config } = usePrepareContractWrite({
     address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
