@@ -24,6 +24,7 @@ export type GoalType =
   | 'RenewNameClick'
   | 'BuyBadgeView'
   | 'BuyNameClick'
+  | 'BulkRegistrationClick'
 
 /**
  * A proxy tracking method that abstracts the analytics provider

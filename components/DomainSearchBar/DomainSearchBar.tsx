@@ -169,6 +169,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
             onClick={() => {
               set(true)
               addCurrentValueToCart()
+              trackGoal('BulkRegistrationClick')
             }}
           >
             <Basket />
