@@ -66,7 +66,7 @@ export const useSearch = (
           })
         } else {
           setResult({
-            status: isAvailable ? SearchStatus.Available : SearchStatus.NotAvailable,
+            status: isAvailable ? SearchStatus.Available : SearchStatus.Taken,
             listing: listing
           })
         }

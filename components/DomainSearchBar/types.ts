@@ -5,5 +5,5 @@ export enum SearchStatus {
   Error, // fetch error
   Duplicate, // already in order
   Available,
-  NotAvailable
+  Taken
 }

@@ -145,9 +145,9 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
               <b>{normalized}</b> is available!
             </>
           )}
-          {status === SearchStatus.NotAvailable && (
+          {status === SearchStatus.Taken && (
             <>
-              <b>{normalized}</b> is not available
+              <b>{normalized}</b> is taken
             </>
           )}
           {status === SearchStatus.Duplicate && (
