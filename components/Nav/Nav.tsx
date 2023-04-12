@@ -21,9 +21,17 @@ interface ChainProps {
   onClick?: () => void
 }
 
+const isChainSupported = (chainId: number) => {
+  try {
+    return toNetwork(chainId) === currentNetwork()
+  } catch {
+    return false
+  }
+}
+
 const Chain = ({ chainId, onClick }: ChainProps) => {
   const isTestnet = currentNetwork() === 'goerli'
-  const isUnsupported = chainId && toNetwork(chainId) !== currentNetwork()
+  const isUnsupported = chainId && !isChainSupported(chainId)
   if (!isTestnet && !isUnsupported) return null
 
   return (
