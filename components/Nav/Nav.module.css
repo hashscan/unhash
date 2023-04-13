@@ -31,10 +31,10 @@
   align-items: center;
   justify-content: flex-start;
 
-  padding: 3px 8px;
+  padding: 2px 8px 2px 5px;
   margin-right: 32px;
   background-color: var(--color-highlight-green);
-  border-radius: var(--radii-sm);
+  border-radius: var(--radii-md);
 
   text-decoration: none;
 }
