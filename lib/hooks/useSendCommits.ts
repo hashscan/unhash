@@ -1,4 +1,4 @@
-import { XENS_ABI, XENS_ADDRESS } from 'lib/constants'
+import { UNHASH_ABI, UNHASH_ADDRESS } from 'lib/constants'
 import { Domain, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
@@ -34,8 +34,8 @@ export const useSendCommits = ({
   })
 
   const { config } = usePrepareContractWrite({
-    address: XENS_ADDRESS.get(currentNetwork()),
-    abi: XENS_ABI,
+    address: UNHASH_ADDRESS.get(currentNetwork()),
+    abi: UNHASH_ABI,
     functionName: 'commit',
     enabled: Boolean(sender) && Boolean(owner) && Boolean(commitments),
     args: [commitments]

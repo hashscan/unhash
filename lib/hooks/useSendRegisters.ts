@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { BigNumber } from 'ethers'
-import { YEAR_IN_SECONDS, XENS_ADDRESS, XENS_ABI } from 'lib/constants'
+import { YEAR_IN_SECONDS, UNHASH_ADDRESS, UNHASH_ABI } from 'lib/constants'
 import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { useOrderPrice } from './useOrderPrice'
@@ -42,8 +42,8 @@ export const useSendRegisters = () => {
   ])
 
   const { config } = usePrepareContractWrite({
-    address: XENS_ADDRESS.get(currentNetwork()),
-    abi: XENS_ABI,
+    address: UNHASH_ADDRESS.get(currentNetwork()),
+    abi: UNHASH_ABI,
     functionName: 'register',
     args,
     enabled: Boolean(totalPrice) && Boolean(registration?.owner),
