@@ -34,8 +34,6 @@ const rainbowkitTheme: Theme = {
   fonts: { body: 'var(--font-ui)' }
 }
 
-const publicURL = 'https://xens.app' // TODO: replace with unhash.com
-
 const metaTitle = 'Unhash: register and manage ENS names'
 
 const metaDescription =
@@ -55,10 +53,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 
         <meta name="description" key="meta-description" content={metaDescription} />
 
-        {/* Disables indexing on goerli.xens.app to avoid SEO penalties */}
-        {currentNetwork() === 'goerli' && <meta name="robots" content="noindex,nofollow" />}
+        {/* Disables indexing on non-primary production deployments to avoid SEO penalties */}
+        {!process.env.NEXT_PUBLIC_PRODUCTION_URL && (
+          <meta name="robots" content="noindex,nofollow" />
+        )}
 
-        <meta property="og:url" content={publicURL} />
+        <meta property="og:url" content={process.env.NEXT_PUBLIC_PRODUCTION_URL} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />
