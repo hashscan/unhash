@@ -46,7 +46,8 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
 
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
     try {
-      sendCommit?.()
+      if (!sendCommit) throw Error('sendCommit is not a function')
+      sendCommit()
     } catch (error) {
       const msg = error instanceof Error ? error.toString() : 'Commit error'
       notify(msg, { status: 'error' })

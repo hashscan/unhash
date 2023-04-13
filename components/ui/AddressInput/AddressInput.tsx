@@ -4,12 +4,19 @@ import { isValidAddress } from 'lib/utils'
 import useEvent from 'react-use-event-hook'
 
 export interface AddressInputProps extends InputProps {
+  defaultValue?: string
   onAddressChange?: (address: string | null) => void // empty string - not set, null - invalid input
 }
 
 // Input with built-in address validation
-export const AddressInput = ({ onAddressChange, onChange, onBlur, ...rest }: AddressInputProps) => {
-  const [address, setAddress] = useState<string | null>('') // empty string - not set, null - invalid input
+export const AddressInput = ({
+  onAddressChange,
+  onChange,
+  onBlur,
+  defaultValue,
+  ...rest
+}: AddressInputProps) => {
+  const [address, setAddress] = useState<string | null>(() => defaultValue ?? '') // empty string - not set, null - invalid input
   const [showError, setShowError] = useState<boolean>(false)
 
   // just to ensure that we don't do extra re-renders
@@ -26,8 +33,9 @@ export const AddressInput = ({ onAddressChange, onChange, onBlur, ...rest }: Add
       onChange={(e) => {
         setShowError(false)
         const value = e.target.value
-        setAddress(value === '' || isValidAddress(value) ? value : null)
-        onChangeStable(address)
+        const newAddress = value === '' || isValidAddress(value) ? value : null
+        setAddress(newAddress)
+        onChangeStable(newAddress)
         onChange?.(e)
       }}
       {...rest}

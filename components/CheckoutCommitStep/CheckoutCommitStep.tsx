@@ -57,8 +57,9 @@ export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepPro
           className={styles.ownerInput}
           placeholder="0xd07d...54aB"
           autoComplete="off"
+          defaultValue={order.ownerAddress}
           onAddressChange={(address) => {
-            const newOwner = address === null ? undefined : address // todo: make it less ugly
+            const newOwner = address === null || address === '' ? undefined : address // todo: make it less ugly
             updateOrder((order) => ({ ...order, ownerAddress: newOwner }))
           }}
         />
