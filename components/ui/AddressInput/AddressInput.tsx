@@ -3,19 +3,19 @@ import { Input, InputProps } from '../Input/Input'
 import { isValidAddress } from 'lib/utils'
 import useEvent from 'react-use-event-hook'
 
-export interface AddressInputProps extends InputProps {
-  defaultValue?: string
-  onAddressChange?: (address: string | null) => void // undefined - not set, null - invalid input
-}
+const inputValueToAddress = (value: string) => {
+  if (value === '') return undefined
 
-const isValidAddressFromInput = (kindOfAddress: string) => {
-  if (kindOfAddress === '') return undefined
-
-  if (isValidAddress(kindOfAddress)) {
-    return kindOfAddress
+  if (isValidAddress(value)) {
+    return value
   }
 
   return null
+}
+
+export interface AddressInputProps extends InputProps {
+  defaultValue?: string
+  onAddressChange?: (address: string | undefined | null) => void // undefined - not set, null - invalid input
 }
 
 // Input with built-in address validation
@@ -37,14 +37,14 @@ export const AddressInput = ({
       {...rest}
       error={showError ? 'Invalid address' : undefined}
       onBlur={(e) => {
-        setShowError(isValidAddressFromInput(value) === null)
+        setShowError(inputValueToAddress(value) === null)
         onBlur?.(e)
       }}
       value={value ?? ''}
       onChange={(e) => {
         setShowError(false)
         setValue(e.target.value)
-        onChangeStable(isValidAddressFromInput(e.target.value))
+        onChangeStable(inputValueToAddress(e.target.value))
       }}
     />
   )
