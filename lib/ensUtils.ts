@@ -75,3 +75,19 @@ export function makeCommitments(names: Domain[], owner: string): BulkRegistratio
     commitments
   }
 }
+
+/**
+ * Estimated gas limit for single commit transaction.
+ * Should only be used for UI purposes, not for actual gas limit calculations.
+ */
+export const COMMIT_GAS_AVERAGE = 46_267
+
+/** Returns estimated average gas for single bulk register transactions. */
+export function registerGasAverage(count: number) {
+  return count === 1 ? 250_000 : 200_000 + count * 100_000
+}
+
+/** Returns gas limit for single and bulk register transactions. */
+export function registerGasLimit(count: number) {
+  return count === 1 ? 320_000 : (200_000 + count * 140_000) * 1.1
+}

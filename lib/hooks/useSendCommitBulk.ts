@@ -9,7 +9,7 @@ import { useRegistration } from './useRegistration'
  * Hook for sending multiple commits in a single transaction.
  * Works same as useSendCommit.
  */
-export const useSendCommits = ({
+export const useSendCommitBulk = ({
   names, // make sure to use stable reference to 'names' to avoid extra renders
   duration,
   owner
@@ -72,4 +72,4 @@ export const useSendCommits = ({
   }
 }
 
-export type useSendCommitsType = typeof useSendCommits
+export type useSendCommitBulkType = typeof useSendCommitBulk

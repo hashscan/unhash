@@ -16,7 +16,6 @@ import { chains, provider, connectors } from 'lib/connectors'
 import { AnalyticsScript } from 'lib/analytics'
 
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
-import { currentNetwork } from 'lib/network'
 import { Dialogs } from 'lib/dialogs'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'

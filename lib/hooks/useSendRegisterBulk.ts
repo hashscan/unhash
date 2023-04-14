@@ -6,20 +6,17 @@ import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from
 import { useOrderPrice } from './useOrderPrice'
 import { useRegistration } from './useRegistration'
 import { currentNetwork } from 'lib/network'
+import { registerGasLimit } from 'lib/ensUtils'
 
-// TODO: rename
-// TODO: calculate gas
-// TODO: support fees
-export const useSendRegisters = () => {
+export const useSendRegisterBulk = () => {
   const { registration, setRegistering } = useRegistration()
   if (!registration) throw new Error('registration should exist')
 
   // fetch prices
   const orderPrice = useOrderPrice(registration.names, registration?.duration)
   const totalPrice = orderPrice?.total?.wei
-
-  // TODO: set gas limit based on number of names; 1_000_000 enough for 5-10 names
-  const gasLimit = 1_000_000
+  // manually estimated: 200k + 140k per following name
+  const gasLimit = registerGasLimit(registration.names.length)
 
   // args
   const args = useMemo(() => {
@@ -77,4 +74,4 @@ export const useSendRegisters = () => {
   }
 }
 
-export type useSendRegistersType = typeof useSendRegisters
+export type useSendRegisterBulkType = typeof useSendRegisterBulk

@@ -27,7 +27,7 @@ export const statusToLEDColor = (
     case SearchStatus.Available:
       return 'success'
 
-    case SearchStatus.NotAvailable:
+    case SearchStatus.Taken:
       return 'error'
 
     case SearchStatus.Error:
