@@ -22,19 +22,19 @@ interface CommitButtonProps {
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { names } = order
   const { address: sender } = useAccount()
-  const useCommitHook = names.length === 1 ? useSendCommit : useSendCommitBulk
+  const nullableSender = sender ? sender : null
 
-  // later should only be used for multiple names
+  const useCommitHook = names.length === 1 ? useSendCommit : useSendCommitBulk
   const { sendCommit, status, error } = useCommitHook({
     names,
     duration: order.durationInYears * YEAR_IN_SECONDS,
-    owner: order.ownerAddress ?? sender,
+    owner: order.ownerAddress !== undefined ? order.ownerAddress : nullableSender,
+    // two arguments only used by a single name hook (TODO: fix that)
     setDefaultResolver: true,
-    addr: order.ownerAddress ?? sender // can be set a different address or no address
+    addr: order.ownerAddress === undefined ? sender : order.ownerAddress // can be set a different address or no address
   })
 
   const notify = useNotifier()
-
   useChange(error?.message, (current) => {
     if (current) {
       notify(current, { status: 'error', title: 'Error sending transaction' })

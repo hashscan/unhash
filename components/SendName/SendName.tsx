@@ -23,7 +23,7 @@ export const SendName = ({
   ...rest
 }: SendNameProps) => {
   const notify = useNotifier()
-  const [address, setAddress] = useState<string>()
+  const [address, setAddress] = useState<string | undefined>()
   useEffect(() => trackGoal('OpenSendNameDialog'), [])
 
   // fetch name's token id
@@ -83,9 +83,8 @@ export const SendName = ({
           label="Send to"
           placeholder="Enter address or ENS name..."
           disabled={isControlsDisabled}
-          value={address}
-          onAddressChange={(a) => setAddress(a || undefined)}
-          onChange={(e) => setAddress(e.target.value)}
+          defaultValue={address}
+          onAddressChange={(value) => setAddress(value ?? undefined)}
         />
         <div className={styles.hint}>
           {

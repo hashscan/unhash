@@ -11,10 +11,10 @@ export function useMakeCommitment({
   resolver,
   addr
 }: Omit<CommitmentParams, 'owner'> & {
-  owner?: string // required to get result; hooks is disabled unless it's set
+  owner: string | null
 }) {
-  const result = useMemo(() => {
-    if (!owner) return undefined
+  return useMemo(() => {
+    if (!owner) return {} as ReturnType<typeof makeCommitment>
 
     return makeCommitment({
       name,
@@ -23,8 +23,4 @@ export function useMakeCommitment({
       addr
     })
   }, [name, owner, resolver, addr])
-
-  return {
-    ...result
-  }
 }

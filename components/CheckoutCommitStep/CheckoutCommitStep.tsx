@@ -57,9 +57,10 @@ export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepPro
           className={styles.ownerInput}
           placeholder="0xd07d...54aB"
           autoComplete="off"
+          // TODO: we loose invalid input when parent component is collapsed so i set it to '0x0'
+          defaultValue={order.ownerAddress === null ? '0x0' : order.ownerAddress}
           onAddressChange={(address) => {
-            const newOwner = address === null ? undefined : address // todo: make it less ugly
-            updateOrder((order) => ({ ...order, ownerAddress: newOwner }))
+            updateOrder((order) => ({ ...order, ownerAddress: address }))
           }}
         />
       </AdditionalInfo>

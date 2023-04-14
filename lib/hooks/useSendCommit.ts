@@ -19,7 +19,7 @@ import { currentNetwork } from 'lib/network'
 export const useSendCommit: useSendCommitBulkType = ({
   names,
   duration,
-  owner,
+  owner, // must be non-null to enable commit transaction
   addr,
   setDefaultResolver = true
 }) => {
@@ -56,7 +56,7 @@ export const useSendCommit: useSendCommitBulkType = ({
       setCommitting({
         names: names,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
-        owner: owner,
+        owner: owner!,
         duration,
         secret: secret!, // TODO: fix?
         commitTxHash: data.hash

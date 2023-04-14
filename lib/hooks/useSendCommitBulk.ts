@@ -8,7 +8,6 @@ import { useRegistration } from './useRegistration'
 /**
  * Hook for sending multiple commits in a single transaction.
  * Works same as useSendCommit.
- * Note: make sure to use stable reference to 'names' to avoid extra renders
  */
 export const useSendCommitBulk = ({
   names, // make sure to use stable reference to 'names' to avoid extra renders
@@ -17,10 +16,10 @@ export const useSendCommitBulk = ({
 }: {
   names: Domain[]
   duration: number
-  owner: string | undefined // required; hook is disabled unless it's set
-  // unify interface with useSendCommit
+  owner: string | null // must be non-null to enable commit transaction
+  // following arguments added to unify interface with useSendCommit and not used here
   setDefaultResolver?: boolean
-  addr?: string
+  addr?: string | null
 }) => {
   const { address: sender } = useAccount()
   const { setCommitting } = useRegistration()
@@ -52,7 +51,7 @@ export const useSendCommitBulk = ({
       setCommitting({
         names,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
-        owner: owner,
+        owner: owner!,
         duration,
         secret: secret!, // TODO: fix?
         commitTxHash: data.hash

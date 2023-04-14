@@ -60,7 +60,7 @@ export type RegistrationStatus =
 export type RegistrationOrder = {
   names: Domain[]
   durationInYears: number
-  ownerAddress: string | undefined
+  ownerAddress: string | undefined | null // null means error, undefined means not set
 }
 
 export type Domain = `${string}.eth`
@@ -89,7 +89,7 @@ export type CommitmentParams = {
   name: Domain
   owner: string
   resolver?: string
-  addr?: string
+  addr?: string | null
 }
 
 export type RegistrationParams = CommitmentParams & {
