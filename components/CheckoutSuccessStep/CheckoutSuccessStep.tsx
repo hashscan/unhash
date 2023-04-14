@@ -15,7 +15,7 @@ interface CheckoutSuccessStepProps {
 const EtherscanLink = ({ txn }: { txn: string }) => {
   return (
     <Link href={useEtherscanURL('txn', txn)} target="_blank" className={styles.inlineLink}>
-      View on Ethescan ↗
+      View on Etherscan ↗
     </Link>
   )
 }
