@@ -19,7 +19,7 @@ import { currentNetwork } from 'lib/network'
 export const useSendCommit: useSendCommitsType = ({
   names,
   duration,
-  owner,
+  owner, // must be non-null to enable commit transaction
   addr,
   setDefaultResolver = true
 }) => {
