@@ -56,7 +56,7 @@ export const useSendCommit: useSendCommitsType = ({
       setCommitting({
         names: names,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
-        owner: owner,
+        owner: owner!,
         duration,
         secret: secret!, // TODO: fix?
         commitTxHash: data.hash

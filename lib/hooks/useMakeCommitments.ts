@@ -10,16 +10,14 @@ export function useMakeCommitments({
   owner
 }: {
   names: Domain[]
-  owner?: string // required to get result; hooks is disabled unless it's set
+  owner: string | null
 }) {
   const namesHash = names.join(',')
 
-  const results = useMemo(() => {
-    if (!owner) return undefined
+  return useMemo(() => {
+    if (!owner) return {} as ReturnType<typeof makeCommitments>
 
     const names = namesHash.split(',') as Domain[]
     return makeCommitments(names, owner)
   }, [namesHash, owner])
-
-  return { ...results }
 }

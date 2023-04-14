@@ -19,10 +19,10 @@ export const useSendCommits = ({
 }: {
   names: Domain[]
   duration: number
-  owner: string | undefined // required; hook is disabled unless it's set
+  owner: string | null
   // unify interface with useSendCommit
   setDefaultResolver?: boolean
-  addr?: string
+  addr?: string | null
 }) => {
   const { address: sender } = useAccount()
   const { setCommitting } = useRegistration()
@@ -54,7 +54,7 @@ export const useSendCommits = ({
       setCommitting({
         names,
         sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
-        owner: owner,
+        owner: owner!,
         duration,
         secret: secret!, // TODO: fix?
         commitTxHash: data.hash

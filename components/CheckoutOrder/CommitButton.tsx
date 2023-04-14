@@ -28,9 +28,9 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   const { sendCommit, status, error } = useCommitHook({
     names,
     duration: order.durationInYears * YEAR_IN_SECONDS,
-    owner: order.ownerAddress ?? sender,
+    owner: order.ownerAddress === undefined ? sender! : order.ownerAddress,
     setDefaultResolver: true,
-    addr: order.ownerAddress ?? sender // can be set a different address or no address
+    addr: order.ownerAddress === undefined ? sender : order.ownerAddress // can be set a different address or no address
   })
 
   const notify = useNotifier()
@@ -46,8 +46,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
 
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
     try {
-      if (!sendCommit) throw Error('sendCommit is not a function')
-      sendCommit()
+      sendCommit?.()
     } catch (error) {
       const msg = error instanceof Error ? error.toString() : 'Commit error'
       notify(msg, { status: 'error' })

@@ -11,7 +11,7 @@ export function useMakeCommitment({
   resolver,
   addr
 }: Omit<CommitmentParams, 'owner'> & {
-  owner?: string // required to get result; hooks is disabled unless it's set
+  owner: string | null
 }) {
   return useMemo(() => {
     if (!owner) return {} as ReturnType<typeof makeCommitment>
