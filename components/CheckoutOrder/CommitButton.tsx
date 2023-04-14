@@ -22,12 +22,13 @@ interface CommitButtonProps {
 export const CommitButton = ({ order }: CommitButtonProps) => {
   const { names } = order
   const { address: sender } = useAccount()
+  const nullableSender = sender ? sender : null
 
   const useCommitHook = names.length === 1 ? useSendCommit : useSendCommits
   const { sendCommit, status, error } = useCommitHook({
     names,
     duration: order.durationInYears * YEAR_IN_SECONDS,
-    owner: order.ownerAddress === undefined ? sender! : order.ownerAddress,
+    owner: order.ownerAddress !== undefined ? order.ownerAddress : nullableSender,
     // two arguments only used by a single name hook (TODO: fix that)
     setDefaultResolver: true,
     addr: order.ownerAddress === undefined ? sender : order.ownerAddress // can be set a different address or no address
