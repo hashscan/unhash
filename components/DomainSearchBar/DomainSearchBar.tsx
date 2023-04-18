@@ -14,7 +14,7 @@ import { useSearch } from './useSearch'
 import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 import { normalizeDotETH, findSuffix, statusToLEDColor } from './utils'
 import { trackGoal } from 'lib/analytics'
-import { useNames } from 'lib/hooks/useNames'
+import { useCart } from 'lib/hooks/useNames'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
@@ -32,7 +32,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   _props,
   ref
 ) {
-  const [, setGlobalNames] = useNames()
+  const [, updateCart] = useCart()
   const [isBulkEnabled, set] = useState(false)
   const [searchQuery, setSearchQueryRaw] = useState('')
   const [names, setNames] = useState<Domain[]>([])
@@ -53,16 +53,16 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const registerDomain = useCallback(() => {
     if (isNavigating || (!names.length && status !== SearchStatus.Available)) return
 
-    const namesForRegistration = isBulkEnabled ? names : [normalized] as Domain[]
+    const namesForRegistration = isBulkEnabled ? names : ([normalized] as Domain[])
 
     trackGoal('SearchRegisterClick', { props: { names: namesForRegistration.join(',') } })
     setIsNavigating(true)
-    setGlobalNames(namesForRegistration)
+    updateCart({ names: namesForRegistration })
 
     navigate('/register').finally(() => {
       setIsNavigating(false)
     })
-  }, [isBulkEnabled, isNavigating, names, navigate, normalized, setGlobalNames, status])
+  }, [isBulkEnabled, isNavigating, names, navigate, normalized, updateCart, status])
 
   const addCurrentValueToCart = useCallback(() => {
     if (isNavigating || status !== SearchStatus.Available) return
