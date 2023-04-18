@@ -16,7 +16,7 @@ import { Registration, RegistrationOrder, RegisterStep } from 'lib/types'
 
 import styles from './register.module.css'
 import { useRouter } from 'next/router'
-import { useNames } from 'lib/hooks/useNames'
+import { useCart } from 'lib/hooks/useNames'
 
 interface RegisterProps {}
 
@@ -37,7 +37,7 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
 
 // use local registration object from local state on final state
 const usePatchedRegistration = () => {
-  const [, setNames] = useNames()
+  const [, updateCart] = useCart()
   const result = useRegistration()
   const [localState, updateLocalState] = useState<
     Pick<ReturnType<typeof useRegistration>, 'registration'> | undefined
@@ -48,7 +48,7 @@ const usePatchedRegistration = () => {
       updateLocalState({ registration: result.registration })
       result.clearRegistration()
       // drop names from local storage on success
-      setNames([])
+      updateCart({ names: [] })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.registration])
@@ -57,11 +57,11 @@ const usePatchedRegistration = () => {
 }
 
 const Register: PageWithLayout<RegisterProps> = () => {
-  const [names] = useNames()
+  const [cart] = useCart()
   // get registration
   const { registration: reg } = usePatchedRegistration()
   // use names from registration object first
-  const namesForRegistration = reg?.names ?? names
+  const namesForRegistration = reg?.names ?? cart.names
 
   const router = useRouter()
   useEffect(() => {
@@ -93,7 +93,7 @@ const Register: PageWithLayout<RegisterProps> = () => {
     'If you close the browser tab, you may interrupt the registration process.'
   )
 
-  // TODO: add loading state 
+  // TODO: add loading state
   if (namesForRegistration == null) return null
 
   return (
