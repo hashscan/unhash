@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useState } from 'react'
-import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTimeout } from 'usehooks-ts'
 import { useBeforeUnload } from 'react-use'
@@ -13,14 +12,13 @@ import { CheckoutRegisterStep } from 'components/CheckoutRegisterStep/CheckoutRe
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { COMMIT_WAIT_MS } from 'lib/constants'
 import { useRegistration } from 'lib/hooks/useRegistration'
-import { Domain, Registration, RegistrationOrder, RegisterStep } from 'lib/types'
+import { Registration, RegistrationOrder, RegisterStep } from 'lib/types'
 
 import styles from './register.module.css'
-import { notNull } from 'lib/utils'
+import { useRouter } from 'next/router'
+import { useNames } from 'lib/hooks/useNames'
 
-interface RegisterProps {
-  names: Domain[]
-}
+interface RegisterProps {}
 
 // this is actually a reducer
 function calculateStep(_: RegisterStep, reg: Registration | undefined): RegisterStep {
@@ -39,6 +37,7 @@ function calculateStep(_: RegisterStep, reg: Registration | undefined): Register
 
 // use local registration object from local state on final state
 const usePatchedRegistration = () => {
+  const [, setNames] = useNames()
   const result = useRegistration()
   const [localState, updateLocalState] = useState<
     Pick<ReturnType<typeof useRegistration>, 'registration'> | undefined
@@ -48,6 +47,8 @@ const usePatchedRegistration = () => {
     if (result.registration?.status === 'registered') {
       updateLocalState({ registration: result.registration })
       result.clearRegistration()
+      // drop names from local storage on success
+      setNames([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.registration])
@@ -55,11 +56,20 @@ const usePatchedRegistration = () => {
   return localState ?? result
 }
 
-const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
-  // get registration and calculate step
+const Register: PageWithLayout<RegisterProps> = () => {
+  const [names] = useNames()
+  // get registration
   const { registration: reg } = usePatchedRegistration()
-  // use names from local storage first
+  // use names from registration object first
   const namesForRegistration = reg?.names ?? names
+
+  const router = useRouter()
+  useEffect(() => {
+    // redirect to main page if no registration
+    if (namesForRegistration.length === 0) {
+      router.push('/')
+    }
+  }, [namesForRegistration.length, router])
 
   // reducer to update step on registration changes and timeout
   const [step, dispatchStep] = useReducer(calculateStep, 'initializing')
@@ -82,6 +92,8 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
     displayWarningOnClose,
     'If you close the browser tab, you may interrupt the registration process.'
   )
+
+  if (namesForRegistration == null) return null
 
   return (
     <>
@@ -109,24 +121,6 @@ const Register: PageWithLayout<RegisterProps> = ({ names }: RegisterProps) => {
       </div>
     </>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const names = Array.isArray(query.names) ? query.names : [query.names].filter(notNull)
-
-  // TODO: return validation here or move it to client
-  if (!names.length) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false
-      }
-    }
-  }
-
-  return {
-    props: { names }
-  }
 }
 
 Register.layout = <ContainerLayout verticalPadding={false} />
