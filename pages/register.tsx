@@ -94,7 +94,11 @@ const Register: PageWithLayout<RegisterProps> = () => {
     'If you close the browser tab, you may interrupt the registration process.'
   )
 
-  if (namesForRegistration == null || namesForRegistration.length === 0) {
+  if (
+    namesForRegistration == null ||
+    namesForRegistration.length === 0 ||
+    step === 'initializing'
+  ) {
     return (
       <div className={styles.loading}>
         <LoaderSpinner className={styles.loader} />
@@ -113,7 +117,6 @@ const Register: PageWithLayout<RegisterProps> = () => {
         <main className={styles.main}>
           <CheckoutProgress className={styles.progress} step={step} names={namesForRegistration} />
 
-          {step === 'initializing' && <div></div>}
           {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
           {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
