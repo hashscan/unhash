@@ -14,7 +14,7 @@ import { useSearch } from './useSearch'
 import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 import { normalizeDotETH, findSuffix, statusToLEDColor } from './utils'
 import { trackGoal } from 'lib/analytics'
-import { useCart } from 'lib/hooks/useNames'
+import { useCart } from 'lib/hooks/useCart'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'

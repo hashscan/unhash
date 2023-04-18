@@ -16,7 +16,7 @@ import { Registration, RegistrationOrder, RegisterStep } from 'lib/types'
 
 import styles from './register.module.css'
 import { useRouter } from 'next/router'
-import { useCart } from 'lib/hooks/useNames'
+import { useCart } from 'lib/hooks/useCart'
 import { LoaderSpinner } from 'components/icons'
 
 interface RegisterProps {}
