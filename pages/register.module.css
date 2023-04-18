@@ -11,6 +11,15 @@
   padding: 40px 0 96px 0;
 }
 
+.loading {
+  width: var(--profile-width);
+}
+
+.loader {
+  display: block;
+  margin: 120px auto;
+}
+
 .progress {
   margin-bottom: 32px;
 }
