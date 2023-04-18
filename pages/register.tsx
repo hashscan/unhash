@@ -17,6 +17,7 @@ import { Registration, RegistrationOrder, RegisterStep } from 'lib/types'
 import styles from './register.module.css'
 import { useRouter } from 'next/router'
 import { useCart } from 'lib/hooks/useNames'
+import { LoaderSpinner } from 'components/icons'
 
 interface RegisterProps {}
 
@@ -93,8 +94,13 @@ const Register: PageWithLayout<RegisterProps> = () => {
     'If you close the browser tab, you may interrupt the registration process.'
   )
 
-  // TODO: add loading state
-  if (namesForRegistration == null) return null
+  if (namesForRegistration == null || namesForRegistration.length === 0) {
+    return (
+      <div className={styles.loading}>
+        <LoaderSpinner className={styles.loader} />
+      </div>
+    )
+  }
 
   return (
     <>
