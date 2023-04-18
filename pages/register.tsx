@@ -93,6 +93,7 @@ const Register: PageWithLayout<RegisterProps> = () => {
     'If you close the browser tab, you may interrupt the registration process.'
   )
 
+  // TODO: add loading state 
   if (namesForRegistration == null) return null
 
   return (
