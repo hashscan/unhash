@@ -24,7 +24,7 @@ type CreateRegistrationParams = {
 export function useRegistration() {
   const { address: sender } = useAccount()
   const [registration, setRegistration] = useLocalStorage<Registration | undefined>(
-    `ens.registration.${sender?.toLowerCase() ?? 'non-authorized'}`,
+    `unhash.registration.${sender?.toLowerCase() ?? 'non-authorized'}`,
     undefined
   )
 
