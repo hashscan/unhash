@@ -63,6 +63,10 @@ export type RegistrationOrder = {
   ownerAddress: string | undefined | null // null means error, undefined means not set
 }
 
+export type Cart = {
+  names: Domain[]
+}
+
 export type Domain = `${string}.eth`
 
 export type Currency = {
