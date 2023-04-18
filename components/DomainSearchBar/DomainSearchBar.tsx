@@ -14,12 +14,14 @@ import { useSearch } from './useSearch'
 import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
 import { normalizeDotETH, findSuffix, statusToLEDColor } from './utils'
 import { trackGoal } from 'lib/analytics'
+import { useNames } from 'lib/hooks/useNames'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
 import { BuyCard } from 'components/ui/BuyCard/BuyCard'
 import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
+import { Domain } from 'lib/types'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -30,9 +32,10 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   _props,
   ref
 ) {
+  const [, setGlobalNames] = useNames()
   const [isBulkEnabled, set] = useState(false)
   const [searchQuery, setSearchQueryRaw] = useState('')
-  const [names, setNames] = useState<string[]>([])
+  const [names, setNames] = useState<Domain[]>([])
   const [isNavigating, setIsNavigating] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -50,25 +53,21 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const registerDomain = useCallback(() => {
     if (isNavigating || (!names.length && status !== SearchStatus.Available)) return
 
-    const namesForRegistration = isBulkEnabled ? names : [normalized]
+    const namesForRegistration = isBulkEnabled ? names : [normalized] as Domain[]
 
     trackGoal('SearchRegisterClick', { props: { names: namesForRegistration.join(',') } })
     setIsNavigating(true)
+    setGlobalNames(namesForRegistration)
 
-    const params = new URLSearchParams(
-      namesForRegistration.map((name) => ['names', name])
-    ).toString()
-
-    // hide params from browser url
-    navigate(`/register?${params}`, '/register').finally(() => {
+    navigate('/register').finally(() => {
       setIsNavigating(false)
     })
-  }, [isBulkEnabled, isNavigating, names, navigate, normalized, status])
+  }, [isBulkEnabled, isNavigating, names, navigate, normalized, setGlobalNames, status])
 
   const addCurrentValueToCart = useCallback(() => {
     if (isNavigating || status !== SearchStatus.Available) return
 
-    setNames((names) => [...names, normalized])
+    setNames((names) => [...names, normalized] as Domain[])
     setSearchQuery('')
     inputRef.current?.focus()
   }, [isNavigating, normalized, setSearchQuery, status])
