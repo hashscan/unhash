@@ -141,6 +141,13 @@ button.startBulk > div {
   }
 }
 
+.bulkRegistrationContent {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
 .space {
   flex-grow: 1;
 }
@@ -150,14 +157,14 @@ button.startBulk > div {
   font-size: 12.47px;
   font-family: var(--font-mono);
   min-width: 18px;
+  font-weight: 800;
 
   padding: 0 4px;
-  margin-right: 4px;
-
   border-radius: 99px;
 
   background-color: var(--color-slate-8);
   color: var(--color-slate-1);
+  flex-shrink: 0px;
 }
 
 .badges > .bulkRegistration:disabled .namesCount {
