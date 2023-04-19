@@ -22,6 +22,7 @@ import { BuyCard } from 'components/ui/BuyCard/BuyCard'
 import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
 import { Domain } from 'lib/types'
+import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -185,7 +186,12 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
                 registerDomain()
               }}
             >
-              <span className={styles.namesCount}>{names.length}</span> Register all&nbsp;&nbsp;→
+              <div className={styles.bulkRegistrationContent}>
+                <span className={styles.namesCount}>
+                  <SlideFlap flipKey={String(names.length)}>{names.length}</SlideFlap>
+                </span>{' '}
+                Register all&nbsp;&nbsp;→
+              </div>
             </Button>
           </>
         )}
