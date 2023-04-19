@@ -18,7 +18,7 @@ import { useCart } from 'lib/hooks/useCart'
 
 import { StatusBadge } from 'components/ui/StatusBadge/StatusBadge'
 import { SearchButton } from './SearchButton'
-import { BuyCard } from 'components/ui/BuyCard/BuyCard'
+import { MarketplaceListing } from 'components/MarketplaceListing/MarketplaceListing'
 import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
 import { Domain } from 'lib/types'
@@ -198,7 +198,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
       </div>
 
       <div className={styles.buyCardContainer}>
-        {listing && <BuyCard name={normalized} listing={listing} />}
+        {listing && <MarketplaceListing name={normalized} listing={listing} />}
       </div>
     </>
   )

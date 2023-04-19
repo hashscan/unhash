@@ -1,16 +1,22 @@
 .card {
-  padding: 8px 8px 8px 16px;
-  width: 75%;
+  padding: 12px 8px 12px 16px;
+  max-width: 630px;
 
   box-shadow: var(--shadow-sm);
   border-radius: var(--radii-md);
   border: 1px solid var(--color-slate-5);
   background: var(--color-background);
 
-  display: flex;
+  display: inline-flex;
   flex-flow: row;
   align-items: center;
   justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
 }
 
 .logo {
@@ -31,6 +37,7 @@
 .content {
   flex-grow: 1;
   padding-left: 16px;
+  margin-right: 24px;
 }
 
 .title {
@@ -38,7 +45,7 @@
   letter-spacing: var(--ls-reg);
 }
 
-.title>b {
+.title > b {
   font-weight: 500;
 }
 
