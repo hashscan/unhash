@@ -86,14 +86,9 @@
 @media (max-width: 768px) {
   .button {
     font: var(--type-regular);
-    width: 128px;
   }
 
   .loader {
     margin-right: 6px;
-  }
-
-  .label > svg {
-    display: none;
   }
 }
