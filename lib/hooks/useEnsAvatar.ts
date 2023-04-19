@@ -14,7 +14,7 @@ const loadEnsAvatarModule = (): Promise<EnsAvatarImportType> => import('@ensdoma
  * @param domain
  * @returns
  */
-export const useEnsAvatar = (domain: Domain) => {
+export const useEnsAvatar = (domain?: Domain) => {
   // use deployment network and ignore wallet network
   const chainId = useMemo(() => toChain(currentNetwork()).id, [])
   const provider = useProvider({ chainId })
@@ -33,6 +33,7 @@ export const useEnsAvatar = (domain: Domain) => {
   return useQuery({
     queryKey: [domain],
     queryFn,
+    enabled: !!domain,
     cacheTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchOnMount: false
