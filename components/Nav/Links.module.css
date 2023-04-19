@@ -5,7 +5,7 @@
   margin-right: 32px;
   flex-shrink: 1;
   flex-grow: 1;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .navLink {
