@@ -98,10 +98,10 @@
   align-items: center;
   gap: 8px;
 
-  padding: 0 12px;
+  padding: 0 12px 0 0;
   border-radius: var(--radii-sm);
-  border: 1px solid var(--color-slate-6);
-  background-color: var(--color-slate-8);
+  border: none;
+  background-color: var(--color-slate-f);
 
   cursor: pointer;
   user-select: none;
@@ -112,7 +112,12 @@
 
 .account:hover {
   background-color: var(--color-slate-6);
-  border: 1px solid var(--color-slate-5);
+}
+
+@media (max-width: 768px) {
+  .account {
+    padding: 0;
+  }
 }
 
 .mobileAccount {
@@ -127,6 +132,7 @@
   .mobileAccount {
     display: flex;
     gap: 8px;
+    align-items: center;
   }
 }
 
@@ -145,9 +151,9 @@
 }
 
 .accountAvatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 19px;
   overflow: hidden;
   background-color: var(--color-slate-6);
   display: flex;
@@ -157,8 +163,8 @@
 }
 
 .accountAvatar > svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .accountAvatarPlaceholder {
@@ -178,7 +184,7 @@
 }
 
 .chainWarning {
-  padding: 0 8px 0 8px;
+  padding: 0 8px;
   border-radius: var(--radii-round);
   cursor: pointer;
   transition: var(--ease-200);
@@ -186,7 +192,7 @@
   color: var(--color-slate-1);
   border: none;
   font: var(--type-sm);
-  height: 32px;
+  height: 34px;
   letter-spacing: 0.01em;
   column-gap: 6px;
 
