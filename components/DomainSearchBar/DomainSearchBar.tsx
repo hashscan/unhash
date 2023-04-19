@@ -23,6 +23,7 @@ import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
 import { Domain } from 'lib/types'
 import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
+import { useMediaQuery } from 'usehooks-ts'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
@@ -92,6 +93,9 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
     }
   }))
 
+  const isMobileViewport = useMediaQuery('(max-width: 768px)')
+  const inputPlaceholder = isMobileViewport ? 'Type .eth name...' : 'Search for .eth domain...'
+
   return (
     <>
       <div className={styles.searchBar}>
@@ -104,7 +108,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
               onChange={(e) => setSearchQuery(e.target.value)}
               className={styles.input}
               spellCheck="false"
-              placeholder="Search for .eth domain..."
+              placeholder={inputPlaceholder}
             ></input>
           </form>
 
