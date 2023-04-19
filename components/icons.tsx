@@ -427,6 +427,19 @@ export const Basket = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const PlusSign = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={16}>
+    <svg viewBox="0 0 16 16" fill="none">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.6 1C9.6 0.447715 9.15228 0 8.6 0H7.4C6.84772 0 6.4 0.447716 6.4 1V5.4C6.4 5.95228 5.95228 6.4 5.4 6.4H1C0.447715 6.4 0 6.84772 0 7.4V8.6C0 9.15229 0.447716 9.6 1 9.6H5.4C5.95228 9.6 6.4 10.0477 6.4 10.6V15C6.4 15.5523 6.84772 16 7.4 16H8.6C9.15229 16 9.6 15.5523 9.6 15V10.6C9.6 10.0477 10.0477 9.6 10.6 9.6H15C15.5523 9.6 16 9.15228 16 8.6V7.4C16 6.84772 15.5523 6.4 15 6.4H10.6C10.0477 6.4 9.6 5.95228 9.6 5.4V1Z"
+        fill="currentColor"
+      />
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */

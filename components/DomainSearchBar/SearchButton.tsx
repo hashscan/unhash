@@ -3,7 +3,7 @@ import { ComponentProps, MouseEventHandler } from 'react'
 import clsx from 'clsx'
 import styles from './SearchButton.module.css'
 import { SearchStatus } from './types'
-import { LoaderSpinner } from 'components/icons'
+import { LoaderSpinner, PlusSign } from 'components/icons'
 
 export interface SearchButtonProps extends ComponentProps<'div'> {
   status: SearchStatus
@@ -35,7 +35,14 @@ export const SearchButton = (props: SearchButtonProps) => {
         className={clsx(styles.button, isBulkEnabled && styles.shrinkSize)}
         disabled={isButtonDisabled}
       >
-        {isBulkEnabled ? <>+&nbsp;&nbsp;Add to Cart</> : <>Register&nbsp;&nbsp;→</>}
+        {isBulkEnabled ? (
+          <div className={styles.label}>
+            <PlusSign />
+            Add to Cart
+          </div>
+        ) : (
+          <>Register&nbsp;&nbsp;→</>
+        )}
       </button>
     </div>
   )
