@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { RefObject, useRef, useState } from 'react'
+
 import ui from 'styles/ui.module.css'
 import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
@@ -70,7 +71,7 @@ export const Nav = () => {
           <div className={styles.name}>Unhash</div>
         </Link>
 
-        <Links className={styles.links} />
+        <Links className={clsx(styles.links, styles.desktop)} />
 
         <ConnectButton.Custom>
           {({
@@ -101,47 +102,66 @@ export const Nav = () => {
             }
 
             return (
-              <div
-                className={clsx(styles.buttons, { [styles.buttonsLoading]: !ready })}
-                aria-hidden={!ready}
-              >
-                <Chain chainId={chain?.id} onClick={openChainModal} />
+              <>
+                <div
+                  className={clsx(styles.buttons, { [styles.buttonsLoading]: !ready })}
+                  aria-hidden={!ready}
+                >
+                  <Chain chainId={chain?.id} onClick={openChainModal} />
 
-                {account && (
-                  <button className={styles.account} onClick={() => setOpen(!isOpen)}>
-                    <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
-                      {account.ensName && <Avatar ensName={account.ensName as Domain} />}
+                  {account && (
+                    <button className={styles.account} onClick={() => setOpen(!isOpen)}>
+                      <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
+                        {account.ensName && <Avatar ensName={account.ensName as Domain} />}
+                      </div>
+                      <div
+                        className={clsx(styles.accountName, {
+                          [styles.accountNameAddress]: !account.ensName
+                        })}
+                      >
+                        {account.ensName ? account.ensName : formatAddress(account.address)}
+                      </div>
+                    </button>
+                  )}
+                </div>
+
+                <div
+                  className={ui.modal}
+                  style={{
+                    visibility: isOpen ? 'visible' : 'hidden',
+                    opacity: isOpen ? 1 : 0
+                  }}
+                >
+                  {account && (
+                    <div className={styles.mobileAccount}>
+                      <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
+                        {account.ensName && <Avatar ensName={account.ensName as Domain} />}
+                      </div>
+                      <div
+                        className={clsx(styles.accountName, {
+                          [styles.mobile]: true,
+                          [styles.accountNameAddress]: !account.ensName
+                        })}
+                      >
+                        {account.ensName ? account.ensName : formatAddress(account.address)}
+                      </div>
                     </div>
+                  )}
+                  <Links className={clsx(styles.links, styles.mobile)} mobile />
+                  <div className={ui.menu} onClick={logoutClick}>
                     <div
-                      className={clsx(styles.accountName, {
-                        [styles.accountNameAddress]: !account.ensName
-                      })}
+                      className={ui.menuIcon}
+                      style={{ height: '24px', width: '24px', marginLeft: '-4px' }}
                     >
-                      {account.ensName ? account.ensName : formatAddress(account.address)}
+                      <Logout />
                     </div>
-                  </button>
-                )}
-              </div>
+                    <span className={ui.menuText}>Log out</span>
+                  </div>
+                </div>
+              </>
             )
           }}
         </ConnectButton.Custom>
-        <div
-          className={ui.modal}
-          style={{
-            visibility: isOpen ? 'visible' : 'hidden',
-            opacity: isOpen ? 1 : 0
-          }}
-        >
-          <div className={ui.menu} onClick={logoutClick}>
-            <div
-              className={ui.menuIcon}
-              style={{ height: '24px', width: '24px', marginLeft: '-4px' }}
-            >
-              <Logout />
-            </div>
-            <span className={ui.menuText}>Log out</span>
-          </div>
-        </div>
       </div>
     </nav>
   )
