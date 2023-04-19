@@ -33,9 +33,7 @@
   font: var(--type-lg);
   letter-spacing: var(--ls-lg);
   padding: 14px 16px;
-  border-style: solid;
-  border-width: var(--border-md); /* not defined */
-  border-color: transparent;
+  border: 1.5px solid transparent;
   white-space: nowrap;
 }
 
