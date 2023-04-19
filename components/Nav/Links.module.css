@@ -24,3 +24,14 @@
 .navLinkActive {
   color: var(--color-slate-2);
 }
+
+.navLink.mobile {
+  padding: 12px 18px 12px 12px;
+}
+
+.navLink.mobile:hover {
+  cursor: pointer;
+  background: rgba(92, 92, 92, 0.25);
+  border-radius: var(--radii-sm);
+  color: var(--color-slate-0);
+}

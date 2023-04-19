@@ -21,7 +21,7 @@
 
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -55,6 +55,23 @@
 
 .links {
   flex-grow: 1;
+}
+
+.links.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .links.desktop {
+    display: none;
+  }
+
+  .links.mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+  }
 }
 
 .buttons {
@@ -96,6 +113,21 @@
 .account:hover {
   background-color: var(--color-slate-6);
   border: 1px solid var(--color-slate-5);
+}
+
+.mobileAccount {
+  display: none;
+
+  padding: 12px 18px 12px 12px;
+
+  border-bottom: 1px solid var(--color-slate-5);
+}
+
+@media (max-width: 768px) {
+  .mobileAccount {
+    display: flex;
+    gap: 8px;
+  }
 }
 
 .accountName {
@@ -180,6 +212,10 @@
   .accountName {
     /* hide name on mobiles to save up some space */
     display: none;
+  }
+
+  .accountName.mobile {
+    display: contents;
   }
 
   .chainWarning > span {
