@@ -31,7 +31,7 @@
 
 .navLink.mobile:hover {
   cursor: pointer;
-  background: rgba(92, 92, 92, 0.25);
+  background: var(--color-slate-6);
   border-radius: var(--radii-sm);
   color: var(--color-slate-0);
 }

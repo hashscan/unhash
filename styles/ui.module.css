@@ -28,9 +28,10 @@
   gap: 8px;
 
   padding: 8px;
+
   border-radius: var(--radii-md);
-  background-color: var(--color-slate-7);
-  border: 1px solid rgb(var(--color-slate-2-rgb) / 0.04);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-slate-5);
   box-shadow: var(--shadow-lg);
 
   transition: 100ms;
@@ -54,7 +55,7 @@
 
 .menu:hover {
   cursor: pointer;
-  background: rgba(92, 92, 92, 0.25);
+  background-color: var(--color-slate-6);
   border-radius: var(--radii-sm);
 }
 
