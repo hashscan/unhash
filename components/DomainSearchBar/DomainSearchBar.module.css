@@ -11,16 +11,8 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  min-width: 240px;
   justify-content: flex-end;
-}
-
-@media (max-width: 768px) {
-  .action {
-    position: static;
-    display: block;
-    margin-top: 16px;
-  }
+  pointer-events: none; /* pass through clicks to the input */
 }
 
 .inputWithSuffix {
@@ -35,6 +27,18 @@
   padding: 14px 16px;
   border: 1.5px solid transparent;
   white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .suffix,
+  .input {
+    font: var(--type-md);
+    letter-spacing: var(--ls-md);
+    font-weight: 400;
+    padding: 16px 12px;
+    padding-right: 140px;
+    text-overflow: ellipsis;
+  }
 }
 
 .suffix {
