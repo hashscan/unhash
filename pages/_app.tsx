@@ -36,9 +36,9 @@ const rainbowkitTheme: Theme = {
 const metaTitle = 'Unhash: register and manage ENS names'
 
 const metaDescription =
-  'Simple tool for buying Ethereum Name Service domains. ' +
-  'Set up your public .eth profile to stand out in Metaverse ' +
-  '(zero crypto knowledge required!)'
+  'Buy, register and manage Ethereum Name Service domains. ' +
+  'Set NFT as ENS avatar, set ENS as primary domain, bulk search ' +
+  'and register multiple ENS names.'
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
