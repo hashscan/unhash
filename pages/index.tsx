@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react'
 import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
+import { useMediaQuery } from 'usehooks-ts'
 
 import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar/DomainSearchBar'
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'
@@ -28,6 +29,9 @@ const Search: PageWithLayout = () => {
     searchBarRef.current?.setSearch(name)
   }, [])
 
+  const isMobileViewport = useMediaQuery('(max-width: 768px)')
+  const wrapBalancerRatio = isMobileViewport ? 0.25 : 1 // loosen balancer on mobile
+
   return (
     <>
       <UnfinishedRegistration />
@@ -39,13 +43,13 @@ const Search: PageWithLayout = () => {
               <span className={styles.versionLabel}>Public beta</span>
 
               <h1 className={styles.heroTitle}>
-                <WrapBalancer>Buy and manage .eth names</WrapBalancer>
+                <WrapBalancer ratio={wrapBalancerRatio}>Buy and manage .eth names</WrapBalancer>
               </h1>
 
               <h2 className={styles.heroSubtitle}>
-                <WrapBalancer>
-                  A no-pain way to register an ENS name, link it to your wallet and set up a
-                  public profile.
+                <WrapBalancer ratio={wrapBalancerRatio}>
+                  A no-pain way to register an ENS name, link it to your wallet and set up a public
+                  profile.
                 </WrapBalancer>
               </h2>
 
