@@ -1,4 +1,3 @@
-
 .select {
   height: 40px;
   width: auto;
@@ -17,10 +16,11 @@
 }
 
 .modal {
-  min-width: 180px;
+  --space: 9px;
+  min-width: 182px;
   position: absolute;
-  top: 64px;
-  right: 18px;
+  top: calc(64px + 8px);
+  right: 10px;
 
   display: flex;
   flex-direction: column;
@@ -31,9 +31,16 @@
   border-radius: var(--radii-md);
   background-color: var(--color-slate-7);
   border: 1px solid rgb(var(--color-slate-2-rgb) / 0.04);
+  box-shadow: var(--shadow-lg);
 
   transition: 100ms;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    width: calc(100% - var(--space) * 2);
+  }
 }
 
 .menu {
