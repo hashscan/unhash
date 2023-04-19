@@ -18,7 +18,7 @@
 
 .hero {
   max-width: 640px;
-  padding-top: 72px;
+  padding-top: calc(94px - 1px); /* 1px for the border */
   flex: 1 1;
 }
 
@@ -45,7 +45,7 @@
 
 .searchBar {
   margin-top: 48px;
-  margin-bottom: 80px;
+  margin-bottom: 56px;
 }
 
 .pricingSection {
@@ -102,7 +102,7 @@
   background: linear-gradient(to bottom, #ffffff00 70%, var(--color-slate-7) 100%);
 }
 
-.explainerImgFade>img {
+.explainerImgFade > img {
   width: 100%;
   height: auto;
 }
@@ -110,6 +110,7 @@
 .explainerHeader {
   font-weight: 500;
   margin-bottom: 24px;
+  margin-top: 32px;
   padding: 0px 24px 0px 24px;
   position: relative;
 }
@@ -121,5 +122,6 @@
 @media (max-width: 768px) {
   .hero {
     max-width: unset;
+    padding-top: calc(64px - 1px); /* 1px for the border */
   }
 }
