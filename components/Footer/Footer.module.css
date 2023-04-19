@@ -1,7 +1,6 @@
 .footer {
-  border-top: 1px solid var(--color-slate-3);
-  background-color: var(--color-slate-8);
-  padding: 0 16px;
+  background-color: var(--color-slate-1);
+  padding: 0 24px;
   position: sticky;
   top: 100vh;
   display: flex;
@@ -16,30 +15,28 @@
 .appName {
   display: flex;
   align-items: center;
-  color: var(--color-slate-1);
-  font-weight: 500;
+  color: var(--color-slate-6);
+  font-weight: 600;
   white-space: nowrap;
   margin-right: 8px;
+  gap: 6px;
 }
 
-.appName:before {
-  content: '';
+.logo {
   display: inline-block;
-  width: 4px;
-  height: 4px;
-  border-radius: 16px;
-  background-color: var(--color-slate-1);
-  margin-right: 16px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .links {
-  color: var(--color-slate-4);
+  color: var(--color-slate-5);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .links > a {
-  color: var(--color-slate-2);
+  color: var(--color-slate-8);
   margin-left: 2px;
+  font-weight: 500;
 }

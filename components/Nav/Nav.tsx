@@ -66,7 +66,7 @@ export const Nav = () => {
     <nav className={styles.nav} ref={ref}>
       <div className={styles.sub}>
         <Link href="/" className={styles.brand}>
-          <UnhashLogo className={styles.logo} />
+          <UnhashLogo className={styles.logo} fillColor="var(--color-green-light)" />
           <div className={styles.name}>Unhash</div>
         </Link>
 
