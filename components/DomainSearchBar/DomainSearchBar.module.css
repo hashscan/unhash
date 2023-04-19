@@ -106,7 +106,7 @@
   will-change: transform;
   transform: translateY(-16px);
   opacity: 0;
-  transition: opacity var(--ease-300), transform var(--ease-250) 0.25s;
+  transition: none;
 }
 
 .availabilityVisible {
