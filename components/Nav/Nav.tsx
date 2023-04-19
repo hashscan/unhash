@@ -112,7 +112,7 @@ export const Nav = () => {
                   {account && (
                     <button className={styles.account} onClick={() => setOpen(!isOpen)}>
                       <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
-                        {account.ensName && <Avatar ensName={account.ensName as Domain} />}
+                        <Avatar ensName={account.ensName as Domain} />
                       </div>
                       <div
                         className={clsx(styles.accountName, {
@@ -135,7 +135,7 @@ export const Nav = () => {
                   {account && (
                     <div className={styles.mobileAccount}>
                       <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
-                        {account.ensName && <Avatar ensName={account.ensName as Domain} />}
+                        <Avatar ensName={account.ensName as Domain} />
                       </div>
                       <div
                         className={clsx(styles.accountName, {
@@ -167,12 +167,12 @@ export const Nav = () => {
   )
 }
 
-const Avatar = ({ ensName }: { ensName: Domain }) => {
+const Avatar = ({ ensName }: { ensName?: Domain }) => {
   const { data: avatar, isError } = useEnsAvatar(ensName)
 
-  return avatar && !isError ? (
+  return ensName && avatar && !isError ? (
     <img className={styles.accountAvatarImg} alt={`ENS Avatar for ${ensName}`} src={avatar} />
   ) : (
-    <Profile color="var(--color-slate-5)" />
+    <Profile color="var(--color-slate-4)" />
   )
 }
