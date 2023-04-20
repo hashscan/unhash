@@ -25,11 +25,11 @@
   color: var(--color-slate-2);
 }
 
-.navLink.mobile {
+.navLink.navLink_mobile {
   padding: 12px 18px 12px 12px;
 }
 
-.navLink.mobile:hover {
+.navLink.navLink_mobile:hover {
   cursor: pointer;
   background: var(--color-slate-6);
   border-radius: var(--radii-sm);

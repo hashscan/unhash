@@ -14,7 +14,7 @@ export const Links = (props: ComponentPropsWithoutRef<'div'> & { mobile?: boolea
       <Link
         href="/"
         className={clsx(styles.navLink, {
-          [styles.mobile]: mobile,
+          [styles['navLink_mobile']]: mobile,
           [styles.navLinkActive]: route === '/' || route.match(/\/register$/) !== null
         })}
       >
@@ -24,7 +24,7 @@ export const Links = (props: ComponentPropsWithoutRef<'div'> & { mobile?: boolea
       <Link
         href="/names"
         className={clsx(styles.navLink, {
-          [styles.mobile]: mobile,
+          [styles['navLink_mobile']]: mobile,
           [styles.navLinkActive]: route === '/names'
         })}
       >
@@ -34,7 +34,7 @@ export const Links = (props: ComponentPropsWithoutRef<'div'> & { mobile?: boolea
       <Link
         href="/profile"
         className={clsx(styles.navLink, {
-          [styles.mobile]: mobile,
+          [styles['navLink_mobile']]: mobile,
           [styles.navLinkActive]: route === '/profile'
         })}
       >
