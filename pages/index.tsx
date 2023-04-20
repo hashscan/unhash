@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react'
 import Image from 'next/image'
 import WrapBalancer from 'react-wrap-balancer'
-import { useMediaQuery } from 'usehooks-ts'
+import { useMediaQuery } from '@react-hook/media-query'
 
 import { DomainSearchBar, SearchBarHandle } from 'components/DomainSearchBar/DomainSearchBar'
 import { LandingPricing } from 'components/LandingPricing/LandingPricing'

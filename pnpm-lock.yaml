@@ -7,6 +7,7 @@ specifiers:
   '@radix-ui/react-toast': ^1.1.2
   '@rainbow-me/rainbowkit': ^0.12.7
   '@react-hook/change': ^1.0.0
+  '@react-hook/media-query': ^1.1.1
   '@tanstack/react-query': ^4.28.0
   '@types/node': ^18.11.18
   '@types/react': ^18.0.27
@@ -40,6 +41,7 @@ dependencies:
   '@radix-ui/react-toast': 1.1.2_biqbaboplfbrettd7655fr4n2y
   '@rainbow-me/rainbowkit': 0.12.7_keob75x52kdtcarhv43djrfctu
   '@react-hook/change': 1.0.0_react@18.2.0
+  '@react-hook/media-query': 1.1.1_react@18.2.0
   '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
   clsx: 1.2.1
   ethers: 5.7.2
@@ -1234,6 +1236,14 @@ packages:
 
   /@react-hook/latest/1.0.3_react@18.2.0:
     resolution: {integrity: sha512-dy6duzl+JnAZcDbNTfmaP3xHiKtbXYOaz3G51MGVljh548Y8MWzTr+PHLOfvpypEVW9zwvl+VyKjbWKEVbV1Rg==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /@react-hook/media-query/1.1.1_react@18.2.0:
+    resolution: {integrity: sha512-VM14wDOX5CW5Dn6b2lTiMd79BFMTut9AZj2+vIRT3LCKgMCYmdqruTtzDPSnIVDQdtxdPgtOzvU9oK20LopuOw==}
     peerDependencies:
       react: '>=16.8'
     dependencies:

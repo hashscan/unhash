@@ -17,6 +17,7 @@
     "@radix-ui/react-toast": "^1.1.2",
     "@rainbow-me/rainbowkit": "^0.12.7",
     "@react-hook/change": "^1.0.0",
+    "@react-hook/media-query": "^1.1.1",
     "@tanstack/react-query": "^4.28.0",
     "clsx": "^1.2.1",
     "ethers": "^5.7.2",

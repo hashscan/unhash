@@ -23,7 +23,7 @@ import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
 import { Domain } from 'lib/types'
 import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
-import { useMediaQuery } from 'usehooks-ts'
+import { useMediaQuery } from '@react-hook/media-query'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
