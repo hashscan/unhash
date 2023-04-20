@@ -186,7 +186,7 @@
   color: var(--color-slate-1);
   border: none;
   font: var(--type-sm);
-  height: 32px;
+  height: 34px;
   letter-spacing: 0.01em;
   column-gap: 6px;
 
@@ -218,10 +218,5 @@
 
   .accountName.mobile {
     display: contents;
-  }
-
-  .chainWarning > span {
-    /* hide warning (keep only icon visible) */
-    display: none;
   }
 }
