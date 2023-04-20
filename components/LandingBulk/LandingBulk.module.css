@@ -1,7 +1,10 @@
-.bulk {}
+.bulk {
+  position: relative;
+  max-width: 800px;
+}
 
 .content {
-  width: 50%;
+  margin-right: 240px;
 }
 
 .header {
@@ -11,7 +14,7 @@
   letter-spacing: var(--ls-lg);
   background-color: var(--color-highlight-green);
   line-height: 36px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .header::selection {
@@ -23,19 +26,19 @@
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
   color: var(--color-text-primary);
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 }
 
 .numbers {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 120px;
+  justify-content: space-between;
 }
 
 .number {
   text-align: center;
-  padding: 0 16px;
+  padding: 0 0px;
 }
 
 .numberValue {
@@ -53,9 +56,32 @@
   line-height: 16px;
 }
 
+.logo {
+  width: 96px;
+  height: 96px;
+  background-color: var(--color-text-primary);
+  border-radius: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+
+  opacity: 0.05;
+  rotate: 5deg;
+
+  position: absolute;
+  top: 0;
+  right: 12px;
+}
+
 @media (max-width: 768px) {
   .content {
     width: 100%;
+  }
+
+  .logo {
+    display: none;
   }
 
   .numbers {

@@ -1,8 +1,12 @@
+import { Basket } from 'components/icons'
 import styles from './LandingBulk.module.css'
 
 export const LandingBulk = () => {
   return (
     <div className={styles.bulk}>
+      <div className={styles.logo}>
+        <Basket width={56} height={56} />
+      </div>
       <div className={styles.content}>
         <div className={styles.header}>Bulk register and renew</div>
         <div className={styles.text}>
