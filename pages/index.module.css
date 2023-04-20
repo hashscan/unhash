@@ -50,7 +50,7 @@
 }
 
 .pricingSection {
-  padding: 96px 0;
+  padding: 112px 0;
 }
 
 .versionLabel {
@@ -70,7 +70,7 @@
 }
 
 .explainerSection {
-  padding: 96px 0;
+  padding: 112px 0;
   border-bottom: 1px solid var(--color-slate-6);
 }
 
@@ -121,7 +121,7 @@
 }
 
 .bulkSection {
-  padding: 60px 0 96px 0;
+  padding: 112px 0;
   border-bottom: 1px solid var(--color-slate-6);
 }
 
