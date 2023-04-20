@@ -133,30 +133,42 @@ export const Nav = () => {
                   }}
                 >
                   {account && (
-                    <div className={styles.mobileAccount}>
-                      <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
-                        <Avatar ensName={account.ensName as Domain} />
+                    <>
+                      <div className={styles.mobileAccount}>
+                        <div
+                          className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}
+                        >
+                          <Avatar ensName={account.ensName as Domain} />
+                        </div>
+                        <div
+                          className={clsx(styles.accountName, {
+                            [styles.mobile]: true,
+                            [styles.accountNameAddress]: !account.ensName
+                          })}
+                        >
+                          {account.ensName ? account.ensName : formatAddress(account.address)}
+                        </div>
                       </div>
-                      <div
-                        className={clsx(styles.accountName, {
-                          [styles.mobile]: true,
-                          [styles.accountNameAddress]: !account.ensName
-                        })}
-                      >
-                        {account.ensName ? account.ensName : formatAddress(account.address)}
-                      </div>
-                    </div>
+                      <div className={styles.delimiter}></div>
+                    </>
                   )}
+
                   <Links className={clsx(styles.links, styles.mobile)} mobile />
-                  <div className={ui.menu} onClick={logoutClick}>
-                    <div
-                      className={ui.menuIcon}
-                      style={{ height: '24px', width: '24px', marginLeft: '-4px' }}
-                    >
-                      <Logout />
-                    </div>
-                    <span className={ui.menuText}>Log out</span>
-                  </div>
+                  {account && (
+                    <>
+                      <div className={styles.delimiter}></div>
+
+                      <div className={ui.menu} onClick={logoutClick}>
+                        <div
+                          className={ui.menuIcon}
+                          style={{ height: '24px', width: '24px', marginLeft: '-4px' }}
+                        >
+                          <Logout />
+                        </div>
+                        <span className={ui.menuText}>Log out</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </>
             )
