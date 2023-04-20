@@ -57,16 +57,16 @@
   flex-grow: 1;
 }
 
-.links.mobile {
+.links.links_mobile {
   display: none;
 }
 
 @media (max-width: 768px) {
-  .links.desktop {
+  .links.links_desktop {
     display: none;
   }
 
-  .links.mobile {
+  .links.links_mobile {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -270,7 +270,7 @@
   margin-top: 8px;
 }
 
-.moreButton {
+.buttons > .moreButton {
   display: none;
 }
 

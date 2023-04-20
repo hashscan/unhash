@@ -73,7 +73,7 @@ export const Nav = () => {
           <div className={styles.name}>Unhash</div>
         </Link>
 
-        <Links className={clsx(styles.links, styles.desktop)} />
+        <Links className={clsx(styles.links, styles['links_desktop'])} />
 
         <ConnectButton.Custom>
           {({
@@ -126,7 +126,11 @@ export const Nav = () => {
                     </button>
                   )}
 
-                  <Button className={styles.moreButton} variant="ghost" onClick={() => setOpen(!isOpen)}>
+                  <Button
+                    className={styles.moreButton}
+                    variant="ghost"
+                    onClick={() => setOpen(!isOpen)}
+                  >
                     <Dots className={styles.svgInButton} />
                   </Button>
                 </div>
@@ -159,7 +163,7 @@ export const Nav = () => {
                     </>
                   )}
 
-                  <Links className={clsx(styles.links, styles.mobile)} mobile />
+                  <Links className={clsx(styles.links, styles['links_mobile'])} mobile />
                   {account && (
                     <>
                       <div className={styles.delimiter}></div>
