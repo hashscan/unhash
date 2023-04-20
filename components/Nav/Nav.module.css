@@ -283,3 +283,9 @@
     border-radius: 20px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .buttons > .walletButton {
+    width: 40px;
+  }
+}
