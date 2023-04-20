@@ -104,7 +104,7 @@ export const Nav = () => {
                   <Chain chainId={chain?.id} onClick={openChainModal} />
 
                   {!(connected && account) ? (
-                    <Button onClick={openConnectModal}>
+                    <Button className={styles.walletButton} onClick={openConnectModal}>
                       {isMobileViewport ? (
                         <Wallet className={styles.svgInButton} />
                       ) : (
