@@ -279,7 +279,7 @@
     display: inline-flex;
     padding: 0;
     width: 40px;
-    /* AAAAAA */
+    /* TODO: replace with button variant round */
     border-radius: 20px !important;
   }
 }
