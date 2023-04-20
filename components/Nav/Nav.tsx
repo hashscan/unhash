@@ -14,7 +14,7 @@ import { toNetwork, currentNetwork, Domain } from 'lib/types'
 import { Button } from 'components/ui/Button/Button'
 import Link from 'next/link'
 import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
-import { useMediaQuery } from 'usehooks-ts'
+import { useMediaQuery } from '@react-hook/media-query'
 
 import { UnhashLogo } from 'components/icons'
 
