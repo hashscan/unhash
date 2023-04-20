@@ -1,10 +1,10 @@
 import { useAccount } from 'wagmi'
 import styles from './profile.module.css'
-import { formatAddress } from 'lib/utils'
 import { ContainerLayout, PageWithLayout } from 'components/layouts'
 import { AuthLayout } from 'components/AuthLayout/AuthLayout'
 import { useCurrentUser } from 'lib/hooks/useCurrentUser'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
+import { ProfileUser } from 'components/ProfileUser/ProfileUser'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ProfilePrimaryDomain } from 'components/ProfilePrimaryDomain/ProfilePrimaryDomain'
@@ -38,7 +38,8 @@ const Profile: PageWithLayout = () => {
   return (
     <main className={styles.main}>
       <div className={styles.title}>Profile</div>
-      <div className={styles.address}>{address ? formatAddress(address, 6) : null}</div>
+      <ProfileUser className={styles.user} address={address!} domain={primaryName} />
+      <div className={styles.divider} style={{ marginTop: '32px' }}></div>
 
       {/* Primary ENS header */}
       <div className={styles.header}>Primary ENS</div>

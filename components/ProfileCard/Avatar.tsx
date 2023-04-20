@@ -7,12 +7,16 @@ import styles from './Avatar.module.css'
 import clsx from 'clsx'
 
 import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
-import { useState } from 'react'
+import { ComponentProps, useState } from 'react'
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
+interface AvatarProps extends ComponentProps<'div'> {
+  domain: Domain
+}
+
 // Later avatar should be resolved on API side
-export const Avatar = ({ domain }: { domain: Domain }) => {
+export const Avatar = ({ domain, className }: AvatarProps) => {
   const [revalidating, setRevalidating] = useState(false)
 
   const {
@@ -40,7 +44,7 @@ export const Avatar = ({ domain }: { domain: Domain }) => {
 
   return (
     <div
-      className={clsx({
+      className={clsx(className, {
         [styles.avatar]: true,
         [styles.avatar_loading]: isLoading,
         [styles.avatar_unset]: isUnset
