@@ -1,10 +1,32 @@
 .bulk {
-  position: relative;
   max-width: 800px;
 }
 
 .content {
-  margin-right: 240px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.content>:nth-child(2) {
+  flex: 1 1 50%;
+}
+
+.logo {
+  width: 96px;
+  height: 96px;
+
+  color: var(--color-background);
+  box-shadow: var(--shadow-reg);
+  background-color: var(--color-text-primary);
+  border-radius: 24px;
+  rotate: -4deg;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header {
@@ -23,10 +45,10 @@
 }
 
 .text {
+  width: 66.6%;
   font: var(--type-regular);
   letter-spacing: var(--ls-regular);
   color: var(--color-text-primary);
-  margin-bottom: 48px;
 }
 
 .numbers {
@@ -38,7 +60,7 @@
 
 .number {
   text-align: center;
-  padding: 0 0px;
+  padding: 0 8px;
 }
 
 .numberValue {
@@ -50,29 +72,10 @@
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   font-weight: 300;
-  color: var(--color-text-);
+  color: var(--color-text-secondary);
 
   white-space: pre-line;
   line-height: 16px;
-}
-
-.logo {
-  width: 96px;
-  height: 96px;
-  background-color: var(--color-text-primary);
-  border-radius: 24px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-background);
-
-  opacity: 0.05;
-  rotate: 5deg;
-
-  position: absolute;
-  top: 0;
-  right: 12px;
 }
 
 @media (max-width: 768px) {
@@ -80,13 +83,19 @@
     width: 100%;
   }
 
-  .logo {
-    display: none;
+  .text {
+    width: 100%;
   }
 
   .numbers {
     align-items: baseline;
     justify-content: space-around;
     gap: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .logo {
+    display: none;
   }
 }
