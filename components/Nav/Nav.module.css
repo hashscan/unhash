@@ -137,7 +137,7 @@
   .mobileAccount {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     padding: 12px 18px 12px 12px;
   }
 }
@@ -238,6 +238,13 @@
   margin-right: 4px;
 }
 
+@media (max-width: 449px) {
+  .chainWarning > span {
+    /* hide warning (keep only icon visible) */
+    display: none;
+  }
+}
+
 .chainWarning:hover {
   background-color: var(--color-slate-1);
   color: var(--color-slate-8);
@@ -257,11 +264,6 @@
   .accountName.mobile {
     display: contents;
   }
-
-  .chainWarning > span {
-    /* hide warning (keep only icon visible) */
-    display: none;
-  }
 }
 
 .svgInButton {
@@ -277,6 +279,7 @@
     display: inline-flex;
     padding: 0;
     width: 40px;
-    border-radius: 20px;
+    /* AAAAAA */
+    border-radius: 20px !important;
   }
 }
