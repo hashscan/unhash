@@ -443,6 +443,55 @@ export const PlusSign = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const Wallet = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg viewBox="0 0 24 24">
+      <g fill="none">
+        <path d="M0 0h24v24H0V0z"></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M13.499 13.48a.25.25 0 00-.249.251.25.25 0 10.249-.251"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M3 6.283V6a3 3 0 013-3h12a3 3 0 013 3v9a3 3 0 01-3 3h-1"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M21 9L17 9"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M13.325 20.922A3 3 0 0017 17.999V9.387a3 3 0 00-2.325-2.923L5.45 4.335A2 2 0 003 6.283v9.869a3 3 0 002.325 2.923l8 1.847z"
+        ></path>
+      </g>
+    </svg>
+  </BaseIcon>
+)
+
+export const Dots = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg fill="none" viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M8.074 12c0-.448-.156-.825-.469-1.133a1.55 1.55 0 00-1.14-.46 1.61 1.61 0 00-1.391.796c-.14.24-.21.505-.21.797 0 .292.07.557.21.797.146.24.339.432.578.578.245.146.516.219.813.219.292 0 .56-.073.805-.219.244-.146.44-.338.585-.578.146-.24.22-.505.22-.797zm5.524 0a1.54 1.54 0 00-.461-1.133 1.54 1.54 0 00-1.133-.46c-.297 0-.565.072-.805.218a1.61 1.61 0 00-.578.578c-.14.24-.21.505-.21.797 0 .292.07.557.21.797.146.24.339.432.578.578.24.146.508.219.805.219.292 0 .557-.073.797-.219a1.7 1.7 0 00.578-.578c.146-.24.219-.505.219-.797zm5.539 0a1.54 1.54 0 00-.461-1.133 1.55 1.55 0 00-1.14-.46 1.601 1.601 0 00-1.391.796c-.146.24-.22.505-.22.797 0 .292.074.557.22.797.145.24.338.432.578.578.244.146.515.219.812.219.297 0 .565-.073.805-.219.245-.146.437-.338.578-.578.146-.24.219-.505.219-.797z"
+      ></path>
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */

@@ -6,7 +6,7 @@ import ui from 'styles/ui.module.css'
 import { useDisconnect } from 'wagmi'
 import { useOnClickOutside } from 'usehooks-ts'
 import { formatAddress } from 'lib/utils'
-import { InfoCircle, Logout, Profile } from 'components/icons'
+import { InfoCircle, Logout, Profile, Wallet, Dots } from 'components/icons'
 import { Links } from './Links'
 import clsx from 'clsx'
 import styles from './Nav.module.css'
@@ -14,6 +14,7 @@ import { toNetwork, currentNetwork, Domain } from 'lib/types'
 import { Button } from 'components/ui/Button/Button'
 import Link from 'next/link'
 import { useEnsAvatar } from 'lib/hooks/useEnsAvatar'
+import { useMediaQuery } from 'usehooks-ts'
 
 import { UnhashLogo } from 'components/icons'
 
@@ -55,6 +56,7 @@ export const Nav = () => {
   const [isOpen, setOpen] = useState(false)
   const { disconnect } = useDisconnect()
 
+  const isMobileViewport = useMediaQuery('(max-width: 768px)')
   const ref = useRef<HTMLElement>() as RefObject<HTMLElement>
   useOnClickOutside(ref, () => setOpen(false))
 
@@ -92,14 +94,6 @@ export const Nav = () => {
               (!authenticationStatus || authenticationStatus === 'authenticated')
 
             if (!mounted) return null
-            if (!connected) {
-              return (
-                <div className={styles.buttons}>
-                  <Chain />
-                  <Button onClick={openConnectModal}>Connect wallet</Button>
-                </div>
-              )
-            }
 
             return (
               <>
@@ -109,7 +103,15 @@ export const Nav = () => {
                 >
                   <Chain chainId={chain?.id} onClick={openChainModal} />
 
-                  {account && (
+                  {!(connected && account) ? (
+                    <Button onClick={openConnectModal}>
+                      {isMobileViewport ? (
+                        <Wallet className={styles.svgInButton} />
+                      ) : (
+                        'Connect wallet'
+                      )}
+                    </Button>
+                  ) : (
                     <button className={styles.account} onClick={() => setOpen(!isOpen)}>
                       <div className={clsx(styles.accountAvatar, styles.acccountAvatarPlaceholder)}>
                         <Avatar ensName={account.ensName as Domain} />
@@ -123,6 +125,10 @@ export const Nav = () => {
                       </div>
                     </button>
                   )}
+
+                  <Button className={styles.moreButton} variant="ghost" onClick={() => setOpen(!isOpen)}>
+                    <Dots className={styles.svgInButton} />
+                  </Button>
                 </div>
 
                 <div
