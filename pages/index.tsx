@@ -19,6 +19,7 @@ import domainCardImg from '../styles/assets/explainer-domains.png'
 import walletCardImg from '../styles/assets/explainer-wallet.png'
 import profileCardImg from '../styles/assets/explainer-profile.png'
 import { getDomainName } from 'lib/utils'
+import { LandingBulk } from 'components/LandingBulk/LandingBulk'
 
 const Search: PageWithLayout = () => {
   const searchBarRef = useRef<SearchBarHandle>(null)
@@ -107,6 +108,12 @@ const Search: PageWithLayout = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className={styles.bulkSection}>
+          <div className={styles.container}>
+            <LandingBulk />
           </div>
         </div>
 

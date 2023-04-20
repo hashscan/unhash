@@ -18,7 +18,8 @@
 
 .hero {
   max-width: 640px;
-  padding-top: calc(94px - 1px); /* 1px for the border */
+  padding-top: calc(94px - 1px);
+  /* 1px for the border */
   flex: 1 1;
 }
 
@@ -102,7 +103,7 @@
   background: linear-gradient(to bottom, #ffffff00 70%, var(--color-slate-7) 100%);
 }
 
-.explainerImgFade > img {
+.explainerImgFade>img {
   width: 100%;
   height: auto;
 }
@@ -119,9 +120,15 @@
   padding: 0px 24px 40px 24px;
 }
 
+.bulkSection {
+  padding: 60px 0 96px 0;
+  border-bottom: 1px solid var(--color-slate-6);
+}
+
 @media (max-width: 768px) {
   .hero {
     max-width: unset;
-    padding-top: calc(64px - 1px); /* 1px for the border */
+    padding-top: calc(64px - 1px);
+    /* 1px for the border */
   }
 }

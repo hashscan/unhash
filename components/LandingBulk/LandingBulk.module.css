@@ -1,0 +1,66 @@
+.bulk {}
+
+.content {
+  width: 50%;
+}
+
+.header {
+  display: inline-block;
+
+  font: var(--type-lg);
+  letter-spacing: var(--ls-lg);
+  background-color: var(--color-highlight-green);
+  line-height: 36px;
+  margin-bottom: 8px;
+}
+
+.header::selection {
+  color: var(--color-highlight-green);
+  background-color: var(--color-text-primary);
+}
+
+.text {
+  font: var(--type-regular);
+  letter-spacing: var(--ls-regular);
+  color: var(--color-text-primary);
+  margin-bottom: 36px;
+}
+
+.numbers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 120px;
+}
+
+.number {
+  text-align: center;
+  padding: 0 16px;
+}
+
+.numberValue {
+  font: var(--type-x-lg);
+  letter-spacing: var(--ls-x-lg);
+}
+
+.numberDesc {
+  font: var(--type-sm);
+  letter-spacing: var(--ls-sm);
+  font-weight: 300;
+  color: var(--color-text-);
+
+  white-space: pre-line;
+  line-height: 16px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+  }
+
+  .numbers {
+    align-items: baseline;
+    justify-content: space-around;
+    gap: 0;
+  }
+}
