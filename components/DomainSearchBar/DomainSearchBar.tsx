@@ -4,8 +4,7 @@ import {
   useImperativeHandle,
   useCallback,
   FormEventHandler,
-  useRef,
-  useEffect
+  useRef
 } from 'react'
 import clsx from 'clsx'
 
