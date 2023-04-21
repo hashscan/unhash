@@ -4,7 +4,8 @@ import {
   useImperativeHandle,
   useCallback,
   FormEventHandler,
-  useRef
+  useRef,
+  useEffect
 } from 'react'
 import clsx from 'clsx'
 
@@ -28,6 +29,20 @@ import { useMediaQuery } from '@react-hook/media-query'
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
   setSearch: (val: string) => void
+}
+
+// useMediaQuery on a server returns false, so react hydration fails on mobile clients
+// this hooks wraps useMediaQuery and fix this problem 
+const useDynamicPlaceholder = (query: string, firstText: string, secondText: string) => {
+  const [isClient, set] = useState(false)
+  const isMobileViewport = useMediaQuery(query)
+
+  useEffect(() => {
+    set(true)
+  }, [])
+
+  if (!isClient) return ''
+  return isMobileViewport ? firstText : secondText
 }
 
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBarWithRef(
@@ -93,8 +108,11 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
     }
   }))
 
-  const isMobileViewport = useMediaQuery('(max-width: 768px)')
-  const inputPlaceholder = isMobileViewport ? 'Type .eth name...' : 'Search for .eth domain...'
+  const inputPlaceholder = useDynamicPlaceholder(
+    '(max-width: 768px)',
+    'Type .eth name...',
+    'Search for .eth domain...'
+  )
 
   return (
     <>
