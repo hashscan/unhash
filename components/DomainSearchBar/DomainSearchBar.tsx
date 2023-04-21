@@ -24,25 +24,10 @@ import { Button } from 'components/ui/Button/Button'
 import { Basket } from 'components/icons'
 import { Domain } from 'lib/types'
 import { SlideFlap } from 'components/ui/SlideFlap/SlideFlap'
-import { useMediaQuery } from '@react-hook/media-query'
 
 // allow parent components to imperatively update search string using ref
 export interface SearchBarHandle {
   setSearch: (val: string) => void
-}
-
-// useMediaQuery on a server returns false, so react hydration fails on mobile clients
-// this hooks wraps useMediaQuery and fix this problem 
-const useDynamicPlaceholder = (query: string, firstText: string, secondText: string) => {
-  const [isClient, set] = useState(false)
-  const isMobileViewport = useMediaQuery(query)
-
-  useEffect(() => {
-    set(true)
-  }, [])
-
-  if (!isClient) return ''
-  return isMobileViewport ? firstText : secondText
 }
 
 export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBarWithRef(
@@ -108,12 +93,6 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
     }
   }))
 
-  const inputPlaceholder = useDynamicPlaceholder(
-    '(max-width: 768px)',
-    'Type .eth name...',
-    'Search for .eth domain...'
-  )
-
   return (
     <>
       <div className={styles.searchBar}>
@@ -126,7 +105,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
               onChange={(e) => setSearchQuery(e.target.value)}
               className={styles.input}
               spellCheck="false"
-              placeholder={inputPlaceholder}
+              placeholder={'Search for .eth domain...'}
             ></input>
           </form>
 
