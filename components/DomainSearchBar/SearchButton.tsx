@@ -38,10 +38,12 @@ export const SearchButton = (props: SearchButtonProps) => {
         {isBulkEnabled ? (
           <div className={styles.label}>
             <PlusSign />
-            Add to Cart
+            <span className={styles.label_desktop}>Add to Cart</span>
           </div>
         ) : (
-          <>Register&nbsp;&nbsp;→</>
+          <>
+            <span className={styles.label_desktop}>Register&nbsp;&nbsp;</span>→
+          </>
         )}
       </button>
     </div>

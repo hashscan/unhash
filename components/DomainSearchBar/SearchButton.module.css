@@ -85,10 +85,14 @@
 
 @media (max-width: 768px) {
   .button {
-    font: var(--type-regular);
+    width: 50px;
   }
 
   .loader {
     margin-right: 6px;
+  }
+
+  .label_desktop {
+    display: none;
   }
 }
