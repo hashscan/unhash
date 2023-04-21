@@ -14,9 +14,11 @@ import { COMMIT_GAS_AVERAGE, registerGasAverage } from 'lib/ensUtils'
 
 interface CheckoutOrderProps {
   order: RegistrationOrder
+  focusAddress: () => void
+  lockInputs: () => void
 }
 
-export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
+export const CheckoutOrder = ({ order, focusAddress, lockInputs }: CheckoutOrderProps) => {
   const { names, durationInYears } = order
 
   const durationInSeconds = durationInYears * YEAR_IN_SECONDS
@@ -59,7 +61,7 @@ export const CheckoutOrder = ({ order }: CheckoutOrderProps) => {
         </div>
       </div>
 
-      <CommitButton order={order} />
+      <CommitButton order={order} focusAddress={focusAddress} lockInputs={lockInputs} />
 
       {/* only on mobiles */}
       <div className={styles.mobileTotal}>Estimated total {formatUSDPrice(totalPrice)}</div>

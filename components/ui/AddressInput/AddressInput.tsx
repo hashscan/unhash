@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { Input, InputProps } from '../Input/Input'
 import { isValidAddress } from 'lib/utils'
 import useEvent from 'react-use-event-hook'
@@ -20,32 +20,30 @@ export interface AddressInputProps extends InputProps {
 
 // Input with built-in address validation
 // undefined - not set, null - invalid input
-export const AddressInput = ({
-  onAddressChange,
-  onBlur,
-  defaultValue,
-  ...rest
-}: AddressInputProps) => {
-  const [value, setValue] = useState<string>(() => defaultValue ?? '')
-  const [showError, setShowError] = useState<boolean>(false)
+export const AddressInput = forwardRef<HTMLInputElement, AddressInputProps>(
+  function AddressInputWithRef({ onAddressChange, onBlur, defaultValue, ...rest }, ref) {
+    const [value, setValue] = useState<string>(() => defaultValue ?? '')
+    const [showError, setShowError] = useState<boolean>(false)
 
-  // just to ensure that we don't do extra re-renders
-  const onChangeStable = useEvent((value) => onAddressChange?.(value))
+    // just to ensure that we don't do extra re-renders
+    const onChangeStable = useEvent((value) => onAddressChange?.(value))
 
-  return (
-    <Input
-      {...rest}
-      error={showError ? 'Invalid address' : undefined}
-      onBlur={(e) => {
-        setShowError(inputValueToAddress(value) === null)
-        onBlur?.(e)
-      }}
-      value={value ?? ''}
-      onChange={(e) => {
-        setShowError(false)
-        setValue(e.target.value)
-        onChangeStable(inputValueToAddress(e.target.value))
-      }}
-    />
-  )
-}
+    return (
+      <Input
+        ref={ref}
+        {...rest}
+        error={showError ? 'Invalid address' : undefined}
+        onBlur={(e) => {
+          setShowError(inputValueToAddress(value) === null)
+          onBlur?.(e)
+        }}
+        value={value ?? ''}
+        onChange={(e) => {
+          setShowError(false)
+          setValue(e.target.value)
+          onChangeStable(inputValueToAddress(e.target.value))
+        }}
+      />
+    )
+  }
+)

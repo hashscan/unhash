@@ -1,9 +1,12 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import Head from 'next/head'
 import { useTimeout } from 'usehooks-ts'
 import { useBeforeUnload } from 'react-use'
 
-import { CheckoutCommitStep } from 'components/CheckoutCommitStep/CheckoutCommitStep'
+import {
+  CheckoutCommitStep,
+  type CheckoutCommitHandle
+} from 'components/CheckoutCommitStep/CheckoutCommitStep'
 import { CheckoutOrder } from 'components/CheckoutOrder/CheckoutOrder'
 import { CheckoutProgress } from 'components/CheckoutProgress/CheckoutProgress'
 import { CheckoutSuccessStep } from 'components/CheckoutSuccessStep/CheckoutSuccessStep'
@@ -94,6 +97,8 @@ const Register: PageWithLayout<RegisterProps> = () => {
     'If you close the browser tab, you may interrupt the registration process.'
   )
 
+  const checkoutHandles = useRef<CheckoutCommitHandle>(null)
+
   if (
     namesForRegistration == null ||
     namesForRegistration.length === 0 ||
@@ -117,7 +122,9 @@ const Register: PageWithLayout<RegisterProps> = () => {
         <main className={styles.main}>
           <CheckoutProgress className={styles.progress} step={step} names={namesForRegistration} />
 
-          {step === 'commit' && <CheckoutCommitStep order={order} updateOrder={updateOrder} />}
+          {step === 'commit' && (
+            <CheckoutCommitStep ref={checkoutHandles} order={order} updateOrder={updateOrder} />
+          )}
           {step === 'wait' && reg && <CheckoutWaitStep registration={reg} />}
           {step === 'register' && reg && <CheckoutRegisterStep registration={reg} />}
           {step === 'success' && reg && <CheckoutSuccessStep registration={reg} />}
@@ -125,7 +132,11 @@ const Register: PageWithLayout<RegisterProps> = () => {
 
         {step === 'commit' && (
           <div className={styles.order}>
-            <CheckoutOrder order={order} />
+            <CheckoutOrder
+              focusAddress={() => checkoutHandles.current?.focus()}
+              lockInputs={() => checkoutHandles.current?.lock()}
+              order={order}
+            />
           </div>
         )}
       </div>

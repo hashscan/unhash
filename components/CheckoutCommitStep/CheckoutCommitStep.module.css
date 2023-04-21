@@ -155,3 +155,37 @@
   border-radius: 4px;
   padding: 4px 12px;
 }
+
+.sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px
+}
+
+.groupOption {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row;
+
+  gap: 12px;
+
+  padding: 16px;
+  cursor: pointer;
+
+  border-radius: var(--radii-lg);
+  border: 1px solid var(--color-slate-6);
+}
