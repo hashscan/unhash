@@ -36,7 +36,7 @@
     letter-spacing: var(--ls-md);
     font-weight: 400;
     padding: 16px 12px;
-    padding-right: 140px;
+    padding-right: 110px;
     text-overflow: ellipsis;
   }
 }

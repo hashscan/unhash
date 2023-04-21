@@ -41,9 +41,9 @@ export const SearchButton = (props: SearchButtonProps) => {
             <span className={styles.label_desktop}>Add to Cart</span>
           </div>
         ) : (
-          <>
+          <span>
             <span className={styles.label_desktop}>Register&nbsp;&nbsp;</span>→
-          </>
+          </span>
         )}
       </button>
     </div>
