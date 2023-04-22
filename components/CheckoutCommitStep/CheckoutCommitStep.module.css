@@ -172,12 +172,12 @@
   display: flex;
   flex-direction: column;
 
-  gap: 12px
+  gap: 12px;
 }
 
 .groupOption {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr min-content;
   grid-auto-columns: 1fr;
   grid-auto-flow: row;
 
@@ -188,4 +188,27 @@
 
   border-radius: var(--radii-lg);
   border: 1px solid var(--color-slate-6);
+}
+
+.groupOption.groupOption_checked {
+  cursor: default;
+}
+
+.groupOption.groupOption_disabled {
+  cursor: not-allowed;
+  color: var(--color-slate-3);
+  background-color: var(--color-slate-7);
+}
+
+.groupOption.groupOption_checked::after {
+  content: ' ';
+  position: absolute;
+  inset: -1px;
+  box-shadow: 0px 0px 0 var(--border-width-md) inset var(--color-slate-1);
+  pointer-events: none;
+  border-radius: var(--radii-lg);
+}
+
+.groupOption.groupOption_disabled.groupOption_checked::after {
+  box-shadow: 0px 0px 0 var(--border-width-md) inset var(--color-slate-3);
 }

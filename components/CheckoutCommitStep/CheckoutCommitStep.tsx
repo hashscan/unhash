@@ -63,18 +63,26 @@ export const CheckoutCommitStep = forwardRef<CheckoutCommitHandle, CheckoutCommi
           >
             <RadioGroup.Label className={styles.sr_only}>Type of registration</RadioGroup.Label>
             <RadioGroup.Option value={'default'}>
-              {({ checked }) => (
-                <div className={styles.groupOption}>
-                  <div>Use by this wallet</div>
-                  <div>{checked ? '✅' : ''}</div>
+              {({ checked, disabled }) => (
+                <div
+                  className={clsx(styles.groupOption, {
+                    [styles.groupOption_checked]: checked,
+                    [styles.groupOption_disabled]: disabled
+                  })}
+                >
+                  <div>Use by my wallet</div>
                 </div>
               )}
             </RadioGroup.Option>
-            <RadioGroup.Option value={'forFriend'}>
-              {({ checked }) => (
-                <div className={styles.groupOption}>
-                  <div>For another wallet</div>
-                  <div>{checked ? '✅' : ''}</div>
+            <RadioGroup.Option value={'forFriend'} disabled={order.names.length > 1}>
+              {({ checked, disabled }) => (
+                <div
+                  className={clsx(styles.groupOption, {
+                    [styles.groupOption_checked]: checked,
+                    [styles.groupOption_disabled]: disabled
+                  })}
+                >
+                  <div>Simple register</div>
 
                   {checked && (
                     <AddressInput
