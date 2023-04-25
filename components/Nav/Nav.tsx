@@ -128,7 +128,7 @@ export const Nav = () => {
 
                   <Button
                     className={styles.moreButton}
-                    variant="ghost"
+                    variant="rounded-ghost"
                     onClick={() => setOpen(!isOpen)}
                   >
                     <Dots className={styles.svgInButton} />
