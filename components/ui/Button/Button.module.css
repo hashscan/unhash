@@ -84,6 +84,10 @@
   font-weight: 400;
 }
 
+.button.button_variant_rounded {
+  border-radius: var(--radii-round);
+}
+
 .button.button_medium {
   border-radius: var(--radii-md);
   padding: 0 28px;
@@ -122,12 +126,18 @@
   transform: rotate3d(1, 0, 0, 6deg) scale(0.99, 0.99) translateY(1px);
 }
 
-.button.button_ghost {
+.button.button_variant_ghost,
+.button.button_variant_rounded-ghost {
   color: var(--color-text-primary);
   background: none;
   box-shadow: none;
 }
 
-.button.button_ghost:hover {
+.button.button_variant_rounded-ghost {
+  border-radius: var(--radii-round);
+}
+
+.button.button_variant_rounded-ghost:hover,
+.button.button_variant_ghost:hover {
   background-color: var(--color-slate-6);
 }

@@ -9,7 +9,7 @@ import styles from './Button.module.css'
 export interface ButtonProps extends ComponentProps<'button'> {
   as?: 'button' | 'a'
   size?: 'small' | 'regular' | 'medium' | 'cta'
-  variant?: 'primary' | 'ghost'
+  variant?: 'primary' | 'rounded' | 'ghost' | 'rounded-ghost'
   isLoading?: boolean
 }
 
@@ -32,7 +32,7 @@ const ButtonWithRef = (
       className,
       styles.button,
       styles[`button_${size}`],
-      styles[`button_${variant}`],
+      styles[`button_variant_${variant}`],
       {
         [styles.button_loading]: isLoading
       }
