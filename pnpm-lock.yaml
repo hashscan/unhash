@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@adraffy/ens-normalize': ^1.9.0
   '@babel/core': ^7.20.12
   '@ensdomains/ens-avatar': ^0.2.2
   '@headlessui/react': ^1.7.13
@@ -36,6 +37,7 @@ specifiers:
   wagmi: ^0.12.10
 
 dependencies:
+  '@adraffy/ens-normalize': 1.9.0
   '@ensdomains/ens-avatar': 0.2.2
   '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-toast': 1.1.2_biqbaboplfbrettd7655fr4n2y
@@ -77,6 +79,10 @@ packages:
   /@adobe/css-tools/4.1.0:
     resolution: {integrity: sha512-mMVJ/j/GbZ/De4ZHWbQAQO1J6iVnjtZLc9WEdkUQb8S/Bu2cAF2bETXUgMAdvMG3/ngtKmcNBe+Zms9bg6jnQQ==}
     dev: true
+
+  /@adraffy/ens-normalize/1.9.0:
+    resolution: {integrity: sha512-iowxq3U30sghZotgl4s/oJRci6WPBfNO5YYgk2cIOMCHr3LeGPcsZjCEr+33Q4N+oV3OABDAtA+pyvWjbvBifQ==}
+    dev: false
 
   /@ampproject/remapping/2.2.0:
     resolution: {integrity: sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==}

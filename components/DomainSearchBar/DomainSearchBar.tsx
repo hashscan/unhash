@@ -12,7 +12,7 @@ import styles from './DomainSearchBar.module.css'
 import { SearchStatus } from './types'
 import { useSearch } from './useSearch'
 import { useRouterNavigate } from 'lib/hooks/useRouterNavigate'
-import { normalizeDotETH, findSuffix, statusToLEDColor } from './utils'
+import { normalize, findSuffix, statusToLEDColor } from './utils'
 import { trackGoal } from 'lib/analytics'
 import { useCart } from 'lib/hooks/useCart'
 
@@ -41,11 +41,11 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const inputRef = useRef<HTMLInputElement>(null)
 
   const setSearchQuery = useCallback((val: string) => {
-    setSearchQueryRaw(normalizeDotETH(val))
+    setSearchQueryRaw(normalize(val))
   }, [])
 
   const suffix = findSuffix(searchQuery)
-  const normalized = searchQuery.length ? normalizeDotETH(searchQuery + suffix) : ''
+  const normalized = searchQuery.length ? normalize(searchQuery + suffix) : ''
 
   const { status, validationMessage, errorMessage } = useSearch(normalized, false, names)
   const { listing } = useSearch(normalized, true) // run parallel search for listing
