@@ -8,6 +8,7 @@ import {
 } from 'react'
 import clsx from 'clsx'
 
+import { useRifm } from 'rifm'
 import styles from './DomainSearchBar.module.css'
 import { SearchStatus } from './types'
 import { useSearch } from './useSearch'
@@ -43,6 +44,14 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
   const setSearchQuery = useCallback((val: string) => {
     setSearchQueryRaw(normalize(val))
   }, [])
+
+  const rifm = useRifm({
+    accept: /./g, // all symbols
+    value: searchQuery,
+    onChange: setSearchQueryRaw,
+    format: (v: string) => v, // no formatting
+    replace: normalize // replace some invalid names with valid if possible and preserve cursor
+  })
 
   const suffix = findSuffix(searchQuery)
   const normalized = searchQuery.length ? normalize(searchQuery + suffix) : ''
@@ -100,8 +109,8 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
             <input
               autoFocus
               ref={inputRef}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={rifm.value}
+              onChange={rifm.onChange}
               className={styles.input}
               spellCheck="false"
               placeholder={'Search for .eth domain...'}
