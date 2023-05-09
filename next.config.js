@@ -7,17 +7,14 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
   reactStrictMode: true,
-  experimental: {
-    appDir: true
-  },
-  i18n: {
-    // Setting locales explicitly ensures that the proper "lang" attribute is set on the <html />
-    locales: ['en-US'],
+  // i18n: {
+  //   // Setting locales explicitly ensures that the proper "lang" attribute is set on the <html />
+  //   locales: ['en-US'],
 
-    // Read more about I18n routing:
-    // https://nextjs.org/docs/advanced-features/i18n-routing
-    defaultLocale: 'en-US'
-  },
+  //   // Read more about I18n routing:
+  //   // https://nextjs.org/docs/advanced-features/i18n-routing
+  //   defaultLocale: 'en-US'
+  // },
 
   async rewrites() {
     return [
