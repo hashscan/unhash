@@ -492,6 +492,54 @@ export const Dots = (props: BaseIconProps) => (
   </BaseIcon>
 )
 
+export const Warning = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <g fill="none">
+        <path d="M0 0h24v24H0z"></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M12 13.12V9.38M11.999 16.125a.25.25 0 10.002.5.25.25 0 00-.002-.5"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M14.029 4.139l7.659 13.404c.89 1.558-.235 3.497-2.029 3.497H4.341c-1.795 0-2.92-1.939-2.029-3.497L9.971 4.139c.897-1.571 3.161-1.571 4.058 0z"
+        ></path>
+      </g>
+    </svg>
+  </BaseIcon>
+)
+
+export const Error = (props: BaseIconProps) => (
+  <BaseIcon {...props} baseSize={24}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <g fill="none">
+        <path d="M0 0h24v24H0V0z"></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M12 12V7.5M11.999 15.5a.25.25 0 10.002.5.25.25 0 00-.002-.5"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
+          d="M3 14.381V9.619A4.5 4.5 0 015.236 5.73l4.5-2.619a4.501 4.501 0 014.527 0l4.5 2.619A4.5 4.5 0 0121 9.619v4.762a4.5 4.5 0 01-2.236 3.889l-4.5 2.619a4.501 4.501 0 01-4.527 0l-4.5-2.619A4.5 4.5 0 013 14.381z"
+        ></path>
+      </g>
+    </svg>
+  </BaseIcon>
+)
+
 /*
  * <BaseIcon />
  */

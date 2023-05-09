@@ -7,6 +7,7 @@ import api, { DomainInfo } from 'lib/api'
 import { validateDomain } from 'lib/utils'
 import { formatAddress } from 'lib/utils'
 import Link from 'next/link'
+import { Label } from 'components/ui/Label/Label'
 
 interface DomainPageProps {
   domain: Domain
@@ -21,7 +22,9 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
         <title>{domain}</title>
       </Head>
 
-      <div className={styles.title}>{domain}</div>
+      <h1 className={styles.title}>
+        {domain} <Label size="lg" type={'error'}></Label>
+      </h1>
       <div className={styles.address}>{formatAddress(info.registrant as Domain, 4)}</div>
       <div className={styles.info}>
         This domain is owned by{' '}

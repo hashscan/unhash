@@ -1,0 +1,55 @@
+.label {
+  display: inline-flex;
+  border-radius: var(--radii-md);
+
+  background-color: var(--color-warning);
+
+  gap: 12px;
+  padding: 8px;
+
+  font: var(--type-regular);
+  font-family: var(--font-mono);
+  letter-spacing: var(--ls-regular);
+}
+
+.label > svg {
+  color: black;
+  width: 32px;
+  height: 32px;
+}
+
+.label.label_size_sl {
+  gap: 4px;
+  padding: 4px;
+
+  font: var(--type-sm);
+}
+
+.label.label_size_sl > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.label.label_size_md {
+  gap: 8px;
+  padding: 8px;
+
+  font: var(--type-regular);
+}
+
+.label.label_size_md > svg {
+  width: 24px;
+  height: 24px;
+}
+
+.label.label_type_warning {
+  background-color: var(--color-warning);
+}
+
+.label.label_type_error {
+  background-color: var(--color-error);
+}
+
+.label.label_type_error > svg {
+  color: white;
+}
