@@ -2,7 +2,7 @@ import localFont from 'next/font/local'
 import { JetBrains_Mono } from 'next/font/google'
 
 // If loading a variable font, you don't need to specify the font weight
-export const JetBrainsMono = JetBrains_Mono({ subsets: ['latin'] })
+export const JetBrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
 // primary Sans Serif font for the UI
 export const Lausanne = localFont({
@@ -29,5 +29,6 @@ export const Lausanne = localFont({
     }
   ],
   fallback: ['system-ui'],
+  variable: '--font-ui',
   display: 'swap'
 })

@@ -1,5 +1,15 @@
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {}
+})
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
+  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
+  reactStrictMode: true,
+  experimental: {
+    appDir: true
+  },
   i18n: {
     // Setting locales explicitly ensures that the proper "lang" attribute is set on the <html />
     locales: ['en-US'],
@@ -22,3 +32,5 @@ module.exports = {
     ]
   }
 }
+
+module.exports = withMDX(nextConfig)
