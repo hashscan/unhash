@@ -9,10 +9,10 @@ export const Link = ({ href, children }: PropsWithChildren<{ href?: string }>) =
 
 export const Image = ({ src, alt }: { src?: string; alt?: string }) =>
   src ? (
-    <div>
-      <NextImage src={src} alt={alt ?? 'image'} />
-      {alt && <div>alt</div>}
-    </div>
+    <>
+      <NextImage src={src} alt={alt ?? 'image'} width={1200} height={627} />
+      {alt && <span>{alt}</span>}
+    </>
   ) : null
 
 export const Paragraph = ({ children }: PropsWithChildren<{}>) => (
