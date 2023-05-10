@@ -6,6 +6,8 @@ export function generateStaticParams() {
   return Object.keys(posts)
 }
 
+export const dynamic = 'force-static'
+
 export default function Post({ params }: { params: { slug: string } }) {
   const { default: Content } = posts[params.slug] ?? { default: null }
 
