@@ -1,6 +1,6 @@
 let MDXComponent: (props) => JSX.Element
 
-declare module './content/*.mdx' {
+declare module 'content/*.mdx' {
   export const title: string
   export const description: string
   export const slug: string
