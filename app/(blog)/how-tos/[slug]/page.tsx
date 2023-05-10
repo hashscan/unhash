@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import posts from 'content'
 
@@ -6,14 +7,27 @@ export function generateStaticParams() {
   return Object.keys(posts).map((slug) => ({ slug }))
 }
 
-export const dynamic = 'force-static'
+type PostParams = { params: { slug: string } }
 
-export default function Post({ params }: { params: { slug: string } }) {
-  const { default: Content } = posts[params.slug] ?? { default: null }
+export function generateMetadata({ params }: PostParams) {
+  const post = posts[params.slug]
 
-  if (!Content) {
+  const metadata: Metadata = {
+    title: post.title,
+    description: post.description,
+
+    robots: 'index, follow'
+  }
+
+  return metadata
+}
+
+export default function Post({ params }: PostParams) {
+  const post = posts[params.slug]
+
+  if (!post) {
     notFound()
   }
 
-  return <Content />
+  return <post.default />
 }
