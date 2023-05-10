@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
+import { Providers } from 'components/Providers/Providers'
+import { ContainerLayout } from 'components/layouts'
 
 export const metadata = {
   title: 'Next.js',
@@ -11,7 +13,11 @@ export const metadata = {
 export default function Root({ children }: PropsWithChildren<{}>) {
   return (
     <html lang="en" className={clsx(Lausanne.variable, JetBrainsMono.variable)}>
-      <body>{children}</body>
+      <body>
+        <Providers>
+          <ContainerLayout>{children}</ContainerLayout>
+        </Providers>
+      </body>
     </html>
   )
 }
