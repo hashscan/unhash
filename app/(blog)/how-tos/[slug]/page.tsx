@@ -3,7 +3,7 @@ import posts from 'content'
 
 // generate static pages for blog
 export function generateStaticParams() {
-  return Object.keys(posts)
+  return Object.keys(posts).map((slug) => ({ slug }))
 }
 
 export const dynamic = 'force-static'
