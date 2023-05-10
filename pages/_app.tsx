@@ -1,37 +1,15 @@
-import { darkTheme, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
-import { createClient, WagmiConfig } from 'wagmi'
-import { Provider as WrapBalancerProvider } from 'react-wrap-balancer'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
+import { Providers } from 'components/Providers/Providers'
 import { wrapInLayout } from 'components/layouts'
-import { RegistrationsProvider } from 'components/RegistrationsProvider/RegistrationsProvider'
-import { NotifierProvider } from 'components/ui/Notifier/NotifierProvider'
-import { Feedback } from 'components/Feedback/Feedback'
 
 import 'styles/global.css'
 import '@rainbow-me/rainbowkit/styles.css'
-import { chains, provider, connectors } from 'lib/connectors'
 
 import { AnalyticsScript } from 'lib/analytics'
 
 import { Lausanne, JetBrainsMono } from 'styles/fonts'
-import { Dialogs } from 'lib/dialogs'
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
-
-const wagmiClient = createClient({
-  autoConnect: true,
-  connectors,
-  provider
-})
-
-const rainbowkitTheme: Theme = {
-  ...darkTheme(),
-  fonts: { body: 'var(--font-ui)' }
-}
 
 const metaTitle = 'Unhash: register and manage ENS names'
 
@@ -84,21 +62,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         `}
       </style>
 
-      <QueryClientProvider client={queryClient}>
-        <WagmiConfig client={wagmiClient}>
-          <NotifierProvider>
-            <RegistrationsProvider>
-              <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
-                <WrapBalancerProvider>
-                  {wrapInLayout(Component, <Component {...pageProps} />)}
-                  <Feedback />
-                  <Dialogs />
-                </WrapBalancerProvider>
-              </RainbowKitProvider>
-            </RegistrationsProvider>
-          </NotifierProvider>
-        </WagmiConfig>
-      </QueryClientProvider>
+      <Providers>{wrapInLayout(Component, <Component {...pageProps} />)}</Providers>
     </>
   )
 }
