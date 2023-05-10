@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation'
 import posts from 'content'
 
-export async function generateStaticParams() {
+// generate static pages for blog
+export function generateStaticParams() {
   return Object.keys(posts)
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
-  const { default: Content } = posts[params.slug]
+export default function Post({ params }: { params: { slug: string } }) {
+  const { default: Content } = posts[params.slug] ?? { default: null }
 
   if (!Content) {
     notFound()
