@@ -18,14 +18,15 @@
   height: 32px;
 }
 
-.label.label_size_sl {
+.label.label_size_sm {
   gap: 4px;
   padding: 4px;
+  border-radius: var(--radii-sm);
 
   font: var(--type-sm);
 }
 
-.label.label_size_sl > svg {
+.label.label_size_sm > svg {
   width: 16px;
   height: 16px;
 }
