@@ -206,7 +206,7 @@ export const DomainSearchBar = forwardRef<SearchBarHandle, {}>(function SearchBa
         )}
       </div>
 
-      <div className={styles.buyCardContainer}>
+      <div className={styles.listingContainer}>
         {listing && <MarketplaceListing name={normalized} listing={listing} />}
       </div>
     </>

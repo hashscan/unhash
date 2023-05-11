@@ -171,6 +171,7 @@ button.startBulk > div {
   color: var(--color-slate-5);
 }
 
-.buyCardContainer {
+.listingContainer {
+  min-height: 72px;
   margin-top: 12px;
 }
