@@ -1,11 +1,6 @@
 import posts from 'content'
 import Link from 'next/link'
 
-// generate static pages for blog
-export function generateStaticParams() {
-  return Object.keys(posts)
-}
-
 export default function Posts() {
   return (
     <>
