@@ -6,7 +6,6 @@ import { Provider as WrapBalancerProvider } from 'react-wrap-balancer'
 
 import { RegistrationsProvider } from 'components/RegistrationsProvider/RegistrationsProvider'
 import { NotifierProvider } from 'components/ui/Notifier/NotifierProvider'
-// import { Feedback } from 'components/Feedback/Feedback'
 
 import 'styles/global.css'
 import '@rainbow-me/rainbowkit/styles.css'
@@ -39,7 +38,6 @@ export const Providers = ({ children }: PropsWithChildren<{}>) => {
             <RainbowKitProvider theme={rainbowkitTheme} chains={chains}>
               <WrapBalancerProvider>
                 {children}
-                {/* <Feedback /> */}
                 <Dialogs />
               </WrapBalancerProvider>
             </RainbowKitProvider>
