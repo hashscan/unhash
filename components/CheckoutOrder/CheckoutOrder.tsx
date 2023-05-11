@@ -16,9 +16,15 @@ interface CheckoutOrderProps {
   order: RegistrationOrder
   focusAddress: () => void
   lockInputs: () => void
+  unlockInputs: () => void
 }
 
-export const CheckoutOrder = ({ order, focusAddress, lockInputs }: CheckoutOrderProps) => {
+export const CheckoutOrder = ({
+  order,
+  focusAddress,
+  lockInputs,
+  unlockInputs
+}: CheckoutOrderProps) => {
   const { names, durationInYears } = order
 
   const durationInSeconds = durationInYears * YEAR_IN_SECONDS
@@ -61,7 +67,12 @@ export const CheckoutOrder = ({ order, focusAddress, lockInputs }: CheckoutOrder
         </div>
       </div>
 
-      <CommitButton order={order} focusAddress={focusAddress} lockInputs={lockInputs} />
+      <CommitButton
+        order={order}
+        focusAddress={focusAddress}
+        lockInputs={lockInputs}
+        unlockInputs={unlockInputs}
+      />
 
       {/* only on mobiles */}
       <div className={styles.mobileTotal}>Estimated total {formatUSDPrice(totalPrice)}</div>

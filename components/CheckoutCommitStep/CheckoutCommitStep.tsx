@@ -25,6 +25,7 @@ interface CheckoutCommitStepProps {
 
 export type CheckoutCommitHandle = {
   lock: () => void
+  unlock: () => void
   focus: () => void
 }
 
@@ -40,6 +41,7 @@ export const CheckoutCommitStep = forwardRef<CheckoutCommitHandle, CheckoutCommi
       ref,
       () => ({
         lock: () => lock(true),
+        unlock: () => lock(false),
         focus: () => addressInputRef.current?.focus()
       }),
       []

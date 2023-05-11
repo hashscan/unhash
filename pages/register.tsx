@@ -135,6 +135,7 @@ const Register: PageWithLayout<RegisterProps> = () => {
             <CheckoutOrder
               focusAddress={() => checkoutHandles.current?.focus()}
               lockInputs={() => checkoutHandles.current?.lock()}
+              unlockInputs={() => checkoutHandles.current?.unlock()}
               order={order}
             />
           </div>

@@ -19,9 +19,15 @@ interface CommitButtonProps {
   order: RegistrationOrder
   focusAddress: () => void
   lockInputs: () => void
+  unlockInputs: () => void
 }
 
-export const CommitButton = ({ order, focusAddress, lockInputs }: CommitButtonProps) => {
+export const CommitButton = ({
+  order,
+  focusAddress,
+  lockInputs,
+  unlockInputs
+}: CommitButtonProps) => {
   const { names } = order
   const { address: sender } = useAccount()
   const nullableSender = sender ? sender : null
@@ -39,6 +45,7 @@ export const CommitButton = ({ order, focusAddress, lockInputs }: CommitButtonPr
   const notify = useNotifier()
   useChange(error?.message, (current) => {
     if (current) {
+      unlockInputs()
       notify(current, { status: 'error', title: 'Error sending transaction' })
     }
   })
@@ -54,6 +61,7 @@ export const CommitButton = ({ order, focusAddress, lockInputs }: CommitButtonPr
       sendCommit?.()
       lockInputs()
     } catch (error) {
+      unlockInputs()
       const msg = error instanceof Error ? error.toString() : 'Commit error'
       notify(msg, { status: 'error' })
     }
