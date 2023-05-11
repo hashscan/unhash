@@ -1,15 +1,20 @@
+'use client'
+
 import clsx from 'clsx'
 import { Chat } from 'components/icons'
 import { ComponentProps, useEffect, useState } from 'react'
 import styles from './Feedback.module.css'
 import { FeedbackForm } from './FeedbackForm'
+import { usePathname as usePath } from 'next/navigation'
 
-import { useCurrentRoute } from 'lib/hooks/useCurrentRoute'
-
-export const Feedback = ({ className, ...rest }: ComponentProps<'div'>) => {
+export const Feedback = ({
+  className,
+  usePathname = usePath,
+  ...rest
+}: ComponentProps<'div'> & { usePathname?: () => string }) => {
   const [isHidden, hide] = useState(true)
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const route = useCurrentRoute()
+  const route = usePathname()
 
   useEffect(() => {
     const SHOW_AFTER = 700

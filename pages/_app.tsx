@@ -3,6 +3,8 @@ import Head from 'next/head'
 
 import { Providers } from 'components/Providers/Providers'
 import { wrapInLayout } from 'components/layouts'
+import { Feedback } from 'components/Feedback/Feedback'
+import { useCurrentRoute } from 'lib/hooks/useCurrentRoute'
 
 import 'styles/global.css'
 import '@rainbow-me/rainbowkit/styles.css'
@@ -62,7 +64,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         `}
       </style>
 
-      <Providers>{wrapInLayout(Component, <Component {...pageProps} />)}</Providers>
+      <Providers>
+        {wrapInLayout(Component, <Component {...pageProps} />)}
+        <Feedback usePathname={useCurrentRoute} />
+      </Providers>
     </>
   )
 }
