@@ -11,6 +11,9 @@ import { NextPage } from 'next'
 import clsx from 'clsx'
 
 import { Nav } from 'components/Nav/Nav'
+import { useCurrentRoute } from 'lib/hooks/useCurrentRoute'
+import { usePathname } from 'next/navigation'
+
 import styles from './layouts.module.css'
 
 /**
@@ -38,7 +41,7 @@ export interface BaseLayoutProps {
 export const FullWidthLayout = ({ nav = true, children }: PropsWithChildren<BaseLayoutProps>) => {
   return (
     <>
-      {nav && <Nav />}
+      {nav && <Nav usePathname={useCurrentRoute} />}
       {children}
     </>
   )
@@ -57,7 +60,31 @@ export const ContainerLayout = ({
 }: PropsWithChildren<ContainerLayoutProps>) => {
   return (
     <>
-      {nav && <Nav />}
+      {nav && <Nav usePathname={useCurrentRoute} />}
+      <div
+        className={clsx(styles.container, {
+          [styles.withVerticalPadding]: verticalPadding,
+          [styles.centered]: centered
+        })}
+      >
+        {children}
+      </div>
+    </>
+  )
+}
+
+/**
+ * Layout for app ROUTER
+ */
+export const AppRouterLayout = ({
+  nav = true,
+  verticalPadding = true,
+  centered = false,
+  children
+}: PropsWithChildren<ContainerLayoutProps>) => {
+  return (
+    <>
+      {nav && <Nav usePathname={usePathname} />}
       <div
         className={clsx(styles.container, {
           [styles.withVerticalPadding]: verticalPadding,

@@ -52,7 +52,7 @@ const Chain = ({ chainId, onClick }: ChainProps) => {
   )
 }
 
-export const Nav = () => {
+export const Nav = ({ usePathname }: { usePathname: () => string }) => {
   const [isOpen, setOpen] = useState(false)
   const { disconnect } = useDisconnect()
 
@@ -73,7 +73,7 @@ export const Nav = () => {
           <div className={styles.name}>Unhash</div>
         </Link>
 
-        <Links className={clsx(styles.links, styles['links_desktop'])} />
+        <Links usePathname={usePathname} className={clsx(styles.links, styles['links_desktop'])} />
 
         <ConnectButton.Custom>
           {({
@@ -163,7 +163,11 @@ export const Nav = () => {
                     </>
                   )}
 
-                  <Links className={clsx(styles.links, styles['links_mobile'])} mobile />
+                  <Links
+                    className={clsx(styles.links, styles['links_mobile'])}
+                    usePathname={usePathname}
+                    mobile
+                  />
                   {account && (
                     <>
                       <div className={styles.delimiter}></div>
