@@ -1,3 +1,4 @@
+import { ens_normalize as ensNormalize, ens_split as ensSplit } from '@adraffy/ens-normalize'
 import { Domain, NFTToken, TransactionStatus } from './types'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -17,7 +18,9 @@ export function isValidAddress(address: string): boolean {
   return /^0x[0-9a-fA-F]{40}$/.test(address)
 }
 
-/** Returns error message or null if domain valid. */
+/**
+ * Returns error message or null if domain valid.
+ */
 export function validateDomain(domain: string): string | null {
   if (!domain.endsWith('.eth')) {
     return 'Domain must end with .eth'
@@ -78,4 +81,17 @@ export function loadingToStatus(
 
 export function notNull<T>(val: T): val is NonNullable<T> {
   return !!val
+}
+
+export function isValidName(name: string) {
+  try {
+    return ensNormalize(name) === name
+  } catch (error) {
+    return false
+  }
+}
+
+export function isNameASCIIOnly(name: string) {
+  const tokens = ensSplit(name)
+  return tokens.every((token) => token.type === 'ASCII')
 }

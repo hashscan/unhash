@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 import { Button } from 'components/ui/Button/Button'
 
 import { openDialog } from 'lib/dialogs'
+import { WarningLabel } from 'components/WarningLabel/WarningLabel'
 
 function buildMenuItems(
   domain: UserDomain,
@@ -214,7 +215,7 @@ const Names: PageWithLayout = () => {
                   </td>
                   <td className={clsx(styles.cell, styles.nameCell)}>
                     <Link className={styles.domain} href={`/${domain.name}/`}>
-                      {domain.name}
+                      {domain.name} <WarningLabel name={domain.name} />
                     </Link>
                   </td>
                   <td className={clsx(styles.cell, styles.rightsCell)}>
