@@ -1,8 +1,8 @@
-import React, { ComponentProps } from 'react'
+import React, { ComponentPropsWithoutRef, forwardRef } from 'react'
 import styles from './Input.module.css'
 import clsx from 'clsx'
 
-export interface InputProps extends ComponentProps<'input'> {
+export interface InputProps extends ComponentPropsWithoutRef<'input'> {
   label?: string
   icon?: JSX.Element
   hint?: string
@@ -10,22 +10,17 @@ export interface InputProps extends ComponentProps<'input'> {
   labelClassName?: string
 }
 
-export const Input = ({
-  label,
-  icon,
-  hint,
-  error,
-  className,
-  labelClassName,
-  children,
-  ...rest
-}: InputProps) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(function InputWithRef(
+  { label, icon, hint, error, className, labelClassName, children, ...rest },
+  ref
+) {
   return (
     <div className={clsx(styles.container)}>
       {label && <div className={clsx(styles.label, labelClassName)}>{label}</div>}
       <div className={clsx(styles.wrapper, { [styles.wrapperHintSpace]: !error && !hint })}>
         {icon && <div className={styles.icon}>{icon}</div>}
         <input
+          ref={ref}
           {...rest}
           className={clsx(styles.input, className, {
             [styles.inputWithIcon]: icon !== undefined,
@@ -40,4 +35,4 @@ export const Input = ({
       )}
     </div>
   )
-}
+})

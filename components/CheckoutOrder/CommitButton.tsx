@@ -17,9 +17,17 @@ import { useSendCommit } from 'lib/hooks/useSendCommit'
 
 interface CommitButtonProps {
   order: RegistrationOrder
+  focusAddress: () => void
+  lockInputs: () => void
+  unlockInputs: () => void
 }
 
-export const CommitButton = ({ order }: CommitButtonProps) => {
+export const CommitButton = ({
+  order,
+  focusAddress,
+  lockInputs,
+  unlockInputs
+}: CommitButtonProps) => {
   const { names } = order
   const { address: sender } = useAccount()
   const nullableSender = sender ? sender : null
@@ -37,21 +45,27 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
   const notify = useNotifier()
   useChange(error?.message, (current) => {
     if (current) {
+      unlockInputs()
       notify(current, { status: 'error', title: 'Error sending transaction' })
     }
   })
 
-  const onStartClick = useCallback(() => {
+  const onStartClick = () => {
     trackGoal('CommitClick', { props: { names: names.join(',') } })
+
+    // ownerAddress is invalid so we focus address input and do nothing here
+    if (order.ownerAddress === null) return focusAddress()
 
     // can't send transaction for any reason (e.g. wallet not connected, alchemy down, etc.)`
     try {
       sendCommit?.()
+      lockInputs()
     } catch (error) {
+      unlockInputs()
       const msg = error instanceof Error ? error.toString() : 'Commit error'
       notify(msg, { status: 'error' })
     }
-  }, [sendCommit, notify, names])
+  }
 
   return (
     <div>
@@ -74,7 +88,7 @@ export const CommitButton = ({ order }: CommitButtonProps) => {
               size="cta"
               status={status}
               className={styles.commitButton}
-              onClick={() => onStartClick()}
+              onClick={onStartClick}
             >
               {buttonLabel}
             </TransactionButton>

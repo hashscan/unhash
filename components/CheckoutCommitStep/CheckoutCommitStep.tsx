@@ -1,4 +1,12 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react'
+import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { RegistrationOrder } from 'lib/types'
@@ -6,8 +14,7 @@ import styles from './CheckoutCommitStep.module.css'
 import { pluralize } from 'lib/pluralize'
 import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
-import { Tool as ToolIcon, EthereumIcon } from 'components/icons'
-import { AdditionalInfo } from 'components/AdditionalInfo/AdditionalInfo'
+import { EthereumIcon } from 'components/icons'
 
 const YEAR_BUTTONS = [1, 2, 3, 4]
 
@@ -16,57 +23,115 @@ interface CheckoutCommitStepProps {
   updateOrder: Dispatch<SetStateAction<RegistrationOrder>>
 }
 
-export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepProps) => {
-  const nameLabel = pluralize('name', order.names.length, true)
+export type CheckoutCommitHandle = {
+  lock: () => void
+  unlock: () => void
+  focus: () => void
+}
 
-  // TODO: show connect wallet button if not connected
-  return (
-    <div className={styles.container}>
-      <div className={styles.formGroup}>
-        <div className={styles.header}>Registration period</div>
-        <div className={styles.subheader}>
-          {"You'll"} get {order.names.length === 1 ? 'the name' : 'names'} for a selected period of
-          time and can always renew it later. By choosing a longer period, you will save on renewal
-          network fees.
+type RegType = 'default' | 'forFriend'
+
+export const CheckoutCommitStep = forwardRef<CheckoutCommitHandle, CheckoutCommitStepProps>(
+  function CheckoutCommitStepWithRef({ order, updateOrder }, ref) {
+    const [isLocked, lock] = useState(false)
+    const [type, setType] = useState<RegType>('default')
+    const addressInputRef = useRef<HTMLInputElement>(null)
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        lock: () => lock(true),
+        unlock: () => lock(false),
+        focus: () => addressInputRef.current?.focus()
+      }),
+      []
+    )
+
+    return (
+      <div className={styles.container}>
+        <div className={styles.formGroup}>
+          <RadioGroup
+            disabled={isLocked}
+            value={type}
+            onChange={(type: RegType) => {
+              if (type === 'forFriend') {
+                updateOrder((order) => ({ ...order, ownerAddress: null }))
+              } else if (type === 'default') {
+                updateOrder((order) => ({ ...order, ownerAddress: undefined }))
+              }
+              setType(type)
+            }}
+            className={styles.group}
+          >
+            <RadioGroup.Label className={styles.sr_only}>Type of registration</RadioGroup.Label>
+            <RadioGroup.Option value={'default'}>
+              {({ checked, disabled }) => (
+                <div
+                  className={clsx(styles.groupOption, {
+                    [styles.groupOption_checked]: checked,
+                    [styles.groupOption_disabled]: disabled
+                  })}
+                >
+                  <div>Use by my wallet</div>
+                </div>
+              )}
+            </RadioGroup.Option>
+            <RadioGroup.Option value={'forFriend'} disabled={order.names.length > 1}>
+              {({ checked, disabled }) => (
+                <div
+                  className={clsx(styles.groupOption, {
+                    [styles.groupOption_checked]: checked,
+                    [styles.groupOption_disabled]: disabled
+                  })}
+                >
+                  <div>Simple register</div>
+
+                  {checked && (
+                    <AddressInput
+                      ref={addressInputRef}
+                      icon={<EthereumIcon />}
+                      className={styles.ownerInput}
+                      placeholder="0xd07d...54aB"
+                      autoComplete="off"
+                      disabled={isLocked}
+                      defaultValue={order.ownerAddress ?? ''}
+                      onAddressChange={(address) => {
+                        updateOrder((order) => ({ ...order, ownerAddress: address }))
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+            </RadioGroup.Option>
+          </RadioGroup>
         </div>
-        <div className={styles.years}>
-          {YEAR_BUTTONS.map((year) => (
-            <div
-              key={year}
-              className={clsx(styles.yearButton, {
-                [styles.yearButtonSelected]: year === order.durationInYears
-              })}
-              onClick={() => {
-                updateOrder((order) => ({ ...order, durationInYears: year }))
-              }}
-            >
-              {pluralize('year', year)}
-            </div>
-          ))}
+
+        <div className={styles.formGroup}>
+          <div className={styles.header}>Registration period</div>
+          <div className={styles.subheader}>
+            {"You'll"} get {order.names.length === 1 ? 'the name' : 'names'} for a selected period
+            of time and can always renew it later. By choosing a longer period, you will save on
+            renewal network fees.
+          </div>
+          <div className={styles.years}>
+            {YEAR_BUTTONS.map((year) => (
+              <div
+                key={year}
+                className={clsx(styles.yearButton, {
+                  [styles.yearButtonSelected]: year === order.durationInYears
+                })}
+                onClick={() => {
+                  updateOrder((order) => ({ ...order, durationInYears: year }))
+                }}
+              >
+                {pluralize('year', year)}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <AdditionalInfo header="Advanced Settings" icon={<ToolIcon />}>
-        <div className={styles.subheader}>
-          Set <b>{nameLabel} owner</b> address if {"you're"} buying this {nameLabel} for another
-          wallet. By default it will be owned by your current wallet.
-        </div>
-
-        <AddressInput
-          icon={<EthereumIcon />}
-          className={styles.ownerInput}
-          placeholder="0xd07d...54aB"
-          autoComplete="off"
-          // TODO: we loose invalid input when parent component is collapsed so i set it to '0x0'
-          defaultValue={order.ownerAddress === null ? '0x0' : order.ownerAddress}
-          onAddressChange={(address) => {
-            updateOrder((order) => ({ ...order, ownerAddress: address }))
-          }}
-        />
-      </AdditionalInfo>
-
-      {/* TODO: Profile */}
-      {/* <div>
+        {/* TODO: Profile */}
+        {/* <div>
       <div className={styles.header}>ENS Profile</div>
       <div className={styles.subheader}>
         Configure public ENS profile for this domain if you are setting it for your wallet. You can
@@ -103,6 +168,7 @@ export const CheckoutCommitStep = ({ order, updateOrder }: CheckoutCommitStepPro
         className={clsx(styles.profileInput, ui.input, styles.profileInputLast)}
       />
       </div> */}
-    </div>
-  )
-}
+      </div>
+    )
+  }
+)
