@@ -33,8 +33,9 @@ export type OrderPrice = {
 
 export type DomainInfo = {
   tokenId: string
-  registrant: Address | null
-  controller: Address | null
+  isWrapped: boolean
+  registrant: Address | null // NameWrapper contract for wrapped names
+  controller: Address | null // NameWrapper contract for wrapped names
   resolver: Address | null
   textRecords: TextRecords
   addrRecords: AddrRecords

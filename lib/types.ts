@@ -27,8 +27,9 @@ export type UserDomain = {
   name: Domain
   namehash: string | null
   isValid: boolean
+  isWrapped?: boolean
   owned: boolean
-  controlled: boolean
+  controlled: boolean // controlled by NameWrapper contract for wrapped names
   resolved: boolean
   registeredAt?: number
   expiresAt?: number
