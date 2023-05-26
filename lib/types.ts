@@ -33,6 +33,7 @@ export type UserDomain = {
   resolved: boolean
   registeredAt?: number
   expiresAt?: number
+  resolver?: string
 }
 
 export type Registration = {
