@@ -193,8 +193,8 @@ const Names: PageWithLayout = () => {
                   </div>
                 </th>
                 <th className={clsx(styles.cell, styles.headCell, styles.nameCell)}>Domain</th>
-                <th className={clsx(styles.cell, styles.headCell, styles.rightsCell)}>
-                  {!anySelected && 'Rights'}
+                <th className={clsx(styles.cell, styles.headCell, styles.labelsCell)}>
+                  {!anySelected && 'Labels'}
                 </th>
                 <th className={clsx(styles.cell, styles.headCell, styles.expirationCell)}>
                   {!anySelected && 'Expiration'}
@@ -218,10 +218,11 @@ const Names: PageWithLayout = () => {
                       {domain.name} <WarningLabel name={domain.name} />
                     </Link>
                   </td>
-                  <td className={clsx(styles.cell, styles.rightsCell)}>
-                    <div className={styles.rights}>
-                      {domain.owned && <div className={styles.right}>Owner</div>}
-                      {domain.controlled && <div className={styles.right}>Controller</div>}
+                  <td className={clsx(styles.cell, styles.labelsCell)}>
+                    <div className={styles.labels}>
+                      {domain.owned && <div className={styles.label}>Owner</div>}
+                      {domain.controlled && <div className={styles.label}>Controller</div>}
+                      {domain.isWrapped && <div className={styles.label}>Wrapped</div>}
                     </div>
                   </td>
                   <td className={clsx(styles.cell, styles.expirationCell)}>

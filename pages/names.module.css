@@ -169,11 +169,11 @@
   align-items: center;
 }
 
-.rightsCell {
+.labelsCell {
   width: 260px;
 }
 
-.rights {
+.labels {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -182,7 +182,7 @@
   flex-wrap: wrap;
 }
 
-.right {
+.label {
   font: var(--type-sm);
   letter-spacing: var(--ls-sm);
   color: var(--color-text-secondary);
