@@ -21,9 +21,14 @@ export const ETH_REVERSE_REGISTRAR_ADDRESS = new Map<Network, Address>([
   ['goerli', '0x4f7A657451358a22dc397d5eE7981FfC526cd856']
 ])
 
-export const ENS_NFT_ADDRESS = new Map<Network, Address>([
+export const BASE_REGISTRAR_ADDRESS = new Map<Network, Address>([
   ['mainnet', '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'],
   ['goerli', '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85']
+])
+
+export const NAME_WRAPPER_ADDRESS = new Map<Network, Address>([
+  ['mainnet', '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401'],
+  ['goerli', '0x114D4603199df73e7D157787f8778E21fCd13066']
 ])
 
 export const UNHASH_ADDRESS = new Map<Network, Address>([
@@ -50,7 +55,11 @@ export const ETH_RESOLVER_ABI = [
 
 export const ETH_REVERSE_REGISTRAR_ABI = ['function setName(string) returns (bytes32)']
 
-export const ENS_NFT_ABI = ['function safeTransferFrom(address, address, uint256)']
+export const BASE_REGISTRAR_ABI = ['function safeTransferFrom(address, address, uint256)']
+
+export const NAME_WRAPPER_ABI = [
+  'function safeTransferFrom(address, address, uint256, uint256, bytes)'
+]
 
 export const UNHASH_ABI = [
   'function commit(bytes32[] _commitments)',
@@ -61,3 +70,11 @@ export const UNHASH_ABI = [
 export const YEAR_IN_SECONDS = 365 * 60 * 60 * 24
 
 export const COMMIT_WAIT_MS = 60 * 1000
+
+export function getNameContract(network: Network, isWrapped: boolean): Address {
+  return isWrapped ? NAME_WRAPPER_ADDRESS.get(network)! : BASE_REGISTRAR_ADDRESS.get(network)!
+}
+
+export function getNameContractABI(isWrapped: boolean): string[] {
+  return isWrapped ? NAME_WRAPPER_ABI : BASE_REGISTRAR_ABI
+}

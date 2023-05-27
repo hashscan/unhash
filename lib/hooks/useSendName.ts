@@ -1,14 +1,16 @@
-import { ENS_NFT_ADDRESS, ENS_NFT_ABI } from 'lib/constants'
+import { getNameContractABI, getNameContract } from 'lib/constants'
 import { currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 export const useSendName = ({
-  tokenId, // pass domain's NFT token id; name itself not needed
+  isWrapped,
+  tokenId,
   toAddress,
   onError,
   onSuccess
 }: {
+  isWrapped: boolean
   tokenId?: string
   toAddress?: string
   onError?: (e: Error) => void
@@ -17,10 +19,12 @@ export const useSendName = ({
   const { address: fromAddress } = useAccount()
 
   const { config } = usePrepareContractWrite({
-    address: ENS_NFT_ADDRESS.get(currentNetwork()),
-    abi: ENS_NFT_ABI,
+    address: getNameContract(currentNetwork(), isWrapped),
+    abi: getNameContractABI(isWrapped),
     functionName: 'safeTransferFrom',
-    args: [fromAddress, toAddress, tokenId],
+    args: isWrapped
+      ? [fromAddress, toAddress, tokenId, 1, '0x']
+      : [fromAddress, toAddress, tokenId],
     enabled: Boolean(tokenId) && Boolean(toAddress)
   })
 

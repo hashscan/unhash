@@ -36,6 +36,7 @@ export const SendName = ({
     txHash,
     isSuccess
   } = useSendName({
+    isWrapped: domainInfo?.isWrapped ?? false,
     tokenId: domainInfo?.tokenId,
     toAddress: address,
     onError: (error) => notify(error.message, { status: 'error' })
