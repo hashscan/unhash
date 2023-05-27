@@ -33,6 +33,7 @@ export type OrderPrice = {
 
 export type DomainInfo = {
   tokenId: string
+  namehash: string | null
   isWrapped: boolean
   registrant: Address | null // NameWrapper contract for wrapped names
   controller: Address | null // NameWrapper contract for wrapped names
