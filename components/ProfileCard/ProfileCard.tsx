@@ -17,7 +17,7 @@ export const ProfileCard = ({ address, domain }: ProfileCardProps) => {
   const info = useDomainInfo(domain)
   const labels = useMemo(
     () => ({
-      isOwner: info?.registrant?.toLowerCase() === address.toLowerCase(),
+      isOwner: info?.owner?.toLowerCase() === address.toLowerCase(),
       isController: info?.controller?.toLowerCase() === address.toLowerCase()
     }),
     [address, info]

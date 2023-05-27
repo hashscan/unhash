@@ -32,12 +32,15 @@ export type OrderPrice = {
 }
 
 export type DomainInfo = {
+  contract: string
   tokenId: string
   namehash: string | null
   isWrapped: boolean
+  owner: string // ENS owner
   registrant: Address | null // NameWrapper contract for wrapped names
   controller: Address | null // NameWrapper contract for wrapped names
   resolver: Address | null
+  createdAt: string
   textRecords: TextRecords
   addrRecords: AddrRecords
 }

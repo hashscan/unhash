@@ -25,15 +25,15 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
       <h1 className={styles.title}>
         {domain} <WarningLabel name={domain} size={'lg'}></WarningLabel>
       </h1>
-      <div className={styles.address}>{formatAddress(info.registrant as Domain, 4)}</div>
+      <div className={styles.address}>{formatAddress(info.owner as Domain, 4)}</div>
       <div className={styles.info}>
         This domain is owned by{' '}
         <Link
           className={styles.link}
-          href={`https://etherscan.io/address/${info.registrant}`}
+          href={`https://etherscan.io/address/${info.owner}`}
           target="_blank"
         >
-          {formatAddress(info.registrant as Domain, 4)}
+          {formatAddress(info.owner as Domain, 4)}
         </Link>
         {info.addrRecords.ethereum ? (
           <>
