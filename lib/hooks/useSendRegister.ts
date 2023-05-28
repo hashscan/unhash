@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import {
-  ETH_REGISTRAR_ADDRESS,
-  ETH_REGISTRAR_ABI,
+  ETH_REGISTRAR_ADDRESS_LEGACY,
+  ETH_REGISTRAR_LEGACY_ABI,
   YEAR_IN_SECONDS,
   ETH_RESOLVER_ADDRESS
 } from 'lib/constants'
@@ -26,8 +26,8 @@ export const useSendRegister: useSendRegisterBulkType = () => {
   const gasLimit = registerGasLimit(1)
 
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
-    abi: ETH_REGISTRAR_ABI,
+    address: ETH_REGISTRAR_ADDRESS_LEGACY.get(currentNetwork()),
+    abi: ETH_REGISTRAR_LEGACY_ABI,
     functionName: 'registerWithConfig',
     args: [
       getDomainName(registration.names[0]),

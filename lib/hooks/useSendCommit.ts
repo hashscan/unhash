@@ -1,6 +1,6 @@
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { ETH_REGISTRAR_LEGACY_ABI, ETH_REGISTRAR_ADDRESS_LEGACY, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
@@ -36,8 +36,8 @@ export const useSendCommit: useSendCommitBulkType = ({
 
   // prepare commit transaction
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
-    abi: ETH_REGISTRAR_ABI,
+    address: ETH_REGISTRAR_ADDRESS_LEGACY.get(currentNetwork()),
+    abi: ETH_REGISTRAR_LEGACY_ABI,
     functionName: 'commit',
     enabled: Boolean(sender) && Boolean(owner) && Boolean(commitment),
     args: [commitment]

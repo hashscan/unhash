@@ -6,9 +6,15 @@ export const API_URL = 'https://api.unhash.com'
 export const FEEDBACK_TWITTER = 'https://twitter.com/jackqack'
 export const FEEDBACK_TELEGRAM = 'https://t.me/jackqack'
 
-export const ETH_REGISTRAR_ADDRESS = new Map<Network, Address>([
+// TODO: remove legacy registrar
+export const ETH_REGISTRAR_ADDRESS_LEGACY = new Map<Network, Address>([
   ['mainnet', '0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5'],
   ['goerli', '0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5']
+])
+
+export const ETH_REGISTRAR_ADDRESS = new Map<Network, Address>([
+  ['mainnet', '0x253553366da8546fc250f225fe3d25d0c782303b'],
+  ['goerli', '0xCc5e7dB10E65EED1BBD105359e7268aa660f6734']
 ])
 
 export const ETH_RESOLVER_ADDRESS = new Map<Network, Address>([
@@ -36,13 +42,18 @@ export const UNHASH_ADDRESS = new Map<Network, Address>([
   ['goerli', '0x3e0c4c5ed99e97b0ed051910a53834f218f1e144']
 ])
 
-export const ETH_REGISTRAR_ABI = [
-  'function available(string) view returns (bool)',
+export const ETH_REGISTRAR_LEGACY_ABI = [
   'function makeCommitment(string,address,bytes32) pure returns (bytes32)',
   'function commit(bytes32)',
   'function makeCommitmentWithConfig(string,address,bytes32,address,address) pure returns (bytes32)',
   'function register(string,address,uint256,bytes32) payable',
   'function registerWithConfig(string,address,uint,bytes32,address,address) payable',
+  'function renew(string,uint256) payable'
+]
+
+export const ETH_REGISTRAR_ABI = [
+  'function commit(bytes32)',
+  'function register(string,address,uint256,bytes32,address,bytes[], bool, uint16) payable',
   'function renew(string,uint256) payable'
 ]
 
