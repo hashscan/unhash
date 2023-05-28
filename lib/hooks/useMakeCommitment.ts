@@ -8,8 +8,9 @@ import { useMemo } from 'react'
 export function useMakeCommitment({
   name,
   owner,
+  duration,
   resolver,
-  addr
+  reverseRecord
 }: Omit<CommitmentParams, 'owner'> & {
   owner: string | null
 }) {
@@ -19,8 +20,9 @@ export function useMakeCommitment({
     return makeCommitment({
       name,
       owner,
+      duration,
       resolver,
-      addr
+      reverseRecord
     })
-  }, [name, owner, resolver, addr])
+  }, [name, owner, duration, resolver, reverseRecord])
 }

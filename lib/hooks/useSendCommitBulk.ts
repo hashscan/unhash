@@ -27,7 +27,8 @@ export const useSendCommitBulk = ({
   // generate secrets and commitments for each name
   const { secret, commitments } = useMakeCommitments({
     names: names,
-    owner: owner
+    owner: owner,
+    duration: duration
   })
 
   const { config } = usePrepareContractWrite({

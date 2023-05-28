@@ -94,8 +94,10 @@ export type TransactionStatus = 'idle' | 'commit' | 'processing'
 export type CommitmentParams = {
   name: Domain
   owner: string
+  duration: number
   resolver?: string
-  addr?: string | null
+  // addr?: string | null // TODO: not supported in a current version
+  reverseRecord: boolean
 }
 
 export type RegistrationParams = CommitmentParams & {

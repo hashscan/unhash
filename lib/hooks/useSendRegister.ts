@@ -1,9 +1,9 @@
 import { BigNumber } from 'ethers'
 import {
-  ETH_REGISTRAR_ADDRESS_LEGACY,
-  ETH_REGISTRAR_LEGACY_ABI,
   YEAR_IN_SECONDS,
-  ETH_RESOLVER_ADDRESS
+  ETH_RESOLVER_ADDRESS,
+  ETH_REGISTRAR_ADDRESS,
+  ETH_REGISTRAR_ABI
 } from 'lib/constants'
 import { currentNetwork } from 'lib/types'
 import { getDomainName, loadingToStatus } from 'lib/utils'
@@ -26,16 +26,18 @@ export const useSendRegister: useSendRegisterBulkType = () => {
   const gasLimit = registerGasLimit(1)
 
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS_LEGACY.get(currentNetwork()),
-    abi: ETH_REGISTRAR_LEGACY_ABI,
-    functionName: 'registerWithConfig',
+    address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
+    abi: ETH_REGISTRAR_ABI,
+    functionName: 'register',
     args: [
       getDomainName(registration.names[0]),
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
       ETH_RESOLVER_ADDRESS.get(currentNetwork()),
-      registration?.owner
+      [], // data TODO: how to pass empty bytes[]?
+      false, // reverseRecord
+      0 // ownerControlledFuses
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner) && Boolean(value),
     overrides: {
