@@ -1,5 +1,5 @@
 import { namehash } from 'ethers/lib/utils.js'
-import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { ETH_RESOLVER_ABI, ETH_RESOLVER_LEGACY_ADDRESS } from 'lib/constants'
 import { Domain, TextRecords, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import {
@@ -20,7 +20,7 @@ export const useSendUpdateRecords = ({
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const resolverAddress = ETH_RESOLVER_ADDRESS.get(currentNetwork())
+  const resolverAddress = ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork())
   const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })! // must always be defined
 
   const node = domain ? namehash(domain) : undefined

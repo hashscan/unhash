@@ -1,4 +1,3 @@
-import { solidityKeccak256 } from 'ethers/lib/utils.js'
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 import { ethers } from 'ethers'

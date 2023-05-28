@@ -1,5 +1,5 @@
 import { namehash } from 'ethers/lib/utils.js'
-import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { ETH_RESOLVER_ABI, ETH_RESOLVER_LEGACY_ADDRESS } from 'lib/constants'
 import { Domain, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { Address, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
@@ -23,7 +23,7 @@ export const useSendSetAddr = ({
   const node = domain ? namehash(domain) : undefined
 
   const { config } = usePrepareContractWrite({
-    address: ETH_RESOLVER_ADDRESS.get(currentNetwork()),
+    address: ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()),
     abi: ETH_RESOLVER_ABI,
     functionName: 'setAddr',
     enabled: Boolean(node) && Boolean(address),

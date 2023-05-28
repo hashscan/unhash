@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import {
   YEAR_IN_SECONDS,
-  ETH_RESOLVER_ADDRESS,
+  ETH_RESOLVER_LEGACY_ADDRESS,
   ETH_REGISTRAR_ADDRESS,
   ETH_REGISTRAR_ABI
 } from 'lib/constants'
@@ -34,7 +34,7 @@ export const useSendRegister: useSendRegisterBulkType = () => {
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
-      ETH_RESOLVER_ADDRESS.get(currentNetwork()),
+      ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()),
       [], // data TODO: how to pass empty bytes[]?
       false, // reverseRecord
       0 // ownerControlledFuses

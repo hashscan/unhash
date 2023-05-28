@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import useChange from '@react-hook/change'
 
