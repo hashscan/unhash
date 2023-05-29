@@ -1,6 +1,10 @@
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_LEGACY_ADDRESS } from 'lib/constants'
+import {
+  ETH_REGISTRAR_ABI,
+  ETH_REGISTRAR_ADDRESS,
+  ETH_RESOLVER_LEGACY_ADDRESS
+} from 'lib/constants'
 import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
@@ -27,13 +31,18 @@ export const useSendCommit: useSendCommitBulkType = ({
   const { setCommitting } = useRegistration()
 
   // generate secret and commitment
-  const { secret, commitment } = useMakeCommitment({
+  const {
+    secret,
+    commitment,
+    data: recordsData,
+    resolver
+  } = useMakeCommitment({
     name: names[0],
     owner: owner,
     duration: duration,
     resolver: setDefaultResolver ? ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()) : undefined,
-    reverseRecord: false
-    // addr: setDefaultResolver ? addr : undefined
+    reverseRecord: false,
+    addr: setDefaultResolver ? addr : undefined
   })
 
   // prepare commit transaction
@@ -57,10 +66,14 @@ export const useSendCommit: useSendCommitBulkType = ({
     onSuccess: (data) =>
       setCommitting({
         names: names,
-        sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
+        sender: sender!, // more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner!,
         duration,
-        secret: secret!, // TODO: fix?
+        secret: secret!,
+        resolver: resolver,
+        data: recordsData,
+        reverseRecord: false,
+        ownerControlledFuses: 0,
         commitTxHash: data.hash
       })
   })

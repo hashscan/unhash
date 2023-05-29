@@ -1,6 +1,10 @@
+import { makeCommitmentData } from '@ensdomains/ensjs/utils/registerHelpers'
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 import { ethers } from 'ethers'
+import { generateRecordCallArray } from '@ensdomains/ensjs/utils/recordHelpers'
+import { namehash } from 'ethers/lib/utils.js'
+import { ETH_RESOLVER_ABI } from './constants'
 
 /**
  * A function to generate secret for commit transaction.
@@ -21,7 +25,7 @@ function _makeCommitment(
   duration: number,
   secret: string,
   resolver: string,
-  data: Array<Uint8Array>,
+  data: string[],
   reverseRecord: boolean,
   ownerControlledFuses: number
 ): string {
@@ -43,16 +47,21 @@ function _makeCommitment(
  * Generate secret and commitment hash for ENS commit transaction.
  */
 export function makeCommitment(params: CommitmentParams): RegistrationParams {
-  const { name, owner, duration, resolver, reverseRecord } = params
+  const { name, owner, duration, resolver, addr, reverseRecord } = params
 
   const secret = generateCommitSecret()
   const _name = getDomainName(name)
   const ownerControlledFuses = 0
 
-  // TODO: turn eth addr to data bytes array with delegatecall
-  const data = new Array<Uint8Array>()
-  if (resolver) {
-    // addr ?? ZERO_ADDRESS
+  const data = new Array<string>()
+  if (resolver && addr && addr !== ZERO_ADDRESS) {
+    const node = namehash(_name)
+    const ethCoinType = 60
+
+    // TODO: test encoding works
+    const iface = new ethers.utils.Interface(ETH_RESOLVER_ABI)
+    const ethAddrData = iface.encodeFunctionData('setAddr', [node, ethCoinType, addr])
+    data.push(ethAddrData)
   }
 
   const commitment = _makeCommitment(
@@ -65,7 +74,7 @@ export function makeCommitment(params: CommitmentParams): RegistrationParams {
     reverseRecord,
     ownerControlledFuses
   )
-  return { ...params, secret, commitment }
+  return { ...params, secret, data, commitment }
 }
 
 /**
@@ -80,16 +89,7 @@ export function makeCommitments(
 
   const commitments = names.map((name) => {
     const _name = getDomainName(name)
-    return _makeCommitment(
-      _name,
-      owner,
-      duration,
-      secret,
-      ZERO_ADDRESS,
-      new Array<Uint8Array>(),
-      false,
-      0
-    )
+    return _makeCommitment(_name, owner, duration, secret, ZERO_ADDRESS, [], false, 0)
   })
 
   return {

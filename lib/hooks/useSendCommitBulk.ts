@@ -19,7 +19,7 @@ export const useSendCommitBulk = ({
   owner: string | null // must be non-null to enable commit transaction
   // following arguments added to unify interface with useSendCommit and not used here
   setDefaultResolver?: boolean
-  addr?: string | null
+  addr?: string
 }) => {
   const { address: sender } = useAccount()
   const { setCommitting } = useRegistration()
@@ -51,10 +51,14 @@ export const useSendCommitBulk = ({
     onSuccess: (data) => {
       setCommitting({
         names,
-        sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
+        sender: sender!, // more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner!,
         duration,
-        secret: secret!, // TODO: fix?
+        secret: secret!,
+        resolver: undefined,
+        data: [],
+        reverseRecord: false,
+        ownerControlledFuses: 0,
         commitTxHash: data.hash
       })
     }

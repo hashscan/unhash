@@ -10,6 +10,7 @@ export function useMakeCommitment({
   owner,
   duration,
   resolver,
+  addr,
   reverseRecord
 }: Omit<CommitmentParams, 'owner'> & {
   owner: string | null
@@ -22,7 +23,8 @@ export function useMakeCommitment({
       owner,
       duration,
       resolver,
+      addr,
       reverseRecord
     })
-  }, [name, owner, duration, resolver, reverseRecord])
+  }, [name, owner, duration, resolver, addr, reverseRecord])
 }

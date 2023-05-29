@@ -38,7 +38,7 @@ export const CommitButton = ({
     owner: order.ownerAddress !== undefined ? order.ownerAddress : nullableSender,
     // two arguments only used by a single name hook (TODO: fix that)
     setDefaultResolver: true,
-    addr: order.ownerAddress === undefined ? sender : order.ownerAddress // can be set a different address or no address
+    addr: order.ownerAddress === undefined ? sender : order.ownerAddress ?? undefined
   })
 
   const notify = useNotifier()

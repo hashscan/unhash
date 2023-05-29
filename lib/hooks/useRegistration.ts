@@ -12,6 +12,12 @@ type CreateRegistrationParams = {
   owner?: string
   duration: number
   secret: string
+  // following fields ignored for multiple names
+  resolver?: string
+  data: string[]
+  reverseRecord: boolean
+  ownerControlledFuses: number
+
   commitTxHash: string
 }
 

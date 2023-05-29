@@ -1,10 +1,5 @@
 import { BigNumber } from 'ethers'
-import {
-  YEAR_IN_SECONDS,
-  ETH_RESOLVER_LEGACY_ADDRESS,
-  ETH_REGISTRAR_ADDRESS,
-  ETH_REGISTRAR_ABI
-} from 'lib/constants'
+import { YEAR_IN_SECONDS, ETH_REGISTRAR_ADDRESS, ETH_REGISTRAR_ABI } from 'lib/constants'
 import { currentNetwork } from 'lib/types'
 import { getDomainName, loadingToStatus } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
@@ -34,10 +29,10 @@ export const useSendRegister: useSendRegisterBulkType = () => {
       registration?.owner,
       registration?.duration || YEAR_IN_SECONDS,
       registration?.secret,
-      ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()),
-      [], // data TODO: how to pass empty bytes[]?
-      false, // reverseRecord
-      0 // ownerControlledFuses
+      registration?.resolver,
+      registration?.data,
+      registration?.reverseRecord,
+      registration?.ownerControlledFuses
     ],
     enabled: Boolean(registration?.secret) && Boolean(registration?.owner) && Boolean(value),
     overrides: {
