@@ -11,12 +11,12 @@ export const ETH_REGISTRAR_ADDRESS = new Map<Network, Address>([
   ['goerli', '0xCc5e7dB10E65EED1BBD105359e7268aa660f6734']
 ])
 
+// TODO: replace legacy resolver by new one
 export const ETH_RESOLVER_LEGACY_ADDRESS = new Map<Network, Address>([
   ['mainnet', '0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41'],
   ['goerli', '0x2800Ec5BAB9CE9226d19E0ad5BC607e3cfC4347E']
 ])
 
-// TODO: replace legacy resolver by new one
 export const ETH_RESOLVER_ADDRESS = new Map<Network, Address>([
   ['mainnet', '0x231b0ee14048e9dccd1d247744d114a4eb5e8e63'],
   ['goerli', '0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750']

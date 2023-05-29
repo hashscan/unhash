@@ -1,10 +1,6 @@
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-import {
-  ETH_REGISTRAR_ABI,
-  ETH_REGISTRAR_ADDRESS,
-  ETH_RESOLVER_LEGACY_ADDRESS
-} from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, ETH_RESOLVER_ADDRESS } from 'lib/constants'
 import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
@@ -40,7 +36,7 @@ export const useSendCommit: useSendCommitBulkType = ({
     name: names[0],
     owner: owner,
     duration: duration,
-    resolver: setDefaultResolver ? ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()) : undefined,
+    resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(currentNetwork()) : undefined,
     reverseRecord: false,
     addr: setDefaultResolver ? addr : undefined
   })

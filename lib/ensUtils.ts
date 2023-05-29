@@ -1,9 +1,6 @@
-import { makeCommitmentData } from '@ensdomains/ensjs/utils/registerHelpers'
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 import { ethers } from 'ethers'
-import { generateRecordCallArray } from '@ensdomains/ensjs/utils/recordHelpers'
-import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI } from './constants'
 
 /**
@@ -16,6 +13,14 @@ export function generateCommitSecret() {
   return `0x${Array.from(bytes)
     .map((p) => p.toString(16).padStart(2, '0'))
     .join('')}`
+}
+
+export function nodehash(label: string) {
+  const labelhash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(label))
+  const ethNode = '0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae'
+  return ethers.utils.keccak256(
+    ethers.utils.solidityPack(['bytes32', 'bytes32'], [ethNode, labelhash])
+  )
 }
 
 // Raw internal function to generate commitment
@@ -50,22 +55,21 @@ export function makeCommitment(params: CommitmentParams): RegistrationParams {
   const { name, owner, duration, resolver, addr, reverseRecord } = params
 
   const secret = generateCommitSecret()
-  const _name = getDomainName(name)
+  const label = getDomainName(name)
   const ownerControlledFuses = 0
 
   const data = new Array<string>()
   if (resolver && addr && addr !== ZERO_ADDRESS) {
-    const node = namehash(_name)
-    const ethCoinType = 60
+    const node = nodehash(label)
+    const coinType = 60 // ETH
 
-    // TODO: test encoding works
     const iface = new ethers.utils.Interface(ETH_RESOLVER_ABI)
-    const ethAddrData = iface.encodeFunctionData('setAddr', [node, ethCoinType, addr])
+    const ethAddrData = iface.encodeFunctionData('setAddr', [node, coinType, addr])
     data.push(ethAddrData)
   }
 
   const commitment = _makeCommitment(
-    _name,
+    label,
     owner,
     duration,
     secret,
