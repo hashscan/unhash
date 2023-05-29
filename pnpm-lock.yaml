@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@adraffy/ens-normalize':
-    specifier: ^1.9.0
-    version: 1.9.1
+    specifier: 1.9.0
+    version: 1.9.0
   '@ensdomains/ens-avatar':
     specifier: ^0.2.2
     version: 0.2.5
@@ -131,8 +131,8 @@ packages:
     resolution: {integrity: sha512-E09FiIft46CmH5Qnjb0wsW54/YQd69LsxeKUOWawmws1XWvyFGURnAChH0mlr7YPFR1ofwvUQfcL0J3lMxXqPA==}
     dev: true
 
-  /@adraffy/ens-normalize@1.9.1:
-    resolution: {integrity: sha512-8R32JJI4FvzYw6IqhiyElXYm8qfHTAM7aQka/j9YjdlaO1TSWc7GHf14oVkO/ir8nSA/LvSC2zBag+yvvjGxJg==}
+  /@adraffy/ens-normalize@1.9.0:
+    resolution: {integrity: sha512-iowxq3U30sghZotgl4s/oJRci6WPBfNO5YYgk2cIOMCHr3LeGPcsZjCEr+33Q4N+oV3OABDAtA+pyvWjbvBifQ==}
     dev: false
 
   /@ampproject/remapping@2.2.1:
