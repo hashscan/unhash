@@ -1,10 +1,10 @@
-import { namehash } from 'ethers/lib/utils.js'
 import { ETH_RESOLVER_ABI, ETH_RESOLVER_LEGACY_ADDRESS } from 'lib/constants'
 import { Domain, NFTToken, currentNetwork } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 import { nftToAvatarRecord } from 'lib/utils'
+import { getNodeForResolver } from 'lib/ensUtils'
 
 const TEXT_AVATAR_FIELD = 'avatar'
 
@@ -13,16 +13,18 @@ const TEXT_AVATAR_FIELD = 'avatar'
  */
 export const useSendSetAvatar = ({
   domain,
+  resolver,
   avatar,
   onError,
   onSuccess
 }: {
   domain: Domain
+  resolver?: string
   avatar: NFTToken | null
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const node = domain ? namehash(domain) : undefined
+  const node = resolver ? getNodeForResolver(domain, resolver) : undefined
 
   const { config } = usePrepareContractWrite({
     address: ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()),

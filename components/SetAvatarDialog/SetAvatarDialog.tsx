@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAccount } from 'wagmi'
 
 import { TransactionButton } from 'components/TransactionButton/TransactionButton'
@@ -34,9 +34,15 @@ export const SetAvatarDialog = ({
   const [user, setUser] = useState<UserInfo>()
   const domain: Domain = user?.primaryName?.name!
   const [selectedAvatar, setSelectedAvatar] = useState<NFTToken | null>(null)
+  const nameResolver = useMemo<string | undefined>(() => {
+    const name = user?.primaryName?.name
+    if (!name) return undefined
+    return user.domains.find((d) => d.name === name)?.resolver
+  }, [user])
 
   const { sendSetAvatar, status: transactionStatus } = useSendSetAvatar({
     domain,
+    resolver: nameResolver,
     avatar: selectedAvatar,
     onSuccess: () => {
       closeDialogWithSuccess()

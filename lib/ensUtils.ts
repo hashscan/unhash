@@ -1,7 +1,7 @@
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 import { ethers } from 'ethers'
-import { ETH_RESOLVER_ABI } from './constants'
+import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from './constants'
 
 /**
  * A function to generate secret for commit transaction.
@@ -102,6 +102,22 @@ export function makeCommitments(
     secret,
     commitments
   }
+}
+
+/**
+ * Returns a node for a given resolver that it can use as an id to set records.
+ * Note: We don't really know how 3rd party resolvers identify nodes
+ * and assume same as legacy resolver.
+ */
+export function getNodeForResolver(name: Domain, resolver: string): string {
+  const label = getDomainName(name)
+
+  const newResolvers = Array.from(ETH_RESOLVER_ADDRESS.values())
+  if (newResolvers.find((v) => v.toLocaleLowerCase() === resolver.toLocaleLowerCase())) {
+    return nodehash(label)
+  }
+
+  return nodehash(label)
 }
 
 /**
