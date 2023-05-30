@@ -1,10 +1,10 @@
+import { PropsWithChildren } from 'react'
 import { Feedback } from 'components/Feedback/Feedback'
 import { AppRouterLayout } from 'components/layouts'
-import { PropsWithChildren } from 'react'
 
-export default function BlogLayout({ children }: PropsWithChildren<{}>) {
+export default function ProfileLayout({ children }: PropsWithChildren<{}>) {
   return (
-    <AppRouterLayout>
+    <AppRouterLayout verticalPadding={false}>
       {children}
       <Feedback />
     </AppRouterLayout>
