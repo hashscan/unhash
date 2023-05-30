@@ -18,9 +18,12 @@ const Profile: PageWithLayout = () => {
 
   const { user: userInfo } = useCurrentUser()
   const primaryName = userInfo?.primaryName?.name
-  // an option to change eth addr only available for manager and only if resolver is already set
+  // an option to change eth addr only available for manager (for legacy names)
+  // and only if resolver is already set
   const userDomains = useMemo(
-    () => userInfo?.domains.filter((d) => d.isValid && d.controlled && d.resolver) || [],
+    () =>
+      userInfo?.domains.filter((d) => d.isValid && d.resolver && (d.isWrapped || d.controlled)) ||
+      [],
     [userInfo]
   )
 
