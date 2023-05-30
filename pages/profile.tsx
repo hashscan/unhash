@@ -18,7 +18,11 @@ const Profile: PageWithLayout = () => {
 
   const { user: userInfo } = useCurrentUser()
   const primaryName = userInfo?.primaryName?.name
-  const userDomains = useMemo(() => userInfo?.domains.filter((d) => d.isValid) || [], [userInfo])
+  // an option to change eth addr only available for manager and only if resolver is already set
+  const userDomains = useMemo(
+    () => userInfo?.domains.filter((d) => d.isValid && d.controlled && d.resolver) || [],
+    [userInfo]
+  )
 
   const etherscanLink = useEtherscanURL('address', primaryName!)
 
