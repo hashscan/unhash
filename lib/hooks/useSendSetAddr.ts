@@ -1,6 +1,6 @@
-import { namehash } from 'ethers/lib/utils.js'
-import { ETH_RESOLVER_ABI, ETH_RESOLVER_LEGACY_ADDRESS } from 'lib/constants'
-import { Domain, currentNetwork } from 'lib/types'
+import { ETH_RESOLVER_ABI } from 'lib/constants'
+import { getNodeForResolver } from 'lib/ensUtils'
+import { Domain } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
 import { Address, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
@@ -11,22 +11,24 @@ const COIN_TYPE_ETH = 60
  */
 export const useSendSetAddr = ({
   domain,
+  resolver,
   address,
   onError,
   onSuccess
 }: {
   domain: Domain
+  resolver?: string
   address?: Address
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const node = domain ? namehash(domain) : undefined
+  const node = resolver ? getNodeForResolver(domain, resolver) : undefined
 
   const { config } = usePrepareContractWrite({
-    address: ETH_RESOLVER_LEGACY_ADDRESS.get(currentNetwork()),
+    address: resolver as `0x${string}` | undefined,
     abi: ETH_RESOLVER_ABI,
     functionName: 'setAddr',
-    enabled: Boolean(node) && Boolean(address),
+    enabled: Boolean(resolver) && Boolean(node) && Boolean(address),
     args: [node, COIN_TYPE_ETH, address?.toLowerCase()]
   })
 

@@ -14,11 +14,13 @@ import { trackGoal } from 'lib/analytics'
 
 interface PrimaryDomainUnresolvedEthProps extends ComponentProps<'div'> {
   domain: Domain
+  resolver?: string
   onResolved: (domain: Domain) => void
 }
 
 export const PrimaryDomainUnresolvedEth = ({
   domain,
+  resolver,
   onResolved,
   className,
   ...rest
@@ -29,6 +31,7 @@ export const PrimaryDomainUnresolvedEth = ({
   // update records transaction
   const { sendSetAddr, status } = useSendSetAddr({
     domain,
+    resolver,
     address,
     onError: (error) => notify(error.message, { status: 'error' }),
     onSuccess: () => onResolved(domain)
