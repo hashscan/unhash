@@ -1,7 +1,7 @@
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 import { ethers } from 'ethers'
-import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from './constants'
+import { ETH_RESOLVER_ABI, PUBLIC_RESOLVER_ADDRESS } from './constants'
 
 /**
  * A function to generate secret for commit transaction.
@@ -112,7 +112,7 @@ export function makeCommitments(
 export function getNodeForResolver(name: Domain, resolver: string): string {
   const label = getDomainName(name)
 
-  const newResolvers = Array.from(ETH_RESOLVER_ADDRESS.values())
+  const newResolvers = Array.from(PUBLIC_RESOLVER_ADDRESS.values())
   if (newResolvers.find((v) => v.toLocaleLowerCase() === resolver.toLocaleLowerCase())) {
     return nodehash(label)
   }
