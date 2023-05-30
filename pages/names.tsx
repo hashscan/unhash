@@ -214,7 +214,7 @@ const Names: PageWithLayout = () => {
                     </div>
                   </td>
                   <td className={clsx(styles.cell, styles.nameCell)}>
-                    <Link className={styles.domain} href={`/${domain.name}/`}>
+                    <Link className={styles.domain} href={`/profile/${domain.name}/`}>
                       {domain.name} <WarningLabel name={domain.name} />
                     </Link>
                   </td>
