@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@adraffy/ens-normalize': ^1.9.0
+  '@adraffy/ens-normalize': ^1.9.2
   '@babel/core': ^7.20.12
   '@ensdomains/ens-avatar': ^0.2.2
   '@headlessui/react': ^1.7.13
@@ -42,7 +42,7 @@ specifiers:
   wagmi: ^0.12.10
 
 dependencies:
-  '@adraffy/ens-normalize': 1.9.1
+  '@adraffy/ens-normalize': 1.9.2
   '@ensdomains/ens-avatar': 0.2.5
   '@headlessui/react': 1.7.14_biqbaboplfbrettd7655fr4n2y
   '@mdx-js/loader': 2.3.0
@@ -90,8 +90,8 @@ packages:
     resolution: {integrity: sha512-E09FiIft46CmH5Qnjb0wsW54/YQd69LsxeKUOWawmws1XWvyFGURnAChH0mlr7YPFR1ofwvUQfcL0J3lMxXqPA==}
     dev: true
 
-  /@adraffy/ens-normalize/1.9.1:
-    resolution: {integrity: sha512-8R32JJI4FvzYw6IqhiyElXYm8qfHTAM7aQka/j9YjdlaO1TSWc7GHf14oVkO/ir8nSA/LvSC2zBag+yvvjGxJg==}
+  /@adraffy/ens-normalize/1.9.2:
+    resolution: {integrity: sha512-0h+FrQDqe2Wn+IIGFkTCd4aAwTJ+7834Ek1COohCyV26AXhwQ7WQaz+4F/nLOeVl/3BtWHOHLPsq46V8YB46Eg==}
     dev: false
 
   /@ampproject/remapping/2.2.1:
