@@ -38,6 +38,7 @@ export const ProfileCard = ({ address, domain }: ProfileCardProps) => {
         </div>
       </div>
 
+      {/* TODO: make sure resolver is set */}
       <ProfileCardForm domain={domain} info={info} />
     </div>
   )
