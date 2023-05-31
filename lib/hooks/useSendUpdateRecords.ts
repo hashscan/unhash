@@ -20,7 +20,8 @@ export const useSendUpdateRecords = ({
 }) => {
   const iface = new Interface(ETH_RESOLVER_ABI)
 
-  const node = resolver ? getNodeForResolver(domain, resolver) : undefined
+  const node = resolver ? getNodeForResolver(domain) : undefined
+
   const encoded = node
     ? Object.entries(records).map(([key, record]) =>
         iface.encodeFunctionData('setText', [node, key, record])

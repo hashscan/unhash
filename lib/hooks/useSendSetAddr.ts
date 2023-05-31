@@ -22,7 +22,7 @@ export const useSendSetAddr = ({
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const node = resolver ? getNodeForResolver(domain, resolver) : undefined
+  const node = resolver ? getNodeForResolver(domain) : undefined
 
   const { config } = usePrepareContractWrite({
     address: resolver as `0x${string}` | undefined,

@@ -106,17 +106,9 @@ export function makeCommitments(
 
 /**
  * Returns a node for a given resolver that it can use as an id to set records.
- * Note: We don't really know how 3rd party resolvers identify nodes
- * and assume same as legacy resolver.
  */
-export function getNodeForResolver(name: Domain, resolver: string): string {
+export function getNodeForResolver(name: Domain): string {
   const label = getDomainName(name)
-
-  const newResolvers = Array.from(PUBLIC_RESOLVER_ADDRESS.values())
-  if (newResolvers.find((v) => v.toLocaleLowerCase() === resolver.toLocaleLowerCase())) {
-    return nodehash(label)
-  }
-
   return nodehash(label)
 }
 
