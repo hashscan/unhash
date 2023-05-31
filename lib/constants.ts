@@ -37,8 +37,8 @@ export const NAME_WRAPPER_ADDRESS = new Map<Network, Address>([
 ])
 
 export const UNHASH_ADDRESS = new Map<Network, Address>([
-  ['mainnet', '0x9001a8B74536AA6df3ee675057F6F4355C03f949'],
-  ['goerli', '0x3e0c4c5ed99e97b0ed051910a53834f218f1e144']
+  ['mainnet', '0xa3f6f3b4edc76e73cf8cb59ba3b073ce0426d418'],
+  ['goerli', '0x830228bdc43D4f9f0dF29A66cfC256a9AF4062B3']
 ])
 
 export const ETH_REGISTRAR_ABI = [
