@@ -6,24 +6,23 @@ export const API_URL = 'https://api.unhash.com'
 export const FEEDBACK_TWITTER = 'https://twitter.com/jackqack'
 export const FEEDBACK_TELEGRAM = 'https://t.me/jackqack'
 
-// TODO: remove legacy registrar
-export const ETH_REGISTRAR_ADDRESS_LEGACY = new Map<Network, Address>([
-  ['mainnet', '0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5'],
-  ['goerli', '0x283Af0B28c62C092C9727F1Ee09c02CA627EB7F5']
-])
-
 export const ETH_REGISTRAR_ADDRESS = new Map<Network, Address>([
   ['mainnet', '0x253553366da8546fc250f225fe3d25d0c782303b'],
   ['goerli', '0xCc5e7dB10E65EED1BBD105359e7268aa660f6734']
 ])
 
-export const ETH_RESOLVER_ADDRESS = new Map<Network, Address>([
-  ['mainnet', '0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41'],
-  ['goerli', '0x2800Ec5BAB9CE9226d19E0ad5BC607e3cfC4347E']
+// export const RESOLVER_LEGACY_ADDRESS = new Map<Network, Address>([
+//   ['mainnet', '0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41'],
+//   ['goerli', '0x2800Ec5BAB9CE9226d19E0ad5BC607e3cfC4347E']
+// ])
+
+export const PUBLIC_RESOLVER_ADDRESS = new Map<Network, Address>([
+  ['mainnet', '0x231b0ee14048e9dccd1d247744d114a4eb5e8e63'],
+  ['goerli', '0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750']
 ])
 
-export const ETH_REVERSE_REGISTRAR_ADDRESS = new Map<Network, Address>([
-  ['mainnet', '0x084b1c3c81545d370f3634392de611caabff8148'],
+export const REVERSE_REGISTRAR_ADDRESS = new Map<Network, Address>([
+  ['mainnet', '0xa58e81fe9b61b5c3fe2afd33cf304c454abfc7cb'],
   ['goerli', '0x4f7A657451358a22dc397d5eE7981FfC526cd856']
 ])
 
@@ -38,18 +37,9 @@ export const NAME_WRAPPER_ADDRESS = new Map<Network, Address>([
 ])
 
 export const UNHASH_ADDRESS = new Map<Network, Address>([
-  ['mainnet', '0x9001a8B74536AA6df3ee675057F6F4355C03f949'],
-  ['goerli', '0x3e0c4c5ed99e97b0ed051910a53834f218f1e144']
+  ['mainnet', '0xa3f6f3b4edc76e73cf8cb59ba3b073ce0426d418'],
+  ['goerli', '0x830228bdc43D4f9f0dF29A66cfC256a9AF4062B3']
 ])
-
-export const ETH_REGISTRAR_LEGACY_ABI = [
-  'function makeCommitment(string,address,bytes32) pure returns (bytes32)',
-  'function commit(bytes32)',
-  'function makeCommitmentWithConfig(string,address,bytes32,address,address) pure returns (bytes32)',
-  'function register(string,address,uint256,bytes32) payable',
-  'function registerWithConfig(string,address,uint,bytes32,address,address) payable',
-  'function renew(string,uint256) payable'
-]
 
 export const ETH_REGISTRAR_ABI = [
   'function commit(bytes32)',

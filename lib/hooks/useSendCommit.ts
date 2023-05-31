@@ -1,6 +1,6 @@
 import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
-import { ETH_REGISTRAR_LEGACY_ABI, ETH_REGISTRAR_ADDRESS_LEGACY, ETH_RESOLVER_ADDRESS } from 'lib/constants'
+import { ETH_REGISTRAR_ABI, ETH_REGISTRAR_ADDRESS, PUBLIC_RESOLVER_ADDRESS } from 'lib/constants'
 import { loadingToStatus } from 'lib/utils'
 import { useRegistration } from './useRegistration'
 import { useMakeCommitment } from './useMakeCommitment'
@@ -27,17 +27,24 @@ export const useSendCommit: useSendCommitBulkType = ({
   const { setCommitting } = useRegistration()
 
   // generate secret and commitment
-  const { secret, commitment } = useMakeCommitment({
+  const {
+    secret,
+    commitment,
+    data: recordsData,
+    resolver
+  } = useMakeCommitment({
     name: names[0],
     owner: owner,
-    resolver: setDefaultResolver ? ETH_RESOLVER_ADDRESS.get(currentNetwork()) : undefined,
+    duration: duration,
+    resolver: setDefaultResolver ? PUBLIC_RESOLVER_ADDRESS.get(currentNetwork()) : undefined,
+    reverseRecord: false,
     addr: setDefaultResolver ? addr : undefined
   })
 
   // prepare commit transaction
   const { config } = usePrepareContractWrite({
-    address: ETH_REGISTRAR_ADDRESS_LEGACY.get(currentNetwork()),
-    abi: ETH_REGISTRAR_LEGACY_ABI,
+    address: ETH_REGISTRAR_ADDRESS.get(currentNetwork()),
+    abi: ETH_REGISTRAR_ABI,
     functionName: 'commit',
     enabled: Boolean(sender) && Boolean(owner) && Boolean(commitment),
     args: [commitment]
@@ -55,10 +62,14 @@ export const useSendCommit: useSendCommitBulkType = ({
     onSuccess: (data) =>
       setCommitting({
         names: names,
-        sender: sender!, // the more correct way would be saving sender at the moment of write() call vs onSuccess callback
+        sender: sender!, // more correct way would be saving sender at the moment of write() call vs onSuccess callback
         owner: owner!,
         duration,
-        secret: secret!, // TODO: fix?
+        secret: secret!,
+        resolver: resolver,
+        data: recordsData,
+        reverseRecord: false,
+        ownerControlledFuses: 0,
         commitTxHash: data.hash
       })
   })

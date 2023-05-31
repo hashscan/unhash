@@ -1,38 +1,38 @@
-import { namehash } from 'ethers/lib/utils.js'
-import { ETH_RESOLVER_ABI, ETH_RESOLVER_ADDRESS } from 'lib/constants'
-import { Domain, TextRecords, currentNetwork } from 'lib/types'
+import { Interface } from 'ethers/lib/utils.js'
+import { ETH_RESOLVER_ABI } from 'lib/constants'
+import { getNodeForResolver } from 'lib/ensUtils'
+import { Domain, TextRecords } from 'lib/types'
 import { loadingToStatus } from 'lib/utils'
-import {
-  useContract,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction
-} from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 
 export const useSendUpdateRecords = ({
   domain,
+  resolver,
   records,
   onError,
   onSuccess
 }: {
   domain: Domain
+  resolver?: string
   records: TextRecords
   onError?: (e: Error) => void
   onSuccess?: () => void
 }) => {
-  const resolverAddress = ETH_RESOLVER_ADDRESS.get(currentNetwork())
-  const contract = useContract({ abi: ETH_RESOLVER_ABI, address: resolverAddress })! // must always be defined
+  const iface = new Interface(ETH_RESOLVER_ABI)
 
-  const node = domain ? namehash(domain) : undefined
-  const encoded = Object.entries(records).map(([key, record]) =>
-    contract?.interface.encodeFunctionData('setText', [node, key, record])
-  )
+  const node = resolver ? getNodeForResolver(domain) : undefined
+
+  const encoded = node
+    ? Object.entries(records).map(([key, record]) =>
+        iface.encodeFunctionData('setText', [node, key, record])
+      )
+    : []
 
   const { config } = usePrepareContractWrite({
-    address: resolverAddress,
+    address: resolver as `0x${string}` | undefined,
     abi: ETH_RESOLVER_ABI,
     functionName: 'multicall',
-    enabled: encoded.length !== 0 && Boolean(domain),
+    enabled: Boolean(resolver) && encoded.length !== 0 && Boolean(domain),
     args: [encoded]
   })
 

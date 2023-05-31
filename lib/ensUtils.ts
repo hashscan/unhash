@@ -1,6 +1,7 @@
-import { solidityKeccak256 } from 'ethers/lib/utils.js'
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
+import { ethers } from 'ethers'
+import { ETH_RESOLVER_ABI } from './constants'
 
 /**
  * A function to generate secret for commit transaction.
@@ -14,58 +15,85 @@ export function generateCommitSecret() {
     .join('')}`
 }
 
+export function nodehash(label: string) {
+  const labelhash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(label))
+  const ethNode = '0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae'
+  return ethers.utils.keccak256(
+    ethers.utils.solidityPack(['bytes32', 'bytes32'], [ethNode, labelhash])
+  )
+}
+
 // Raw internal function to generate commitment
 function _makeCommitment(
   name: string,
   owner: string,
+  duration: number,
   secret: string,
   resolver: string,
-  addr: string
+  data: string[],
+  reverseRecord: boolean,
+  ownerControlledFuses: number
 ): string {
-  const label = solidityKeccak256(['string'], [name])
+  const label = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(name))
 
-  if (resolver === ZERO_ADDRESS && addr === ZERO_ADDRESS) {
-    return solidityKeccak256(['bytes32', 'address', 'bytes32'], [label, owner, secret])
+  if (data.length > 0 && resolver === ZERO_ADDRESS) {
+    throw new Error('ResolverRequiredWhenDataSupplied')
   }
 
-  if (resolver === ZERO_ADDRESS) {
-    throw new Error('addr can only be set with resolver')
-  }
-
-  return solidityKeccak256(
-    ['bytes32', 'address', 'address', 'address', 'bytes32'],
-    [label, owner, resolver, addr, secret]
+  const encoded = ethers.utils.defaultAbiCoder.encode(
+    ['bytes32', 'address', 'uint256', 'bytes32', 'address', 'bytes[]', 'bool', 'uint16'],
+    [label, owner, duration, secret, resolver, data, reverseRecord, ownerControlledFuses]
   )
+
+  return ethers.utils.keccak256(encoded)
 }
 
 /**
  * Generate secret and commitment hash for ENS commit transaction.
  */
 export function makeCommitment(params: CommitmentParams): RegistrationParams {
-  const { name, owner, resolver, addr } = params
+  const { name, owner, duration, resolver, addr, reverseRecord } = params
 
   const secret = generateCommitSecret()
-  const _name = getDomainName(name)
+  const label = getDomainName(name)
+  const ownerControlledFuses = 0
+
+  const data = new Array<string>()
+  if (resolver && addr && addr !== ZERO_ADDRESS) {
+    const node = nodehash(label)
+    const coinType = 60 // ETH
+
+    const iface = new ethers.utils.Interface(ETH_RESOLVER_ABI)
+    const ethAddrData = iface.encodeFunctionData('setAddr', [node, coinType, addr])
+    data.push(ethAddrData)
+  }
 
   const commitment = _makeCommitment(
-    _name,
+    label,
     owner,
+    duration,
     secret,
     resolver ?? ZERO_ADDRESS,
-    addr ?? ZERO_ADDRESS
+    data,
+    reverseRecord,
+    ownerControlledFuses
   )
-  return { ...params, secret, commitment }
+  return { ...params, secret, data, commitment }
 }
 
 /**
  * Generate list of commitments for ENS commit transaction with a single secret.
  */
-export function makeCommitments(names: Domain[], owner: string): BulkRegistrationParams {
+export function makeCommitments(
+  names: Domain[],
+  owner: string,
+  duration: number
+): BulkRegistrationParams {
   const secret = generateCommitSecret()
 
   const commitments = names.map((name) => {
     const _name = getDomainName(name)
-    return _makeCommitment(_name, owner, secret, ZERO_ADDRESS, ZERO_ADDRESS)
+    return _makeCommitment(_name, owner, duration, secret, ZERO_ADDRESS, [], false, 0)
   })
 
   return {
@@ -77,16 +105,26 @@ export function makeCommitments(names: Domain[], owner: string): BulkRegistratio
 }
 
 /**
+ * Returns a node for a given resolver that it can use as an id to set records.
+ */
+export function getNodeForResolver(name: Domain): string {
+  const label = getDomainName(name)
+  return nodehash(label)
+}
+
+/**
  * Estimated gas limit for single commit transaction.
  * Should only be used for UI purposes, not for actual gas limit calculations.
  */
 export const COMMIT_GAS_AVERAGE = 46_267
 
+// TODO: recalculate for name wrapper update
 /** Returns estimated average gas for single bulk register transactions. */
 export function registerGasAverage(count: number) {
   return count === 1 ? 250_000 : 200_000 + count * 100_000
 }
 
+// TODO: recalculate for name wrapper update
 /** Returns gas limit for single and bulk register transactions. */
 export function registerGasLimit(count: number) {
   return count === 1 ? 320_000 : (200_000 + count * 140_000) * 1.1

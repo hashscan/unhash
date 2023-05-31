@@ -86,6 +86,7 @@ export const ProfilePrimaryDomain = ({
             <PrimaryDomainUnresolvedEth
               className={styles.unresolvedEth}
               domain={newDomain.name}
+              resolver={newDomain.resolver}
               onResolved={onNewDomainResolved}
             />
           ) : (

@@ -42,6 +42,12 @@ export type Registration = {
   owner?: string // who will own the domain; TODO: can't be nullable, fix
   duration: number // seconds
   secret: string
+  // following fields ignored for multiple names
+  resolver?: string
+  data: string[]
+  reverseRecord: boolean
+  ownerControlledFuses: number
+
   status: RegistrationStatus
   commitTxHash?: string
   commitBlock?: number
@@ -94,12 +100,15 @@ export type TransactionStatus = 'idle' | 'commit' | 'processing'
 export type CommitmentParams = {
   name: Domain
   owner: string
+  duration: number
   resolver?: string
-  addr?: string | null
+  addr?: string
+  reverseRecord: boolean
 }
 
 export type RegistrationParams = CommitmentParams & {
   secret: string
+  data: string[]
   commitment: string
 }
 

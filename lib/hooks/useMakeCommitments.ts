@@ -7,10 +7,12 @@ import { useMemo } from 'react'
  */
 export function useMakeCommitments({
   names,
-  owner
+  owner,
+  duration
 }: {
   names: Domain[]
   owner: string | null
+  duration: number
 }) {
   const namesHash = names.join(',')
 
@@ -18,6 +20,6 @@ export function useMakeCommitments({
     if (!owner) return {} as ReturnType<typeof makeCommitments>
 
     const names = namesHash.split(',') as Domain[]
-    return makeCommitments(names, owner)
-  }, [namesHash, owner])
+    return makeCommitments(names, owner, duration)
+  }, [namesHash, owner, duration])
 }
