@@ -1,7 +1,7 @@
 import { BulkRegistrationParams, CommitmentParams, Domain, RegistrationParams } from './types'
 import { getDomainName, ZERO_ADDRESS } from './utils'
 import { ethers } from 'ethers'
-import { ETH_RESOLVER_ABI, PUBLIC_RESOLVER_ADDRESS } from './constants'
+import { ETH_RESOLVER_ABI } from './constants'
 
 /**
  * A function to generate secret for commit transaction.
