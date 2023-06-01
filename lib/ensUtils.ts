@@ -125,5 +125,5 @@ export function registerGasAverage(count: number) {
 
 /** Returns gas limit for single and bulk register transactions. */
 export function registerGasLimit(count: number) {
-  return count === 1 ? 420_000 : (280_000 + (count - 1) * 180_000) * 1.25
+  return count === 1 ? 550_000 : (280_000 + (count - 1) * 180_000) * 1.25
 }
