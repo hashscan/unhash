@@ -44,7 +44,7 @@
 }
 
 .label.label_type_warning {
-  background-color: var(--color-warning);
+  background-color: var(--color-yellow);
 }
 
 .label.label_type_error {

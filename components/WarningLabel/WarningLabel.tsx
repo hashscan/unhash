@@ -1,28 +1,18 @@
 import { isNameASCIIOnly, isValidName } from 'lib/utils'
-import { Label } from 'components/ui/Label/Label'
-import { ComponentProps } from 'react'
 
 export const WarningLabel = ({
   name,
-  size = 'sm'
+  showNonAscii = true
 }: {
   name: string
-  size?: ComponentProps<typeof Label>['size']
+  showNonAscii: boolean
 }) => {
   if (!isValidName(name)) {
-    return (
-      <Label
-        size={size}
-        type={'error'}
-        title="Name contains invalid character(s) and is Malformed"
-      ></Label>
-    )
+    return <span title="Name is Malformed and contains invalid characters">&nbsp;⛔</span>
   }
 
-  if (!isNameASCIIOnly(name)) {
-    return (
-      <Label size={size} type={'warning'} title="This name contains non-ASCII characters"></Label>
-    )
+  if (showNonAscii && !isNameASCIIOnly(name)) {
+    return <span title="Name contains non-ASCII characters">&nbsp;⚠️</span>
   }
 
   return null
