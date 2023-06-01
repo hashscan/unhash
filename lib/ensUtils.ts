@@ -118,14 +118,12 @@ export function getNodeForResolver(name: Domain): string {
  */
 export const COMMIT_GAS_AVERAGE = 46_267
 
-// TODO: recalculate for name wrapper update
 /** Returns estimated average gas for single bulk register transactions. */
 export function registerGasAverage(count: number) {
-  return count === 1 ? 250_000 : 200_000 + count * 100_000
+  return count === 1 ? 320_000 : 280_000 + (count - 1) * 180_000
 }
 
-// TODO: recalculate for name wrapper update
 /** Returns gas limit for single and bulk register transactions. */
 export function registerGasLimit(count: number) {
-  return count === 1 ? 320_000 : (200_000 + count * 140_000) * 1.1
+  return count === 1 ? 420_000 : (280_000 + (count - 1) * 180_000) * 1.25
 }
