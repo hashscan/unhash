@@ -23,7 +23,7 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
       </Head>
 
       <h1 className={styles.title}>
-        {domain} <WarningLabel name={domain} size={'lg'}></WarningLabel>
+        {domain} <WarningLabel name={domain} showNonAscii={true}></WarningLabel>
       </h1>
       <div className={styles.address}>{formatAddress(info.owner as Domain, 4)}</div>
       <div className={styles.info}>
