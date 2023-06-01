@@ -59,10 +59,7 @@ const Names: PageWithLayout = () => {
   // domain list
   const { user, refreshUser } = useCurrentUser()
   const allDomains = useMemo(
-    () =>
-      user?.domains
-        .filter((d) => d.isValid && (d.controlled || d.owned))
-        .sort((a, b) => a.name.localeCompare(b.name)) || [],
+    () => user?.domains.filter((d) => d.controlled || d.owned) || [],
     [user]
   )
 
