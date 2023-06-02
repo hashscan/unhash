@@ -99,11 +99,11 @@ export const Profile = ({ domain, info }: DomainPageProps) => {
           <div className={styles.address}>{formatAddress(info.addrRecords.ethereum ?? '', 4)}</div>
         </div>
 
-        {info.textRecords.description && (
+        {!!info.textRecords.description && (
           <Section title={'Description'}>{info.textRecords.description}</Section>
         )}
 
-        {links.length && (
+        {!!links.length && (
           <Section title={'Links'}>
             {links.map(([type, link, site], index) => (
               <ProfileLink key={index} link={link} label={site ?? 'site'} info={type} isExternal />
