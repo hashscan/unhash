@@ -5,9 +5,7 @@ import { Domain, currentNetwork } from 'lib/types'
 import styles from './domain.module.css'
 import api, { DomainInfo } from 'lib/api'
 import { validateDomain } from 'lib/utils'
-import { formatAddress } from 'lib/utils'
-import Link from 'next/link'
-import { WarningLabel } from 'components/WarningLabel/WarningLabel'
+import { Profile } from 'components/Profile/Profile'
 
 interface DomainPageProps {
   domain: Domain
@@ -19,39 +17,10 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
   return (
     <div className={styles.main}>
       <Head>
-        <title>{domain}</title>
+        <title>{domain} | unhash</title>
       </Head>
 
-      <h1 className={styles.title}>
-        {domain} <WarningLabel name={domain} showNonAscii={true}></WarningLabel>
-      </h1>
-      <div className={styles.address}>{formatAddress(info.owner as Domain, 4)}</div>
-      <div className={styles.info}>
-        This domain is owned by{' '}
-        <Link
-          className={styles.link}
-          href={`https://etherscan.io/address/${info.owner}`}
-          target="_blank"
-        >
-          {formatAddress(info.owner as Domain, 4)}
-        </Link>
-        {info.addrRecords.ethereum ? (
-          <>
-            {' '}
-            and points to{' '}
-            <Link
-              className={styles.link}
-              href={`https://etherscan.io/address/${info.addrRecords.ethereum}`}
-              target="_blank"
-            >
-              {formatAddress(info.addrRecords.ethereum, 4)}
-            </Link>{' '}
-            address.
-          </>
-        ) : (
-          '.'
-        )}
-      </div>
+      <Profile domain={domain} info={info} />
     </div>
   )
 }
