@@ -12,7 +12,6 @@ interface DomainPageProps {
   info: DomainInfo
 }
 
-// TODO: this page only works for mainnet, including Etherscanlinks
 const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPageProps) => {
   return (
     <div className={styles.main}>
@@ -25,7 +24,7 @@ const Domain: PageWithLayout<DomainPageProps> = ({ domain, info }: DomainPagePro
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, res }) => {
   const domain = query.domain as string
   const network = currentNetwork()
 
@@ -49,6 +48,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       }
     }
   }
+
+  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=3600')
 
   return {
     props: {
