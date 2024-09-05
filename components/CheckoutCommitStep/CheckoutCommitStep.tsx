@@ -1,18 +1,11 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState
-} from 'react'
 import { RadioGroup } from '@headlessui/react'
 import clsx from 'clsx'
+import { Dispatch, SetStateAction, forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
+import { AddressInput } from 'components/ui/AddressInput/AddressInput'
+import { pluralize } from 'lib/pluralize'
 import { RegistrationOrder } from 'lib/types'
 import styles from './CheckoutCommitStep.module.css'
-import { pluralize } from 'lib/pluralize'
-import { AddressInput } from 'components/ui/AddressInput/AddressInput'
 
 import { EthereumIcon } from 'components/icons'
 
@@ -72,7 +65,7 @@ export const CheckoutCommitStep = forwardRef<CheckoutCommitHandle, CheckoutCommi
                     [styles.groupOption_disabled]: disabled
                   })}
                 >
-                  <div>Use by my wallet</div>
+                  <div>I will be the owner</div>
                 </div>
               )}
             </RadioGroup.Option>
@@ -84,7 +77,7 @@ export const CheckoutCommitStep = forwardRef<CheckoutCommitHandle, CheckoutCommi
                     [styles.groupOption_disabled]: disabled
                   })}
                 >
-                  <div>Simple register</div>
+                  <div>Purchasing for someone else</div>
 
                   {checked && (
                     <AddressInput

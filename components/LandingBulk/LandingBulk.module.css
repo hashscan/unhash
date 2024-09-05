@@ -1,16 +1,16 @@
 .bulk {
-  max-width: 800px;
 }
 
 .content {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 32px;
-  margin-bottom: 56px;
+  gap: 40px;
+  margin-bottom: 72px;
+  max-width: 800px;
 }
 
-.content>:nth-child(2) {
+.content > :nth-child(2) {
   flex: 1 1 50%;
 }
 
@@ -34,7 +34,6 @@
 
   font: var(--type-lg);
   letter-spacing: var(--ls-lg);
-  background-color: var(--color-highlight-green);
   line-height: 36px;
   margin-bottom: 12px;
 }
@@ -52,15 +51,14 @@
 }
 
 .numbers {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .number {
-  text-align: center;
   padding: 0 8px;
+
+  text-align: center;
 }
 
 .numberValue {
@@ -76,6 +74,7 @@
 
   white-space: pre-line;
   line-height: 16px;
+  margin-top: 8px;
 }
 
 @media (max-width: 768px) {

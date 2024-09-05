@@ -20,15 +20,15 @@ export const LandingBulk = () => {
       <div className={styles.numbers}>
         <div className={styles.number}>
           <div className={styles.numberValue}>10+</div>
-          <div className={styles.numberDesc}>{'names\nat once'}</div>
+          <div className={styles.numberDesc}>{'names at once'}</div>
         </div>
         <div className={styles.number}>
           <div className={styles.numberValue}>~25%</div>
-          <div className={styles.numberDesc}>{'saved on\ngas fees'}</div>
+          <div className={styles.numberDesc}>{'saved on gas fees'}</div>
         </div>
         <div className={styles.number}>
           <div className={styles.numberValue}>~10%</div>
-          <div className={styles.numberDesc}>{'cheaper\nthan alternatives'}</div>
+          <div className={styles.numberDesc}>{'cheaper than alternatives'}</div>
         </div>
       </div>
     </div>
