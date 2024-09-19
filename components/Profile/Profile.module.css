@@ -1,0 +1,159 @@
+.main {
+  --padding: 16px;
+  min-height: 80svh;
+
+  display: grid;
+
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.card {
+  --avatar-size: 124px;
+
+  width: 650px;
+
+  border: 1px solid var(--color-slate-6);
+  border-radius: var(--radii-md);
+
+  background-color: white;
+  color: var(--text-primary);
+
+  display: grid;
+
+  grid-template-columns: min-content 1fr;
+
+  padding: 24px;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+}
+
+.avatarSlot {
+  --avatar-size: 124px;
+  position: relative;
+
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+
+  background-image: linear-gradient(180deg, var(--color-green), var(--color-green-light));
+}
+
+.avatarSlot img,
+.avatarSlot::after {
+  border-radius: inherit;
+}
+
+.avatarSlot img {
+  display: block;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  user-select: none;
+}
+
+.avatarSlot::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 0 1.5px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.nameSlot {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.name {
+  font: var(--type-lg);
+  line-height: 1;
+}
+
+.address {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.section {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section_title {
+  font: var(--type-sm);
+  color: var(--color-gray-4);
+}
+
+.section_content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.link {
+  all: unset;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+
+  transition: background var(--ease-100);
+
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  appearance: none;
+
+  background: var(--color-slate-8);
+  color: var(--color-slate-1);
+
+  border-radius: var(--radii-sm);
+  border: 1.5px solid var(--color-slate-1);
+  padding: 0px 12px;
+  height: 40px;
+
+  font: var(--type-reg);
+  letter-spacing: var(--ls-reg);
+  font-weight: 400;
+
+  width: calc(50% - var(--sm-space) / 2);
+}
+
+.link .link_label {
+  color: var(--color-slate-3);
+}
+
+.link .link_info {
+  font: var(--font-mono);
+}
+
+.link .external_link {
+  display: inline-block;
+  transform: rotate(-45deg);
+  color: var(--color-slate-3);
+}

@@ -7,11 +7,7 @@ export type AddrRecords = {
 
 // Text domain records currently supported by API
 export type TextRecords = {
-  name?: string
-  description?: string
-  email?: string
-  url?: string
-  'com.twitter'?: string
+  [key: string]: string
 }
 
 export type UserInfo = {
